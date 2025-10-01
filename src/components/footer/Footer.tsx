@@ -43,7 +43,7 @@ const Footer = async () => {
             </div>
           </div>
           <Image
-            src='/icons/logo-white.svg'
+            src='/images/icons/logo-white.svg'
             alt='Logo'
             width={100}
             height={100}

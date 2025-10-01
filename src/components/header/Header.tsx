@@ -14,7 +14,7 @@ const Header = async () => {
       <div className='flex w-full items-end justify-between px-2'>
         <Link href='/'>
           <Image
-            src='/icons/logo.svg'
+            src='/images/icons/logo.svg'
             alt='Logo'
             width={160}
             height={35}
