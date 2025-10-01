@@ -1,0 +1,22 @@
+services:
+  next-js:
+    image: "${STACK_NAME}_nextjs:latest"
+    networks:
+        - nginx_network
+    restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+    build:
+      context: ./
+      dockerfile: Dockerfile
+
+networks:
+  wordpress_network:
+    name: "${STACK_NAME}_wordpress_network"
+    external: true
+    driver: bridge
+  nginx_network:
+    external: true
+    driver: bridge

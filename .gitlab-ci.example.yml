@@ -1,0 +1,235 @@
+# .gitlab-ci.yml
+image: alpine:latest
+
+stages:
+    - setup
+    - testing
+    - prepare_server
+    - build_and_push
+    - deploy
+
+variables:
+    # DO  NOT CHANGE THESE VARIABLES IF YOU DON'T KNOW WHAT YOU ARE DOING
+    APP_ENV: "development"
+    NODE_ENV: "${APP_ENV}"
+    NEXT_TELEMETRY_DISABLED: "1"
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: "tcp://docker:2375/"
+    DOCKER_DRIVER: "overlay2"
+    DOCKER_BUILDKIT: "1"
+
+    # DO NOT CHANGE THESE VARIABLES UNLESS YOU ARE USING A CUSTOM DOCKER REGISTRY
+    DOCKER_REGISTRY: "${CI_REGISTRY}"
+    DOCKER_USERNAME: "${CI_REGISTRY_USER}"
+    DOCKER_PASSWORD: "${CI_JOB_TOKEN}"
+
+    # DO NOT CHANGE THIS IF NOT NECESSARY!!!!!!
+    REMOTE_PATH: "${PROJECT_FOLDER_NAME}/${APP_ENV}"
+
+
+
+    #### Those are just default values, you can change them in GitLab CI/CD settings ####
+
+    # Default Deployment Variables
+    PROJECT_FOLDER_NAME: "" # !!!!! NECESSARY TO SET !!!!!, otherwise the script will fail
+    GIT_SSH_URL: "git@git.antstudio.cz:react/xxx.git" # CHANGE THIS TO MATCH YOUR REPOSITORY URL
+
+    # default .env file variables
+    APP_NAME: ""
+    NEXT_PUBLIC_BACKEND_URL: ""
+    FRONTEND_URL: ""
+    GTM_ID: ""
+    NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ""
+    RECAPTCHA_SECRET_KEY: ""
+    RECAPTCHA_THRESHOLD: ""
+
+    # default WordPress .env file variables
+    DB_HOST: ""
+    DB_DATABASE_NAME: ""
+    DB_USER: ""
+    DB_PASSWORD: ""
+    DB_ROOT_PASSWORD: ""
+
+cache:
+    key: "${CI_COMMIT_REF_SLUG}"
+    paths:
+        - node_modules/
+
+# Setup Environment Variables Dynamically
+setup_env:
+    stage: setup
+    environment:
+        name: "${APP_ENV}"
+    rules:
+        -   if: '$CI_COMMIT_REF_NAME == "main"'
+            variables:
+                APP_ENV: "production"
+                REMOTE_PATH: "${PROJECT_FOLDER_NAME}/${APP_ENV}"
+        -   when: always
+    script:
+        - echo "Setting up environment for ${APP_ENV} - NextJS (remote_path = $REMOTE_PATH)"
+        - cp .env.example .env
+        - sed -i "s|APP_ENV=.*|APP_ENV=${APP_ENV}|" .env
+        - sed -i "s|APP_NAME=.*|APP_NAME=${APP_NAME}|" .env
+        - sed -i "s|NEXT_PUBLIC_BACKEND_URL=.*|NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}|" .env
+        - sed -i "s|FRONTEND_URL=.*|FRONTEND_URL=${FRONTEND_URL}|" .env
+        - sed -i "s|GTM_ID=.*|GTM_ID=${GTM_ID}|" .env
+        - sed -i "s|NEXT_PUBLIC_RECAPTCHA_SITE_KEY=.*|NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}|" .env
+        - sed -i "s|RECAPTCHA_SECRET_KEY=.*|RECAPTCHA_SECRET_KEY=${RECAPTCHA_SECRET_KEY}|" .env
+        - sed -i "s|RECAPTCHA_THRESHOLD=.*|RECAPTCHA_THRESHOLD=${RECAPTCHA_THRESHOLD}|" .env
+        - cat .env
+
+        - echo "Setting up environment for ${APP_ENV} - WordPress"
+        - cp wordpress/.env.example wordpress/.env
+        - sed -i "s|DB_HOST=.*|DB_HOST=${DB_HOST}|" wordpress/.env
+        - sed -i "s|DB_DATABASE_NAME=.*|DB_DATABASE_NAME=${DB_DATABASE_NAME}|" wordpress/.env
+        - sed -i "s|DB_USER=.*|DB_USER=${DB_USER}|" wordpress/.env
+        - sed -i "s|DB_PASSWORD=.*|DB_PASSWORD=${DB_PASSWORD}|" wordpress/.env
+        - sed -i "s|DB_ROOT_PASSWORD=.*|DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}|" wordpress/.env
+        - cat wordpress/.env
+    artifacts:
+        paths:
+            - .env
+            - wordpress/.env
+
+# Linting Stage
+lint_code:
+    image: node:22-alpine
+    stage: testing
+    only:
+        - main
+    script:
+        - npm install
+        - npm run lint
+    allow_failure: true
+
+prepare_server:
+    stage: prepare_server
+    dependencies:
+        - setup_env
+    rules:
+        -   if: '$CI_COMMIT_REF_NAME == "main"'
+            variables:
+                APP_ENV: "production"
+                REMOTE_PATH: "${PROJECT_FOLDER_NAME}/${APP_ENV}"
+        -   if: '$PROJECT_FOLDER_NAME == ""'
+            when: never
+        -   when: always
+    environment:
+        name: "${APP_ENV}"
+    before_script:
+        - apk update && apk add --no-cache openssh-client
+        # Setup SSH deploy keys
+        - eval $(ssh-agent -s)
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    script:
+        - echo "Checking if project folder exists on the server..."
+        - echo "$PROJECT_FOLDER_NAME, $REMOTE_PATH, $APP_ENV"  # Output values locally for debugging
+        - |
+            ssh -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "
+              echo '${PROJECT_FOLDER_NAME}, ${REMOTE_PATH}, ${APP_ENV}' &&
+              if [ ! -d '${REMOTE_PATH}' ]; then
+                  echo 'Project folder not found. Preparing project on server...';
+                  mkdir -p '${REMOTE_PATH}' &&
+                  cd '${REMOTE_PATH}' &&
+                  git clone '${GIT_SSH_URL}' . &&
+                  git checkout '${CI_COMMIT_REF_NAME}' &&
+                  echo 'Repository cloned successfully' &&
+                  mkdir -p wordpress &&
+                  echo 'Folder structure prepared';
+              else
+                  echo 'Project folder already exists. Skipping preparation.';
+              fi
+            "
+        # Separate scp command for .env file
+        - scp -P "$SSH_PORT" wordpress/.env "$SSH_USER@$SSH_HOST:$REMOTE_PATH/wordpress/.env"
+        - |
+            ssh -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "
+              cd '${REMOTE_PATH}/wordpress' &&
+              git pull &&
+              make docker-start &&
+              echo 'WordPress containers started successfully'
+            "
+    artifacts:
+        expire_in: 1h
+        paths:
+            - .env
+            - wordpress/.env
+
+# Build and Push Docker Image
+build_and_push:
+    image: docker:latest
+    stage: build_and_push
+    dependencies:
+        - setup_env
+    rules:
+        - if: '$CI_COMMIT_REF_NAME == "main"'
+          variables:
+              APP_ENV: "production"
+              REMOTE_PATH: "${PROJECT_FOLDER_NAME}/${APP_ENV}"
+        - when: always
+    environment:
+        name: "${APP_ENV}"
+    services:
+        - docker:dind
+    script:
+        - echo "Building Docker image..."
+        - docker info
+        - docker build -t "${PROJECT_FOLDER_NAME}_${APP_ENV}_nextjs:latest" .
+        - echo "Logging into Docker Registry with these credentials... username=$DOCKER_USERNAME, password=$DOCKER_PASSWORD, registry=$DOCKER_REGISTRY"
+        - docker login -u "$DOCKER_USERNAME" --password "$DOCKER_PASSWORD" "$DOCKER_REGISTRY"
+        - echo "Pushing Docker image to registry..."
+        - docker tag "${PROJECT_FOLDER_NAME}_${APP_ENV}:latest" "${CI_REGISTRY_IMAGE}"
+        - docker push "${CI_REGISTRY_IMAGE}:latest"
+    artifacts:
+        expire_in: 1h
+        paths:
+            - .env
+            - wordpress/.env
+
+## Deploy to Private Server with Docker
+deploy_to_private_server:
+    stage: deploy
+    rules:
+        # Only run if REMOTE_PATH is defined and the branch is main
+        - if: '$REMOTE_PATH != "" && $CI_COMMIT_REF_NAME == "main"'
+          variables:
+              APP_ENV: "production"
+              REMOTE_PATH: "${PROJECT_FOLDER_NAME}/${APP_ENV}"
+        # Run if REMOTE_PATH is defined for any branch (when always)
+        - if: '$REMOTE_PATH != ""'
+          when: always
+    environment:
+        name: "${APP_ENV}"
+    dependencies:
+        - setup_env
+        - build_and_push
+    before_script:
+        - apk update && apk add --no-cache openssh-client
+        # Setup SSH deploy keys
+        - eval $(ssh-agent -s)
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    script:
+        - echo "Deploying to VPS..."
+        # Transfer .env files to remote server
+        - scp -P "$SSH_PORT" .env "$SSH_USER@$SSH_HOST:$REMOTE_PATH/.env"
+        # Login and deploy Docker containers
+        - ssh -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" "
+            mkdir -p $REMOTE_PATH &&
+            cd $REMOTE_PATH &&
+            docker login -u '$DOCKER_USERNAME' --password '$DOCKER_PASSWORD' '$DOCKER_REGISTRY' &&
+            docker pull '${CI_REGISTRY_IMAGE}' &&
+            git pull &&
+            make docker-start
+            "
+    artifacts:
+        expire_in: 1h
+        paths:
+            - .env
+            - wordpress/.env

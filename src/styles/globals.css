@@ -1,0 +1,236 @@
+@custom-variant dark (&:is(.dark *));
+
+@import 'tailwindcss';
+@import './animations.css';
+
+@theme inline {
+  --color-primary: oklch(var(--primary));
+  --color-secondary: oklch(var(--secondary));
+  --color-tertiary: oklch(var(--tertiary));
+  --color-grey-warm: oklch(var(--grey-warm));
+  --color-grey-cold: oklch(var(--grey-cold));
+  --color-blue-grey: oklch(var(--blue-grey));
+  --color-white-smoke: oklch(var(--white-smoke));
+  --color-black-rich: oklch(var(--black-rich));
+}
+
+@theme {
+  /* Custom breakpoints */
+  --breakpoint-xs: 376px;
+  --breakpoint-2xs: 400px;
+  --breakpoint-2lg: 1200px;
+  --breakpoint-3xl: 1540px;
+  --breakpoint-4xl: 2020px;
+  --breakpoint-5xl: 2560px;
+  --z-1: 1;
+  --z-2: 2;
+  --z-3: 3;
+  --z-4: 4;
+  --z-5: 5;
+  --z-6: 6;
+  --z-7: 7;
+  --z-8: 8;
+  --z-9: 9;
+  --z-11: 11;
+  --z-12: 12;
+  --z-13: 13;
+  --z-14: 14;
+  --z-15: 15;
+  --z-16: 16;
+  --z-17: 17;
+  --z-18: 18;
+  --z-19: 19;
+
+  /* Font Families */
+  --font-family-sans: 'latino-gothic-variable', sans-serif;
+}
+
+@layer base {
+  :root,
+  .default {
+    --max-w: 94.5rem;
+
+    /* Colors */
+    --primary: 0.3529 0.0868 326.35; /* Deep */
+    --secondary: 0.489 0.0618 318.12; /* Amethyst */
+    --tertiary: 0.8109 0.0484 310.4; /* Plum */
+    --grey-warm: 0.9361 0.0034 325.6; /* Grey Warm */
+    --grey-cold: 0.8988 0.0096 279.68; /* Grey Cold */
+    --blue-grey: 0.884 0.0454 254.51; /* Blue Grey */
+    --white-smoke: 0.9682 0.0017 325.59; /* White Smoke */
+    --black-rich: 0.1321 0.0048 345.11; /* Black Rich */
+
+    /* Font Variation Settings */
+    --font-text: 'slnt' 1, 'wdth' 80, 'wght' 30;
+    --font-heading: 'slnt' 1, 'wdth' 80, 'wght' 40;
+    --font-cta: 'slnt' 1, 'wdth' 80, 'wght' 50;
+  }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  /* Font Family Setup */
+  html {
+    font-family: var(--font-family-sans);
+    overflow-x: hidden;
+    overflow-y: visible;
+    @apply bg-white-smoke;
+  }
+
+  body {
+    @apply text-primary;
+    font-variation-settings: var(--font-text);
+  }
+
+  /* Headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-primary;
+    font-variation-settings: var(--font-heading);
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+
+  h4 {
+    @apply text-xl;
+  }
+
+  h5 {
+    @apply text-lg;
+  }
+
+  h6 {
+    @apply text-base;
+  }
+
+  /* Buttons and Links */
+  button,
+  a[href] {
+    cursor: pointer;
+    font-variation-settings: var(--font-cta);
+  }
+
+  p,
+  span {
+    @apply text-secondary;
+  }
+}
+
+@layer utilities {
+  html body[data-scroll-locked] {
+    margin-right: 0 !important;
+  }
+
+  .link {
+    @apply leading-6 underline underline-offset-2 hover:no-underline;
+  }
+
+  /* Font Variation Utilities */
+  .font-text {
+    font-variation-settings: var(--font-text);
+  }
+
+  .font-heading {
+    font-variation-settings: var(--font-heading);
+  }
+
+  .font-cta {
+    font-variation-settings: var(--font-cta);
+  }
+
+  /* Layout Utilities */
+  .max-w-container {
+    @apply mx-auto max-w-[var(--max-w)];
+  }
+
+  .page-container {
+    @apply px-4 sm:px-14;
+  }
+
+  /* Scrollbar Hide Utility */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+
+  /* Custom Scrollbar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--secondary)) transparent;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-left: -2px;
+    margin-right: -2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 0 -8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: oklch(var(--secondary));
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: oklch(var(--secondary) / 0.8);
+  }
+}
+
+/* Lenis Smooth Scrolling */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Loom Integration - Hide Companion */
+#loom-companion-mv3 #shadow-host-companion,
+#loom-companion-mv3 #shadow-host-companion * {
+  display: none !important;
+}

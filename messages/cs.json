@@ -1,0 +1,78 @@
+{
+  "error_page": {
+    "404": {
+      "title": "Stránka nenalezena",
+      "description": "Stránka, kterou hledáte, neexistuje."
+    },
+    "500": {
+      "title": "Vnitřní <span>chyba</span> serveru",
+      "description": "Chybička se vloudila. Víme o&nbsp;ní. A&nbsp;pracujeme na jejím odstranění.",
+      "error_description": "Vyskytla se chyba při načítání stránky. Zkuste se sem vrátit později."
+    }
+  },
+
+  "cookie": {
+    "setting_button": "Nastavení cookies"
+  },
+
+  "common": {
+    "nonstop": "NONSTOP linka",
+    "follow-us": "Sledujte nás"
+  },
+
+  "routes": {
+    "how-to-proceed": "jak-postupovat",
+    "services": "sluzby",
+    "organized-by-us": "organizovali-jsme",
+    "media": "media-a-verejnost",
+    "about-us": "o-nas",
+    "contacts": "kontakty"
+  },
+
+  "header": {
+    "how-to-proceed": "Jak postupovat",
+    "services": "Služby",
+    "organized-by-us": "Organizovali jsme",
+    "media": "Média a veřejnost",
+    "about-us": "O nás",
+    "contacts": "Kontakty"
+  },
+
+  "footer": {
+    "gdpr": "Zásady ochrany osobních údajů",
+    "consumer-information": "Informace pro spotřebitele",
+    "cookies": "Informace o využití cookies",
+    "terms-of-use": "Obchodní podmínky",
+    "copyright": "Všechna práva vyhrazena"
+  },
+
+  "home": {
+    "hero": {
+      "title": "Rozlučte se.<br/> Po svém, s vděčností.",
+      "description": "Vytváříme prostor pro okamžik, který patří jen vám.<br/> Jsme pohřební služba, která naslouchá – a plní vaše představy o vděčném a osobitém rozloučení.",
+      "contact-us": "Kontaktujte nás",
+      "prepare": "Připravte si",
+      "needed-documents": "Potřebné dokumenty",
+      "visit-us": "Navštivte nás",
+      "branches": "poboček"
+    },
+    "how-to-proceed": {
+      "title": "Potřebuji pomoc s rozloučením",
+      "description": "Jsme pohřební služba. Citlivě vás provedeme rozloučením – jednoduše, klidně, s úctou. Postaráme se o vše, co je třeba.",
+      "button-text": "Jak postupovat",
+      "link": "jak-postupovat"
+    },
+    "services": {
+      "title": "Obřad, ceremoniál nebo tichá vzpomínka?",
+      "description": "Důstojné a opravdové rozloučení není otázkou peněz – může být tiché i pompézní, veřejné či osobní. Pomůžeme Vám s přípravou obřadu, který odpovídá vašim představám i možnostem.<br/><br/> Společně vytvoříme prostor okamžiku, který stojí za to prožít opravdově.",
+      "button-text": "Naše služby",
+      "link": "sluzby"
+    },
+    "branches": {
+      "title": "13 poboček v Praze a okolí",
+      "description": "V Praze a okolí jsme vám nablízku, ať už bydlíte kdekoli. Na vybraných pobočkách jsme tu pro vás i o víkendech a ve státní svátky.",
+      "button-text": "Všechny pobočky",
+      "link": "kontakt"
+    }
+  }
+}
