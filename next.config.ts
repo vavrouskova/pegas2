@@ -13,7 +13,6 @@ const nextConfig = {
   experimental: {
     reactCompiler: true,
   },
-  trailingSlash: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -48,22 +47,6 @@ const nextConfig = {
             value: 'public, max-age=9999999999, must-revalidate',
           },
         ],
-      },
-    ];
-  },
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            key: 'host',
-            value: 'antstudio.cz',
-          },
-        ],
-        permanent: true,
-        destination: 'https://www.antstudio.app/:path*',
       },
     ];
   },
