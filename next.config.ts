@@ -13,7 +13,6 @@ const nextConfig = {
   experimental: {
     reactCompiler: true,
   },
-  output: 'standalone' as const,
   trailingSlash: true,
   eslint: {
     ignoreDuringBuilds: true,
