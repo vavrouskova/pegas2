@@ -1,0 +1,29 @@
+default:
+  image:
+    name: node:20-alpine
+    entrypoint: ['/bin/sh', '-c']
+
+variables:
+  DOCKER_TLS_CERTDIR: ''
+
+deploy_preview:
+  stage: deploy
+  # tags: [vercel]   # přidej, pokud má runner tagy
+  except:
+    - main
+  script:
+    - npm install --global vercel
+    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+    - vercel build --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --token=$VERCEL_TOKEN
+
+deploy_production:
+  stage: deploy
+  # tags: [vercel]   # přidej, pokud má runner tagy
+  only:
+    - main
+  script:
+    - npm install --global vercel
+    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+    - vercel build --prod --token=$VERCEL_TOKEN
+    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
