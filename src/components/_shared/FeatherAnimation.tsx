@@ -22,7 +22,8 @@ const FeatherAnimation = () => {
   // Animace pro pravé pírko - rychlejší
   const rightFeatherY = useTransform(scrollYProgress, [0, 1], [-500, -100]);
   const rightFeatherX = useTransform(scrollYProgress, [0, 1], [150, 100]);
-  const rightFeatherRotate = useTransform(scrollYProgress, [0, 1], [0, -10]);
+  const rightFeatherRotate = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const rightFeatherScale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
 
   return (
     <div
@@ -59,6 +60,7 @@ const FeatherAnimation = () => {
           y: rightFeatherY,
           x: rightFeatherX,
           rotate: rightFeatherRotate,
+          scale: rightFeatherScale,
         }}
       >
         <Image
