@@ -39,6 +39,9 @@
   },
 
   "footer": {
+    "nonstop-branches": "Pobočky otevřené včetně víkendů a svátků",
+    "all-branches": "Všechny naše pobočky",
+    "directorate": "Ředitelství",
     "gdpr": "Zásady ochrany osobních údajů",
     "consumer-information": "Informace pro spotřebitele",
     "cookies": "Informace o využití cookies",

@@ -5,41 +5,42 @@ import React from 'react';
 
 import Facebook from '@/components/icons/Facebook';
 import Instagram from '@/components/icons/Instagram';
-import { PhoneNumber } from '@/lib/constants';
+import { DirectorateInformation, Email, PhoneNumber, SecondaryPhoneNumber } from '@/lib/constants';
+import { getBranchOffices } from '@/utils/data';
 
 const Footer = async () => {
   const t = await getTranslations();
+  const branchesData = await getBranchOffices();
 
   return (
     <footer className='bg-primary px-14 pt-[7.75rem] pb-[3.75rem]'>
       <div className='grid grid-cols-4 gap-4'>
         <div className='col-span-2 flex flex-col justify-between'>
           <div>
-            <div className='mb-12 flex flex-col gap-4'>
-              <span className='text-white-smoke'>{t('common.nonstop')}</span>
+            <div className='mb-7.5 flex flex-col gap-4'>
+              <span className='font-heading text-white-smoke'>{t('common.nonstop')}</span>
               <Link
-                className='text-white-smoke text-2xl'
+                className='text-white-smoke w-fit text-2xl'
                 href={`tel:${PhoneNumber}`}
               >
                 +420 {PhoneNumber}
               </Link>
             </div>
             <div className='flex items-center gap-2'>
-              <div className='flex gap-4'>
+              <div className='flex gap-2'>
                 <Link
-                  className='p-1.25'
+                  className='bg-white-smoke flex size-12 items-center justify-center transition-all duration-300 hover:opacity-80'
                   href='https://www.facebook.com/'
                 >
-                  <Facebook className='text-white-smoke h-5.5 w-5.5' />
+                  <Facebook className='text-primary' />
                 </Link>
                 <Link
-                  className='p-1.25'
+                  className='bg-white-smoke flex size-12 items-center justify-center transition-all duration-300 hover:opacity-80'
                   href='https://www.instagram.com/'
                 >
-                  <Instagram className='text-white-smoke h-5.5 w-5.5' />
+                  <Instagram className='text-primary' />
                 </Link>
               </div>
-              <span className='text-white-smoke text-sm'>{t('common.follow-us')}</span>
             </div>
           </div>
           <Image
@@ -49,10 +50,76 @@ const Footer = async () => {
             height={100}
           />
         </div>
-        <div className='flex flex-col gap-4'>column 2</div>
-        <div className='flex flex-col gap-4'>column 3</div>
+        <div className='flex flex-col justify-between'>
+          <div className='flex flex-col gap-6'>
+            <span className='font-heading text-white-smoke max-w-[16.875rem] text-lg text-balance'>
+              {t('footer.nonstop-branches')}
+            </span>
+            <div className='flex flex-col gap-4'>
+              {branchesData
+                .filter((branch) => branch.isNonStop)
+                .map((branch) => (
+                  <Link
+                    key={branch.id}
+                    href={branch.url}
+                    className='text-tertiary text-sm'
+                  >
+                    <span className='mr-1 text-white'>{branch.city}</span> {branch.address}
+                  </Link>
+                ))}
+            </div>
+          </div>
+          <div className='flex flex-col gap-3'>
+            <span className='font-heading text-white-smoke text-lg text-balance'>{t('footer.directorate')}</span>
+            <div className='flex flex-col gap-4'>
+              <span className='text-tertiary text-sm'>{DirectorateInformation.name}</span>
+              <span className='text-tertiary text-sm'>{DirectorateInformation.address}</span>
+              <span className='text-tertiary text-sm'>{DirectorateInformation.openingHours}</span>
+              <span className='text-tertiary text-sm'>{DirectorateInformation.openingHoursWeekend}</span>
+            </div>
+          </div>
+          <div className='flex flex-col gap-4'>
+            <Link
+              className='text-sm text-white'
+              href={`mailto:${Email}`}
+            >
+              {Email}
+            </Link>
+            <div className='flex items-center gap-2 text-white'>
+              <Link
+                className='text-sm text-white'
+                href={`tel:${PhoneNumber}`}
+              >
+                +420 {PhoneNumber}
+              </Link>
+              |
+              <Link
+                className='text-sm text-white'
+                href={`tel:${SecondaryPhoneNumber}`}
+              >
+                +420 {SecondaryPhoneNumber}
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className='flex flex-col'>
+          <span className='font-heading text-white-smoke mb-6 max-w-[10.875rem] text-lg text-balance'>
+            {t('footer.all-branches')}
+          </span>
+          <div className='flex flex-col gap-4'>
+            {branchesData.map((branch) => (
+              <Link
+                key={branch.id}
+                href={branch.url}
+                className='text-tertiary text-sm'
+              >
+                <span className='text-white'>{branch.city}</span> {branch.address}
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
-      <div className='mt-12 pt-4'>
+      <div className='mt-24 flex flex-col gap-6 pt-4'>
         <div className='text-tertiary flex items-center gap-4 text-sm'>
           <Link
             className='font-text'

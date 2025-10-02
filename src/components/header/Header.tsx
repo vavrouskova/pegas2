@@ -26,6 +26,7 @@ const Header = async () => {
             <Link
               href={link.href}
               key={getUniqueId()}
+              className='hover:text-secondary transition-all duration-300 hover:scale-105'
             >
               {link.label}
             </Link>
