@@ -62,9 +62,9 @@ const Footer = async () => {
                   <Link
                     key={branch.id}
                     href={branch.url}
-                    className='text-tertiary text-sm'
+                    className='text-tertiary font-text text-sm'
                   >
-                    <span className='mr-1 text-white'>{branch.city}</span> {branch.address}
+                    <span className='font-cta mr-1 text-white'>{branch.city}</span> {branch.address}
                   </Link>
                 ))}
             </div>
@@ -111,9 +111,9 @@ const Footer = async () => {
               <Link
                 key={branch.id}
                 href={branch.url}
-                className='text-tertiary text-sm'
+                className='text-tertiary font-text text-sm'
               >
-                <span className='text-white'>{branch.city}</span> {branch.address}
+                <span className='font-cta text-white'>{branch.city}</span> {branch.address}
               </Link>
             ))}
           </div>

@@ -9,7 +9,7 @@ const StickyContact = async () => {
   const t = await getTranslations('common');
 
   return (
-    <div className='bg-primary fixed right-0 bottom-20 flex gap-4 p-4 pr-12'>
+    <div className='bg-primary fixed right-0 bottom-20 z-50 flex gap-4 p-4 pr-12 shadow-lg'>
       <div className='flex h-16 w-16 items-center justify-center'>
         <Phone className='text-white-smoke size-[1.9375rem]' />
       </div>

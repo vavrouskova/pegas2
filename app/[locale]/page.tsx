@@ -3,6 +3,7 @@ import React from 'react';
 
 import ContentBox from '@/components/_shared/ContentBox';
 import ContentWithImages from '@/components/_shared/ContentWithImages';
+import FeatherAnimation from '@/components/_shared/FeatherAnimation';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 
 const Homepage = async () => {
@@ -21,14 +22,8 @@ const Homepage = async () => {
         description={t('how-to-proceed.description')}
         buttonText={t('how-to-proceed.button-text')}
         link={t('how-to-proceed.link')}
-        variant='grid'
+        image={{ src: '/images/faq-image.webp', alt: 'How to proceed' }}
         className='mb-60'
-        images={[
-          { src: '/images/rose.webp', alt: 'How to proceed' },
-          { src: '/images/wing.webp', alt: 'How to proceed' },
-          { src: '/images/room.webp', alt: 'How to proceed' },
-          { src: '/images/rose.webp', alt: 'How to proceed' },
-        ]}
       />
 
       <section className='mb-60'>
@@ -46,9 +41,27 @@ const Homepage = async () => {
         description={t('branches.description')}
         buttonText={t('branches.button-text')}
         link={t('branches.link')}
-        variant='single'
-        className='mb-60'
-        images={[{ src: '/images/room.webp', alt: 'Branches' }]}
+        image={{ src: '/images/room.webp', alt: 'Branches' }}
+      />
+
+      <section className='relative pt-[25rem] pb-[25rem]'>
+        <ContentBox
+          title={t('organized-by-us.title')}
+          description={t('organized-by-us.description').replaceAll('<br/>', '\n')}
+          buttonText={t('organized-by-us.button-text')}
+          link={t('organized-by-us.link')}
+          className='relative z-20 mx-auto max-w-[42.6875rem]'
+        />
+        <FeatherAnimation />
+      </section>
+
+      <ContentWithImages
+        title={t('about-us.title')}
+        description={t('about-us.description')}
+        buttonText={t('about-us.button-text')}
+        link={t('about-us.link')}
+        className='mb-60 flex-row-reverse'
+        image={{ src: '/images/about-us.webp', alt: 'About us' }}
       />
     </main>
   );
