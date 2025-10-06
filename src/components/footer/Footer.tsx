@@ -21,7 +21,7 @@ const Footer = async () => {
             <div className='mb-7.5 flex flex-col gap-2 md:gap-4'>
               <span className='font-heading text-white-smoke'>{t('common.nonstop')}</span>
               <Link
-                className='text-white-smoke w-fit text-2xl'
+                className='text-white-smoke w-fit text-2xl transition-all duration-300 hover:opacity-70'
                 href={`tel:${PhoneNumber}`}
               >
                 +420 {PhoneNumber}
@@ -30,13 +30,13 @@ const Footer = async () => {
             <div className='flex items-center gap-2'>
               <div className='flex gap-2'>
                 <Link
-                  className='flex size-12 items-center justify-center transition-all duration-300 hover:opacity-80'
+                  className='flex size-12 items-center justify-center transition-all duration-300 hover:opacity-70'
                   href='https://www.facebook.com/'
                 >
                   <Facebook className='text-white-smoke' />
                 </Link>
                 <Link
-                  className='flex size-12 items-center justify-center transition-all duration-300 hover:opacity-80'
+                  className='flex size-12 items-center justify-center transition-all duration-300 hover:opacity-70'
                   href='https://www.instagram.com/'
                 >
                   <Instagram className='text-white-smoke' />
@@ -64,7 +64,7 @@ const Footer = async () => {
                   <Link
                     key={branch.id}
                     href={branch.url}
-                    className='text-tertiary font-text text-sm'
+                    className='text-tertiary font-text text-sm transition-all duration-300 hover:opacity-70'
                   >
                     <span className='font-cta mr-1 text-white'>{branch.city}</span> {branch.address}
                   </Link>
@@ -84,7 +84,7 @@ const Footer = async () => {
               <Link
                 key={branch.id}
                 href={branch.url}
-                className='text-tertiary font-text text-sm'
+                className='text-tertiary font-text text-sm transition-all duration-300 hover:opacity-70'
               >
                 <span className='font-cta text-white'>{branch.city}</span> {branch.address}
               </Link>
@@ -98,25 +98,25 @@ const Footer = async () => {
       <div className='mt-10 flex flex-col gap-6 pt-4 md:mt-24'>
         <div className='text-tertiary flex gap-6 text-sm max-lg:flex-col lg:items-center lg:gap-4'>
           <Link
-            className='font-text'
+            className='font-text transition-all duration-300 hover:opacity-70'
             href={t('routes.gdpr')}
           >
             {t('footer.gdpr')}
           </Link>
           <Link
-            className='font-text'
+            className='font-text transition-all duration-300 hover:opacity-70'
             href={t('routes.consumer-information')}
           >
             {t('footer.consumer-information')}
           </Link>
           <Link
-            className='font-text'
+            className='font-text transition-all duration-300 hover:opacity-70'
             href={t('routes.cookies')}
           >
             {t('footer.cookies')}
           </Link>
           <Link
-            className='font-text'
+            className='font-text transition-all duration-300 hover:opacity-70'
             href={t('routes.terms-of-use')}
           >
             {t('footer.terms-of-use')}

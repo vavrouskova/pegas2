@@ -20,21 +20,21 @@ const DirectorateInfo = async ({ className }: ClassNameProps) => {
       </div>
       <div className='mt-3 flex flex-col gap-4 md:mt-6'>
         <Link
-          className='text-sm text-white'
+          className='text-sm text-white transition-all duration-300 hover:opacity-70'
           href={`mailto:${Email}`}
         >
           {Email}
         </Link>
         <div className='flex flex-wrap items-center gap-2 text-white'>
           <Link
-            className='text-sm text-white'
+            className='text-sm text-white transition-all duration-300 hover:opacity-70'
             href={`tel:${PhoneNumber}`}
           >
             +420 {PhoneNumber}
           </Link>
           |
           <Link
-            className='text-sm text-white'
+            className='text-sm text-white transition-all duration-300 hover:opacity-70'
             href={`tel:${SecondaryPhoneNumber}`}
           >
             +420 {SecondaryPhoneNumber}

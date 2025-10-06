@@ -29,7 +29,7 @@ const MobileMenu = (props: any) => {
     >
       <DrawerTrigger asChild>
         <div
-          className='group flex cursor-pointer transition-all duration-300 hover:opacity-50 lg:hidden'
+          className='group flex cursor-pointer transition-all duration-300 hover:opacity-70 lg:hidden'
           onClick={() => setIsOpen(true)}
         >
           <Hamburger className='text-primary' />
@@ -60,7 +60,7 @@ const MobileMenu = (props: any) => {
               key={getUniqueId('header-nav')}
               href={item.href as any}
               aria-label={item.name}
-              className='font-heading block w-full text-left text-xl leading-none'
+              className='font-heading block w-full text-left text-xl leading-none hover:opacity-70'
               onClick={() => setIsOpen(false)}
             >
               {item.label}
