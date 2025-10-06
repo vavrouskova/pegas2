@@ -26,15 +26,18 @@ const ContentWithImages = ({ title, description, buttonText, link, className, im
         description={description}
         buttonText={buttonText}
         link={link}
-        className='max-w-[28.375rem] min-w-[28.375rem] lg:mx-auto'
+        className='max-w-[28.375rem] lg:mx-auto lg:max-w-[28.375rem] lg:flex-shrink-0'
       />
-      <Image
-        src={displayImage.src}
-        alt={displayImage.alt}
-        width={1400}
-        height={1400}
-        className='w-full max-w-[43.25rem]'
-      />
+      <div className='min-w-0 lg:max-w-[43.25rem] lg:flex-1'>
+        <Image
+          src={displayImage.src}
+          alt={displayImage.alt}
+          width={1400}
+          height={1400}
+          sizes='(min-width: 1024px) 50vw, 100vw'
+          className='h-auto w-full'
+        />
+      </div>
     </section>
   );
 };
