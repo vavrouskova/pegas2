@@ -93,6 +93,10 @@
       "button-text": "Více o Pegasu",
       "link": "o-nas"
     },
+    "services-nav": {
+      "title": "Vybrané služby",
+      "all-services": "Všechny služby"
+    },
     "footer-bg": {
       "claim": "V tichu jsme.",
       "alt": "Footer background"

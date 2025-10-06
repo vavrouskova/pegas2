@@ -71,7 +71,7 @@ const Footer = async () => {
                 ))}
             </div>
           </div>
-          <div className='hidden md:block'>
+          <div className='max-md:hidden'>
             <DirectorateInfo />
           </div>
         </div>
@@ -96,7 +96,7 @@ const Footer = async () => {
         </div>
       </div>
       <div className='mt-10 flex flex-col gap-6 pt-4 md:mt-24'>
-        <div className='text-tertiary flex flex-col gap-6 text-sm lg:flex-row lg:items-center lg:gap-4'>
+        <div className='text-tertiary flex gap-6 text-sm max-lg:flex-col lg:items-center lg:gap-4'>
           <Link
             className='font-text'
             href={t('routes.gdpr')}

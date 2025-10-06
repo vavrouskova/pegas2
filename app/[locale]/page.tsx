@@ -6,6 +6,7 @@ import ContentWithImages from '@/components/_shared/ContentWithImages';
 import FeatherAnimation from '@/components/_shared/FeatherAnimation';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
+import ServicesSection from '@/components/_shared/ServicesSection';
 
 const Homepage = async () => {
   const t = await getTranslations('home');
@@ -64,6 +65,8 @@ const Homepage = async () => {
         className='mb-60 lg:flex-row-reverse'
         image={{ src: '/images/about-us.webp', alt: 'About us' }}
       />
+
+      <ServicesSection />
 
       <FooterClaim />
     </main>
