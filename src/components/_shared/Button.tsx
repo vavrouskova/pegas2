@@ -7,7 +7,8 @@ interface ButtonProps {
   tapScale?: number;
   buttonText: string;
   variant?: 'primary' | 'white' | 'destructive';
-  size?: 'default' | 'large';
+  size?: 'default' | 'small';
+  className?: string;
 }
 
 const variantStyles = {
@@ -17,19 +18,31 @@ const variantStyles = {
 };
 
 const sizeStyles = {
-  default: 'h-13 px-8 py-4 text-base',
-  large: 'h-14 px-8 py-4 text-lg',
+  small: 'h-13 px-8 py-4 text-base',
+  default: 'h-14 px-8 py-4 text-lg',
 };
 
-const Button = ({ hoverScale, tapScale, buttonText, variant = 'primary', size = 'default' }: ButtonProps) => {
-  const arrowSize = size === 'large' ? 'h-6 w-6' : 'h-4 w-4';
+const Button = ({
+  hoverScale,
+  tapScale,
+  buttonText,
+  variant = 'primary',
+  size = 'default',
+  className,
+}: ButtonProps) => {
+  const arrowSize = size === 'small' ? 'h-4 w-4' : 'h-6 w-6';
 
   return (
     <RippleButton
       key={`${hoverScale}-${tapScale}`}
       hoverScale={hoverScale}
       tapScale={tapScale}
-      className={cn('flex items-center justify-center gap-1 leading-none', sizeStyles[size], variantStyles[variant])}
+      className={cn(
+        'flex items-center justify-center gap-1 leading-none',
+        sizeStyles[size],
+        variantStyles[variant],
+        className
+      )}
     >
       {buttonText}
       <ArrowRight className={arrowSize} />

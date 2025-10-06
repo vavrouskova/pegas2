@@ -6,6 +6,7 @@ import ContentWithImages from '@/components/_shared/ContentWithImages';
 import FeatherAnimation from '@/components/_shared/FeatherAnimation';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
+import OrganizedCarouselSection from '@/components/_shared/OrganizedCarouselSection';
 import ServicesSection from '@/components/_shared/ServicesSection';
 
 const Homepage = async () => {
@@ -18,6 +19,8 @@ const Homepage = async () => {
         description={t('hero.description').replaceAll('<br/>', '\n')}
         className='mb-60'
       />
+
+      <OrganizedCarouselSection />
 
       <ContentWithImages
         title={t('how-to-proceed.title')}

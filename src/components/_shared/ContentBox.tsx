@@ -18,10 +18,7 @@ const ContentBox = ({ title, description, buttonText, link, className }: Content
       <h2>{title}</h2>
       <p className='mb-3 text-lg whitespace-pre-line'>{description}</p>
       <Link href={`/${link}`}>
-        <Button
-          size='large'
-          buttonText={buttonText}
-        />
+        <Button buttonText={buttonText} />
       </Link>
     </div>
   );

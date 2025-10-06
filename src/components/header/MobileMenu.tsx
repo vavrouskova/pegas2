@@ -60,7 +60,7 @@ const MobileMenu = (props: any) => {
               key={getUniqueId('header-nav')}
               href={item.href as any}
               aria-label={item.name}
-              className='font-heading block w-full text-left text-xl leading-none hover:opacity-70'
+              className='font-heading block w-full text-left text-xl leading-none transition-all duration-300 hover:opacity-70'
               onClick={() => setIsOpen(false)}
             >
               {item.label}
