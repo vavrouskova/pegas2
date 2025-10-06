@@ -3,9 +3,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import DirectorateInfo from '@/components/footer/DirectorateInfo';
 import Facebook from '@/components/icons/Facebook';
 import Instagram from '@/components/icons/Instagram';
-import { DirectorateInformation, Email, PhoneNumber, SecondaryPhoneNumber } from '@/lib/constants';
+import { PhoneNumber } from '@/lib/constants';
 import { getBranchOffices } from '@/utils/data';
 
 const Footer = async () => {
@@ -13,11 +14,11 @@ const Footer = async () => {
   const branchesData = await getBranchOffices();
 
   return (
-    <footer className='bg-primary px-14 pt-[7.75rem] pb-[3.75rem]'>
-      <div className='grid grid-cols-4 gap-4'>
-        <div className='col-span-2 flex flex-col justify-between'>
-          <div>
-            <div className='mb-7.5 flex flex-col gap-4'>
+    <footer className='bg-primary px-4 pt-11 pb-10 md:px-14 md:pt-[7.75rem] md:pb-[3.75rem]'>
+      <div className='grid gap-9 md:grid-cols-3 md:gap-4 lg:grid-cols-4'>
+        <div className='col-span-1 flex flex-col-reverse justify-between gap-11 md:flex-col md:gap-0 lg:col-span-2'>
+          <div className='flex flex-col-reverse gap-11 md:flex-col md:gap-0'>
+            <div className='mb-7.5 flex flex-col gap-2 md:gap-4'>
               <span className='font-heading text-white-smoke'>{t('common.nonstop')}</span>
               <Link
                 className='text-white-smoke w-fit text-2xl'
@@ -29,16 +30,16 @@ const Footer = async () => {
             <div className='flex items-center gap-2'>
               <div className='flex gap-2'>
                 <Link
-                  className='bg-white-smoke flex size-12 items-center justify-center transition-all duration-300 hover:opacity-80'
+                  className='flex size-12 items-center justify-center transition-all duration-300 hover:opacity-80'
                   href='https://www.facebook.com/'
                 >
-                  <Facebook className='text-primary' />
+                  <Facebook className='text-white-smoke' />
                 </Link>
                 <Link
-                  className='bg-white-smoke flex size-12 items-center justify-center transition-all duration-300 hover:opacity-80'
+                  className='flex size-12 items-center justify-center transition-all duration-300 hover:opacity-80'
                   href='https://www.instagram.com/'
                 >
-                  <Instagram className='text-primary' />
+                  <Instagram className='text-white-smoke' />
                 </Link>
               </div>
             </div>
@@ -48,6 +49,7 @@ const Footer = async () => {
             alt='Logo'
             width={100}
             height={100}
+            className='mx-2 md:mx-0'
           />
         </div>
         <div className='flex flex-col justify-between'>
@@ -69,37 +71,8 @@ const Footer = async () => {
                 ))}
             </div>
           </div>
-          <div className='flex flex-col gap-3'>
-            <span className='font-heading text-white-smoke text-lg text-balance'>{t('footer.directorate')}</span>
-            <div className='flex flex-col gap-4'>
-              <span className='text-tertiary text-sm'>{DirectorateInformation.name}</span>
-              <span className='text-tertiary text-sm'>{DirectorateInformation.address}</span>
-              <span className='text-tertiary text-sm'>{DirectorateInformation.openingHours}</span>
-              <span className='text-tertiary text-sm'>{DirectorateInformation.openingHoursWeekend}</span>
-            </div>
-          </div>
-          <div className='flex flex-col gap-4'>
-            <Link
-              className='text-sm text-white'
-              href={`mailto:${Email}`}
-            >
-              {Email}
-            </Link>
-            <div className='flex items-center gap-2 text-white'>
-              <Link
-                className='text-sm text-white'
-                href={`tel:${PhoneNumber}`}
-              >
-                +420 {PhoneNumber}
-              </Link>
-              |
-              <Link
-                className='text-sm text-white'
-                href={`tel:${SecondaryPhoneNumber}`}
-              >
-                +420 {SecondaryPhoneNumber}
-              </Link>
-            </div>
+          <div className='hidden md:block'>
+            <DirectorateInfo />
           </div>
         </div>
         <div className='flex flex-col'>
@@ -118,30 +91,33 @@ const Footer = async () => {
             ))}
           </div>
         </div>
+        <div className='md:hidden'>
+          <DirectorateInfo />
+        </div>
       </div>
-      <div className='mt-24 flex flex-col gap-6 pt-4'>
-        <div className='text-tertiary flex items-center gap-4 text-sm'>
+      <div className='mt-10 flex flex-col gap-6 pt-4 md:mt-24'>
+        <div className='text-tertiary flex flex-col gap-6 text-sm lg:flex-row lg:items-center lg:gap-4'>
           <Link
             className='font-text'
-            href={t('footer.gdpr')}
+            href={t('routes.gdpr')}
           >
             {t('footer.gdpr')}
           </Link>
           <Link
             className='font-text'
-            href={t('footer.consumer-information')}
+            href={t('routes.consumer-information')}
           >
             {t('footer.consumer-information')}
           </Link>
           <Link
             className='font-text'
-            href={t('footer.cookies')}
+            href={t('routes.cookies')}
           >
             {t('footer.cookies')}
           </Link>
           <Link
             className='font-text'
-            href={t('footer.terms-of-use')}
+            href={t('routes.terms-of-use')}
           >
             {t('footer.terms-of-use')}
           </Link>

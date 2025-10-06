@@ -1,7 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import Logo from '@/components/header/Logo';
+import MobileMenu from '@/components/header/MobileMenu';
 import Search from '@/components/icons/Search';
 import { getHeaderLinks } from '@/utils/data';
 import { getUniqueId } from '@/utils/helper';
@@ -10,18 +11,10 @@ const Header = async () => {
   const headerLinks = await getHeaderLinks();
 
   return (
-    <header className='max-w-container mx-auto mt-6 px-12 py-4'>
+    <header className='max-w-container mx-auto px-4 py-2 lg:mt-6 lg:px-12 lg:py-4'>
       <div className='flex w-full items-end justify-between px-2'>
-        <Link href='/'>
-          <Image
-            src='/images/icons/logo.svg'
-            alt='Logo'
-            width={160}
-            height={35}
-            className='mb-[0.19rem]'
-          />
-        </Link>
-        <div className='flex gap-8'>
+        <Logo className='lg:mb-[0.19rem]' />
+        <div className='2lg:gap-8 hidden gap-6 lg:flex'>
           {headerLinks.map((link) => (
             <Link
               href={link.href}
@@ -34,6 +27,7 @@ const Header = async () => {
         </div>
         <div className='flex items-center gap-4'>
           <Search className='h-6 w-6' />
+          <MobileMenu headerLinks={headerLinks} />
         </div>
       </div>
     </header>

@@ -26,7 +26,11 @@
     "organized-by-us": "organizovali-jsme",
     "media": "media-a-verejnost",
     "about-us": "o-nas",
-    "contacts": "kontakty"
+    "contacts": "kontakty",
+    "gdpr": "zasady-ochrany-osobnich-udaju",
+    "terms-of-use": "obchodni-podminky",
+    "consumer-information": "informace-pro-spotrebitele",
+    "cookies": "informace-o-vyuziti-cookies"
   },
 
   "header": {
@@ -88,6 +92,10 @@
       "description": "V životě jsou okamžiky, kdy slova nestačí. Organizujeme citlivá a osobitá rozloučení, která si zaslouží prožít. Jsme nejvetší pohřební služba v České republice. Naším cílem je, aby každé rozloučení bylo důstojné a připravené s péčí i vděčností.",
       "button-text": "Více o Pegasu",
       "link": "o-nas"
+    },
+    "footer-bg": {
+      "claim": "V tichu jsme.",
+      "alt": "Footer background"
     }
   }
 }

@@ -4,6 +4,7 @@ import React from 'react';
 import ContentBox from '@/components/_shared/ContentBox';
 import ContentWithImages from '@/components/_shared/ContentWithImages';
 import FeatherAnimation from '@/components/_shared/FeatherAnimation';
+import FooterClaim from '@/components/_shared/FooterClaim';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 
 const Homepage = async () => {
@@ -63,6 +64,8 @@ const Homepage = async () => {
         className='mb-60 flex-row-reverse'
         image={{ src: '/images/about-us.webp', alt: 'About us' }}
       />
+
+      <FooterClaim />
     </main>
   );
 };
