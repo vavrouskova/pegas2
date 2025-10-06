@@ -20,7 +20,7 @@ const data = [
     id: 1,
     title: 'Rozloučení s Jurajem Jakubiskem',
     where: 'Obřadní síň Strašnice, Praha',
-    when: '10. 10. 2025',
+    when: 'Středa 10. 10. 2025 - 10:00',
     image: '/images/car.webp',
     link: '#',
   },
@@ -28,7 +28,7 @@ const data = [
     id: 2,
     title: 'Rozloučení s Jurajem Jakubiskem',
     where: 'Obřadní síň Strašnice, Praha',
-    when: '10. 10. 2025',
+    when: 'Středa 10. 10. 2025 - 10:00',
     image: '/images/room.webp',
     link: '#',
   },
@@ -36,7 +36,7 @@ const data = [
     id: 3,
     title: 'Rozloučení s Jurajem Jakubiskem',
     where: 'Obřadní síň Strašnice, Praha',
-    when: '10. 10. 2025',
+    when: 'Středa 10. 10. 2025 - 10:00',
     image: '/images/rose.webp',
     link: '#',
   },
@@ -76,21 +76,23 @@ const OrganizedCarouselSection = () => {
                 key={item.id}
                 className='basis-full pl-0'
               >
-                <article className='group bg-primary flex items-center gap-4 overflow-hidden'>
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    width={320}
-                    height={320}
-                    loading='lazy'
-                    className='h-40 w-40 object-cover md:h-64 md:w-64'
-                  />
-                  <div className='flex-1 space-y-2 px-10 py-9'>
+                <article className='group bg-primary flex min-h-[10rem] items-stretch gap-4 overflow-hidden max-md:flex-col md:min-h-[16rem]'>
+                  <div className='relative aspect-square h-full flex-shrink-0 basis-[10rem] md:basis-[16rem]'>
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      sizes='(max-width: 768px) 160px, 256px'
+                      loading='lazy'
+                      className='object-cover'
+                    />
+                  </div>
+                  <div className='flex-1 space-y-2 px-4 py-5 md:px-10 md:py-9'>
                     <h3 className='text-white-smoke mb-6 text-2xl'>{item.title}</h3>
-                    <p className='text-tertiary text-sm'>
+                    <p className='text-tertiary text-lg'>
                       <span className='font-heading text-white-smoke'>{t('where')}:</span> {item.where}
                     </p>
-                    <p className='text-tertiary text-sm'>
+                    <p className='text-tertiary text-lg'>
                       <span className='font-heading text-white-smoke'>{t('when')}:</span> {item.when}
                     </p>
                     <Link href={item.link}>
