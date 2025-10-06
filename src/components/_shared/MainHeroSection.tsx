@@ -16,10 +16,10 @@ const MainHeroSection = async ({ title, description, className }: MainHeroSectio
 
   return (
     <section className={className}>
-      <div className='mt-[29.57rem] flex max-w-[36rem] flex-col justify-center gap-8'>
+      <div className='mt-96 flex max-w-[36rem] flex-col justify-center gap-8 md:mt-[29.57rem]'>
         <h1 className='whitespace-pre-line'>{title}</h1>
         <p className='text-xl whitespace-pre-line'>{description}</p>
-        <div className='flex justify-between gap-4 text-lg'>
+        <div className='flex flex-col justify-between gap-4 text-lg md:flex-row'>
           <div className='flex flex-col'>
             <span className='leading-9'>{t('contact-us')}</span>
             <Link
@@ -54,7 +54,7 @@ const MainHeroSection = async ({ title, description, className }: MainHeroSectio
         alt='Background Image'
         width={2000}
         height={2000}
-        className='absolute top-12 right-0 z-[-1] w-[81rem]'
+        className='absolute top-6 right-0 z-[-1] w-[81rem] min-w-[35rem] md:top-12'
       />
     </section>
   );

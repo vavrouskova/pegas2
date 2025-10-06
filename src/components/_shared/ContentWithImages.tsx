@@ -18,20 +18,22 @@ const ContentWithImages = ({ title, description, buttonText, link, className, im
   const fallbackAlt = 'How to navigate';
   const displayImage = image || { src: fallbackSource, alt: fallbackAlt };
   return (
-    <section className={cn('flex items-center justify-between gap-10', className)}>
+    <section
+      className={cn('flex flex-col-reverse justify-between gap-12 lg:flex-row lg:items-center lg:gap-10', className)}
+    >
       <ContentBox
         title={title}
         description={description}
         buttonText={buttonText}
         link={link}
-        className='mx-auto max-w-[28.375rem]'
+        className='max-w-[28.375rem] min-w-[28.375rem] lg:mx-auto'
       />
       <Image
         src={displayImage.src}
         alt={displayImage.alt}
         width={1400}
         height={1400}
-        className='size-[43.25rem]'
+        className='w-full max-w-[43.25rem]'
       />
     </section>
   );

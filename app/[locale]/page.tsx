@@ -33,7 +33,7 @@ const Homepage = async () => {
           description={t('services.description').replaceAll('<br/>', '\n')}
           buttonText={t('services.button-text')}
           link={t('services.link')}
-          className='mx-auto max-w-[42.6875rem]'
+          className='max-w-[42.6875rem] lg:mx-auto'
         />
       </section>
 
@@ -51,7 +51,7 @@ const Homepage = async () => {
           description={t('organized-by-us.description').replaceAll('<br/>', '\n')}
           buttonText={t('organized-by-us.button-text')}
           link={t('organized-by-us.link')}
-          className='relative z-20 mx-auto max-w-[42.6875rem]'
+          className='relative z-20 max-w-[42.6875rem] lg:mx-auto'
         />
         <FeatherAnimation />
       </section>
@@ -61,7 +61,7 @@ const Homepage = async () => {
         description={t('about-us.description')}
         buttonText={t('about-us.button-text')}
         link={t('about-us.link')}
-        className='mb-60 flex-row-reverse'
+        className='mb-60 lg:flex-row-reverse'
         image={{ src: '/images/about-us.webp', alt: 'About us' }}
       />
 
