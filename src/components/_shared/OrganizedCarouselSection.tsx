@@ -45,6 +45,7 @@ const data = [
 const OrganizedCarouselSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [api, setApi] = useState<CarouselApi | null>(null);
+  const [isHovering, setIsHovering] = useState(false);
   const t = useTranslations('common');
 
   const goToSlide = (index: number) => {
@@ -62,9 +63,22 @@ const OrganizedCarouselSection = () => {
       api.off('reInit', handleSelect);
     };
   }, [api]);
+
+  React.useEffect(() => {
+    if (!api) return;
+    const interval = setInterval(() => {
+      if (isHovering) return;
+      api.scrollNext();
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [api, isHovering]);
   return (
     <section className='pt-16 pb-36'>
-      <div className='relative'>
+      <div
+        className='relative'
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
         <Carousel
           opts={{ align: 'start', loop: true }}
           className='mx-auto max-w-[52.125rem]'
@@ -83,7 +97,6 @@ const OrganizedCarouselSection = () => {
                       alt={item.title}
                       fill
                       sizes='(max-width: 768px) 160px, 256px'
-                      loading='lazy'
                       className='object-cover'
                     />
                   </div>
