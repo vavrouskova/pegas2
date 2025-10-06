@@ -18,7 +18,9 @@
   "common": {
     "nonstop": "NONSTOP linka",
     "follow-us": "Sledujte nás",
-    "find-out-more": "Zjistěte podrobnosti"
+    "find-out-more": "Zjistěte podrobnosti",
+    "where": "Kde",
+    "when": "Kdy"
   },
 
   "routes": {
