@@ -87,6 +87,7 @@
 
   body {
     @apply text-primary;
+    overflow-x: hidden;
     font-variation-settings: var(--font-text);
   }
 

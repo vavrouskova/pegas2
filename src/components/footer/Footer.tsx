@@ -14,8 +14,8 @@ const Footer = async () => {
   const branchesData = await getBranchOffices();
 
   return (
-    <footer className='bg-primary px-4 pt-11 pb-10 md:px-14 md:pt-[7.75rem] md:pb-[3.75rem]'>
-      <div className='grid gap-9 md:grid-cols-3 md:gap-4 lg:grid-cols-4'>
+    <footer className='bg-primary mx-auto px-4 pt-11 pb-10 md:px-14 md:pt-[7.75rem] md:pb-[3.75rem]'>
+      <div className='max-w-container grid gap-9 md:grid-cols-3 md:gap-4 lg:grid-cols-4'>
         <div className='col-span-1 flex flex-col-reverse justify-between gap-11 md:flex-col md:gap-0 lg:col-span-2'>
           <div className='flex flex-col-reverse gap-11 md:flex-col md:gap-0'>
             <div className='mb-7.5 flex flex-col gap-2 md:gap-4'>
@@ -95,7 +95,7 @@ const Footer = async () => {
           <DirectorateInfo />
         </div>
       </div>
-      <div className='mt-10 flex flex-col gap-6 pt-4 md:mt-24'>
+      <div className='max-w-container mt-10 flex flex-col gap-6 pt-4 md:mt-24'>
         <div className='text-tertiary flex gap-6 text-sm max-lg:flex-col lg:items-center lg:gap-4'>
           <Link
             className='font-text transition-all duration-300 hover:opacity-70'
