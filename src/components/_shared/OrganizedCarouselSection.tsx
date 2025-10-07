@@ -81,7 +81,7 @@ const OrganizedCarouselSection = () => {
       >
         <Carousel
           opts={{ align: 'start', loop: true }}
-          className='mx-auto max-w-[52.125rem]'
+          className='mx-auto max-w-80 md:max-w-[52.125rem]'
           setApi={setApi}
         >
           <CarouselContent className='-ml-0'>
@@ -90,7 +90,7 @@ const OrganizedCarouselSection = () => {
                 key={item.id}
                 className='basis-full pl-0'
               >
-                <article className='group bg-primary flex min-h-[10rem] items-stretch gap-4 overflow-hidden max-md:flex-col md:min-h-[16rem]'>
+                <article className='group bg-primary flex min-h-[10rem] items-stretch overflow-hidden max-md:flex-col md:min-h-[16rem]'>
                   <div className='relative aspect-square h-full flex-shrink-0 basis-[10rem] md:basis-[16rem]'>
                     <Image
                       src={item.image}

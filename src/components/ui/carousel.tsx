@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import ArrowRight from '@/components/icons/ArrowRight';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -190,7 +190,7 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProp
         onClick={scrollPrev}
         {...props}
       >
-        <ArrowLeft className='!h-6 !w-6' />
+        <ArrowRight className='!h-6 !w-6 rotate-180' />
         <span className='sr-only'>Previous slide</span>
       </Button>
     );

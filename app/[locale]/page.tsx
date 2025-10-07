@@ -4,6 +4,7 @@ import React from 'react';
 import ContentBox from '@/components/_shared/ContentBox';
 import ContentWithImages from '@/components/_shared/ContentWithImages';
 import FeatherAnimation from '@/components/_shared/FeatherAnimation';
+import FeatherStatic from '@/components/_shared/FeatherStatic';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 import OrganizedCarouselSection from '@/components/_shared/OrganizedCarouselSection';
@@ -58,6 +59,7 @@ const Homepage = async () => {
           className='relative z-20 max-w-[42.6875rem] lg:mx-auto'
         />
         <FeatherAnimation />
+        <FeatherStatic />
       </section>
 
       <ContentWithImages

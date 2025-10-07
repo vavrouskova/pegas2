@@ -5,8 +5,10 @@ import Image from 'next/image';
 import { useRef } from 'react';
 
 import { MotionDiv } from '@/components/animate-ui/MotionWrappers';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 const FeatherAnimation = () => {
+  const isLargeScreen = useMediaQuery('(min-width: 1024px)');
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -22,7 +24,7 @@ const FeatherAnimation = () => {
   // Animace pro pravé pírko - rychlejší
   const rightFeatherY = useTransform(scrollYProgress, [0, 1], [-500, -100]);
   const rightFeatherX = useTransform(scrollYProgress, [0, 1], [150, 100]);
-  const rightFeatherRotate = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  const rightFeatherRotate = useTransform(scrollYProgress, [0, 1], [20, -10]);
   const rightFeatherScale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
 
   return (
@@ -30,55 +32,46 @@ const FeatherAnimation = () => {
       ref={containerRef}
       className='absolute top-0 left-0 h-full w-full'
     >
-      {/* Levé pírko */}
-      <MotionDiv
-        className='absolute top-1/2 left-0 z-10'
-        style={{
-          y: leftFeatherY,
-          x: leftFeatherX,
-          rotate: leftFeatherRotate,
-        }}
-      >
-        <Image
-          src='/images/feather1.webp'
-          alt='Feather 1'
-          width={80}
-          height={120}
-          style={{
-            height: '11.08013rem',
-            width: '16.822rem',
-            flexShrink: 0,
-            aspectRatio: '177.28/269.15',
-          }}
-        />
-      </MotionDiv>
+      {isLargeScreen && (
+        <>
+          {/* Levé pírko */}
+          <MotionDiv
+            className='absolute top-1/2 left-1/2 z-10 -translate-x-[700px]'
+            style={{
+              y: leftFeatherY,
+              x: leftFeatherX,
+              rotate: leftFeatherRotate,
+            }}
+          >
+            <Image
+              src='/images/feather1.webp'
+              alt='Feather 1'
+              width={80}
+              height={120}
+              className='h-[11.08013rem] w-[16.822rem] shrink-0'
+            />
+          </MotionDiv>
 
-      {/* Pravé pírko */}
-      <MotionDiv
-        className='absolute top-1/2 right-0 z-10'
-        style={{
-          y: rightFeatherY,
-          x: rightFeatherX,
-          rotate: rightFeatherRotate,
-          scale: rightFeatherScale,
-        }}
-      >
-        <Image
-          src='/images/feather2.webp'
-          alt='Feather 2'
-          width={386}
-          height={586}
-          style={{
-            width: '24.1215rem',
-            height: '36.62163rem',
-            transform: 'rotate(-77.654deg)',
-            flexShrink: 0,
-            aspectRatio: '385.94/585.95',
-            mixBlendMode: 'darken',
-            filter: 'blur(9.449999809265137px)',
-          }}
-        />
-      </MotionDiv>
+          {/* Pravé pírko */}
+          <MotionDiv
+            className='absolute top-1/2 right-1/2 z-10 translate-x-[700px]'
+            style={{
+              y: rightFeatherY,
+              x: rightFeatherX,
+              rotate: rightFeatherRotate,
+              scale: rightFeatherScale,
+            }}
+          >
+            <Image
+              src='/images/feather2.webp'
+              alt='Feather 2'
+              width={386}
+              height={586}
+              className='h-[36.62163rem] w-[24.1215rem] shrink-0 rotate-[-77.654deg] mix-blend-darken blur-[9.5px]'
+            />
+          </MotionDiv>
+        </>
+      )}
     </div>
   );
 };

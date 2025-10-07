@@ -28,10 +28,10 @@ const data = [
 ];
 
 const ServicesSection = async () => {
-  const t = await getTranslations('home.services-nav');
+  const t = await getTranslations('');
   return (
     <section>
-      <h2 className='mb-9 text-3xl md:mb-40 md:text-center'>{t('title')}</h2>
+      <h2 className='mb-9 text-3xl md:mb-40 md:text-center'>{t('home.services-nav.title')}</h2>
       <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:flex'>
         {data.map((item) => (
           <Link
@@ -50,11 +50,11 @@ const ServicesSection = async () => {
           </Link>
         ))}
         <Link
-          href={t('all-services')}
+          href={t('routes.services')}
           className='flex flex-col gap-4 lg:flex-1'
         >
           <div className='bg-primary flex aspect-square w-full items-center gap-2.5 self-stretch p-12' />
-          <h3 className='text-2xl'>{t('all-services')}</h3>
+          <h3 className='text-2xl'>{t('home.services-nav.all-services')}</h3>
         </Link>
       </div>
     </section>
