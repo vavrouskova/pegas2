@@ -63,7 +63,7 @@ const ContentSection = ({
   return (
     <section
       className={cn(
-        'flex flex-col-reverse justify-between gap-12 lg:gap-10',
+        'flex flex-col-reverse justify-between gap-12 py-20 lg:gap-10',
         isImageLeft ? 'lg:flex-row-reverse lg:items-center' : 'lg:flex-row lg:items-center',
         sectionClassName,
         className

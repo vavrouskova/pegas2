@@ -9,7 +9,7 @@ const FeatherStatic = () => {
         alt='Feather 1'
         width={80}
         height={120}
-        className='absolute bottom-30 left-0 z-10 h-[11.08013rem] w-[16.822rem] min-w-[16.822rem] shrink-0 -translate-x-1/2'
+        className='absolute bottom-0 left-0 z-10 h-[15.73919rem] w-[23.8955rem] min-w-[23.8955rem] shrink-0 -translate-x-1/3'
       />
 
       <Image
@@ -17,7 +17,7 @@ const FeatherStatic = () => {
         alt='Feather 2'
         width={386}
         height={586}
-        className='absolute top-0 right-1/2 z-10 h-[36.62163rem] min-h-[36.62163rem] min-w-[24.1215rem] shrink-0 translate-x-[300px] rotate-[-77.654deg] mix-blend-darken blur-[9.5px]'
+        className='absolute top-0 right-1/2 z-10 h-[50.18038rem] min-h-[50.18038rem] min-w-[33.05225rem] shrink-0 translate-x-[400px] -translate-y-36 rotate-[-77.654deg] mix-blend-darken blur-[7px]'
       />
     </div>
   );

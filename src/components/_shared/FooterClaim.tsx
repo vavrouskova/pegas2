@@ -5,7 +5,7 @@ import React from 'react';
 const FooterClaim = async () => {
   const t = await getTranslations('home.footer-bg');
   return (
-    <section className='relative -mx-[calc(50vw-50%)] h-[24.375rem] w-screen overflow-hidden lg:h-[36.3rem]'>
+    <section className='relative -mx-[calc(50vw-50%)] mt-28 h-[24.375rem] w-screen overflow-hidden lg:mt-0 lg:h-[36.3rem]'>
       <Image
         src='/images/feather-bg.webp'
         alt='Footer background'

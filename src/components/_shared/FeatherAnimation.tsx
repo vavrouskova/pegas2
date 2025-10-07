@@ -36,7 +36,7 @@ const FeatherAnimation = () => {
         <>
           {/* Levé pírko */}
           <MotionDiv
-            className='absolute top-1/2 left-1/2 z-10 -translate-x-[700px]'
+            className='absolute top-3/4 left-1/2 z-10 -translate-x-[700px]'
             style={{
               y: leftFeatherY,
               x: leftFeatherX,

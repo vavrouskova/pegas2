@@ -173,44 +173,6 @@
   .page-container {
     @apply px-4 sm:px-14;
   }
-
-  /* Scrollbar Hide Utility */
-  .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-  }
-
-  /* Custom Scrollbar */
-  .custom-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: oklch(var(--secondary)) transparent;
-    padding-left: 2px;
-    padding-right: 2px;
-    margin-left: -2px;
-    margin-right: -2px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar {
-    height: 4px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-    margin: 0 -8px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: oklch(var(--secondary));
-    border-radius: 10px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: oklch(var(--secondary) / 0.8);
-  }
 }
 
 /* Lenis Smooth Scrolling */

@@ -17,7 +17,6 @@ const Homepage = async () => {
       <MainHeroSection
         title={formatTranslation(t('hero.title'))}
         description={formatTranslation(t('hero.description'))}
-        className='mb-60'
       />
 
       <OrganizedCarouselSection />
@@ -28,7 +27,6 @@ const Homepage = async () => {
         buttonText={t('how-to-proceed.button-text')}
         link={t('how-to-proceed.link')}
         image={{ src: '/images/faq-image.webp', alt: t('how-to-proceed.alt') }}
-        className='mb-60'
       />
 
       <ContentSection
@@ -36,7 +34,7 @@ const Homepage = async () => {
         description={formatTranslation(t('services.description'))}
         buttonText={t('services.button-text')}
         link={t('services.link')}
-        sectionClassName='mb-60'
+        sectionClassName='pt-12 md:pt-40 pb-20 md:pb-48'
       />
 
       <ContentSection
@@ -52,7 +50,7 @@ const Homepage = async () => {
         description={formatTranslation(t('organized-by-us.description'))}
         buttonText={t('organized-by-us.button-text')}
         link={t('organized-by-us.link')}
-        sectionClassName='pt-[25rem] pb-[25rem]'
+        sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
         withFeathers
       />
 
@@ -64,7 +62,7 @@ const Homepage = async () => {
         buttonText={t('about-us.button-text')}
         link={t('about-us.link')}
         imagePosition='left'
-        className='mb-60'
+        className='pb-40 lg:py-80'
         image={{ src: '/images/about-us.webp', alt: t('about-us.alt') }}
       />
 
