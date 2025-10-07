@@ -119,8 +119,14 @@ const OrganizedCarouselSection = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className='top-full left-1/2 mt-2 -translate-x-[6.75rem] translate-y-0' />
-          <CarouselNext className='top-full left-1/2 mt-2 translate-x-[4.75rem] translate-y-0' />
+          <CarouselPrevious
+            variant='ghost'
+            className='top-full left-1/2 mt-2 -translate-x-[6.75rem] translate-y-0'
+          />
+          <CarouselNext
+            variant='ghost'
+            className='top-full left-1/2 mt-2 translate-x-[4.75rem] translate-y-0'
+          />
 
           {data.length > 1 && (
             <div className='absolute -bottom-7 left-1/2 flex -translate-x-1/2 space-x-2.5'>
