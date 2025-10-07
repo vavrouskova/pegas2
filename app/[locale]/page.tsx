@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
+import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentBox from '@/components/_shared/ContentBox';
 import ContentWithImages from '@/components/_shared/ContentWithImages';
 import FeatherAnimation from '@/components/_shared/FeatherAnimation';
@@ -61,6 +62,8 @@ const Homepage = async () => {
         <FeatherAnimation />
         <FeatherStatic />
       </section>
+
+      <BlogCarouselSection />
 
       <ContentWithImages
         title={t('about-us.title')}

@@ -37,7 +37,7 @@ const ServicesSection = async () => {
           <Link
             href={item.link}
             key={item.id}
-            className='flex flex-col gap-4 lg:flex-1'
+            className='group flex flex-col gap-4 lg:flex-1'
           >
             <Image
               src={item.image}
@@ -46,15 +46,17 @@ const ServicesSection = async () => {
               height={400}
               className='h-auto w-full'
             />
-            <h3 className='text-2xl'>{item.title}</h3>
+            <h3 className='text-2xl transition-opacity duration-300 group-hover:opacity-70'>{item.title}</h3>
           </Link>
         ))}
         <Link
           href={t('routes.services')}
-          className='flex flex-col gap-4 lg:flex-1'
+          className='group flex flex-col gap-4 lg:flex-1'
         >
           <div className='bg-primary flex aspect-square w-full items-center gap-2.5 self-stretch p-12' />
-          <h3 className='text-2xl'>{t('home.services-nav.all-services')}</h3>
+          <h3 className='text-2xl transition-opacity duration-300 group-hover:opacity-70'>
+            {t('home.services-nav.all-services')}
+          </h3>
         </Link>
       </div>
     </section>
