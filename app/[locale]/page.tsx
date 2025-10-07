@@ -2,10 +2,8 @@ import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
-import ContentBox from '@/components/_shared/ContentBox';
+import ContentBoxSection from '@/components/_shared/ContentBoxSection';
 import ContentWithImages from '@/components/_shared/ContentWithImages';
-import FeatherAnimation from '@/components/_shared/FeatherAnimation';
-import FeatherStatic from '@/components/_shared/FeatherStatic';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 import OrganizedCarouselSection from '@/components/_shared/OrganizedCarouselSection';
@@ -29,39 +27,34 @@ const Homepage = async () => {
         description={t('how-to-proceed.description')}
         buttonText={t('how-to-proceed.button-text')}
         link={t('how-to-proceed.link')}
-        image={{ src: '/images/faq-image.webp', alt: 'How to proceed' }}
+        image={{ src: '/images/faq-image.webp', alt: t('how-to-proceed.alt') }}
         className='mb-60'
       />
 
-      <section className='mb-60'>
-        <ContentBox
-          title={t('services.title')}
-          description={t('services.description').replaceAll('<br/>', '\n')}
-          buttonText={t('services.button-text')}
-          link={t('services.link')}
-          className='max-w-[42.6875rem] lg:mx-auto'
-        />
-      </section>
+      <ContentBoxSection
+        title={t('services.title')}
+        description={t('services.description').replaceAll('<br/>', '\n')}
+        buttonText={t('services.button-text')}
+        link={t('services.link')}
+        sectionClassName='mb-60'
+      />
 
       <ContentWithImages
         title={t('branches.title')}
         description={t('branches.description')}
         buttonText={t('branches.button-text')}
         link={t('branches.link')}
-        image={{ src: '/images/room.webp', alt: 'Branches' }}
+        image={{ src: '/images/room.webp', alt: t('branches.alt') }}
       />
 
-      <section className='relative pt-[25rem] pb-[25rem]'>
-        <ContentBox
-          title={t('organized-by-us.title')}
-          description={t('organized-by-us.description').replaceAll('<br/>', '\n')}
-          buttonText={t('organized-by-us.button-text')}
-          link={t('organized-by-us.link')}
-          className='relative z-20 max-w-[42.6875rem] lg:mx-auto'
-        />
-        <FeatherAnimation />
-        <FeatherStatic />
-      </section>
+      <ContentBoxSection
+        title={t('organized-by-us.title')}
+        description={t('organized-by-us.description').replaceAll('<br/>', '\n')}
+        buttonText={t('organized-by-us.button-text')}
+        link={t('organized-by-us.link')}
+        sectionClassName='pt-[25rem] pb-[25rem]'
+        withFeathers
+      />
 
       <BlogCarouselSection />
 
@@ -71,7 +64,7 @@ const Homepage = async () => {
         buttonText={t('about-us.button-text')}
         link={t('about-us.link')}
         className='mb-60 lg:flex-row-reverse'
-        image={{ src: '/images/about-us.webp', alt: 'About us' }}
+        image={{ src: '/images/about-us.webp', alt: t('about-us.alt') }}
       />
 
       <ServicesSection />

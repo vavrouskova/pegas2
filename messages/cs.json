@@ -70,6 +70,7 @@
       "title": "Potřebuji pomoc s rozloučením",
       "description": "Jsme pohřební služba. Citlivě vás provedeme rozloučením – jednoduše, klidně, s úctou. Postaráme se o vše, co je třeba.",
       "button-text": "Jak postupovat",
+      "alt": "Koláž obřadu",
       "link": "jak-postupovat"
     },
     "services": {
@@ -82,6 +83,7 @@
       "title": "13 poboček v Praze a okolí",
       "description": "V Praze a okolí jsme vám nablízku, ať už bydlíte kdekoli. Na vybraných pobočkách jsme tu pro vás i o víkendech a ve státní svátky.",
       "button-text": "Všechny pobočky",
+      "alt": "Hlavní místnost pobočky",
       "link": "kontakt"
     },
     "organized-by-us": {
@@ -94,6 +96,7 @@
       "title": "O nás",
       "description": "V životě jsou okamžiky, kdy slova nestačí. Organizujeme citlivá a osobitá rozloučení, která si zaslouží prožít. Jsme nejvetší pohřební služba v České republice. Naším cílem je, aby každé rozloučení bylo důstojné a připravené s péčí i vděčností.",
       "button-text": "Více o Pegasu",
+      "alt": "Hosté na obřadu",
       "link": "o-nas"
     },
     "services-nav": {

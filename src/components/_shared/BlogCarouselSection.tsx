@@ -3,17 +3,12 @@
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 
 import Button from '@/components/_shared/Button';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from '@/components/ui/carousel';
+import { CarouselNavigation } from '@/components/_shared/CarouselNavigation';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import { useCarouselAutoplay } from '@/hooks/useCarouselAutoplay';
 
 const data = [
   {
@@ -43,38 +38,12 @@ const data = [
 ];
 
 const BlogCarouselSection = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [api, setApi] = useState<CarouselApi | null>(null);
-  const [isHovering, setIsHovering] = useState(false);
   const t = useTranslations('common');
-
-  const goToSlide = (index: number) => {
-    if (api) api.scrollTo(index);
-  };
-
-  React.useEffect(() => {
-    if (!api) return;
-    const handleSelect = () => setCurrentIndex(api.selectedScrollSnap());
-    handleSelect();
-    api.on('select', handleSelect);
-    api.on('reInit', handleSelect);
-    return () => {
-      api.off('select', handleSelect);
-      api.off('reInit', handleSelect);
-    };
-  }, [api]);
-
-  React.useEffect(() => {
-    if (!api) return;
-    const interval = setInterval(() => {
-      if (isHovering) return;
-      api.scrollNext();
-    }, 6000);
-    return () => clearInterval(interval);
-  }, [api, isHovering]);
+  const { currentIndex, setApi, carouselRef, setIsHovering, goToSlide } = useCarouselAutoplay();
   return (
     <section className='pt-16 pb-36'>
       <div
+        ref={carouselRef}
         className='relative'
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
@@ -114,26 +83,11 @@ const BlogCarouselSection = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious
-            variant='ghost'
-            className='top-full left-1/2 mt-2 -translate-x-[6.75rem] translate-y-0'
+          <CarouselNavigation
+            itemsCount={data.length}
+            currentIndex={currentIndex}
+            onDotClick={goToSlide}
           />
-          <CarouselNext
-            variant='ghost'
-            className='top-full left-1/2 mt-2 translate-x-[4.75rem] translate-y-0'
-          />
-
-          {data.length > 1 && (
-            <div className='absolute -bottom-7 left-1/2 flex -translate-x-1/2 space-x-2.5'>
-              {data.map((_, index) => (
-                <span
-                  key={`slide n.${index + 1}`}
-                  onClick={() => goToSlide(index)}
-                  className={`h-1.5 w-3 cursor-pointer rounded-full transition-all duration-500 ${currentIndex === index ? 'bg-primary w-6' : 'bg-white'}`}
-                />
-              ))}
-            </div>
-          )}
         </Carousel>
       </div>
     </section>

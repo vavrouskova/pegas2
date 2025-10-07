@@ -44,10 +44,10 @@ const StickyContact = () => {
       transition={{ type: 'spring', stiffness: 260, damping: 24 }}
       className='bg-primary fixed right-0 bottom-20 z-50 flex gap-4 p-4 pr-12 shadow-lg will-change-transform'
     >
-      <div className='flex h-16 w-16 items-center justify-center'>
+      <div className='flex size-[3.4375rem] items-center justify-center'>
         <Phone className='text-white-smoke size-[1.9375rem]' />
       </div>
-      <div className='flex flex-col justify-center gap-1 pr-2'>
+      <div className='flex flex-col justify-between pr-2'>
         <span className='text-base text-white'>{t('nonstop')}</span>
         <Link
           className='text-2xl text-white transition-all duration-300 hover:opacity-70'
