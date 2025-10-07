@@ -2,12 +2,12 @@ import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
-import ContentBoxSection from '@/components/_shared/ContentBoxSection';
-import ContentWithImages from '@/components/_shared/ContentWithImages';
+import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 import OrganizedCarouselSection from '@/components/_shared/OrganizedCarouselSection';
 import ServicesSection from '@/components/_shared/ServicesSection';
+import { formatTranslation } from '@/lib/utils';
 
 const Homepage = async () => {
   const t = await getTranslations('home');
@@ -15,14 +15,14 @@ const Homepage = async () => {
   return (
     <main className='max-w-container page-container mx-auto'>
       <MainHeroSection
-        title={t('hero.title').replaceAll('<br/>', '\n')}
-        description={t('hero.description').replaceAll('<br/>', '\n')}
+        title={formatTranslation(t('hero.title'))}
+        description={formatTranslation(t('hero.description'))}
         className='mb-60'
       />
 
       <OrganizedCarouselSection />
 
-      <ContentWithImages
+      <ContentSection
         title={t('how-to-proceed.title')}
         description={t('how-to-proceed.description')}
         buttonText={t('how-to-proceed.button-text')}
@@ -31,15 +31,15 @@ const Homepage = async () => {
         className='mb-60'
       />
 
-      <ContentBoxSection
+      <ContentSection
         title={t('services.title')}
-        description={t('services.description').replaceAll('<br/>', '\n')}
+        description={formatTranslation(t('services.description'))}
         buttonText={t('services.button-text')}
         link={t('services.link')}
         sectionClassName='mb-60'
       />
 
-      <ContentWithImages
+      <ContentSection
         title={t('branches.title')}
         description={t('branches.description')}
         buttonText={t('branches.button-text')}
@@ -47,9 +47,9 @@ const Homepage = async () => {
         image={{ src: '/images/room.webp', alt: t('branches.alt') }}
       />
 
-      <ContentBoxSection
+      <ContentSection
         title={t('organized-by-us.title')}
-        description={t('organized-by-us.description').replaceAll('<br/>', '\n')}
+        description={formatTranslation(t('organized-by-us.description'))}
         buttonText={t('organized-by-us.button-text')}
         link={t('organized-by-us.link')}
         sectionClassName='pt-[25rem] pb-[25rem]'
@@ -58,12 +58,13 @@ const Homepage = async () => {
 
       <BlogCarouselSection />
 
-      <ContentWithImages
+      <ContentSection
         title={t('about-us.title')}
         description={t('about-us.description')}
         buttonText={t('about-us.button-text')}
         link={t('about-us.link')}
-        className='mb-60 lg:flex-row-reverse'
+        imagePosition='left'
+        className='mb-60'
         image={{ src: '/images/about-us.webp', alt: t('about-us.alt') }}
       />
 

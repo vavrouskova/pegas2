@@ -1,3 +1,4 @@
+// Původní typy (zachováno z původního souboru)
 export type ParametersType = {
   [key: string]: string | number | string[] | number[] | unknown;
 };
@@ -58,4 +59,25 @@ export interface YoastData {
     label2: string;
     data2: string;
   };
+}
+
+// Nové typy (přidáno při refactoringu)
+export interface BaseContentProps {
+  title: string;
+  description: string;
+  buttonText: string;
+  link: string;
+  className?: string;
+}
+
+export interface ImageProps {
+  src: string;
+  alt: string;
+}
+
+export interface CarouselItemBase {
+  id: number;
+  title: string;
+  image: string;
+  link: string;
 }

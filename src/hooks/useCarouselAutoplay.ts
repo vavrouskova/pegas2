@@ -11,7 +11,7 @@ interface UseCarouselAutoplayReturn {
   currentIndex: number;
   api: CarouselApi | null;
   setApi: (api: CarouselApi | null) => void;
-  carouselRef: React.RefObject<HTMLDivElement>;
+  carouselRef: React.RefObject<HTMLDivElement | null>;
   isHovering: boolean;
   setIsHovering: (hovering: boolean) => void;
   goToSlide: (index: number) => void;
