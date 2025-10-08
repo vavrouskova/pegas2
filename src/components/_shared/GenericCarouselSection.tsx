@@ -85,11 +85,13 @@ const GenericCarouselSection = <T extends CarouselItemData>({
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselNavigation
-            itemsCount={data.length}
-            currentIndex={currentIndex}
-            onDotClick={goToSlide}
-          />
+          {data.length > 1 && (
+            <CarouselNavigation
+              itemsCount={data.length}
+              currentIndex={currentIndex}
+              onDotClick={goToSlide}
+            />
+          )}
         </Carousel>
       </div>
     </section>

@@ -1,0 +1,2817 @@
+{
+  "data": {
+    "__schema": {
+      "queryType": {
+        "name": "RootQuery",
+        "fields": [
+          {
+            "name": "allSettings",
+            "description": "Entry point to get all settings for the site",
+            "args": [],
+            "type": {
+              "name": "Settings",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "categories",
+            "description": "Connection between the RootQuery type and the category type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToCategoryConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToCategoryConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "category",
+            "description": "A 0bject",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "CategoryIdType",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "Category",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "comment",
+            "description": "Returns a Comment",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "CommentNodeIdTypeEnum",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "Comment",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "comments",
+            "description": "Connection between the RootQuery type and the Comment type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToCommentConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToCommentConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "contentNode",
+            "description": "A node used to manage content",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "ContentNodeIdTypeEnum",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "contentType",
+                "type": {
+                  "name": "ContentTypeEnum",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "asPreview",
+                "type": {
+                  "name": "Boolean",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "ContentNode",
+              "kind": "INTERFACE"
+            }
+          },
+          {
+            "name": "contentNodes",
+            "description": "Connection between the RootQuery type and the ContentNode type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToContentNodeConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToContentNodeConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "contentType",
+            "description": "Fetch a Content Type node by unique Identifier",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "ContentTypeIdTypeEnum",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "ContentType",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "contentTypes",
+            "description": "Connection between the RootQuery type and the ContentType type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToContentTypeConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "discussionSettings",
+            "description": "Fields of the &#039;DiscussionSettings&#039; settings group",
+            "args": [],
+            "type": {
+              "name": "DiscussionSettings",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "generalSettings",
+            "description": "Fields of the &#039;GeneralSettings&#039; settings group",
+            "args": [],
+            "type": {
+              "name": "GeneralSettings",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "graphqlDocument",
+            "description": "An object of the graphqlDocument Type. Saved GraphQL Documents",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "GraphqlDocumentIdType",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "asPreview",
+                "type": {
+                  "name": "Boolean",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "GraphqlDocument",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "graphqlDocumentGroup",
+            "description": "A 0bject",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "GraphqlDocumentGroupIdType",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "GraphqlDocumentGroup",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "graphqlDocumentGroups",
+            "description": "Connection between the RootQuery type and the graphqlDocumentGroup type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToGraphqlDocumentGroupConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToGraphqlDocumentGroupConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "graphqlDocuments",
+            "description": "Connection between the RootQuery type and the graphqlDocument type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToGraphqlDocumentConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToGraphqlDocumentConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "mediaItem",
+            "description": "An object of the mediaItem Type. ",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "MediaItemIdType",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "asPreview",
+                "type": {
+                  "name": "Boolean",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "MediaItem",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "mediaItems",
+            "description": "Connection between the RootQuery type and the mediaItem type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToMediaItemConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToMediaItemConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "menu",
+            "description": "A WordPress navigation menu",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "MenuNodeIdTypeEnum",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "Menu",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "menuItem",
+            "description": "A WordPress navigation menu item",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "MenuItemNodeIdTypeEnum",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "MenuItem",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "menuItems",
+            "description": "Connection between the RootQuery type and the MenuItem type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToMenuItemConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToMenuItemConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "menus",
+            "description": "Connection between the RootQuery type and the Menu type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToMenuConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToMenuConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "node",
+            "description": "Fetches an object given its ID",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": "ID",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "Node",
+              "kind": "INTERFACE"
+            }
+          },
+          {
+            "name": "nodeByUri",
+            "description": "Fetches an object given its Unique Resource Identifier",
+            "args": [
+              {
+                "name": "uri",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "String",
+                    "kind": "SCALAR"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UniformResourceIdentifiable",
+              "kind": "INTERFACE"
+            }
+          },
+          {
+            "name": "page",
+            "description": "An object of the page Type. ",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "PageIdType",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "asPreview",
+                "type": {
+                  "name": "Boolean",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "Page",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "pages",
+            "description": "Connection between the RootQuery type and the page type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToPageConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToPageConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "plugin",
+            "description": "A WordPress plugin",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "Plugin",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "plugins",
+            "description": "Connection between the RootQuery type and the Plugin type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToPluginConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToPluginConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "post",
+            "description": "An object of the post Type. ",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "PostIdType",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "asPreview",
+                "type": {
+                  "name": "Boolean",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "Post",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "postFormat",
+            "description": "A 0bject",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "PostFormatIdType",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "PostFormat",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "postFormats",
+            "description": "Connection between the RootQuery type and the postFormat type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToPostFormatConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToPostFormatConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "posts",
+            "description": "Connection between the RootQuery type and the post type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToPostConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToPostConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "readingSettings",
+            "description": "Fields of the &#039;ReadingSettings&#039; settings group",
+            "args": [],
+            "type": {
+              "name": "ReadingSettings",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "referencePost",
+            "description": "An object of the referencePost Type. ",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "ReferencePostIdType",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "asPreview",
+                "type": {
+                  "name": "Boolean",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "ReferencePost",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "referencePosts",
+            "description": "Connection between the RootQuery type and the referencePost type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToReferencePostConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToReferencePostConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "registeredScripts",
+            "description": "Connection between the RootQuery type and the EnqueuedScript type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToEnqueuedScriptConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "registeredStylesheets",
+            "description": "Connection between the RootQuery type and the EnqueuedStylesheet type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToEnqueuedStylesheetConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "revisions",
+            "description": "Connection between the RootQuery type and the ContentNode type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToRevisionsConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToRevisionsConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "seo",
+            "description": "Returns seo site data",
+            "args": [],
+            "type": {
+              "name": "SEOConfig",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "sluzbyPost",
+            "description": "An object of the sluzbyPost Type. ",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "SluzbyPostIdType",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "asPreview",
+                "type": {
+                  "name": "Boolean",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "SluzbyPost",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "sluzbyPosts",
+            "description": "Connection between the RootQuery type and the sluzbyPost type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToSluzbyPostConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToSluzbyPostConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "tag",
+            "description": "A 0bject",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "TagIdType",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "Tag",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "tags",
+            "description": "Connection between the RootQuery type and the tag type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToTagConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToTagConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "taxonomies",
+            "description": "Connection between the RootQuery type and the Taxonomy type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToTaxonomyConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "taxonomy",
+            "description": "Fetch a Taxonomy node by unique Identifier",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "TaxonomyIdTypeEnum",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "Taxonomy",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "termNode",
+            "description": "A node in a taxonomy used to group and relate content nodes",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "TermNodeIdTypeEnum",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "taxonomy",
+                "type": {
+                  "name": "TaxonomyEnum",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "TermNode",
+              "kind": "INTERFACE"
+            }
+          },
+          {
+            "name": "terms",
+            "description": "Connection between the RootQuery type and the TermNode type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToTermNodeConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToTermNodeConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "theme",
+            "description": "A Theme object",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "Theme",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "themes",
+            "description": "Connection between the RootQuery type and the Theme type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToThemeConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "user",
+            "description": "Returns a user",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              },
+              {
+                "name": "idType",
+                "type": {
+                  "name": "UserNodeIdTypeEnum",
+                  "kind": "ENUM",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "User",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "userRole",
+            "description": "Returns a user role",
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ID",
+                    "kind": "SCALAR"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UserRole",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "userRoles",
+            "description": "Connection between the RootQuery type and the UserRole type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToUserRoleConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "users",
+            "description": "Connection between the RootQuery type and the User type",
+            "args": [
+              {
+                "name": "first",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "last",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "after",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "before",
+                "type": {
+                  "name": "String",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "name": "RootQueryToUserConnectionWhereArgs",
+                  "kind": "INPUT_OBJECT",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "RootQueryToUserConnection",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "viewer",
+            "description": "Returns the current user",
+            "args": [],
+            "type": {
+              "name": "User",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "writingSettings",
+            "description": "Fields of the &#039;WritingSettings&#039; settings group",
+            "args": [],
+            "type": {
+              "name": "WritingSettings",
+              "kind": "OBJECT"
+            }
+          }
+        ]
+      },
+      "mutationType": {
+        "name": "RootMutation",
+        "fields": [
+          {
+            "name": "createCategory",
+            "description": "The createCategory mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreateCategoryInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreateCategoryPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "createComment",
+            "description": "The createComment mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreateCommentInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreateCommentPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "createGraphqlDocument",
+            "description": "The createGraphqlDocument mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreateGraphqlDocumentInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreateGraphqlDocumentPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "createGraphqlDocumentGroup",
+            "description": "The createGraphqlDocumentGroup mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreateGraphqlDocumentGroupInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreateGraphqlDocumentGroupPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "createMediaItem",
+            "description": "The createMediaItem mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreateMediaItemInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreateMediaItemPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "createPage",
+            "description": "The createPage mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreatePageInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreatePagePayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "createPost",
+            "description": "The createPost mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreatePostInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreatePostPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "createPostFormat",
+            "description": "The createPostFormat mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreatePostFormatInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreatePostFormatPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "createReferencePost",
+            "description": "The createReferencePost mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreateReferencePostInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreateReferencePostPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "createSluzbyPost",
+            "description": "The createSluzbyPost mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreateSluzbyPostInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreateSluzbyPostPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "createTag",
+            "description": "The createTag mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreateTagInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreateTagPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "createUser",
+            "description": "The createUser mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "CreateUserInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "CreateUserPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deleteCategory",
+            "description": "The deleteCategory mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeleteCategoryInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeleteCategoryPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deleteComment",
+            "description": "The deleteComment mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeleteCommentInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeleteCommentPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deleteGraphqlDocument",
+            "description": "The deleteGraphqlDocument mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeleteGraphqlDocumentInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeleteGraphqlDocumentPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deleteGraphqlDocumentGroup",
+            "description": "The deleteGraphqlDocumentGroup mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeleteGraphqlDocumentGroupInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeleteGraphqlDocumentGroupPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deleteMediaItem",
+            "description": "The deleteMediaItem mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeleteMediaItemInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeleteMediaItemPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deletePage",
+            "description": "The deletePage mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeletePageInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeletePagePayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deletePost",
+            "description": "The deletePost mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeletePostInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeletePostPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deletePostFormat",
+            "description": "The deletePostFormat mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeletePostFormatInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeletePostFormatPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deleteReferencePost",
+            "description": "The deleteReferencePost mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeleteReferencePostInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeleteReferencePostPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deleteSluzbyPost",
+            "description": "The deleteSluzbyPost mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeleteSluzbyPostInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeleteSluzbyPostPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deleteTag",
+            "description": "The deleteTag mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeleteTagInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeleteTagPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "deleteUser",
+            "description": "The deleteUser mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "DeleteUserInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "DeleteUserPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "increaseCount",
+            "description": "Increase the count.",
+            "args": [
+              {
+                "name": "count",
+                "type": {
+                  "name": "Int",
+                  "kind": "SCALAR",
+                  "ofType": null
+                }
+              }
+            ],
+            "type": {
+              "name": "Int",
+              "kind": "SCALAR"
+            }
+          },
+          {
+            "name": "registerUser",
+            "description": "The registerUser mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "RegisterUserInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "RegisterUserPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "resetUserPassword",
+            "description": "The resetUserPassword mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "ResetUserPasswordInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "ResetUserPasswordPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "restoreComment",
+            "description": "The restoreComment mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "RestoreCommentInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "RestoreCommentPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "sendPasswordResetEmail",
+            "description": "Send password reset email to user",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "SendPasswordResetEmailInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "SendPasswordResetEmailPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updateCategory",
+            "description": "The updateCategory mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdateCategoryInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdateCategoryPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updateComment",
+            "description": "The updateComment mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdateCommentInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdateCommentPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updateGraphqlDocument",
+            "description": "The updateGraphqlDocument mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdateGraphqlDocumentInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdateGraphqlDocumentPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updateGraphqlDocumentGroup",
+            "description": "The updateGraphqlDocumentGroup mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdateGraphqlDocumentGroupInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdateGraphqlDocumentGroupPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updateMediaItem",
+            "description": "The updateMediaItem mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdateMediaItemInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdateMediaItemPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updatePage",
+            "description": "The updatePage mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdatePageInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdatePagePayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updatePost",
+            "description": "The updatePost mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdatePostInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdatePostPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updatePostFormat",
+            "description": "The updatePostFormat mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdatePostFormatInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdatePostFormatPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updateReferencePost",
+            "description": "The updateReferencePost mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdateReferencePostInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdateReferencePostPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updateSettings",
+            "description": "The updateSettings mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdateSettingsInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdateSettingsPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updateSluzbyPost",
+            "description": "The updateSluzbyPost mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdateSluzbyPostInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdateSluzbyPostPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updateTag",
+            "description": "The updateTag mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdateTagInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdateTagPayload",
+              "kind": "OBJECT"
+            }
+          },
+          {
+            "name": "updateUser",
+            "description": "The updateUser mutation",
+            "args": [
+              {
+                "name": "input",
+                "type": {
+                  "name": null,
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "name": "UpdateUserInput",
+                    "kind": "INPUT_OBJECT"
+                  }
+                }
+              }
+            ],
+            "type": {
+              "name": "UpdateUserPayload",
+              "kind": "OBJECT"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "debug": [
+      {
+        "type": "DEBUG_LOGS_INACTIVE",
+        "message": "GraphQL Debug logging is not active. To see debug logs, GRAPHQL_DEBUG must be enabled."
+      }
+    ],
+    "graphqlSmartCache": {
+      "graphqlObjectCache": []
+    }
+  }
+}

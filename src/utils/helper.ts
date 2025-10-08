@@ -223,3 +223,29 @@ export function decodeHtmlEntitiesServer(text: string): string {
 export function normalizePath(path: string): string {
   return path.replace(/\/$/, '');
 }
+
+/**
+ * Formátuje datum a čas pro rozloučení z WordPress ACF pole
+ * WordPress ukládá datum v UTC, ale my chceme zobrazit čas který byl zadán v admin
+ * @param dateString - datum jako string z WordPressu (např. "2025-10-07T14:00:00+00:00")
+ * @returns formátované datum v češtině (např. "úterý 7. 10. 2025 14:00")
+ */
+export function formatFarewellDateTime(dateString?: string): string {
+  if (!dateString) return '';
+  try {
+    // Odstranit timezone suffix a interpretovat jako lokální čas
+    const dateWithoutTZ = dateString.replace(/([+-]\d{2}:\d{2}|Z)$/, '');
+    const date = new Date(dateWithoutTZ);
+
+    return new Intl.DateTimeFormat('cs-CZ', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(date);
+  } catch {
+    return dateString;
+  }
+}
