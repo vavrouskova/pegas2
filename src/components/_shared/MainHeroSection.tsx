@@ -44,7 +44,7 @@ const MainHeroSection = async ({ title, description, branchesCount = 0, classNam
             <span className='leading-9'>{t('visit-us')}</span>
             <Link
               className='link'
-              href='/'
+              href='/contacts'
             >
               {branchesCount} {t('branches')}
             </Link>
