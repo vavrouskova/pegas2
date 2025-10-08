@@ -29,7 +29,7 @@ function convertToCarouselData(referencePosts: ReferencePost[]): ReferencesCarou
     where: post.referenceACF?.farewellPlace,
     when: formatFarewellDateTime(post.referenceACF?.farewellDate),
     image: post.featuredImage?.node.sourceUrl || '/images/car.webp',
-    link: post.link,
+    link: post.slug,
   }));
 }
 

@@ -9,10 +9,11 @@ import { cn } from '@/lib/utils';
 interface MainHeroSectionProps {
   title: string;
   description: string;
+  branchesCount?: number;
   className?: string;
 }
 
-const MainHeroSection = async ({ title, description, className }: MainHeroSectionProps) => {
+const MainHeroSection = async ({ title, description, branchesCount = 0, className }: MainHeroSectionProps) => {
   const t = await getTranslations('home.hero');
 
   return (
@@ -45,7 +46,7 @@ const MainHeroSection = async ({ title, description, className }: MainHeroSectio
               className='link'
               href='/'
             >
-              X {t('branches')}
+              {branchesCount} {t('branches')}
             </Link>
           </div>
         </div>

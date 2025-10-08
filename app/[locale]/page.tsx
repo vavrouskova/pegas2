@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
-import { getHomepageWithSelectedPosts } from '@/api/wordpress-api';
+import { getBranchesCount, getHomepageWithSelectedPosts } from '@/api/wordpress-api';
 import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
@@ -9,28 +9,22 @@ import MainHeroSection from '@/components/_shared/MainHeroSection';
 import ReferencesCarouselSection from '@/components/_shared/ReferencesCarouselSection';
 import ServicesSection from '@/components/_shared/ServicesSection';
 import { formatTranslation } from '@/lib/utils';
-import { ReferencePost } from '@/utils/wordpress-types';
 
 const Homepage = async () => {
-  const t = await getTranslations('home');
+  const [homepageData, branchesCount, t] = await Promise.all([
+    getHomepageWithSelectedPosts(),
+    getBranchesCount(),
+    getTranslations('home'),
+  ]);
 
-  // Získání vybraných reference postů z Homepage ACF
-  let referencePosts: ReferencePost[] = [];
-  try {
-    const homepageData = await getHomepageWithSelectedPosts();
-
-    if (homepageData.homepageACF?.selectedPosts?.nodes) {
-      referencePosts = homepageData.homepageACF.selectedPosts.nodes;
-    }
-  } catch (error) {
-    console.error('Nepodařilo se načíst homepage data z WordPressu:', error);
-  }
+  const referencePosts = homepageData?.homepageACF?.selectedPosts?.nodes || [];
 
   return (
     <main className='max-w-container page-container mx-auto'>
       <MainHeroSection
         title={formatTranslation(t('hero.title'))}
         description={formatTranslation(t('hero.description'))}
+        branchesCount={branchesCount}
       />
 
       <ReferencesCarouselSection referencePosts={referencePosts} />
