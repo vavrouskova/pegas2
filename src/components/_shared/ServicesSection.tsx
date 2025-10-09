@@ -3,50 +3,36 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-const data = [
-  {
-    id: 1,
-    title: 'Převoz zesnulých',
-    image: '/images/car.webp',
-    alt: 'Převoz zesnulých',
-    link: 'sluzby',
-  },
-  {
-    id: 2,
-    title: 'Převoz zesnulých',
-    image: '/images/car.webp',
-    alt: 'Převoz zesnulých',
-    link: 'sluzby',
-  },
-  {
-    id: 3,
-    title: 'Převoz zesnulých',
-    image: '/images/car.webp',
-    alt: 'Převoz zesnulých',
-    link: 'sluzby',
-  },
-];
+import { SluzbyPost } from '@/utils/wordpress-types';
 
-const ServicesSection = async () => {
+interface ServicesSectionProps {
+  services?: SluzbyPost[];
+}
+
+const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
   const t = await getTranslations('');
+
+  if (!services || services.length === 0) {
+    return null;
+  }
   return (
     <section>
       <h2 className='mb-9 text-3xl md:mb-40 md:text-center'>{t('home.services-nav.title')}</h2>
       <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:flex'>
-        {data.map((item) => (
+        {services.map((service) => (
           <Link
-            href={item.link}
-            key={item.id}
+            href={service.slug}
+            key={service.id}
             className='group flex flex-col gap-4 lg:flex-1'
           >
             <Image
-              src={item.image}
-              alt={item.alt}
+              src={service.featuredImage?.node.sourceUrl || '/images/car.webp'}
+              alt={service.featuredImage?.node.altText || service.title}
               width={400}
               height={400}
               className='h-auto w-full'
             />
-            <h3 className='text-2xl transition-opacity duration-300 group-hover:opacity-70'>{item.title}</h3>
+            <h3 className='text-2xl transition-opacity duration-300 group-hover:opacity-70'>{service.title}</h3>
           </Link>
         ))}
         <Link

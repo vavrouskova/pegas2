@@ -34,6 +34,16 @@ export interface ReferencePost {
   referenceACF?: ReferenceACF;
 }
 
+// Sluzby (Services) Types
+export interface SluzbyPost {
+  id: string;
+  databaseId: number;
+  title: string;
+  slug: string;
+  link: string;
+  featuredImage?: MediaItemEdge;
+}
+
 // Homepage ACF Types
 export interface HomepageACF {
   selectedReference?: {
