@@ -43,6 +43,21 @@ export interface SluzbyPost {
   featuredImage?: MediaItemEdge;
 }
 
+// Pobocky (Branches) ACF Types
+export interface PobockyACF {
+  city?: string;
+  openSwitcher?: boolean;
+}
+
+// Pobocky (Branches) Types
+export interface PobockaPost {
+  id: string;
+  databaseId: number;
+  title: string;
+  slug: string;
+  pobockyACF?: PobockyACF;
+}
+
 // Homepage ACF Types
 export interface HomepageACF {
   selectedReference?: {

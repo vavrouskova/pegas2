@@ -46,6 +46,62 @@ export async function getBranchesCount(): Promise<number> {
 }
 
 /**
+ * Získá seznam poboček (pobockaPosts)
+ * @param first - Počet poboček k načtení (výchozí 100)
+ * @returns Promise se seznamem poboček
+ */
+export async function getPobockyPosts(first = 100) {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetPobockyPosts($first: Int!) {
+      pobockaPosts(first: $first) {
+        nodes {
+          id
+          databaseId
+          title
+          slug
+          pobockyACF {
+            city
+            openSwitcher
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { first },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.pobockaPosts?.nodes || [];
+  } catch (error) {
+    console.error('Error fetching pobocky posts:', error);
+    return [];
+  }
+}
+
+/**
  * Získá homepage data s vybranými reference posty a službami z ACF
  * @returns Promise s homepage daty
  */

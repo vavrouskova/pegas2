@@ -3,15 +3,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import { getPobockyPosts } from '@/api/wordpress-api';
 import DirectorateInfo from '@/components/footer/DirectorateInfo';
 import Facebook from '@/components/icons/Facebook';
 import Instagram from '@/components/icons/Instagram';
 import { PhoneNumber } from '@/lib/constants';
-import { getBranchOffices } from '@/utils/data';
+import { PobockaPost } from '@/utils/wordpress-types';
 
 const Footer = async () => {
   const t = await getTranslations();
-  const branchesData = await getBranchOffices();
+  const pobockyData = await getPobockyPosts();
 
   return (
     <footer className='bg-primary mx-auto px-4 pt-11 pb-10 md:px-14 md:pt-[7.75rem] md:pb-[3.75rem]'>
@@ -58,15 +59,18 @@ const Footer = async () => {
               {t('footer.nonstop-branches')}
             </span>
             <div className='flex flex-col gap-4'>
-              {branchesData
-                .filter((branch) => branch.isNonStop)
-                .map((branch) => (
+              {pobockyData
+                .filter((pobocka: PobockaPost) => pobocka.pobockyACF?.openSwitcher === true)
+                .map((pobocka: PobockaPost) => (
                   <Link
-                    key={branch.id}
-                    href={branch.url}
+                    key={pobocka.id}
+                    href={`/${pobocka.slug}`}
                     className='text-tertiary font-text text-sm transition-all duration-300 hover:opacity-70'
                   >
-                    <span className='font-cta mr-1 text-white'>{branch.city}</span> {branch.address}
+                    {pobocka.pobockyACF?.city && (
+                      <span className='font-cta mr-1 text-white'>{pobocka.pobockyACF.city}</span>
+                    )}
+                    {pobocka.title}
                   </Link>
                 ))}
             </div>
@@ -80,13 +84,14 @@ const Footer = async () => {
             {t('footer.all-branches')}
           </span>
           <div className='flex flex-col gap-4'>
-            {branchesData.map((branch) => (
+            {pobockyData.map((pobocka: PobockaPost) => (
               <Link
-                key={branch.id}
-                href={branch.url}
+                key={pobocka.id}
+                href={`/${pobocka.slug}`}
                 className='text-tertiary font-text text-sm transition-all duration-300 hover:opacity-70'
               >
-                <span className='font-cta text-white'>{branch.city}</span> {branch.address}
+                {pobocka.pobockyACF?.city && <span className='font-cta text-white'>{pobocka.pobockyACF.city}</span>}{' '}
+                {pobocka.title}
               </Link>
             ))}
           </div>
