@@ -36,7 +36,7 @@ export interface ReferencePost {
 
 // Homepage ACF Types
 export interface HomepageACF {
-  selectedPosts?: {
+  selectedReference?: {
     nodes: ReferencePost[];
   };
 }

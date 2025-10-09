@@ -49,7 +49,7 @@ export async function getBranchesCount(): Promise<number> {
  * Získá homepage data s vybranými reference posty z ACF
  * @returns Promise s homepage daty
  */
-export async function getHomepageWithSelectedPosts() {
+export async function getHomepageWithSelectedReference() {
   const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
 
   const query = `
@@ -59,7 +59,7 @@ export async function getHomepageWithSelectedPosts() {
         databaseId
         title
         homepageACF {
-          selectedPosts {
+          selectedReference {
             nodes {
               ... on ReferencePost {
                 id

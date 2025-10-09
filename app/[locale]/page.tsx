@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
-import { getBranchesCount, getHomepageWithSelectedPosts } from '@/api/wordpress-api';
+import { getBranchesCount, getHomepageWithSelectedReference } from '@/api/wordpress-api';
 import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
@@ -12,7 +12,7 @@ import { formatTranslation } from '@/lib/utils';
 
 const Homepage = async () => {
   const [homepageData, branchesCount, t] = await Promise.all([
-    getHomepageWithSelectedPosts(),
+    getHomepageWithSelectedReference(),
     getBranchesCount(),
     getTranslations('home'),
   ]);
