@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
-import { getBranchesCount, getHomepageWithSelectedReference, getSluzbyPosts } from '@/api/wordpress-api';
+import { getBranchesCount, getHomepageData } from '@/api/wordpress-api';
 import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
@@ -11,14 +11,14 @@ import ServicesSection from '@/components/_shared/ServicesSection';
 import { formatTranslation } from '@/lib/utils';
 
 const Homepage = async () => {
-  const [homepageData, branchesCount, services, t] = await Promise.all([
-    getHomepageWithSelectedReference(),
+  const [homepageData, branchesCount, t] = await Promise.all([
+    getHomepageData(),
     getBranchesCount(),
-    getSluzbyPosts(10),
     getTranslations('home'),
   ]);
 
   const referencePosts = homepageData?.homepageACF?.selectedReference?.nodes || [];
+  const services = homepageData?.homepageACF?.selectedSluzby?.nodes || [];
 
   return (
     <main className='max-w-container page-container mx-auto'>

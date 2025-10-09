@@ -40,7 +40,6 @@ export interface SluzbyPost {
   databaseId: number;
   title: string;
   slug: string;
-  link: string;
   featuredImage?: MediaItemEdge;
 }
 
@@ -48,6 +47,9 @@ export interface SluzbyPost {
 export interface HomepageACF {
   selectedReference?: {
     nodes: ReferencePost[];
+  };
+  selectedSluzby?: {
+    nodes: SluzbyPost[];
   };
 }
 

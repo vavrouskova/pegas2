@@ -46,72 +46,10 @@ export async function getBranchesCount(): Promise<number> {
 }
 
 /**
- * Získá seznam služeb (sluzbyPosts)
- * @param first - Počet služeb k načtení (výchozí 10)
- * @returns Promise se seznamem služeb
- */
-export async function getSluzbyPosts(first = 10) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
-
-  const query = `
-    query GetSluzbyPosts($first: Int!) {
-      sluzbyPosts(first: $first) {
-        nodes {
-          id
-          databaseId
-          title
-          slug
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-              mediaDetails {
-                width
-                height
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-
-  try {
-    const response = await fetch(graphqlUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query,
-        variables: { first },
-      }),
-      next: { revalidate: 3600 },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const result = await response.json();
-
-    if (result.errors) {
-      console.error('GraphQL errors:', result.errors);
-      throw new Error('GraphQL query failed');
-    }
-
-    return result.data?.sluzbyPosts?.nodes || [];
-  } catch (error) {
-    console.error('Error fetching sluzby posts:', error);
-    return [];
-  }
-}
-
-/**
- * Získá homepage data s vybranými reference posty z ACF
+ * Získá homepage data s vybranými reference posty a službami z ACF
  * @returns Promise s homepage daty
  */
-export async function getHomepageWithSelectedReference() {
+export async function getHomepageData() {
   const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
 
   const query = `
@@ -143,6 +81,26 @@ export async function getHomepageWithSelectedReference() {
                   farewellDate
                   farewellPlace
                   description
+                }
+              }
+            }
+          }
+          selectedSluzby {
+            nodes {
+              ... on SluzbyPost {
+                id
+                databaseId
+                title
+                slug
+                featuredImage {
+                  node {
+                    sourceUrl
+                    altText
+                    mediaDetails {
+                      width
+                      height
+                    }
+                  }
                 }
               }
             }
