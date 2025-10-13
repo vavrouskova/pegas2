@@ -58,7 +58,6 @@ interface GetSeoDataOptions {
   id: string | number;
   /** Type of ID being used */
   idType?: IdType;
-  /** Revalidation time in seconds (default: 86400 = 24 hours) */
   revalidate?: number;
 }
 
@@ -75,7 +74,7 @@ function getIdTypeForQuery(name: string): string {
  * Fetches SEO data from WordPress GraphQL API
  */
 async function fetchSeoData(options: GetSeoDataOptions): Promise<WordPressSeoData | null> {
-  const { contentType, id, idType = 'DATABASE_ID', revalidate = 86_400 } = options;
+  const { contentType, id, idType = 'DATABASE_ID', revalidate = 0 } = options;
   const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL;
 
   if (!graphqlUrl) {
