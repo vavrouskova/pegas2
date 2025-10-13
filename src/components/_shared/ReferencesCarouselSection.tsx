@@ -47,7 +47,7 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
       articleClassName='flex min-h-[10rem] items-stretch max-md:flex-col md:min-h-[16rem]'
       imageFirst
       renderImage={(item) => (
-        <div className='relative aspect-square h-full flex-shrink-0 basis-[10rem] md:basis-[16rem]'>
+        <picture className='relative aspect-square h-auto flex-shrink-0 basis-[10rem] md:basis-[16rem]'>
           <Image
             src={item.image}
             alt={item.title}
@@ -55,7 +55,7 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
             sizes='(max-width: 768px) 160px, 256px'
             className='object-cover'
           />
-        </div>
+        </picture>
       )}
       renderContent={(item, t) => (
         <div className='flex h-full flex-1 flex-col justify-between space-y-2 px-4 py-5 md:px-10 md:py-9'>
