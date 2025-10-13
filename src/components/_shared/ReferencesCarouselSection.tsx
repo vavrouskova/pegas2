@@ -58,18 +58,20 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
         </div>
       )}
       renderContent={(item, t) => (
-        <div className='flex-1 space-y-2 px-4 py-5 md:px-10 md:py-9'>
-          <h3 className='text-white-smoke mb-6 text-2xl'>{item.title}</h3>
-          {item.where && (
-            <p className='text-tertiary text-lg'>
-              <span className='font-heading text-white-smoke'>{t('where')}:</span> {item.where}
-            </p>
-          )}
-          {item.when && (
-            <p className='text-tertiary text-lg'>
-              <span className='font-heading text-white-smoke'>{t('when')}:</span> {item.when}
-            </p>
-          )}
+        <div className='flex h-full flex-1 flex-col justify-between space-y-2 px-4 py-5 md:px-10 md:py-9'>
+          <div className='flex flex-col space-y-2'>
+            <h3 className='text-white-smoke mb-6 text-2xl'>{item.title}</h3>
+            {item.where && (
+              <p className='text-tertiary text-lg'>
+                <span className='font-heading text-white-smoke'>{t('where')}:</span> {item.where}
+              </p>
+            )}
+            {item.when && (
+              <p className='text-tertiary text-lg'>
+                <span className='font-heading text-white-smoke'>{t('when')}:</span> {item.when}
+              </p>
+            )}
+          </div>
           <Link href={item.link}>
             <Button
               buttonText={t('find-out-more')}

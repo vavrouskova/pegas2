@@ -49,9 +49,11 @@ const BlogCarouselSection = () => {
       carouselMaxWidth='screen-container max-lg:max-w-[28.375rem]'
       articleClassName='flex flex-col-reverse items-center lg:grid lg:grid-cols-2'
       renderContent={(item, t) => (
-        <div className='mx-auto flex-1 space-y-2 px-4 py-8 lg:max-w-[28.375rem] lg:px-10'>
-          <h3 className='text-white-smoke mb-6 text-2xl'>{item.title}</h3>
-          <p className='text-tertiary text-lg'>{item.description}</p>
+        <div className='mx-auto flex h-full flex-1 flex-col justify-between space-y-2 px-4 py-8 lg:max-w-[28.375rem] lg:px-10'>
+          <div className='flex flex-col space-y-2'>
+            <h3 className='text-white-smoke mb-6 text-2xl'>{item.title}</h3>
+            <p className='text-tertiary text-lg'>{item.description}</p>
+          </div>
           <Link href={item.link}>
             <Button
               buttonText={t('find-out-more')}
