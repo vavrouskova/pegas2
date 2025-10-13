@@ -37,7 +37,7 @@ const ContentSection = ({
   if (!hasImage) {
     // ContentBox pouze (původní ContentBoxSection)
     return (
-      <section className={cn(withFeathers ? 'relative' : '', sectionClassName)}>
+      <section className={cn('screen-container', withFeathers ? 'relative' : '', sectionClassName)}>
         <ContentBox
           title={title}
           description={description}
@@ -63,7 +63,7 @@ const ContentSection = ({
   return (
     <section
       className={cn(
-        'flex flex-col-reverse justify-between gap-12 py-20 lg:gap-10',
+        'screen-container flex flex-col-reverse justify-between gap-12 py-20 lg:gap-10',
         isImageLeft ? 'lg:flex-row-reverse lg:items-center' : 'lg:flex-row lg:items-center',
         sectionClassName,
         className

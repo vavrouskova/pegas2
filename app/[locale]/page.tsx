@@ -21,7 +21,7 @@ const Homepage = async () => {
   const services = homepageData?.homepageACF?.selectedSluzby?.nodes || [];
 
   return (
-    <main className='max-w-container page-container mx-auto'>
+    <main className='max-w-container mx-auto'>
       <MainHeroSection
         title={formatTranslation(t('hero.title'))}
         description={formatTranslation(t('hero.description'))}

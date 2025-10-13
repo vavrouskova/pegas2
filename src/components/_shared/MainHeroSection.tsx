@@ -17,7 +17,7 @@ const MainHeroSection = async ({ title, description, branchesCount = 0, classNam
   const t = await getTranslations('home.hero');
 
   return (
-    <section className={cn('pb-60', className)}>
+    <section className={cn('screen-container pb-60', className)}>
       <div className='mt-96 flex max-w-[36rem] flex-col justify-center gap-8 md:mt-[29.57rem]'>
         <h1 className='whitespace-pre-line'>{title}</h1>
         <p className='text-xl whitespace-pre-line'>{description}</p>

@@ -16,7 +16,7 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
     return null;
   }
   return (
-    <section>
+    <section className='screen-container'>
       <h2 className='mb-9 text-3xl md:mb-40 md:text-center'>{t('home.services-nav.title')}</h2>
       <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:flex'>
         {services.map((service) => (

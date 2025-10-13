@@ -5,15 +5,15 @@ import React from 'react';
 const FooterClaim = async () => {
   const t = await getTranslations('home.footer-bg');
   return (
-    <section className='max-w-container relative -mx-[calc(50vw-50%)] mt-28 h-[24.375rem] w-screen overflow-hidden lg:mt-0 lg:h-[36.3rem]'>
+    <section className='max-w-container relative z-5 -mx-4 mt-28 h-[24.375rem] w-screen overflow-hidden sm:-mx-14 lg:mt-0 lg:h-[36.3rem]'>
       <Image
         src='/images/feather-bg.webp'
         alt={t('alt')}
-        className='absolute right-1/2 bottom-0 z-10 h-auto min-w-[600px] translate-x-1/2 lg:min-w-[1400px]'
+        className='absolute bottom-0 left-1/2 z-10 h-auto w-full max-w-[600px] min-w-[600px] -translate-x-1/2 lg:max-w-[1400px]'
         width={1400}
         height={1400}
       />
-      <div className='absolute right-0 bottom-0 flex h-full w-fit items-center justify-end px-8 max-md:mb-4 md:px-20 lg:px-36 2xl:right-[10%]'>
+      <div className='absolute right-8 bottom-0 flex h-full w-fit items-center justify-end max-md:mb-4 sm:right-14 lg:right-[10%]'>
         <h2 className='text-3xl font-thin md:text-4xl'>{t('claim')}</h2>
       </div>
     </section>
