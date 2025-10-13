@@ -1,29 +1,78 @@
+# ───────────────────────────────────────────────
+# GitLab CI — Clean Vercel Deployment Configuration
+# ───────────────────────────────────────────────
+# Requirements:
+# - Environment variable: VERCEL_TOKEN
+# ───────────────────────────────────────────────
+
+stages:
+  - deploy
+
 default:
   image:
     name: node:20-alpine
-    entrypoint: ['/bin/sh', '-c']
+    entrypoint: ['/bin/sh', '-lc']
 
-variables:
-  DOCKER_TLS_CERTDIR: ''
+# ───────────────────────────────────────────────
+# Shared deploy logic for all jobs
+# ───────────────────────────────────────────────
+.variables_template:
+  before_script:
+    - npm i -g vercel
+    - |
+      vercel pull \
+        --yes \
+        --environment=${VERCEL_ENV} \
+        --token=${VERCEL_TOKEN}
 
+  script:
+    - vercel deploy ${VERCEL_DEPLOY_FLAGS} --token=${VERCEL_TOKEN} --yes --confirm
+
+# ───────────────────────────────────────────────
+# PREVIEW — only for Merge Requests
+# (not for regular pushes, and not for main/development)
+# ───────────────────────────────────────────────
 deploy_preview:
   stage: deploy
-  # tags: [vercel]   # přidej, pokud má runner tagy
-  except:
-    - main
-  script:
-    - npm install --global vercel
-    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
-    - vercel build --token=$VERCEL_TOKEN
-    - vercel deploy --prebuilt --token=$VERCEL_TOKEN
+  extends: .variables_template
+  variables:
+    VERCEL_ENV: 'preview'
+    VERCEL_DEPLOY_FLAGS: ''
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "development"'
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: on_success
+    - when: never
 
+# ───────────────────────────────────────────────
+# STAGING — for the development branch
+# (runs a preview-style deploy to staging environment)
+# ───────────────────────────────────────────────
+deploy_staging:
+  stage: deploy
+  extends: .variables_template
+  variables:
+    VERCEL_ENV: 'staging'
+    VERCEL_DEPLOY_FLAGS: '--target=staging'
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "development"'
+      when: on_success
+    - when: never
+
+# ───────────────────────────────────────────────
+# PRODUCTION — for the main branch
+# (production deploy using --prod)
+# ───────────────────────────────────────────────
 deploy_production:
   stage: deploy
-  # tags: [vercel]   # přidej, pokud má runner tagy
-  only:
-    - main
-  script:
-    - npm install --global vercel
-    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-    - vercel build --prod --token=$VERCEL_TOKEN
-    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+  extends: .variables_template
+  variables:
+    VERCEL_ENV: 'production'
+    VERCEL_DEPLOY_FLAGS: '--prod'
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: on_success
+    - when: never
