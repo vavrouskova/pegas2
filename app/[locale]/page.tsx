@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
@@ -9,6 +10,11 @@ import MainHeroSection from '@/components/_shared/MainHeroSection';
 import ReferencesCarouselSection from '@/components/_shared/ReferencesCarouselSection';
 import ServicesSection from '@/components/_shared/ServicesSection';
 import { formatTranslation } from '@/lib/utils';
+import { getSeoDataById } from '@/utils/seo';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getSeoDataById('page', 5);
+}
 
 const Homepage = async () => {
   const [homepageData, branchesCount, t] = await Promise.all([
