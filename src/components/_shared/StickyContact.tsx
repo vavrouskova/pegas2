@@ -42,7 +42,7 @@ const StickyContact = () => {
       initial={{ x: 120, opacity: 0 }}
       animate={animateTarget}
       transition={{ type: 'spring', stiffness: 260, damping: 24 }}
-      className='bg-primary fixed right-0 bottom-20 z-50 flex gap-4 p-4 pr-12 shadow-lg will-change-transform'
+      className='bg-primary fixed right-0 bottom-5 z-50 flex gap-4 p-4 pr-12 shadow-lg will-change-transform lg:bottom-20'
     >
       <div className='flex size-[3.4375rem] items-center justify-center'>
         <Phone className='text-white-smoke size-[1.9375rem]' />
