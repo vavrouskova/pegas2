@@ -1,0 +1,35 @@
+import Image from 'next/image';
+import React from 'react';
+
+import Breadcrumbs from '@/components/_shared/Breadcrumbs';
+
+interface BasicHeroSectionProps {
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  pageTitle: string;
+}
+
+const BasicHeroSection = async ({ title, description, image, imageAlt, pageTitle }: BasicHeroSectionProps) => {
+  return (
+    <section className='section-container'>
+      <Breadcrumbs pageTitle={pageTitle} />
+      <div className='mx-auto max-w-[1272px] pt-[7.75rem]'>
+        <div className='mb-8 flex max-w-[35.75rem] flex-col gap-8'>
+          <h1 className='text-4xl'>{title}</h1>
+          <p className='text-primary text-xl'>{description}</p>
+        </div>
+        <Image
+          src={image}
+          alt={imageAlt}
+          width={1272}
+          height={1272}
+          className='h-auto w-full'
+        />
+      </div>
+    </section>
+  );
+};
+
+export default BasicHeroSection;

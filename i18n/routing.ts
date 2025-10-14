@@ -13,6 +13,7 @@ export const defaultLocale = 'cs';
 
 export const pathnames = {
   '/': { cs: '/' },
+  '/about-us': { cs: '/o-nas' },
   '/how-to-proceed': { cs: '/jak-postupovat' },
 } satisfies Pathnames<typeof locales>;
 

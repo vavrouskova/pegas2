@@ -10,10 +10,12 @@ import MainHeroSection from '@/components/_shared/MainHeroSection';
 import ReferencesCarouselSection from '@/components/_shared/ReferencesCarouselSection';
 import ServicesSection from '@/components/_shared/ServicesSection';
 import { formatTranslation } from '@/lib/utils';
-import { getSeoDataById } from '@/utils/seo';
+import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
-  return getSeoDataById('page', 5);
+  const t = await getTranslations('routes');
+
+  return getSeoDataByUri('page', t('home'));
 }
 
 const Homepage = async () => {

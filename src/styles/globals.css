@@ -171,7 +171,7 @@
     @apply mx-auto max-w-[var(--max-w)];
   }
 
-  .screen-container {
+  .section-container {
     @apply px-4 sm:px-14;
   }
 }

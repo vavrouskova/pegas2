@@ -46,7 +46,7 @@ const BlogCarouselSection = () => {
     <GenericCarouselSection
       data={data}
       sectionClassName='pb-14'
-      carouselMaxWidth='screen-container max-lg:max-w-[28.375rem]'
+      carouselMaxWidth='section-container max-lg:max-w-[28.375rem]'
       articleClassName='flex flex-col-reverse items-center lg:grid lg:grid-cols-2'
       renderContent={(item, t) => (
         <div className='mx-auto flex flex-1 flex-col space-y-2 px-4 py-8 max-md:h-full max-md:justify-between lg:max-w-[28.375rem] lg:px-10'>

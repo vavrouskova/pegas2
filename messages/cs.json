@@ -20,10 +20,12 @@
     "follow-us": "Sledujte nás",
     "find-out-more": "Zjistěte podrobnosti",
     "where": "Kde",
-    "when": "Kdy"
+    "when": "Kdy",
+    "home": "Domů"
   },
 
   "routes": {
+    "home": "uvod",
     "how-to-proceed": "jak-postupovat",
     "services": "sluzby",
     "organized-by-us": "organizovali-jsme",
@@ -106,6 +108,25 @@
     "footer-bg": {
       "claim": "V tichu jsme.",
       "alt": "Pírko v pozadí"
+    }
+  },
+
+  "about-us": {
+    "basic-hero": {
+      "title": "Jsme s vámi tiše, ale pevně.",
+      "description": "Jsme největší pohřební služba v Česku. Stojíme při vás v okamžicích, kdy je třeba opřít se o jistotu, zkušenost a lidskost.",
+      "page-title": "O nás"
+    },
+    "experience": {
+      "title": "30 let zkušeností,<br/>30 let lidského přístupu",
+      "description": "Připravujeme rozloučení s péčí a důstojností – od veřejných obřadů po tichá setkání v rodinném kruhu. Jsme citlivá a profesionální služba, která propojuje tradici s přáním těch, kdo zůstávají. Každý okamžik utváříme tak, aby dával smysl právě Vám."
+    },
+    "foundation": {
+      "title": "Nadace PEGAS",
+      "description": "Ve spolupráci s našimi partnery plánujeme projekt, který dá lidem v tíživé životní situaci prostor pro důstojné a vděčné rozloučení s blízkými."
+    },
+    "partners": {
+      "title": "Partnerské organizace"
     }
   }
 }

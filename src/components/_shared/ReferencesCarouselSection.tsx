@@ -43,7 +43,7 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
   return (
     <GenericCarouselSection
       data={data}
-      carouselMaxWidth='max-w-88 screen-container md:max-w-[52.125rem]'
+      carouselMaxWidth='max-w-88 section-container md:max-w-[52.125rem]'
       articleClassName='flex min-h-[10rem] items-stretch max-md:flex-col md:min-h-[16rem]'
       imageFirst
       renderImage={(item) => (

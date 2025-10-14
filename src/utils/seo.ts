@@ -258,18 +258,6 @@ export async function getSeoData(options: GetSeoDataOptions): Promise<Metadata> 
 }
 
 /**
- * Helper function for fetching SEO data by slug
- */
-export async function getSeoDataBySlug(contentType: ContentType, slug: string, revalidate?: number): Promise<Metadata> {
-  return getSeoData({
-    contentType,
-    id: slug,
-    idType: 'SLUG',
-    revalidate,
-  });
-}
-
-/**
  * Helper function for fetching SEO data by database ID
  */
 export async function getSeoDataById(contentType: ContentType, id: number, revalidate?: number): Promise<Metadata> {
