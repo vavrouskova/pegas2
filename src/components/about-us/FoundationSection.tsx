@@ -5,15 +5,15 @@ import React from 'react';
 const FoundationSection = async () => {
   const t = await getTranslations('about-us');
   return (
-    <section className='relative flex h-[60rem] items-end justify-end overflow-hidden px-0 sm:px-14 '>
+    <section className='relative flex h-[40rem] items-end justify-end overflow-hidden px-0 sm:px-14 lg:h-[60rem] '>
       <Image
         src='/images/brand-wing.webp'
         alt='Foundation'
         width={1732}
         height={1400}
-        className='absolute top-1/2 left-0 z-0 -translate-x-40 -translate-y-[40%] rotate-[39.027deg]'
+        className='absolute top-1/2 left-0 z-0 min-w-[600px] -translate-x-40 -translate-y-1/2 rotate-[39.027deg] lg:-translate-y-[40%]'
       />
-      <div className='bg-primary z-10 flex h-[28.3125rem] max-w-[43.25rem] items-center justify-center'>
+      <div className='bg-primary z-10 flex w-full max-w-[43.25rem] items-center justify-center lg:h-[28.3125rem] lg:min-w-[43.25rem]'>
         <div className='flex max-w-[28.375rem] flex-col gap-7 px-12 py-20'>
           <h2 className='text-3xl text-white'>{t('foundation.title')}</h2>
           <p className='text-white'>{t('foundation.description')}</p>

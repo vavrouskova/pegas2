@@ -37,6 +37,16 @@ const AboutUsPage = async () => {
         </div>
       </section>
 
+      <section className='section-container py-16'>
+        <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-24'>
+          <p className='text-3xl leading-[2.0]'>{t('about-us.citation.text')}</p>
+          <div>
+            <p className='font-heading text-xl'>{t('about-us.citation.author')}</p>
+            <p className='text-sm'>{t('about-us.citation.position')}</p>
+          </div>
+        </div>
+      </section>
+
       <ContentSection
         title={t('home.how-to-proceed.title')}
         description={t('home.how-to-proceed.description')}
