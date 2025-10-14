@@ -58,7 +58,7 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
         </picture>
       )}
       renderContent={(item, t) => (
-        <div className='flex h-full flex-1 flex-col justify-between space-y-2 px-4 py-5 md:px-10 md:py-9'>
+        <div className='flex flex-1 flex-col space-y-2 px-4 py-5 max-md:h-full max-md:justify-between md:px-10 md:py-9'>
           <div className='flex flex-col space-y-2'>
             <h3 className='text-white-smoke mb-6 text-2xl'>{item.title}</h3>
             {item.where && (
