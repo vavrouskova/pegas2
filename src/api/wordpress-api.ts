@@ -200,3 +200,56 @@ export async function getHomepageData() {
     throw error;
   }
 }
+
+/**
+ * Získá timeline data ze stránky O Nás
+ * @returns Promise s timeline daty
+ */
+export async function getAboutUsTimeline() {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query Page {
+      page(id: "o-nas", idType: URI) {
+        id
+        oNasACF {
+          timeline {
+            description
+            fieldGroupName
+            titulek
+            year
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.page || null;
+  } catch (error) {
+    console.error('Error fetching about us timeline:', error);
+    return null;
+  }
+}

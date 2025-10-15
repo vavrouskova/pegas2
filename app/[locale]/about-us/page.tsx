@@ -2,12 +2,14 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
+import { getAboutUsTimeline } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
 import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PartnersSection from '@/components/_shared/PartnersSection';
 import FoundationSection from '@/components/about-us/FoundationSection';
+import TimelineSection from '@/components/about-us/TimelineSection';
 import { formatTranslation } from '@/lib/utils';
 import { getSeoDataByUri } from '@/utils/seo';
 
@@ -19,6 +21,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const AboutUsPage = async () => {
   const t = await getTranslations();
+  const aboutUsData = await getAboutUsTimeline();
+  const timeline = aboutUsData?.oNasACF?.timeline || [];
+
+  console.log(timeline);
 
   return (
     <main className='max-w-container mx-auto'>
@@ -36,6 +42,8 @@ const AboutUsPage = async () => {
           <p className='text-lg'>{t('about-us.experience.description')}</p>
         </div>
       </section>
+
+      {timeline.length > 0 && <TimelineSection timeline={timeline} />}
 
       <section className='section-container py-16'>
         <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-24'>

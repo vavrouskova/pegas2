@@ -74,3 +74,22 @@ export interface HomepageData {
   title: string;
   homepageACF?: HomepageACF;
 }
+
+// About Us (O Nas) ACF Types
+export interface TimelineItem {
+  description?: string;
+  fieldGroupName?: string;
+  titulek?: string;
+  year?: string;
+  obrazek?: MediaItemEdge;
+}
+
+export interface ONasACF {
+  timeline?: TimelineItem[];
+}
+
+export interface AboutUsPageData {
+  id: string;
+  databaseId?: number;
+  oNasACF?: ONasACF;
+}
