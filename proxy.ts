@@ -16,7 +16,7 @@ import { routing } from './i18n/routing';
 //   });
 // }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // TODO: Uncomment when backend is ready
   // const { pathname } = request.nextUrl;
   // const redirectResponse = await getRedirect(pathname);
