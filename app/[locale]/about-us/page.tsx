@@ -24,8 +24,6 @@ const AboutUsPage = async () => {
   const aboutUsData = await getAboutUsTimeline();
   const timeline = aboutUsData?.oNasACF?.timeline || [];
 
-  console.log(timeline);
-
   return (
     <main className='max-w-container mx-auto'>
       <BasicHeroSection
