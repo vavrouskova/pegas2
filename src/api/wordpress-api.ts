@@ -218,6 +218,16 @@ export async function getAboutUsTimeline() {
             fieldGroupName
             titulek
             year
+            image {
+              node {
+                altText
+                sourceUrl
+                mediaDetails {
+                  width
+                  height
+                }
+              }
+            }
           }
         }
       }
@@ -243,7 +253,8 @@ export async function getAboutUsTimeline() {
     const result = await response.json();
 
     if (result.errors) {
-      console.error('GraphQL errors:', result.errors);
+      console.error('GraphQL errors for timeline:', JSON.stringify(result.errors, null, 2));
+      console.error('Query was:', query);
       throw new Error('GraphQL query failed');
     }
 

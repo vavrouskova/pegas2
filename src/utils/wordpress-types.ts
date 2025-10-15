@@ -80,8 +80,8 @@ export interface TimelineItem {
   description?: string;
   fieldGroupName?: string;
   titulek?: string;
-  year?: string;
-  obrazek?: MediaItemEdge;
+  year?: number;
+  image?: MediaItemEdge;
 }
 
 export interface ONasACF {
