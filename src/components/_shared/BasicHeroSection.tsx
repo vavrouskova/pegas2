@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
+import LeavesAnimation from '@/components/_shared/LeavesAnimation';
 
 interface BasicHeroSectionProps {
   title: string;
@@ -13,7 +14,8 @@ interface BasicHeroSectionProps {
 
 const BasicHeroSection = async ({ title, description, image, imageAlt, pageTitle }: BasicHeroSectionProps) => {
   return (
-    <section className='section-container'>
+    <section className='relative px-4 sm:px-14 lg:px-44'>
+      <LeavesAnimation />
       <Breadcrumbs pageTitle={pageTitle} />
       <div className='mx-auto max-w-[1272px] pt-[7.75rem]'>
         <div className='mb-8 flex max-w-[35.75rem] flex-col gap-8'>
