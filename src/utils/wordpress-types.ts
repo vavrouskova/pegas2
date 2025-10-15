@@ -93,3 +93,22 @@ export interface AboutUsPageData {
   databaseId?: number;
   oNasACF?: ONasACF;
 }
+
+// Zamestnanci (Employees) ACF Types
+export interface ZamestnanciACF {
+  positionDescription?: string;
+  positonType?: string[];
+  profileImage?: {
+    node: {
+      altText: string;
+      sourceUrl: string;
+    };
+  };
+}
+
+export interface ZamestnanciPost {
+  id: string;
+  databaseId?: number;
+  title?: string;
+  zamestnanciACF?: ZamestnanciACF;
+}

@@ -2,12 +2,13 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
-import { getAboutUsTimeline } from '@/api/wordpress-api';
+import { getAboutUsTimeline, getZamestnanciPosts } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
 import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PartnersSection from '@/components/_shared/PartnersSection';
+import EmployeesSection from '@/components/about-us/EmployeesSection';
 import FoundationSection from '@/components/about-us/FoundationSection';
 import TimelineSection from '@/components/about-us/TimelineSection';
 import { formatTranslation } from '@/lib/utils';
@@ -20,8 +21,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const AboutUsPage = async () => {
-  const t = await getTranslations();
-  const aboutUsData = await getAboutUsTimeline();
+  const [t, aboutUsData, employees] = await Promise.all([
+    getTranslations(),
+    getAboutUsTimeline(),
+    getZamestnanciPosts(),
+  ]);
   const timeline = aboutUsData?.oNasACF?.timeline || [];
 
   return (
@@ -52,6 +56,12 @@ const AboutUsPage = async () => {
           </div>
         </div>
       </section>
+
+      <EmployeesSection
+        employees={employees}
+        managementTitle={t('about-us.employees.management-title')}
+        teamTitle={t('about-us.employees.team-title')}
+      />
 
       <ContentSection
         title={t('home.how-to-proceed.title')}

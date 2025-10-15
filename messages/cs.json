@@ -132,6 +132,10 @@
     },
     "partners": {
       "title": "Partnerské organizace"
+    },
+    "employees": {
+      "management-title": "Vedení firmy",
+      "team-title": "Náši lidé"
     }
   }
 }

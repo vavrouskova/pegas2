@@ -222,10 +222,6 @@ export async function getAboutUsTimeline() {
               node {
                 altText
                 sourceUrl
-                mediaDetails {
-                  width
-                  height
-                }
               }
             }
           }
@@ -262,5 +258,71 @@ export async function getAboutUsTimeline() {
   } catch (error) {
     console.error('Error fetching about us timeline:', error);
     return null;
+  }
+}
+
+/**
+ * Získá seznam zaměstnanců (zamestnanciPosts)
+ * @param first - Počet zaměstnanců k načtení (výchozí 100)
+ * @returns Promise se seznamem zaměstnanců
+ */
+export async function getZamestnanciPosts(first = 100) {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query ZamestnanciPosts($first: Int!) {
+      zamestnanciPosts(first: $first) {
+        nodes {
+          id
+          databaseId
+          title
+          zamestnanciACF {
+            positionDescription
+            positonType
+            profileImage {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { first },
+      }),
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    // Debug logging
+    console.log('=== API RESPONSE ===');
+    console.log('Raw data:', JSON.stringify(result.data?.zamestnanciPosts?.nodes, null, 2));
+    console.log('===================');
+
+    return result.data?.zamestnanciPosts?.nodes || [];
+  } catch (error) {
+    console.error('Error fetching zamestnanci posts:', error);
+    return [];
   }
 }
