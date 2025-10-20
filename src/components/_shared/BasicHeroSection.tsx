@@ -17,7 +17,7 @@ const BasicHeroSection = async ({ title, description, image, imageAlt, pageTitle
       <LeavesAnimation />
       <Breadcrumbs pageTitle={pageTitle} />
       <div className='mx-auto max-w-[1272px] pt-[7.75rem]'>
-        <div className='z-10 mb-8 flex max-w-[35.75rem] flex-col gap-8'>
+        <div className='relative z-10 mb-8 flex max-w-[35.75rem] flex-col gap-8'>
           <h1 className='text-4xl'>{title}</h1>
           <p className='text-primary text-xl'>{description}</p>
         </div>

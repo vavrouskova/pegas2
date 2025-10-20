@@ -46,12 +46,14 @@ const AboutUsPage = async () => {
           <Link
             href={FacebookUrl}
             target='_blank'
+            className='transition-all duration-300 hover:opacity-70'
           >
             <Facebook className='text-white-smoke bg-primary size-8 p-[0.31rem]' />
           </Link>
           <Link
             href={InstagramUrl}
             target='_blank'
+            className='transition-all duration-300 hover:opacity-70'
           >
             <Instagram className='text-white-smoke bg-primary size-8 p-[0.31rem]' />
           </Link>
