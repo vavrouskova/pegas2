@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import Link from 'next/link';
 
 import { getAboutUsTimeline, getZamestnanciPosts } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
@@ -8,12 +7,10 @@ import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PartnersSection from '@/components/_shared/PartnersSection';
+import Socials from '@/components/_shared/Socials';
 import EmployeesSection from '@/components/about-us/EmployeesSection';
 import FoundationSection from '@/components/about-us/FoundationSection';
 import TimelineSection from '@/components/about-us/TimelineSection';
-import Facebook from '@/components/icons/Facebook';
-import Instagram from '@/components/icons/Instagram';
-import { FacebookUrl, InstagramUrl } from '@/lib/constants';
 import { formatTranslation } from '@/lib/utils';
 import { getSeoDataByUri } from '@/utils/seo';
 
@@ -41,23 +38,8 @@ const AboutUsPage = async () => {
         pageTitle={t('about-us.basic-hero.page-title')}
       />
 
-      <section className='section-container relative py-16'>
-        <div className='absolute top-16 left-44 flex flex-col gap-2'>
-          <Link
-            href={FacebookUrl}
-            target='_blank'
-            className='transition-all duration-300 hover:opacity-70'
-          >
-            <Facebook className='text-white-smoke bg-primary size-8 p-[0.31rem]' />
-          </Link>
-          <Link
-            href={InstagramUrl}
-            target='_blank'
-            className='transition-all duration-300 hover:opacity-70'
-          >
-            <Instagram className='text-white-smoke bg-primary size-8 p-[0.31rem]' />
-          </Link>
-        </div>
+      <section className='section-container 2lg:py-16 relative pt-32 lg:pb-16'>
+        <Socials />
         <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-6'>
           <h2 className='text-3xl'>{formatTranslation(t('about-us.experience.title'))}</h2>
           <p className='text-lg'>{t('about-us.experience.description')}</p>
@@ -67,8 +49,8 @@ const AboutUsPage = async () => {
       {timeline.length > 0 && <TimelineSection timeline={timeline} />}
 
       <section className='section-container pt-16 pb-40'>
-        <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-24'>
-          <p className='text-3xl leading-[2.0]'>{t('about-us.citation.text')}</p>
+        <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-14 lg:gap-24'>
+          <p className='text-2xl leading-[2.0] lg:text-3xl'>{t('about-us.citation.text')}</p>
           <div>
             <p className='font-heading text-xl'>{t('about-us.citation.author')}</p>
             <p className='text-sm'>{t('about-us.citation.position')}</p>

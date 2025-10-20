@@ -20,7 +20,7 @@ interface TimelineImageProps {
 const TimelineImage = ({ src, alt, className = '' }: Readonly<TimelineImageProps>) => {
   return (
     <div
-      className={`relative overflow-hidden ${className}`}
+      className={`relative max-w-60 overflow-hidden ${className}`}
       style={{ aspectRatio: IMAGE_ASPECT_RATIO }}
     >
       <Image
@@ -58,7 +58,6 @@ const TimelineContent = ({ title, description, image, className = '' }: Readonly
         <TimelineImage
           src={image.node.sourceUrl}
           alt={image.node.altText || title || 'Timeline image'}
-          className='w-60'
         />
       )}
       {title && <h3 className='font-heading text-2xl'>{title}</h3>}
@@ -76,7 +75,7 @@ const TimelineItemComponent = ({ item, isEven }: Readonly<TimelineItemComponentP
   return (
     <article className='relative'>
       {/* Mobile layout */}
-      <div className='block space-y-4 md:hidden'>
+      <div className='flex flex-col gap-4 md:hidden'>
         <TimelineYear year={item.year} />
         {item.image?.node && (
           <TimelineImage
@@ -135,7 +134,7 @@ const TimelineSection = ({ timeline }: Readonly<TimelineSectionProps>) => {
 
   return (
     <section
-      className='section-container px-4 py-16 sm:px-14 lg:px-44'
+      className='section-container px-4 py-12 sm:px-14 lg:px-44 lg:py-16'
       aria-label='Company timeline'
     >
       <div className='relative'>

@@ -26,7 +26,7 @@ const EmployeeCard = ({ employee, className }: EmployeeCardProps) => {
   const imageAlt = zamestnanciACF?.profileImage?.node?.altText || employee.title || 'Employee';
 
   return (
-    <article className={cn('group flex flex-col gap-4', className)}>
+    <article className={cn('group flex max-w-[16.625rem] flex-col gap-4', className)}>
       <div className='relative aspect-square w-full overflow-hidden'>
         {imageUrl ? (
           <Image
@@ -119,7 +119,7 @@ const EmployeesSection = ({
                 {team.map((employee) => (
                   <CarouselItem
                     key={employee.id}
-                    className='basis-full pl-4 sm:basis-1/2 lg:basis-1/3 xl:basis-1/4'
+                    className='max-w-[16.625rem] basis-full pl-4 sm:basis-1/2 lg:basis-1/3 xl:basis-1/4'
                   >
                     <EmployeeCard employee={employee} />
                   </CarouselItem>
