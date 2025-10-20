@@ -73,11 +73,11 @@ const AboutUsPage = async () => {
       />
 
       <ContentSection
-        title={t('home.branches.title')}
-        description={t('home.branches.description')}
-        buttonText={t('home.branches.button-text')}
-        link={t('home.branches.link')}
-        image={{ src: '/images/room.webp', alt: t('home.branches.alt') }}
+        title={t('about-us.branches.title')}
+        description={t('about-us.branches.description')}
+        buttonText={t('about-us.branches.button-text')}
+        link={t('about-us.branches.link')}
+        image={{ src: '/images/room.webp', alt: t('about-us.branches.alt') }}
         imagePosition='left'
       />
 
