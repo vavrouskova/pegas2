@@ -15,10 +15,24 @@ const MobileMenu = (props: any) => {
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
+
+  // Prevent hydration mismatch by only rendering Drawer on client
+  if (!mounted) {
+    return (
+      <div className='group flex cursor-pointer transition-all duration-300 hover:opacity-70 lg:hidden'>
+        <Hamburger className='text-primary' />
+      </div>
+    );
+  }
 
   return (
     <Drawer
