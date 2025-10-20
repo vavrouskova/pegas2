@@ -9,7 +9,7 @@ const FooterClaim = async () => {
       <Image
         src='/images/feather-bg.webp'
         alt={t('alt')}
-        className='absolute bottom-0 left-1/2 z-10 h-auto w-full max-w-[600px] min-w-[600px] -translate-x-1/2 lg:max-w-[1400px]'
+        className='absolute bottom-0 left-1/2 z-0 h-auto w-full max-w-[600px] min-w-[600px] -translate-x-1/2 lg:max-w-[1400px]'
         width={1400}
         height={1400}
       />

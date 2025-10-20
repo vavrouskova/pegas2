@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
 
 import Button from '@/components/_shared/Button';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
@@ -14,7 +13,11 @@ interface BlogCarouselItemData {
   link: string;
 }
 
-const data: BlogCarouselItemData[] = [
+/**
+ * NOTE: This data should be fetched from WordPress API or passed as props
+ * Currently using hardcoded data as placeholder
+ */
+const BLOG_CAROUSEL_DATA: BlogCarouselItemData[] = [
   {
     id: 1,
     title: 'Rozloučení s A. Švehlíkem',
@@ -44,7 +47,7 @@ const data: BlogCarouselItemData[] = [
 const BlogCarouselSection = () => {
   return (
     <GenericCarouselSection
-      data={data}
+      data={BLOG_CAROUSEL_DATA}
       sectionClassName='pb-14'
       carouselMaxWidth='section-container max-lg:max-w-[28.375rem]'
       articleClassName='flex flex-col-reverse items-center lg:grid lg:grid-cols-2'

@@ -7,12 +7,15 @@ import LeavesAnimation from '@/components/_shared/LeavesAnimation';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { useCarouselAutoplay } from '@/hooks/useCarouselAutoplay';
 import { cn } from '@/lib/utils';
+import { filterEmployeesByPosition } from '@/utils/helper';
 import type { ZamestnanciPost } from '@/utils/wordpress-types';
+
+const POSITION_TYPE_MANAGEMENT = 'company_management';
 
 interface EmployeesSectionProps {
   employees: ZamestnanciPost[];
-  managementTitle?: string;
-  teamTitle?: string;
+  managementTitle: string;
+  teamTitle: string;
 }
 
 interface EmployeeCardProps {
@@ -20,7 +23,7 @@ interface EmployeeCardProps {
   className?: string;
 }
 
-const EmployeeCard = ({ employee, className }: EmployeeCardProps) => {
+const EmployeeCard = ({ employee, className }: Readonly<EmployeeCardProps>) => {
   const { zamestnanciACF } = employee;
   const imageUrl = zamestnanciACF?.profileImage?.node?.sourceUrl;
   const imageAlt = zamestnanciACF?.profileImage?.node?.altText || employee.title || 'Employee';
@@ -52,26 +55,84 @@ const EmployeeCard = ({ employee, className }: EmployeeCardProps) => {
   );
 };
 
-const EmployeesSection = ({
-  employees,
-  managementTitle = 'Vedení společnosti',
-  teamTitle = 'Náš tým',
-}: EmployeesSectionProps) => {
+interface ManagementGridProps {
+  employees: ZamestnanciPost[];
+  title: string;
+}
+
+const ManagementGrid = ({ employees, title }: Readonly<ManagementGridProps>) => {
+  if (employees.length === 0) return null;
+
+  return (
+    <div className='relative z-10 pt-40 pb-16'>
+      <div className='mx-auto max-w-7xl'>
+        <h2 className='font-heading mb-12 text-3xl'>{title}</h2>
+        <div className='flex flex-wrap gap-4 lg:gap-8'>
+          {employees.map((employee) => (
+            <EmployeeCard
+              key={employee.id}
+              employee={employee}
+              className='w-full max-w-[16.625rem] min-w-[16.625rem]'
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface TeamCarouselProps {
+  employees: ZamestnanciPost[];
+  title: string;
+}
+
+const TeamCarousel = ({ employees, title }: Readonly<TeamCarouselProps>) => {
   const { currentIndex, setApi, carouselRef, setIsHovering, goToSlide } = useCarouselAutoplay();
 
-  // Rozdělení zaměstnanců na vedení a ostatní
-  const management = employees.filter((employee) => {
-    const positionType = employee.zamestnanciACF?.positonType;
-    return Array.isArray(positionType) && positionType.includes('company_management');
-  });
-  const team = employees.filter((employee) => {
-    const positionType = employee.zamestnanciACF?.positonType;
-    return !Array.isArray(positionType) || !positionType.includes('company_management');
-  });
+  if (employees.length === 0) return null;
 
-  if (employees.length === 0) {
-    return null;
-  }
+  return (
+    <div className='relative z-10 pt-16 pb-40'>
+      <div className='mx-auto max-w-7xl'>
+        <h2 className='font-heading mb-12 text-3xl'>{title}</h2>
+      </div>
+      <div
+        ref={carouselRef}
+        className='relative -mr-4 sm:-mr-14 lg:mx-auto lg:max-w-7xl'
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
+        <Carousel
+          opts={{ align: 'start', loop: true }}
+          setApi={setApi}
+        >
+          <CarouselContent className='-ml-4 lg:-ml-8'>
+            {employees.map((employee) => (
+              <CarouselItem
+                key={employee.id}
+                className='basis-full pl-4 max-lg:max-w-[16.625rem] sm:basis-1/2 lg:basis-1/3 lg:pl-8 xl:basis-1/4'
+              >
+                <EmployeeCard employee={employee} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          {employees.length > 1 && (
+            <CarouselNavigation
+              itemsCount={employees.length}
+              currentIndex={currentIndex}
+              onDotClick={goToSlide}
+            />
+          )}
+        </Carousel>
+      </div>
+    </div>
+  );
+};
+
+const EmployeesSection = ({ employees, managementTitle, teamTitle }: Readonly<EmployeesSectionProps>) => {
+  const { management, team } = filterEmployeesByPosition(employees, POSITION_TYPE_MANAGEMENT);
+
+  if (employees.length === 0) return null;
 
   return (
     <section className='section-container relative'>
@@ -81,61 +142,14 @@ const EmployeesSection = ({
         leaves2ClassName='w-[34.8125rem] rotate-[260deg]'
         motionDiv2ClassName='top-64 left-1/2 translate-x-[34.5rem]'
       />
-      {/* Vedení společnosti */}
-      {management.length > 0 && (
-        <div className='relative z-10 pt-40 pb-16'>
-          <div className='mx-auto max-w-7xl'>
-            <h2 className='font-heading mb-12 text-3xl'>{managementTitle}</h2>
-            <div className='flex flex-wrap gap-4 lg:gap-8'>
-              {management.map((employee) => (
-                <EmployeeCard
-                  key={employee.id}
-                  employee={employee}
-                  className='w-full max-w-[16.625rem] min-w-[16.625rem]'
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Carousel s ostatními zaměstnanci */}
-      {team.length > 0 && (
-        <div className='relative z-10 pt-16 pb-40'>
-          <div className='mx-auto max-w-7xl'>
-            <h2 className='font-heading mb-12 text-3xl'>{teamTitle}</h2>
-          </div>
-          <div
-            ref={carouselRef}
-            className='relative -mr-4 sm:-mr-14 lg:mx-auto lg:max-w-7xl'
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-          >
-            <Carousel
-              opts={{ align: 'start', loop: true }}
-              setApi={setApi}
-            >
-              <CarouselContent className='-ml-4 lg:-ml-8'>
-                {team.map((employee) => (
-                  <CarouselItem
-                    key={employee.id}
-                    className='basis-full pl-4 max-lg:max-w-[16.625rem] sm:basis-1/2 lg:basis-1/3 lg:pl-8 xl:basis-1/4'
-                  >
-                    <EmployeeCard employee={employee} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              {team.length > 1 && (
-                <CarouselNavigation
-                  itemsCount={team.length}
-                  currentIndex={currentIndex}
-                  onDotClick={goToSlide}
-                />
-              )}
-            </Carousel>
-          </div>
-        </div>
-      )}
+      <ManagementGrid
+        employees={management}
+        title={managementTitle}
+      />
+      <TeamCarousel
+        employees={team}
+        title={teamTitle}
+      />
     </section>
   );
 };

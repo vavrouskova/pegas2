@@ -249,3 +249,26 @@ export function formatFarewellDateTime(dateString?: string): string {
     return dateString;
   }
 }
+
+/**
+ * Filtruje zaměstnance podle typu pozice na vedení a tým
+ * @param employees - pole zaměstnanců
+ * @param managementType - typ pozice pro vedení (default: 'company_management')
+ * @returns objekt s rozdělením zaměstnanců na management a team
+ */
+export function filterEmployeesByPosition<T extends { zamestnanciACF?: { positonType?: string[] } }>(
+  employees: T[],
+  managementType: string = 'company_management'
+): { management: T[]; team: T[] } {
+  const management = employees.filter((employee) => {
+    const positionType = employee.zamestnanciACF?.positonType;
+    return Array.isArray(positionType) && positionType.includes(managementType);
+  });
+
+  const team = employees.filter((employee) => {
+    const positionType = employee.zamestnanciACF?.positonType;
+    return !Array.isArray(positionType) || !positionType.includes(managementType);
+  });
+
+  return { management, team };
+}

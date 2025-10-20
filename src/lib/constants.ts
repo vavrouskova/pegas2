@@ -13,3 +13,34 @@ export const DirectorateInformation = {
 };
 
 export const Email = 'posta@pohrebpegas.cz';
+
+export const PARTNERS = [
+  {
+    id: 'effs',
+    name: 'Effs',
+    imageSrc: '/images/effs.webp',
+    width: 132,
+    height: 132,
+  },
+  {
+    id: 'csups',
+    name: 'Csup',
+    imageSrc: '/images/csups.webp',
+    width: 132,
+    height: 132,
+  },
+  {
+    id: 'pmu',
+    name: 'PMU',
+    imageSrc: '/images/pmu.webp',
+    width: 132,
+    height: 132,
+  },
+  {
+    id: 'sp',
+    name: 'SP',
+    imageSrc: '/images/sp.webp',
+    width: 132,
+    height: 132,
+  },
+] as const;
