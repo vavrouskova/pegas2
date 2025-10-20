@@ -26,7 +26,7 @@ const EmployeeCard = ({ employee, className }: EmployeeCardProps) => {
   const imageAlt = zamestnanciACF?.profileImage?.node?.altText || employee.title || 'Employee';
 
   return (
-    <article className={cn('group flex max-w-[16.625rem] flex-col gap-4', className)}>
+    <article className={cn('group flex flex-col gap-4 max-lg:max-w-[16.625rem]', className)}>
       <div className='relative aspect-square w-full overflow-hidden'>
         {imageUrl ? (
           <Image
@@ -86,11 +86,12 @@ const EmployeesSection = ({
         <div className='relative z-10 pt-40 pb-16'>
           <div className='mx-auto max-w-7xl'>
             <h2 className='font-heading mb-12 text-3xl'>{managementTitle}</h2>
-            <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+            <div className='flex flex-wrap gap-4 lg:gap-8'>
               {management.map((employee) => (
                 <EmployeeCard
                   key={employee.id}
                   employee={employee}
+                  className='w-full max-w-[16.625rem] min-w-[16.625rem]'
                 />
               ))}
             </div>
@@ -106,20 +107,19 @@ const EmployeesSection = ({
           </div>
           <div
             ref={carouselRef}
-            className='relative'
+            className='relative -mr-4 sm:-mr-14 lg:mx-auto lg:max-w-7xl'
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
           >
             <Carousel
               opts={{ align: 'start', loop: true }}
-              className='mx-auto max-w-7xl'
               setApi={setApi}
             >
-              <CarouselContent className='-ml-4'>
+              <CarouselContent className='-ml-4 lg:-ml-8'>
                 {team.map((employee) => (
                   <CarouselItem
                     key={employee.id}
-                    className='max-w-[16.625rem] basis-full pl-4 sm:basis-1/2 lg:basis-1/3 xl:basis-1/4'
+                    className='basis-full pl-4 max-lg:max-w-[16.625rem] sm:basis-1/2 lg:basis-1/3 lg:pl-8 xl:basis-1/4'
                   >
                     <EmployeeCard employee={employee} />
                   </CarouselItem>

@@ -1,6 +1,5 @@
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
-import React from 'react';
 
 const FoundationSection = async () => {
   const t = await getTranslations('about-us');
@@ -11,12 +10,12 @@ const FoundationSection = async () => {
         alt='Foundation'
         width={1732}
         height={1400}
-        className='absolute top-1/2 left-0 z-0 min-w-[600px] -translate-x-40 -translate-y-1/2 rotate-[39.027deg] lg:-translate-y-[40%]'
+        className='absolute top-1/2 left-0 z-0 min-w-[600px] -translate-x-80 -translate-y-1/2 rotate-[39.027deg] lg:-translate-y-[40%]'
       />
       <div className='bg-primary z-10 flex w-full max-w-[43.25rem] items-center justify-center lg:h-[28.3125rem] lg:min-w-[43.25rem]'>
         <div className='flex max-w-[28.375rem] flex-col gap-7 px-12 py-20'>
-          <h2 className='text-3xl text-white'>{t('foundation.title')}</h2>
-          <p className='text-white'>{t('foundation.description')}</p>
+          <h2 className='text-white-smoke text-3xl'>{t('foundation.title')}</h2>
+          <p className='text-white-smoke'>{t('foundation.description')}</p>
         </div>
       </div>
     </section>

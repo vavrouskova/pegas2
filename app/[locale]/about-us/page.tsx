@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import Image from 'next/image';
 
 import { getAboutUsTimeline, getZamestnanciPosts } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
@@ -48,7 +49,7 @@ const AboutUsPage = async () => {
 
       {timeline.length > 0 && <TimelineSection timeline={timeline} />}
 
-      <section className='section-container pt-16 pb-40'>
+      <section className='section-container relative pt-16 pb-40'>
         <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-14 lg:gap-24'>
           <p className='text-2xl leading-[2.0] lg:text-3xl'>{t('about-us.citation.text')}</p>
           <div>
@@ -56,6 +57,13 @@ const AboutUsPage = async () => {
             <p className='text-sm'>{t('about-us.citation.position')}</p>
           </div>
         </div>
+        <Image
+          src='/images/leaves.webp'
+          alt='Leaves 2'
+          width={300}
+          height={300}
+          className='absolute bottom-0 left-1/2 z-10 h-auto w-[20.8rem] shrink-0 -translate-x-1/8 translate-y-1/3 -scale-x-100 rotate-[260deg] lg:hidden'
+        />
       </section>
 
       <EmployeesSection

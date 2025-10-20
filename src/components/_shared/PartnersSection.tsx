@@ -6,10 +6,10 @@ const PartnersSection = async () => {
   const t = await getTranslations('about-us');
 
   return (
-    <section className='section-container pt-72 pb-30'>
-      <h2 className='mb-24 text-center text-3xl'>{t('partners.title')}</h2>
+    <section className='section-container pt-44 lg:pt-72 lg:pb-30'>
+      <h2 className='mb-24 text-3xl lg:text-center'>{t('partners.title')}</h2>
       <div className='mx-auto grid max-w-[1000px] grid-cols-2 gap-4 md:grid-cols-4'>
-        <picture>
+        <picture className='flex items-center justify-center'>
           <Image
             src='/images/effs.webp'
             alt='Effs'
@@ -18,7 +18,7 @@ const PartnersSection = async () => {
             className='mix-blend-darken'
           />
         </picture>
-        <picture>
+        <picture className='flex items-center justify-center'>
           <Image
             src='/images/csups.webp'
             alt='Csup'
@@ -27,7 +27,7 @@ const PartnersSection = async () => {
             className='mix-blend-darken'
           />
         </picture>
-        <picture>
+        <picture className='flex items-center justify-center'>
           <Image
             src='/images/pmu.webp'
             alt='PMU'
@@ -36,7 +36,7 @@ const PartnersSection = async () => {
             className='mix-blend-darken'
           />
         </picture>
-        <picture>
+        <picture className='flex items-center justify-center'>
           <Image
             src='/images/sp.webp'
             alt='SP'
