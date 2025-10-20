@@ -10,7 +10,7 @@ const FoundationSection = async () => {
         alt='Foundation'
         width={1732}
         height={1400}
-        className='absolute top-1/2 left-0 z-0 min-w-[600px] -translate-x-80 -translate-y-1/2 rotate-[39.027deg] lg:-translate-y-[40%]'
+        className='absolute top-1/2 left-0 z-0 min-w-[600px] -translate-x-72 -translate-y-1/2 rotate-[39.027deg] sm:-translate-x-80 md:-translate-y-[40%]'
       />
       <div className='bg-primary z-10 flex w-full max-w-[43.25rem] items-center justify-center lg:h-[28.3125rem] lg:min-w-[43.25rem]'>
         <div className='flex max-w-[28.375rem] flex-col gap-7 px-12 py-20'>
