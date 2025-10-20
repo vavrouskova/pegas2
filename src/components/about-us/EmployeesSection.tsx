@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import React from 'react';
 
 import { CarouselNavigation } from '@/components/_shared/CarouselNavigation';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';

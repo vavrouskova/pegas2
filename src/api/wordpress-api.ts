@@ -315,11 +315,6 @@ export async function getZamestnanciPosts(first = 100) {
       throw new Error('GraphQL query failed');
     }
 
-    // Debug logging
-    console.log('=== API RESPONSE ===');
-    console.log('Raw data:', JSON.stringify(result.data?.zamestnanciPosts?.nodes, null, 2));
-    console.log('===================');
-
     return result.data?.zamestnanciPosts?.nodes || [];
   } catch (error) {
     console.error('Error fetching zamestnanci posts:', error);

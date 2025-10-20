@@ -64,11 +64,11 @@ const AboutUsPage = async () => {
       />
 
       <ContentSection
-        title={t('home.how-to-proceed.title')}
-        description={t('home.how-to-proceed.description')}
-        buttonText={t('home.how-to-proceed.button-text')}
-        link={t('home.how-to-proceed.link')}
-        image={{ src: '/images/faq-image.webp', alt: t('home.how-to-proceed.alt') }}
+        title={t('about-us.how-to-proceed.title')}
+        description={t('about-us.how-to-proceed.description')}
+        buttonText={t('about-us.how-to-proceed.button-text')}
+        link={t('about-us.how-to-proceed.link')}
+        image={{ src: '/images/faq-image.webp', alt: t('about-us.how-to-proceed.alt') }}
       />
 
       <ContentSection

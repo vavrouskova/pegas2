@@ -25,7 +25,7 @@ const LeavesAnimation = () => {
   return (
     <div
       ref={containerRef}
-      className='absolute top-0 left-0 h-full w-full'
+      className='absolute top-0 left-0 z-1 h-full w-full'
     >
       {isLargeScreen && (
         <>

@@ -15,6 +15,7 @@ const PartnersSection = async () => {
             alt='Effs'
             width={132}
             height={132}
+            className='mix-blend-darken'
           />
         </picture>
         <picture>
@@ -23,6 +24,7 @@ const PartnersSection = async () => {
             alt='Csup'
             width={132}
             height={132}
+            className='mix-blend-darken'
           />
         </picture>
         <picture>
@@ -31,6 +33,7 @@ const PartnersSection = async () => {
             alt='PMU'
             width={132}
             height={132}
+            className='mix-blend-darken'
           />
         </picture>
         <picture>
@@ -39,6 +42,7 @@ const PartnersSection = async () => {
             alt='SP'
             width={132}
             height={132}
+            className='mix-blend-darken'
           />
         </picture>
       </div>

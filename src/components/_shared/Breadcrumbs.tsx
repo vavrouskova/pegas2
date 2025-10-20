@@ -5,7 +5,7 @@ import React from 'react';
 const Breadcrumbs = async ({ pageTitle }: { pageTitle: string }) => {
   const t = await getTranslations();
   return (
-    <div className='flex items-center gap-2 pt-12'>
+    <div className='z-10 flex items-center gap-2 pt-12'>
       <Link
         href='/'
         className='font-text text-sm underline underline-offset-2 hover:no-underline'
