@@ -7,7 +7,7 @@ import { getPobockyPosts } from '@/api/wordpress-api';
 import DirectorateInfo from '@/components/footer/DirectorateInfo';
 import Facebook from '@/components/icons/Facebook';
 import Instagram from '@/components/icons/Instagram';
-import { PhoneNumber } from '@/lib/constants';
+import { FacebookUrl, InstagramUrl, PhoneNumber } from '@/lib/constants';
 import { PobockaPost } from '@/utils/wordpress-types';
 
 const Footer = async () => {
@@ -32,13 +32,13 @@ const Footer = async () => {
               <div className='flex gap-2'>
                 <Link
                   className='flex size-12 items-center justify-center transition-all duration-300 hover:opacity-70'
-                  href='https://www.facebook.com/'
+                  href={FacebookUrl}
                 >
                   <Facebook className='text-white-smoke' />
                 </Link>
                 <Link
                   className='flex size-12 items-center justify-center transition-all duration-300 hover:opacity-70'
-                  href='https://www.instagram.com/'
+                  href={InstagramUrl}
                 >
                   <Instagram className='text-white-smoke' />
                 </Link>

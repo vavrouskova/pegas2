@@ -6,8 +6,21 @@ import { useRef } from 'react';
 
 import { MotionDiv } from '@/components/animate-ui/MotionWrappers';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import { cn } from '@/lib/utils';
 
-const LeavesAnimation = () => {
+interface LeavesAnimationProps {
+  leaves1ClassName?: string;
+  motionDiv1ClassName?: string;
+  leaves2ClassName?: string;
+  motionDiv2ClassName?: string;
+}
+
+const LeavesAnimation = ({
+  leaves1ClassName,
+  motionDiv1ClassName,
+  leaves2ClassName,
+  motionDiv2ClassName,
+}: LeavesAnimationProps) => {
   const isLargeScreen = useMediaQuery('(min-width: 1024px)');
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +43,7 @@ const LeavesAnimation = () => {
       {isLargeScreen && (
         <>
           <MotionDiv
-            className='absolute top-[31rem] left-1/2 z-10 translate-x-[34.5rem]'
+            className={cn('absolute top-[31rem] left-1/2 z-10 translate-x-[34.5rem]', motionDiv2ClassName)}
             style={{
               y: secondLeafY,
             }}
@@ -40,11 +53,11 @@ const LeavesAnimation = () => {
               alt='Leaves 2'
               width={300}
               height={300}
-              className='h-auto w-[27rem] shrink-0 -scale-x-100 rotate-[260deg]'
+              className={cn('h-auto w-[27rem] shrink-0 -scale-x-100 rotate-[260deg]', leaves2ClassName)}
             />
           </MotionDiv>
           <MotionDiv
-            className='absolute top-44 left-1/2 z-10 translate-x-[26rem]'
+            className={cn('absolute top-44 left-1/2 z-10 translate-x-[26rem]', motionDiv1ClassName)}
             style={{
               y: firstLeafY,
             }}
@@ -54,7 +67,10 @@ const LeavesAnimation = () => {
               alt='Leaves 1'
               width={300}
               height={300}
-              className='h-auto w-[34.7rem] shrink-0 -scale-x-100 rotate-[-20deg] mix-blend-darken blur-[9px]'
+              className={cn(
+                'h-auto w-[34.7rem] shrink-0 -scale-x-100 rotate-[-20deg] mix-blend-darken blur-[9px]',
+                leaves1ClassName
+              )}
             />
           </MotionDiv>
         </>

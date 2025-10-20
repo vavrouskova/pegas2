@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import React from 'react';
+import Link from 'next/link';
 
 import { getAboutUsTimeline, getZamestnanciPosts } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
@@ -11,6 +11,9 @@ import PartnersSection from '@/components/_shared/PartnersSection';
 import EmployeesSection from '@/components/about-us/EmployeesSection';
 import FoundationSection from '@/components/about-us/FoundationSection';
 import TimelineSection from '@/components/about-us/TimelineSection';
+import Facebook from '@/components/icons/Facebook';
+import Instagram from '@/components/icons/Instagram';
+import { FacebookUrl, InstagramUrl } from '@/lib/constants';
 import { formatTranslation } from '@/lib/utils';
 import { getSeoDataByUri } from '@/utils/seo';
 
@@ -38,7 +41,21 @@ const AboutUsPage = async () => {
         pageTitle={t('about-us.basic-hero.page-title')}
       />
 
-      <section className='section-container py-16'>
+      <section className='section-container relative py-16'>
+        <div className='absolute top-16 left-44 flex flex-col gap-2'>
+          <Link
+            href={FacebookUrl}
+            target='_blank'
+          >
+            <Facebook className='text-white-smoke bg-primary size-8 p-[0.31rem]' />
+          </Link>
+          <Link
+            href={InstagramUrl}
+            target='_blank'
+          >
+            <Instagram className='text-white-smoke bg-primary size-8 p-[0.31rem]' />
+          </Link>
+        </div>
         <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-6'>
           <h2 className='text-3xl'>{formatTranslation(t('about-us.experience.title'))}</h2>
           <p className='text-lg'>{t('about-us.experience.description')}</p>
@@ -47,7 +64,7 @@ const AboutUsPage = async () => {
 
       {timeline.length > 0 && <TimelineSection timeline={timeline} />}
 
-      <section className='section-container py-16'>
+      <section className='section-container pt-16 pb-40'>
         <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-24'>
           <p className='text-3xl leading-[2.0]'>{t('about-us.citation.text')}</p>
           <div>
@@ -62,6 +79,8 @@ const AboutUsPage = async () => {
         managementTitle={t('about-us.employees.management-title')}
         teamTitle={t('about-us.employees.team-title')}
       />
+
+      <BlogCarouselSection />
 
       <ContentSection
         title={t('about-us.how-to-proceed.title')}
@@ -79,8 +98,6 @@ const AboutUsPage = async () => {
         image={{ src: '/images/room.webp', alt: t('home.branches.alt') }}
         imagePosition='left'
       />
-
-      <BlogCarouselSection />
 
       <FoundationSection />
 

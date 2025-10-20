@@ -3,6 +3,7 @@
 import Image from 'next/image';
 
 import { CarouselNavigation } from '@/components/_shared/CarouselNavigation';
+import LeavesAnimation from '@/components/_shared/LeavesAnimation';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { useCarouselAutoplay } from '@/hooks/useCarouselAutoplay';
 import { cn } from '@/lib/utils';
@@ -73,10 +74,16 @@ const EmployeesSection = ({
   }
 
   return (
-    <>
+    <section className='section-container relative'>
+      <LeavesAnimation
+        leaves1ClassName='w-[44.6875rem] rotate-[-20deg]'
+        motionDiv1ClassName='top-0 left-1/2 translate-x-[26rem]'
+        leaves2ClassName='w-[34.8125rem] rotate-[260deg]'
+        motionDiv2ClassName='top-64 left-1/2 translate-x-[34.5rem]'
+      />
       {/* Vedení společnosti */}
       {management.length > 0 && (
-        <section className='section-container py-16'>
+        <div className='relative z-10 pt-40 pb-16'>
           <div className='mx-auto max-w-7xl'>
             <h2 className='font-heading mb-12 text-3xl'>{managementTitle}</h2>
             <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
@@ -88,12 +95,12 @@ const EmployeesSection = ({
               ))}
             </div>
           </div>
-        </section>
+        </div>
       )}
 
       {/* Carousel s ostatními zaměstnanci */}
       {team.length > 0 && (
-        <section className='section-container py-16'>
+        <div className='relative z-10 pt-16 pb-40'>
           <div className='mx-auto max-w-7xl'>
             <h2 className='font-heading mb-12 text-3xl'>{teamTitle}</h2>
           </div>
@@ -127,9 +134,9 @@ const EmployeesSection = ({
               )}
             </Carousel>
           </div>
-        </section>
+        </div>
       )}
-    </>
+    </section>
   );
 };
 
