@@ -15,7 +15,10 @@ const Footer = async () => {
   const pobockyData = await getPobockyPosts();
 
   return (
-    <footer className='bg-primary mx-auto px-4 pt-11 pb-10 md:px-14 md:pt-[7.75rem] md:pb-[3.75rem]'>
+    <footer
+      id='main-footer'
+      className='bg-primary mx-auto px-4 pt-11 pb-10 md:px-14 md:pt-[7.75rem] md:pb-[3.75rem]'
+    >
       <div className='max-w-container grid gap-9 md:grid-cols-3 md:gap-4 lg:grid-cols-4'>
         <div className='col-span-1 flex flex-col-reverse justify-between gap-11 md:flex-col md:gap-0 lg:col-span-2'>
           <div className='flex flex-col-reverse gap-11 md:flex-col md:gap-0'>

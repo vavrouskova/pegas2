@@ -14,22 +14,27 @@ const StickyContact = () => {
   const [isFooterVisible, setIsFooterVisible] = useState(false);
 
   useEffect(() => {
-    const footer = document.querySelector('footer');
+    const footer = document.querySelector('#main-footer');
     if (!footer) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        setIsFooterVisible(entry.isIntersecting);
-      },
-      {
-        root: null,
-        threshold: 0.05,
-      }
-    );
+    const checkFooterVisibility = () => {
+      const footerRect = footer.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
 
-    observer.observe(footer);
-    return () => observer.disconnect();
+      // Footer je viditelný když jeho top je v dolní části obrazovky (méně než 300px od spodu)
+      const isVisible = footerRect.top < windowHeight - 100;
+
+      setIsFooterVisible(isVisible);
+    };
+
+    // Kontrola při scrollu
+    window.addEventListener('scroll', checkFooterVisibility, { passive: true });
+    // Počáteční kontrola
+    checkFooterVisibility();
+
+    return () => {
+      window.removeEventListener('scroll', checkFooterVisibility);
+    };
   }, []);
 
   const animateTarget = useMemo(
