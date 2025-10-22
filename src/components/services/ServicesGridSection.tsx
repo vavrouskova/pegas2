@@ -48,7 +48,7 @@ const ServicesGridSection = ({ title, description, services, baseUrl = '/sluzby'
             <Link
               key={service.id}
               href={`${baseUrl}/${service.slug}`}
-              className='group flex flex-col gap-8 transition-opacity hover:opacity-80'
+              className='group flex flex-col gap-8 transition-opacity duration-300 hover:opacity-80'
             >
               {/* Obrázek */}
               <div className='relative aspect-square w-full overflow-hidden'>

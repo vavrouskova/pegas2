@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import Button from '@/components/_shared/Button';
+import LeavesAnimation from '@/components/_shared/LeavesAnimation';
 
 interface OtherService {
   id: string;
@@ -20,7 +21,8 @@ const OtherServicesSection = ({ services, baseUrl = '/sluzby' }: OtherServicesSe
   }
 
   return (
-    <section className='section-container py-20 md:py-32'>
+    <section className='section-container relative py-20 md:py-32'>
+      <LeavesAnimation />
       <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-32'>
         {services.map((service) => (
           <div

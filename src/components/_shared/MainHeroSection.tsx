@@ -10,7 +10,8 @@ interface MainHeroSectionProps {
   title: string;
   description: string;
   branchesCount?: number;
-  className?: string;
+  sectionClassName?: string;
+  contentClassName?: string;
   pageTitle?: string;
   noImage?: boolean;
 }
@@ -19,16 +20,17 @@ const MainHeroSection = async ({
   title,
   description,
   branchesCount = 0,
-  className,
+  sectionClassName,
+  contentClassName,
   pageTitle,
   noImage = false,
 }: MainHeroSectionProps) => {
   const t = await getTranslations('home.hero');
 
   return (
-    <section className={cn('section-container pb-60', className)}>
+    <section className={cn('section-container pb-60', sectionClassName)}>
       {pageTitle && <Breadcrumbs pageTitle={pageTitle} />}
-      <div className='mt-96 flex max-w-[36rem] flex-col justify-center gap-8 md:mt-[29.57rem]'>
+      <div className={cn('mt-96 flex max-w-[36rem] flex-col justify-center gap-8 md:mt-[29.57rem]', contentClassName)}>
         <h1 className='whitespace-pre-line'>{title}</h1>
         <p className='text-xl whitespace-pre-line'>{description}</p>
         <div className='flex flex-col justify-between gap-4 text-lg md:flex-row'>

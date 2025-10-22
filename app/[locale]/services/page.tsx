@@ -35,6 +35,7 @@ const ServicesPage = async () => {
         branchesCount={branchesCount}
         pageTitle={t('services.hero.page-title')}
         noImage
+        contentClassName='mt-18 md:mt-38'
       />
 
       <TransportSection
