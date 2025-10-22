@@ -26,7 +26,7 @@
 
   "routes": {
     "home": "uvod",
-    "how-to-proceed": "jak-postupovat",
+    "faq": "jak-postupovat",
     "services": "sluzby",
     "organized-by-us": "organizovali-jsme",
     "media": "media-a-verejnost",
@@ -39,7 +39,7 @@
   },
 
   "header": {
-    "how-to-proceed": "Jak postupovat",
+    "faq": "Jak postupovat",
     "services": "Služby",
     "organized-by-us": "Organizovali jsme",
     "media": "Média a veřejnost",
@@ -68,7 +68,7 @@
       "visit-us": "Navštivte nás",
       "branches": "poboček"
     },
-    "how-to-proceed": {
+    "faq": {
       "title": "Potřebuji pomoc s rozloučením",
       "description": "Jsme pohřební služba. Citlivě vás provedeme rozloučením – jednoduše, klidně, s úctou. Postaráme se o vše, co je třeba.",
       "button-text": "Jak postupovat",
@@ -133,7 +133,7 @@
       "alt": "Hlavní místnost pobočky",
       "link": "kontakt"
     },
-    "how-to-proceed": {
+    "faq": {
       "title": "Péče, kterou si na poslední cestě zaslouží každý",
       "description": "Úcta, důstojnost, vděčnost – nejen naoko, ale opravdově. V našem špičkovém zázemí dopřejeme každému člověku prvotřídní péči a zacházení. Od převozu v převozové rakvi, přes úpravu na poslední cestu až po její poslední zastavení.",
       "button-text": "Jak postupovat",

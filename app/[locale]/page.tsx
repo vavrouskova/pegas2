@@ -39,11 +39,11 @@ const Homepage = async () => {
       <ReferencesCarouselSection referencePosts={referencePosts} />
 
       <ContentSection
-        title={t('how-to-proceed.title')}
-        description={t('how-to-proceed.description')}
-        buttonText={t('how-to-proceed.button-text')}
-        link={t('how-to-proceed.link')}
-        image={{ src: '/images/faq-image.webp', alt: t('how-to-proceed.alt') }}
+        title={t('faq.title')}
+        description={t('faq.description')}
+        buttonText={t('faq.button-text')}
+        link={t('faq.link')}
+        image={{ src: '/images/faq-image.webp', alt: t('faq.alt') }}
       />
 
       <ContentSection

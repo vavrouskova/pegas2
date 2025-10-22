@@ -8,8 +8,8 @@ export const getHeaderLinks = async () => {
 
   return [
     {
-      label: tHeader('how-to-proceed'),
-      href: tRoutes('how-to-proceed'),
+      label: tHeader('faq'),
+      href: tRoutes('faq'),
     },
     {
       label: tHeader('services'),
@@ -40,8 +40,8 @@ export const getFooterLinks = async () => {
 
   return [
     {
-      label: tFooter('how-to-proceed'),
-      href: tRoutes('how-to-proceed'),
+      label: tFooter('faq'),
+      href: tRoutes('faq'),
     },
   ];
 };
