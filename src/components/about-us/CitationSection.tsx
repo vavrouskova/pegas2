@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { czechTypography } from '@/lib/utils';
+
 interface CitationSectionProps {
   quote: string;
   author: string;
@@ -10,10 +12,10 @@ const CitationSection = ({ quote, author, position }: Readonly<CitationSectionPr
   return (
     <section className='section-container relative pt-16 pb-40'>
       <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-14 lg:gap-24'>
-        <blockquote className='text-2xl leading-[2.0] lg:text-3xl'>{quote}</blockquote>
+        <blockquote className='text-2xl leading-[2.0] lg:text-3xl'>{czechTypography(quote)}</blockquote>
         <footer>
-          <p className='font-heading text-xl'>{author}</p>
-          <p className='text-sm'>{position}</p>
+          <p className='font-heading text-xl'>{czechTypography(author)}</p>
+          <p className='text-sm'>{czechTypography(position)}</p>
         </footer>
       </div>
       <Image

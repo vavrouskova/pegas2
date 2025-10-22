@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import { PhoneNumber } from '@/lib/constants';
-import { cn } from '@/lib/utils';
+import { cn, czechTypography } from '@/lib/utils';
 
 interface MainHeroSectionProps {
   title: string;
@@ -33,8 +33,8 @@ const MainHeroSection = async ({
     <section className={cn('section-container pb-60', sectionClassName)}>
       {pageTitle && <Breadcrumbs pageTitle={pageTitle} />}
       <div className={cn('mt-96 flex max-w-[36rem] flex-col justify-center gap-8 md:mt-[29.57rem]', contentClassName)}>
-        <h1 className='whitespace-pre-line'>{title}</h1>
-        <p className='text-xl whitespace-pre-line'>{description}</p>
+        <h1 className='whitespace-pre-line'>{czechTypography(title)}</h1>
+        <p className='text-xl whitespace-pre-line'>{czechTypography(description)}</p>
         <div className='flex flex-col justify-between gap-4 text-lg md:flex-row'>
           <div className='flex flex-col'>
             <span className='leading-9'>{t('contact-us')}</span>

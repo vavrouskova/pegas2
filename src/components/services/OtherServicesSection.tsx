@@ -3,6 +3,7 @@ import React from 'react';
 
 import Button from '@/components/_shared/Button';
 import LeavesAnimation from '@/components/_shared/LeavesAnimation';
+import { czechTypography } from '@/lib/utils';
 
 interface OtherService {
   id: string;
@@ -33,10 +34,10 @@ const OtherServicesSection = ({ services }: OtherServicesSectionProps) => {
             className='flex flex-col gap-9'
           >
             {/* Nadpis */}
-            <h2>{service.title}</h2>
+            <h2>{czechTypography(service.title)}</h2>
 
             {/* Popis */}
-            {service.sluzbyAcf?.introText && <p className='text-lg'>{service.sluzbyAcf.introText}</p>}
+            {service.sluzbyAcf?.introText && <p className='text-lg'>{czechTypography(service.sluzbyAcf.introText)}</p>}
 
             {/* CTA tlačítko */}
             <Link href={`/${service.slug}`}>

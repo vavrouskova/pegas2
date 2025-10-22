@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import { czechTypography } from '@/lib/utils';
+
 interface ServicePost {
   id: string;
   title: string;
@@ -34,8 +36,8 @@ const ServicesGridSection = ({ title, description, services }: ServicesGridSecti
     <section className='section-container py-20 md:py-32'>
       {/* Nadpis a popis sekce */}
       <div className='mb-16 flex max-w-[42.6875rem] flex-col gap-8'>
-        <h2>{title}</h2>
-        <p className='text-lg leading-relaxed'>{description}</p>
+        <h2>{czechTypography(title)}</h2>
+        <p className='text-lg leading-relaxed'>{czechTypography(description)}</p>
       </div>
 
       {/* Grid služeb */}
@@ -62,7 +64,7 @@ const ServicesGridSection = ({ title, description, services }: ServicesGridSecti
               </div>
 
               {/* Nadpis */}
-              <h3 className='text-2xl leading-tight font-black tracking-wide'>{service.title}</h3>
+              <h3 className='text-2xl leading-tight font-black tracking-wide'>{czechTypography(service.title)}</h3>
             </Link>
           );
         })}

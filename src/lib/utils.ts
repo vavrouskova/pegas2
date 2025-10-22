@@ -13,3 +13,40 @@ export function cn(...inputs: ClassValue[]) {
 export function formatTranslation(text: string): string {
   return text.replaceAll('<br/>', '\n');
 }
+
+/**
+ * Aplikuje českou typografii - nahrazuje mezery za jednopísmenými předložkami/spojkami
+ * nezlomitelnou mezerou, aby se zabránilo jejich umístění na konci řádku.
+ *
+ * Typické české jednopísmenné předložky a spojky:
+ * - a (and)
+ * - i (also, even)
+ * - o (about)
+ * - u (at, by)
+ * - v (in)
+ * - z (from)
+ * - k (to)
+ * - s (with)
+ *
+ * @param text - Text k formátování
+ * @returns Text s nezlomitelnými mezerami za jednopísmenými slovy
+ *
+ * @example
+ * czechTypography("Jsem v Praze") // "Jsem v\u00A0Praze"
+ * czechTypography("To je a bylo") // "To je a\u00A0bylo"
+ */
+export function czechTypography(text: string): string {
+  if (!text) return text;
+
+  // Nezlomitelná mezera (non-breaking space)
+  const nbsp = '\u00A0';
+
+  // Regexp pro jednopísmenná slova následovaná běžnou mezerou
+  // \b = word boundary (začátek/konec slova)
+  // [aáiíoóuúvzksAÁIÍOÓUÚVZKS] = jednopísmenné předložky (včetně verzí s diakritikou)
+  // \s+ = jedna nebo více mezer
+  // (?=\S) = positive lookahead - následuje non-whitespace znak (nenahradí mezeru na konci věty)
+  const pattern = /\b([aáiíoóuúvzksAÁIÍOÓUÚVZKS])\s+(?=\S)/g;
+
+  return text.replace(pattern, `$1${nbsp}`);
+}
