@@ -6,6 +6,7 @@ import React from 'react';
 
 import Button from '@/components/_shared/Button';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
+import { czechTypography } from '@/lib/utils';
 import { formatFarewellDateTime } from '@/utils/helper';
 import { ReferencePost } from '@/utils/wordpress-types';
 
@@ -60,15 +61,17 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
       renderContent={(item, t) => (
         <div className='flex flex-1 flex-col space-y-2 px-4 py-5 max-md:h-full max-md:justify-between md:px-10 md:py-9'>
           <div className='flex flex-col space-y-2'>
-            <h3 className='text-white-smoke mb-6 text-2xl'>{item.title}</h3>
+            <h3 className='text-white-smoke mb-6 text-2xl'>{czechTypography(item.title)}</h3>
             {item.where && (
               <p className='text-tertiary text-lg'>
-                <span className='font-heading text-white-smoke'>{t('where')}:</span> {item.where}
+                <span className='font-heading text-white-smoke'>{czechTypography(t('where'))}:</span>{' '}
+                {czechTypography(item.where)}
               </p>
             )}
             {item.when && (
               <p className='text-tertiary text-lg'>
-                <span className='font-heading text-white-smoke'>{t('when')}:</span> {item.when}
+                <span className='font-heading text-white-smoke'>{czechTypography(t('when'))}:</span>{' '}
+                {czechTypography(item.when)}
               </p>
             )}
           </div>

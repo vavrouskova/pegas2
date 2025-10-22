@@ -61,7 +61,10 @@ export function replaceWordpressUrl(xmlString: string, replaceWith: string) {
 }
 
 export function removeNumberFromUrl(xmlString: string) {
-  const regex = new RegExp(`(${process.env.NEXT_PUBLIC_ASSET_PREFIX})/\\d+(?=/)`, 'g');
+  // Escape special regex characters in the environment variable for safe RegExp construction
+  const escapedPrefix = (process.env.NEXT_PUBLIC_ASSET_PREFIX || '').replace(/[$()*+.?[\\\]^{|}]/g, '\\$&');
+  // eslint-disable-next-line security/detect-non-literal-regexp -- Safe: environment variable is escaped before use
+  const regex = new RegExp(`(${escapedPrefix})/\\d+(?=/)`, 'g');
   return xmlString.replace(regex, '$1');
 }
 

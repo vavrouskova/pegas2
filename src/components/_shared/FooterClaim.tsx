@@ -2,6 +2,8 @@ import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import React from 'react';
 
+import { czechTypography } from '@/lib/utils';
+
 const FooterClaim = async () => {
   const t = await getTranslations('home.footer-bg');
   return (
@@ -14,7 +16,7 @@ const FooterClaim = async () => {
         height={1400}
       />
       <div className='absolute right-8 bottom-0 flex h-full w-fit items-center justify-end max-md:mb-4 sm:right-14 lg:right-[10%]'>
-        <h2 className='text-3xl font-thin md:text-4xl'>{t('claim')}</h2>
+        <h2 className='text-3xl font-thin md:text-4xl'>{czechTypography(t('claim'))}</h2>
       </div>
     </section>
   );

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+import { czechTypography } from '@/lib/utils';
 import { SluzbyPost } from '@/utils/wordpress-types';
 
 interface ServicesSectionProps {
@@ -17,7 +18,7 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
   }
   return (
     <section className='section-container'>
-      <h2 className='mb-9 text-3xl md:mb-40 md:text-center'>{t('home.services-nav.title')}</h2>
+      <h2 className='mb-9 text-3xl md:mb-40 md:text-center'>{czechTypography(t('home.services-nav.title'))}</h2>
       <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:flex'>
         {services.map((service) => (
           <Link
@@ -32,7 +33,9 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
               height={400}
               className='h-auto w-full'
             />
-            <h3 className='text-2xl transition-opacity duration-300 group-hover:opacity-70'>{service.title}</h3>
+            <h3 className='text-2xl transition-opacity duration-300 group-hover:opacity-70'>
+              {czechTypography(service.title)}
+            </h3>
           </Link>
         ))}
         <Link
@@ -41,7 +44,7 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
         >
           <div className='bg-primary flex aspect-square w-full items-center gap-2.5 self-stretch p-12' />
           <h3 className='text-2xl transition-opacity duration-300 group-hover:opacity-70'>
-            {t('home.services-nav.all-services')}
+            {czechTypography(t('home.services-nav.all-services'))}
           </h3>
         </Link>
       </div>
