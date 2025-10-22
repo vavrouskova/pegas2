@@ -1,6 +1,6 @@
 'use client';
 
-import { useScroll, useTransform } from 'framer-motion';
+import { useScroll, useTransform, useSpring } from 'framer-motion';
 import Image from 'next/image';
 import { useRef } from 'react';
 
@@ -16,16 +16,26 @@ const FeatherAnimation = () => {
     offset: ['start end', 'end start'],
   });
 
-  // Animace pro levé pírko - pomalejší
-  const leftFeatherY = useTransform(scrollYProgress, [0, 1], [-150, 0]);
-  const leftFeatherX = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const leftFeatherRotate = useTransform(scrollYProgress, [0, 1], [0, 20]);
+  // Jemný spring config pro hladký, elegantní pohyb
+  const springConfig = { stiffness: 60, damping: 40, restDelta: 0.001 };
 
-  // Animace pro pravé pírko - rychlejší
-  const rightFeatherY = useTransform(scrollYProgress, [0, 1], [-500, -100]);
-  const rightFeatherX = useTransform(scrollYProgress, [0, 1], [150, 100]);
-  const rightFeatherRotate = useTransform(scrollYProgress, [0, 1], [20, -10]);
-  const rightFeatherScale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+  // Levé pírko - jemný parallax s lehkou rotací
+  const leftFeatherY = useTransform(scrollYProgress, [0, 1], [-100, 50]);
+  const leftFeatherX = useTransform(scrollYProgress, [0, 1], [0, -25]);
+  const leftFeatherRotate = useTransform(scrollYProgress, [0, 1], [0, 12]);
+  const leftFeatherScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.96, 1.02, 0.98]);
+  const leftFeatherOpacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.5, 0.95, 0.95, 0.6]);
+
+  // Pravé pírko - odlišná trajektorie pro efekt hloubky
+  const rightFeatherY = useTransform(scrollYProgress, [0, 1], [-280, -80]);
+  const rightFeatherX = useTransform(scrollYProgress, [0, 1], [80, 50]);
+  const rightFeatherRotate = useTransform(scrollYProgress, [0, 1], [10, -5]);
+  const rightFeatherScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.98, 1.03, 0.92]);
+  const rightFeatherOpacity = useTransform(scrollYProgress, [0, 0.12, 0.88, 1], [0.45, 1, 1, 0.55]);
+
+  // Spring pro extra hladký pohyb
+  const smoothLeftFeatherY = useSpring(leftFeatherY, springConfig);
+  const smoothRightFeatherY = useSpring(rightFeatherY, springConfig);
 
   return (
     <div
@@ -38,9 +48,11 @@ const FeatherAnimation = () => {
           <MotionDiv
             className='absolute top-3/4 left-1/2 z-10 -translate-x-[700px]'
             style={{
-              y: leftFeatherY,
+              y: smoothLeftFeatherY,
               x: leftFeatherX,
               rotate: leftFeatherRotate,
+              scale: leftFeatherScale,
+              opacity: leftFeatherOpacity,
             }}
           >
             <Image
@@ -49,6 +61,7 @@ const FeatherAnimation = () => {
               width={80}
               height={120}
               className='h-[11.08013rem] w-[16.822rem] shrink-0'
+              style={{ willChange: 'transform, opacity' }}
             />
           </MotionDiv>
 
@@ -56,10 +69,11 @@ const FeatherAnimation = () => {
           <MotionDiv
             className='absolute top-1/2 right-1/2 z-10 translate-x-[700px]'
             style={{
-              y: rightFeatherY,
+              y: smoothRightFeatherY,
               x: rightFeatherX,
               rotate: rightFeatherRotate,
               scale: rightFeatherScale,
+              opacity: rightFeatherOpacity,
             }}
           >
             <Image
@@ -68,6 +82,7 @@ const FeatherAnimation = () => {
               width={386}
               height={586}
               className='h-[36.62163rem] w-[24.1215rem] shrink-0 rotate-[-77.654deg] mix-blend-darken blur-[9.5px]'
+              style={{ willChange: 'transform, opacity' }}
             />
           </MotionDiv>
         </>
