@@ -321,3 +321,275 @@ export async function getZamestnanciPosts(first = 100) {
     return [];
   }
 }
+
+/**
+ * Získá všechna data služeb v jednom requestu (optimalizováno)
+ * @param first - Počet služeb k načtení pro každou kategorii (výchozí 100)
+ * @returns Promise s daty všech taxonomií a služeb
+ */
+export async function getAllServicesData(first = 100) {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetAllServicesData($first: Int!) {
+      funeralCeremonies: typSluzby(id: "smutecni-obrady", idType: SLUG) {
+        name
+        description
+        sluzbyPosts(first: $first) {
+          nodes {
+            id
+            title
+            slug
+            featuredImage {
+              node {
+                sourceUrl
+                altText
+                mediaDetails {
+                  width
+                  height
+                }
+              }
+            }
+          }
+        }
+      }
+      funeralEssentials: typSluzby(id: "nalezitosti-pohrbu", idType: SLUG) {
+        name
+        description
+        sluzbyPosts(first: $first) {
+          nodes {
+            id
+            title
+            slug
+            featuredImage {
+              node {
+                sourceUrl
+                altText
+                mediaDetails {
+                  width
+                  height
+                }
+              }
+            }
+          }
+        }
+      }
+      allServices: sluzbyPosts(first: $first) {
+        nodes {
+          id
+          title
+          slug
+          typSluzby {
+            nodes {
+              id
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { first },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    const data = result.data;
+
+    // Filtrujeme služby bez taxonomie
+    const allPosts = data?.allServices?.nodes || [];
+    const uncategorizedPosts = allPosts.filter(
+      (post: { typSluzby?: { nodes?: unknown[] } }) => !post.typSluzby?.nodes || post.typSluzby.nodes.length === 0
+    );
+
+    return {
+      funeralCeremonies: {
+        taxonomy: data?.funeralCeremonies
+          ? {
+              name: data.funeralCeremonies.name,
+              description: data.funeralCeremonies.description,
+            }
+          : null,
+        posts: data?.funeralCeremonies?.sluzbyPosts?.nodes || [],
+      },
+      funeralEssentials: {
+        taxonomy: data?.funeralEssentials
+          ? {
+              name: data.funeralEssentials.name,
+              description: data.funeralEssentials.description,
+            }
+          : null,
+        posts: data?.funeralEssentials?.sluzbyPosts?.nodes || [],
+      },
+      otherServices: uncategorizedPosts,
+    };
+  } catch (error) {
+    console.error('Error fetching all services data:', error);
+    return {
+      funeralCeremonies: { taxonomy: null, posts: [] },
+      funeralEssentials: { taxonomy: null, posts: [] },
+      otherServices: [],
+    };
+  }
+}
+
+/**
+ * Získá služby BEZ přiřazené taxonomie (služby, které nejsou v žádné kategorii)
+ * @param first - Počet služeb k načtení (výchozí 100)
+ * @returns Promise se seznamem služeb
+ * @deprecated Použij getAllServicesData() pro lepší výkon
+ */
+export async function getUncategorizedServices(first = 100) {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetUncategorizedServices($first: Int!) {
+      sluzbyPosts(first: $first) {
+        nodes {
+          id
+          title
+          slug
+          typSluzby {
+            nodes {
+              id
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { first },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    // Filtrujeme jen služby bez taxonomie (kde typSluzby.nodes je prázdné pole)
+    const allPosts = result.data?.sluzbyPosts?.nodes || [];
+    const uncategorizedPosts = allPosts.filter(
+      (post: { typSluzby?: { nodes?: unknown[] } }) => !post.typSluzby?.nodes || post.typSluzby.nodes.length === 0
+    );
+
+    return uncategorizedPosts;
+  } catch (error) {
+    console.error('Error fetching uncategorized services:', error);
+    return [];
+  }
+}
+
+/**
+ * Získá služby podle taxonomie (typSluzby)
+ * @param taxonomySlug - Slug taxonomie (např. "smutecni-obrady")
+ * @param first - Počet služeb k načtení (výchozí 100)
+ * @returns Promise s daty taxonomie a seznamem služeb
+ */
+export async function getServicesByTaxonomy(taxonomySlug: string, first = 100) {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetServicesByTaxonomy($slug: ID!, $first: Int!) {
+      typSluzby(id: $slug, idType: SLUG) {
+        name
+        description
+        sluzbyPosts(first: $first) {
+          nodes {
+            id
+            title
+            slug
+            featuredImage {
+              node {
+                sourceUrl
+                altText
+                mediaDetails {
+                  width
+                  height
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { slug: taxonomySlug, first },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    const taxonomyData = result.data?.typSluzby;
+
+    return {
+      taxonomy: taxonomyData
+        ? {
+            name: taxonomyData.name,
+            description: taxonomyData.description,
+          }
+        : null,
+      posts: taxonomyData?.sluzbyPosts?.nodes || [],
+    };
+  } catch (error) {
+    console.error(`Error fetching services for taxonomy ${taxonomySlug}:`, error);
+    return {
+      taxonomy: null,
+      posts: [],
+    };
+  }
+}

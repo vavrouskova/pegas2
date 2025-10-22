@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
-import { getBranchesCount } from '@/api/wordpress-api';
+import { getAllServicesData, getBranchesCount } from '@/api/wordpress-api';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 import PartnersSection from '@/components/_shared/PartnersSection';
+import OtherServicesSection from '@/components/services/OtherServicesSection';
+import ServicesGridSection from '@/components/services/ServicesGridSection';
 import TransportSection from '@/components/services/TransportSection';
 import { formatTranslation } from '@/lib/utils';
 import { getSeoDataByUri } from '@/utils/seo';
@@ -17,7 +19,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const ServicesPage = async () => {
-  const [branchesCount, t] = await Promise.all([getBranchesCount(), getTranslations()]);
+  const [branchesCount, t, servicesData] = await Promise.all([
+    getBranchesCount(),
+    getTranslations(),
+    getAllServicesData(),
+  ]);
+
+  const { funeralCeremonies, funeralEssentials, otherServices } = servicesData;
 
   return (
     <main className='max-w-container mx-auto'>
@@ -56,6 +64,12 @@ const ServicesPage = async () => {
         }}
       />
 
+      <ServicesGridSection
+        title={funeralCeremonies.taxonomy?.name || 'Smuteční obřady'}
+        description={funeralCeremonies.taxonomy?.description || ''}
+        services={funeralCeremonies.posts}
+      />
+
       <ContentSection
         title={t('home.organized-by-us.title')}
         description={formatTranslation(t('home.organized-by-us.description'))}
@@ -64,6 +78,14 @@ const ServicesPage = async () => {
         sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
         withFeathers
       />
+
+      <ServicesGridSection
+        title={funeralEssentials.taxonomy?.name || 'Náležitosti pohřbu'}
+        description={funeralEssentials.taxonomy?.description || ''}
+        services={funeralEssentials.posts}
+      />
+
+      <OtherServicesSection services={otherServices} />
 
       <ContentSection
         title={t('home.about-us.title')}
