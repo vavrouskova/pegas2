@@ -1,8 +1,8 @@
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
+import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import { PhoneNumber } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
@@ -11,13 +11,23 @@ interface MainHeroSectionProps {
   description: string;
   branchesCount?: number;
   className?: string;
+  pageTitle?: string;
+  noImage?: boolean;
 }
 
-const MainHeroSection = async ({ title, description, branchesCount = 0, className }: MainHeroSectionProps) => {
+const MainHeroSection = async ({
+  title,
+  description,
+  branchesCount = 0,
+  className,
+  pageTitle,
+  noImage = false,
+}: MainHeroSectionProps) => {
   const t = await getTranslations('home.hero');
 
   return (
     <section className={cn('section-container pb-60', className)}>
+      {pageTitle && <Breadcrumbs pageTitle={pageTitle} />}
       <div className='mt-96 flex max-w-[36rem] flex-col justify-center gap-8 md:mt-[29.57rem]'>
         <h1 className='whitespace-pre-line'>{title}</h1>
         <p className='text-xl whitespace-pre-line'>{description}</p>
@@ -51,13 +61,15 @@ const MainHeroSection = async ({ title, description, branchesCount = 0, classNam
           </div>
         </div>
       </div>
-      <Image
-        src='/images/wing.webp'
-        alt='Background Image'
-        width={2000}
-        height={2000}
-        className='absolute top-6 right-0 z-[-1] w-[81rem] min-w-[35rem] md:top-12'
-      />
+      {!noImage && (
+        <Image
+          src='/images/wing.webp'
+          alt='Background Image'
+          width={2000}
+          height={2000}
+          className='absolute top-6 right-0 z-[-1] w-[81rem] min-w-[35rem] md:top-12'
+        />
+      )}
     </section>
   );
 };

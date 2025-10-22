@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/filename-case */
 import { getRequestConfig } from 'next-intl/server';
 
 // eslint-disable-next-line no-restricted-imports

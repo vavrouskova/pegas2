@@ -151,5 +151,32 @@
       "management-title": "Vedení firmy",
       "team-title": "Náši lidé"
     }
+  },
+  "services": {
+    "hero": {
+      "page-title": "Služby",
+      "title": "Není třeba vědět vše. <br/>Jsme tu, abychom vás provedli.",
+      "description": "Nadechněte se. Všechno má svůj čas. Není nutné rozhodovat hned – stačí jeden klidný hovor. Vyslechneme, poradíme, citlivě pomůžeme. Postaráme se."
+    },
+    "transport": {
+      "title": "Převoz zesnulých",
+      "description": "Z místa posledního odchodu se stává začátek rozloučení.\nPřevozy zajišťujeme tiše a s respektem – s využitím převozových rakví, špičkového technického zázemí a zkušeného týmu, který jedná citlivě, s empatií a důstojností.",
+      "features": {
+        "dignified-transport": {
+          "title": "Důstojný převoz v rakvi",
+          "description": "Každý převoz realizujeme v převozové rakvi s maximální péčí a úctou k zesnulému."
+        },
+        "empathetic-approach": {
+          "title": "Empatický přístup",
+          "description": "Náš tým jedná citlivě a s pochopením pro situaci pozůstalých."
+        },
+        "modern-facilities": {
+          "title": "Moderní technické zázemí",
+          "description": "Využíváme špičkové vybavení a zázemí pro zajištění kvalitních převozů."
+        }
+      },
+      "primary-button": "Chci zajistit převoz",
+      "secondary-button": "Repatriace ze zahraničí"
+    }
   }
 }
