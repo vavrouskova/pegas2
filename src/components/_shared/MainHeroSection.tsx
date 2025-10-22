@@ -12,6 +12,7 @@ interface MainHeroSectionProps {
   branchesCount?: number;
   sectionClassName?: string;
   contentClassName?: string;
+  imageClassName?: string;
   pageTitle?: string;
   noImage?: boolean;
 }
@@ -22,6 +23,7 @@ const MainHeroSection = async ({
   branchesCount = 0,
   sectionClassName,
   contentClassName,
+  imageClassName,
   pageTitle,
   noImage = false,
 }: MainHeroSectionProps) => {
@@ -69,7 +71,7 @@ const MainHeroSection = async ({
           alt='Background Image'
           width={2000}
           height={2000}
-          className='absolute top-6 right-0 z-[-1] w-[81rem] min-w-[35rem] md:top-12'
+          className={cn('absolute top-6 right-0 z-[-1] w-[81rem] min-w-[35rem] md:top-12', imageClassName)}
         />
       )}
     </section>

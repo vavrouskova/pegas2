@@ -34,8 +34,8 @@ const ServicesPage = async () => {
         description={formatTranslation(t('services.hero.description'))}
         branchesCount={branchesCount}
         pageTitle={t('services.hero.page-title')}
-        noImage
         contentClassName='mt-18 md:mt-38'
+        imageClassName='top-[31rem] md:top-[38rem]'
       />
 
       <TransportSection
