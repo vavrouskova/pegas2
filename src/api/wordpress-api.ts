@@ -379,6 +379,9 @@ export async function getAllServicesData(first = 100) {
           id
           title
           slug
+          sluzbyAcf {
+            introText
+          }
           typSluzby {
             nodes {
               id

@@ -25,7 +25,7 @@ interface ServicesGridSectionProps {
   baseUrl?: string;
 }
 
-const ServicesGridSection = ({ title, description, services, baseUrl = '/sluzby' }: ServicesGridSectionProps) => {
+const ServicesGridSection = ({ title, description, services }: ServicesGridSectionProps) => {
   if (!services || services.length === 0) {
     return null;
   }
@@ -47,7 +47,7 @@ const ServicesGridSection = ({ title, description, services, baseUrl = '/sluzby'
           return (
             <Link
               key={service.id}
-              href={`${baseUrl}/${service.slug}`}
+              href={`/${service.slug}`}
               className='group flex flex-col gap-8 transition-opacity duration-300 hover:opacity-80'
             >
               {/* Obrázek */}

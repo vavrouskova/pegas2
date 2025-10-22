@@ -8,6 +8,9 @@ interface OtherService {
   id: string;
   title: string;
   slug: string;
+  sluzbyAcf?: {
+    introText?: string;
+  };
 }
 
 interface OtherServicesSectionProps {
@@ -15,7 +18,7 @@ interface OtherServicesSectionProps {
   baseUrl?: string;
 }
 
-const OtherServicesSection = ({ services, baseUrl = '/sluzby' }: OtherServicesSectionProps) => {
+const OtherServicesSection = ({ services }: OtherServicesSectionProps) => {
   if (!services || services.length === 0) {
     return null;
   }
@@ -32,8 +35,11 @@ const OtherServicesSection = ({ services, baseUrl = '/sluzby' }: OtherServicesSe
             {/* Nadpis */}
             <h2>{service.title}</h2>
 
+            {/* Popis */}
+            {service.sluzbyAcf?.introText && <p className='text-lg'>{service.sluzbyAcf.introText}</p>}
+
             {/* CTA tlačítko */}
-            <Link href={`${baseUrl}/${service.slug}`}>
+            <Link href={`/${service.slug}`}>
               <Button buttonText='Detail služby' />
             </Link>
           </div>
