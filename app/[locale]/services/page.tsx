@@ -60,7 +60,7 @@ const ServicesPage = async () => {
         }}
         secondaryButton={{
           text: t('services.transport.secondary-button'),
-          link: 'sluzby/repatriace',
+          link: 'repatriace',
         }}
       />
 

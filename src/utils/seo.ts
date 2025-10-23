@@ -67,6 +67,9 @@ interface GetSeoDataOptions {
 function getIdTypeForQuery(name: string): string {
   if (name === 'page') return 'PageIdType';
   if (name === 'post') return 'PostIdType';
+  if (name === 'referencePost') return 'ReferencePostIdType';
+  if (name === 'sluzbyPost') return 'SluzbyPostIdType';
+  if (name === 'pobockaPost') return 'PobockaPostIdType';
   return 'ID';
 }
 
@@ -277,6 +280,18 @@ export async function getSeoDataByUri(contentType: ContentType, uri: string, rev
     contentType,
     id: uri,
     idType: 'URI',
+    revalidate,
+  });
+}
+
+/**
+ * Helper function for fetching SEO data by slug
+ */
+export async function getSeoDataBySlug(contentType: ContentType, slug: string, revalidate?: number): Promise<Metadata> {
+  return getSeoData({
+    contentType,
+    id: slug,
+    idType: 'SLUG',
     revalidate,
   });
 }

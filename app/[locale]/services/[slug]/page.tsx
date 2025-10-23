@@ -1,20 +1,48 @@
+import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
+import { getServiceBySlug } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
+import { getSeoDataBySlug } from '@/utils/seo';
 
-const ServiceDetailPage = async () => {
-  const [t] = await Promise.all([getTranslations()]);
+interface ServiceDetailPageProps {
+  params: Promise<{
+    slug: string;
+    locale: string;
+  }>;
+}
+
+export async function generateMetadata({ params }: ServiceDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  return getSeoDataBySlug('sluzbyPost', slug);
+}
+
+const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
+  const { slug } = await params;
+  const [t, serviceData] = await Promise.all([getTranslations(), getServiceBySlug(slug)]);
+
+  // Pokud služba nebyla nalezena, zobraz 404
+  if (!serviceData) {
+    notFound();
+  }
+
+  const { title, sluzbyAcf } = serviceData;
+  const introText = sluzbyAcf?.introText || '';
+  const image = sluzbyAcf?.introImageSluzby?.node?.sourceUrl || '/images/team-pegas.webp';
+  const imageAlt = sluzbyAcf?.introImageSluzby?.node?.altText || title;
 
   return (
     <main className='max-w-container mx-auto'>
       <BasicHeroSection
-        title={t('about-us.basic-hero.title')}
-        description={t('about-us.basic-hero.description')}
-        image='/images/team-pegas.webp'
-        imageAlt='Team Pegas'
-        pageTitle={t('about-us.basic-hero.page-title')}
+        title={title}
+        description={introText}
+        image={image}
+        imageAlt={imageAlt}
+        pageTitle={title}
       />
 
       <ContentSection

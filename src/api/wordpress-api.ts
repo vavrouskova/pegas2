@@ -519,6 +519,65 @@ export async function getUncategorizedServices(first = 100) {
 }
 
 /**
+ * Získá detail služby podle slugu
+ * @param slug - Slug služby
+ * @returns Promise s detailem služby
+ */
+export async function getServiceBySlug(slug: string) {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetServiceBySlug($slug: ID!) {
+      sluzbyPost(id: $slug, idType: SLUG) {
+        id
+        databaseId
+        title
+        slug
+        sluzbyAcf {
+          introText
+          introImageSluzby {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { slug },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.sluzbyPost || null;
+  } catch (error) {
+    console.error(`Error fetching service with slug ${slug}:`, error);
+    return null;
+  }
+}
+
+/**
  * Získá služby podle taxonomie (typSluzby)
  * @param taxonomySlug - Slug taxonomie (např. "smutecni-obrady")
  * @param first - Počet služeb k načtení (výchozí 100)
