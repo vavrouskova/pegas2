@@ -6,12 +6,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
- * Formátuje přeložený text nahrazením HTML tagů za znaky nového řádku
+ * Formátuje přeložený text nahrazením HTML tagů a {{br}} značek za znaky nového řádku
  * @param text - Text k formátování
- * @returns Formátovaný text s novými řádky místo HTML tagů
+ * @returns Formátovaný text s novými řádky místo HTML tagů a {{br}} značek
  */
 export function formatTranslation(text: string): string {
-  return text.replaceAll('<br/>', '\n');
+  // Nahradit staré <br/> i nové {{br}} za \n
+  return text.replaceAll('<br/>', '\n').replaceAll('{{br}}', '\n');
 }
 
 /**

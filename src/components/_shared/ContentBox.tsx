@@ -2,7 +2,8 @@ import Link from 'next/link';
 import React from 'react';
 
 import Button from '@/components/_shared/Button';
-import { cn, czechTypography } from '@/lib/utils';
+import { FormattedText } from '@/components/_shared/FormattedText';
+import { cn } from '@/lib/utils';
 
 interface ContentBoxProps {
   title: string;
@@ -15,8 +16,15 @@ interface ContentBoxProps {
 const ContentBox = ({ title, description, buttonText, link, className }: ContentBoxProps) => {
   return (
     <div className={cn('flex w-full flex-col gap-7', className)}>
-      <h2>{czechTypography(title)}</h2>
-      <p className='mb-3 text-lg whitespace-pre-line'>{czechTypography(description)}</p>
+      <FormattedText
+        text={title}
+        as='h2'
+      />
+      <FormattedText
+        text={description}
+        as='p'
+        className='mb-3 text-lg'
+      />
       <Link href={`/${link}`}>
         <Button buttonText={buttonText} />
       </Link>

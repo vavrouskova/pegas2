@@ -1,8 +1,8 @@
 import Image from 'next/image';
 
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
+import { FormattedText } from '@/components/_shared/FormattedText';
 import LeavesAnimation from '@/components/_shared/LeavesAnimation';
-import { czechTypography } from '@/lib/utils';
 
 interface BasicHeroSectionProps {
   title: string;
@@ -19,8 +19,16 @@ const BasicHeroSection = ({ title, description, image, imageAlt, pageTitle }: Re
       <Breadcrumbs pageTitle={pageTitle} />
       <div className='mx-auto max-w-[1272px] pt-[7.75rem]'>
         <div className='relative z-10 mb-5 flex max-w-[35.75rem] flex-col gap-8 lg:mb-8'>
-          <h1 className='text-4xl'>{czechTypography(title)}</h1>
-          <p className='text-primary text-xl'>{czechTypography(description)}</p>
+          <FormattedText
+            text={title}
+            as='h1'
+            className='text-4xl'
+          />
+          <FormattedText
+            text={description}
+            as='p'
+            className='text-primary text-xl'
+          />
         </div>
         <Image
           src={image}

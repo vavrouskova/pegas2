@@ -2,8 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import Button from '@/components/_shared/Button';
+import { FormattedText } from '@/components/_shared/FormattedText';
 import LeavesAnimation from '@/components/_shared/LeavesAnimation';
-import { czechTypography } from '@/lib/utils';
 
 interface OtherService {
   id: string;
@@ -40,10 +40,19 @@ const OtherServicesSection = ({ services }: OtherServicesSectionProps) => {
             className='flex flex-col gap-7'
           >
             {/* Nadpis */}
-            <h2>{czechTypography(service.title)}</h2>
+            <FormattedText
+              text={service.title}
+              as='h2'
+            />
 
             {/* Popis */}
-            {service.sluzbyAcf?.introText && <p className='text-lg'>{czechTypography(service.sluzbyAcf.introText)}</p>}
+            {service.sluzbyAcf?.introText && (
+              <FormattedText
+                text={service.sluzbyAcf.introText}
+                as='p'
+                className='text-lg'
+              />
+            )}
 
             {/* CTA tlačítko */}
             <Link

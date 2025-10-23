@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import Button from '@/components/_shared/Button';
-import { czechTypography } from '@/lib/utils';
+import { FormattedText } from '@/components/_shared/FormattedText';
 
 interface TransportFeature {
   title: string;
@@ -28,8 +28,15 @@ const TransportSection = ({ title, description, features, primaryButton, seconda
       <div className='max-w-[42.6875rem] lg:ml-30'>
         {/* Hlavní nadpis a popis */}
         <div className='mb-9 flex flex-col gap-8'>
-          <h2>{czechTypography(title)}</h2>
-          <p className='text-lg leading-relaxed whitespace-pre-line'>{czechTypography(description)}</p>
+          <FormattedText
+            text={title}
+            as='h2'
+          />
+          <FormattedText
+            text={description}
+            as='p'
+            className='text-lg leading-relaxed'
+          />
         </div>
 
         {/* Výhody/Features */}
@@ -39,8 +46,16 @@ const TransportSection = ({ title, description, features, primaryButton, seconda
               key={index}
               className='flex flex-col gap-2.5'
             >
-              <h4 className='text-xl'>{czechTypography(feature.title)}</h4>
-              <p className='text-lg leading-relaxed'>{czechTypography(feature.description)}</p>
+              <FormattedText
+                text={feature.title}
+                as='h4'
+                className='text-xl'
+              />
+              <FormattedText
+                text={feature.description}
+                as='p'
+                className='text-lg leading-relaxed'
+              />
             </div>
           ))}
         </div>

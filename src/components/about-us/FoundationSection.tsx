@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 
-import { czechTypography } from '@/lib/utils';
+import { FormattedText } from '@/components/_shared/FormattedText';
 
 const FoundationSection = async () => {
   const t = await getTranslations('about-us');
@@ -16,8 +16,16 @@ const FoundationSection = async () => {
       />
       <div className='bg-primary z-10 flex w-full max-w-[43.25rem] items-center justify-center lg:h-[28.3125rem] lg:min-w-[43.25rem]'>
         <div className='flex max-w-[28.375rem] flex-col gap-7 px-12 py-20'>
-          <h2 className='text-white-smoke text-3xl'>{czechTypography(t('foundation.title'))}</h2>
-          <p className='text-white-smoke'>{czechTypography(t('foundation.description'))}</p>
+          <FormattedText
+            text={t('foundation.title')}
+            as='h2'
+            className='text-white-smoke text-3xl'
+          />
+          <FormattedText
+            text={t('foundation.description')}
+            as='p'
+            className='text-white-smoke'
+          />
         </div>
       </div>
     </section>

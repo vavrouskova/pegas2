@@ -9,7 +9,6 @@ import PartnersSection from '@/components/_shared/PartnersSection';
 import OtherServicesSection from '@/components/services/OtherServicesSection';
 import ServicesGridSection from '@/components/services/ServicesGridSection';
 import TransportSection from '@/components/services/TransportSection';
-import { formatTranslation } from '@/lib/utils';
 import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -30,8 +29,8 @@ const ServicesPage = async () => {
   return (
     <main className='max-w-container mx-auto'>
       <MainHeroSection
-        title={formatTranslation(t('services.hero.title'))}
-        description={formatTranslation(t('services.hero.description'))}
+        title={t('services.hero.title')}
+        description={t('services.hero.description')}
         branchesCount={branchesCount}
         pageTitle={t('services.hero.page-title')}
         contentClassName='mt-18 lg:ml-30 md:mt-38 pb-[20rem] sm:pb-60'
@@ -73,7 +72,7 @@ const ServicesPage = async () => {
 
       <ContentSection
         title={t('home.organized-by-us.title')}
-        description={formatTranslation(t('home.organized-by-us.description'))}
+        description={t('home.organized-by-us.description')}
         buttonText={t('home.organized-by-us.button-text')}
         link={t('home.organized-by-us.link')}
         sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'

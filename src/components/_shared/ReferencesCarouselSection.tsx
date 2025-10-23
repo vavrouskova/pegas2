@@ -5,6 +5,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import Button from '@/components/_shared/Button';
+import { FormattedText } from '@/components/_shared/FormattedText';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
 import { czechTypography } from '@/lib/utils';
 import { formatFarewellDateTime } from '@/utils/helper';
@@ -61,17 +62,35 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
       renderContent={(item, t) => (
         <div className='flex flex-1 flex-col space-y-2 px-4 py-5 max-md:h-full max-md:justify-between md:px-10 md:py-9'>
           <div className='flex flex-col space-y-2'>
-            <h3 className='text-white-smoke mb-6 text-2xl'>{czechTypography(item.title)}</h3>
+            <FormattedText
+              text={item.title}
+              as='h3'
+              className='text-white-smoke mb-6 text-2xl'
+            />
             {item.where && (
               <p className='text-tertiary text-lg'>
-                <span className='font-heading text-white-smoke'>{czechTypography(t('where'))}:</span>{' '}
-                {czechTypography(item.where)}
+                <FormattedText
+                  text={`${t('where')}:`}
+                  as='span'
+                  className='font-heading text-white-smoke'
+                />{' '}
+                <FormattedText
+                  text={item.where}
+                  as='span'
+                />
               </p>
             )}
             {item.when && (
               <p className='text-tertiary text-lg'>
-                <span className='font-heading text-white-smoke'>{czechTypography(t('when'))}:</span>{' '}
-                {czechTypography(item.when)}
+                <FormattedText
+                  text={`${t('when')}:`}
+                  as='span'
+                  className='font-heading text-white-smoke'
+                />{' '}
+                <FormattedText
+                  text={item.when}
+                  as='span'
+                />
               </p>
             )}
           </div>

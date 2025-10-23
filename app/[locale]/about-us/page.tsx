@@ -12,7 +12,7 @@ import CitationSection from '@/components/about-us/CitationSection';
 import EmployeesSection from '@/components/about-us/EmployeesSection';
 import FoundationSection from '@/components/about-us/FoundationSection';
 import TimelineSection from '@/components/about-us/TimelineSection';
-import { formatTranslation } from '@/lib/utils';
+import { FormattedText } from '@/components/_shared/FormattedText';
 import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -43,8 +43,16 @@ const AboutUsPage = async () => {
       <section className='section-container 2lg:py-16 relative pt-32 lg:pb-16'>
         <Socials />
         <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-6'>
-          <h2 className='text-3xl'>{formatTranslation(t('about-us.experience.title'))}</h2>
-          <p className='text-lg'>{t('about-us.experience.description')}</p>
+          <FormattedText
+            text={t('about-us.experience.title')}
+            as='h2'
+            className='text-3xl'
+          />
+          <FormattedText
+            text={t('about-us.experience.description')}
+            as='p'
+            className='text-lg'
+          />
         </div>
       </section>
 

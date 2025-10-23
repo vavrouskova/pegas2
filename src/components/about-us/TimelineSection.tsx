@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-import { czechTypography } from '@/lib/utils';
+import { FormattedText } from '@/components/_shared/FormattedText';
 import type { TimelineItem } from '@/utils/wordpress-types';
 
 interface TimelineSectionProps {
@@ -61,8 +61,19 @@ const TimelineContent = ({ title, description, image, className = '' }: Readonly
           alt={image.node.altText || title || 'Timeline image'}
         />
       )}
-      {title && <h3 className='font-heading text-2xl'>{czechTypography(title)}</h3>}
-      {description && <p>{czechTypography(description)}</p>}
+      {title && (
+        <FormattedText
+          text={title}
+          as='h3'
+          className='font-heading text-2xl'
+        />
+      )}
+      {description && (
+        <FormattedText
+          text={description}
+          as='p'
+        />
+      )}
     </div>
   );
 };

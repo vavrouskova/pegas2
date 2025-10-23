@@ -3,7 +3,6 @@ import { getTranslations } from 'next-intl/server';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
-import { formatTranslation } from '@/lib/utils';
 
 const ServiceDetailPage = async () => {
   const [t] = await Promise.all([getTranslations()]);
@@ -20,7 +19,7 @@ const ServiceDetailPage = async () => {
 
       <ContentSection
         title={t('home.organized-by-us.title')}
-        description={formatTranslation(t('home.organized-by-us.description'))}
+        description={t('home.organized-by-us.description')}
         buttonText={t('home.organized-by-us.button-text')}
         link={t('home.organized-by-us.link')}
         sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'

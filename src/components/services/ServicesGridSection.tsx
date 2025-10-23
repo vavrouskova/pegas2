@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import { czechTypography } from '@/lib/utils';
+import { FormattedText } from '@/components/_shared/FormattedText';
 
 interface ServicePost {
   id: string;
@@ -35,8 +35,15 @@ const ServicesGridSection = ({ title, description, services }: ServicesGridSecti
     <section className='section-container py-20 md:py-32'>
       {/* Nadpis a popis sekce */}
       <div className='mb-16 flex max-w-[42.6875rem] flex-col gap-8 lg:ml-30'>
-        <h2>{czechTypography(title)}</h2>
-        <p className='text-lg leading-relaxed'>{czechTypography(description)}</p>
+        <FormattedText
+          text={title}
+          as='h2'
+        />
+        <FormattedText
+          text={description}
+          as='p'
+          className='text-lg leading-relaxed'
+        />
       </div>
 
       {/* Grid služeb */}
@@ -63,7 +70,11 @@ const ServicesGridSection = ({ title, description, services }: ServicesGridSecti
               </div>
 
               {/* Nadpis */}
-              <h3 className='text-2xl leading-tight font-black tracking-wide'>{czechTypography(service.title)}</h3>
+              <FormattedText
+                text={service.title}
+                as='h3'
+                className='text-2xl leading-tight font-black tracking-wide'
+              />
             </Link>
           );
         })}

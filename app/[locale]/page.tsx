@@ -9,7 +9,6 @@ import FooterClaim from '@/components/_shared/FooterClaim';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 import ReferencesCarouselSection from '@/components/_shared/ReferencesCarouselSection';
 import ServicesSection from '@/components/_shared/ServicesSection';
-import { formatTranslation } from '@/lib/utils';
 import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -31,8 +30,8 @@ const Homepage = async () => {
   return (
     <main className='max-w-container mx-auto'>
       <MainHeroSection
-        title={formatTranslation(t('hero.title'))}
-        description={formatTranslation(t('hero.description'))}
+        title={t('hero.title')}
+        description={t('hero.description')}
         branchesCount={branchesCount}
       />
 
@@ -48,7 +47,7 @@ const Homepage = async () => {
 
       <ContentSection
         title={t('services.title')}
-        description={formatTranslation(t('services.description'))}
+        description={t('services.description')}
         buttonText={t('services.button-text')}
         link={t('services.link')}
         sectionClassName='pt-12 md:pt-40 pb-20 md:pb-48'
@@ -64,7 +63,7 @@ const Homepage = async () => {
 
       <ContentSection
         title={t('organized-by-us.title')}
-        description={formatTranslation(t('organized-by-us.description'))}
+        description={t('organized-by-us.description')}
         buttonText={t('organized-by-us.button-text')}
         link={t('organized-by-us.link')}
         sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'

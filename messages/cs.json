@@ -60,8 +60,8 @@
 
   "home": {
     "hero": {
-      "title": "Rozlučte se.<br/> Po svém, s vděčností.",
-      "description": "Vytváříme prostor pro okamžik, který patří jen vám.<br/> Jsme pohřební služba, která naslouchá – a plní vaše představy o vděčném a osobitém rozloučení.",
+      "title": "Rozlučte se.'{{br}}' Po svém, s vděčností.",
+      "description": "Vytváříme prostor pro okamžik, který patří jen vám.'{{br}}' Jsme pohřební služba, která naslouchá – a plní vaše představy o vděčném a osobitém rozloučení.",
       "contact-us": "Kontaktujte nás",
       "prepare": "Připravte si",
       "needed-documents": "Potřebné dokumenty",
@@ -77,7 +77,7 @@
     },
     "services": {
       "title": "Obřad, ceremoniál nebo tichá vzpomínka?",
-      "description": "Důstojné a opravdové rozloučení není otázkou peněz – může být tiché i pompézní, veřejné či osobní. Pomůžeme Vám s přípravou obřadu, který odpovídá vašim představám i možnostem.<br/><br/> Společně vytvoříme prostor okamžiku, který stojí za to prožít opravdově.",
+      "description": "Důstojné a opravdové rozloučení není otázkou peněz – může být tiché i pompézní, veřejné či osobní. Pomůžeme Vám s přípravou obřadu, který odpovídá vašim představám i možnostem.'{{br}}{{br}}' Společně vytvoříme prostor okamžiku, který stojí za to prožít opravdově.",
       "button-text": "Naše služby",
       "link": "sluzby"
     },
@@ -90,7 +90,7 @@
     },
     "organized-by-us": {
       "title": "Jsme tu. Tiše, ale pevně.",
-      "description": "Už 30 let děláme osobitá rozloučení, které mají hluboký smysl.  Nasloucháme, plníme přání.<br/><br/> Věříme, že důstojný závěr si zaslouží každý z nás.",
+      "description": "Už 30 let děláme osobitá rozloučení, které mají hluboký smysl.  Nasloucháme, plníme přání.'{{br}}{{br}}' Věříme, že důstojný závěr si zaslouží každý z nás.",
       "button-text": "Organizovali jsme",
       "link": "organizovali-jsme"
     },
@@ -118,7 +118,7 @@
       "page-title": "O nás"
     },
     "experience": {
-      "title": "30 let zkušeností,<br/>30 let lidského přístupu",
+      "title": "30 let zkušeností,'{{br}}'30 let lidského přístupu",
       "description": "Připravujeme rozloučení s péčí a důstojností – od veřejných obřadů po tichá setkání v rodinném kruhu. Jsme citlivá a profesionální služba, která propojuje tradici s přáním těch, kdo zůstávají. Každý okamžik utváříme tak, aby dával smysl právě Vám."
     },
     "citation": {
@@ -155,7 +155,7 @@
   "services": {
     "hero": {
       "page-title": "Služby",
-      "title": "Není třeba vědět vše. <br/>Jsme tu, abychom vás provedli.",
+      "title": "Není třeba vědět vše.'{{br:max-lg:hidden}}' Jsme tu, abychom vás provedli.",
       "description": "Nadechněte se. Všechno má svůj čas. Není nutné rozhodovat hned – stačí jeden klidný hovor. Vyslechneme, poradíme, citlivě pomůžeme. Postaráme se."
     },
     "transport": {

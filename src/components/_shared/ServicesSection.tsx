@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import { czechTypography } from '@/lib/utils';
+import { FormattedText } from '@/components/_shared/FormattedText';
 import { SluzbyPost } from '@/utils/wordpress-types';
 
 interface ServicesSectionProps {
@@ -18,7 +18,11 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
   }
   return (
     <section className='section-container'>
-      <h2 className='mb-9 text-3xl md:mb-40 md:text-center'>{czechTypography(t('home.services-nav.title'))}</h2>
+      <FormattedText
+        text={t('home.services-nav.title')}
+        as='h2'
+        className='mb-9 text-3xl md:mb-40 md:text-center'
+      />
       <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:flex'>
         {services.map((service) => (
           <Link
@@ -33,9 +37,11 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
               height={400}
               className='h-auto w-full'
             />
-            <h3 className='text-2xl transition-opacity duration-300 group-hover:opacity-70'>
-              {czechTypography(service.title)}
-            </h3>
+            <FormattedText
+              text={service.title}
+              as='h3'
+              className='text-2xl transition-opacity duration-300 group-hover:opacity-70'
+            />
           </Link>
         ))}
         <Link
@@ -43,9 +49,11 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
           className='group flex flex-col gap-4 lg:flex-1'
         >
           <div className='bg-primary flex aspect-square w-full items-center gap-2.5 self-stretch p-12' />
-          <h3 className='text-2xl transition-opacity duration-300 group-hover:opacity-70'>
-            {czechTypography(t('home.services-nav.all-services'))}
-          </h3>
+          <FormattedText
+            text={t('home.services-nav.all-services')}
+            as='h3'
+            className='text-2xl transition-opacity duration-300 group-hover:opacity-70'
+          />
         </Link>
       </div>
     </section>

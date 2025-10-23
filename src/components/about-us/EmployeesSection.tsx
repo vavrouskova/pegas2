@@ -3,10 +3,11 @@
 import Image from 'next/image';
 
 import { CarouselNavigation } from '@/components/_shared/CarouselNavigation';
+import { FormattedText } from '@/components/_shared/FormattedText';
 import LeavesAnimation from '@/components/_shared/LeavesAnimation';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { useCarouselAutoplay } from '@/hooks/useCarouselAutoplay';
-import { cn, czechTypography } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { filterEmployeesByPosition } from '@/utils/helper';
 import type { ZamestnanciPost } from '@/utils/wordpress-types';
 
@@ -46,9 +47,19 @@ const EmployeeCard = ({ employee, className }: Readonly<EmployeeCardProps>) => {
         )}
       </div>
       <div className='flex flex-col gap-1'>
-        {employee.title && <h3 className='font-heading text-xl'>{czechTypography(employee.title)}</h3>}
+        {employee.title && (
+          <FormattedText
+            text={employee.title}
+            as='h3'
+            className='font-heading text-xl'
+          />
+        )}
         {zamestnanciACF?.positionDescription && (
-          <p className='text-primary text-sm'>{czechTypography(zamestnanciACF.positionDescription)}</p>
+          <FormattedText
+            text={zamestnanciACF.positionDescription}
+            as='p'
+            className='text-primary text-sm'
+          />
         )}
       </div>
     </article>
@@ -66,7 +77,11 @@ const ManagementGrid = ({ employees, title }: Readonly<ManagementGridProps>) => 
   return (
     <div className='relative z-10 pt-40 pb-16'>
       <div className='mx-auto max-w-7xl'>
-        <h2 className='font-heading mb-12 text-3xl'>{czechTypography(title)}</h2>
+        <FormattedText
+          text={title}
+          as='h2'
+          className='font-heading mb-12 text-3xl'
+        />
         <div className='flex flex-wrap gap-4 lg:gap-8'>
           {employees.map((employee) => (
             <EmployeeCard
@@ -94,7 +109,11 @@ const TeamCarousel = ({ employees, title }: Readonly<TeamCarouselProps>) => {
   return (
     <div className='relative z-10 pt-16 pb-40'>
       <div className='mx-auto max-w-7xl'>
-        <h2 className='font-heading mb-12 text-3xl'>{czechTypography(title)}</h2>
+        <FormattedText
+          text={title}
+          as='h2'
+          className='font-heading mb-12 text-3xl'
+        />
       </div>
       <div
         ref={carouselRef}
