@@ -1,5 +1,5 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
 import Button from '@/components/_shared/Button';
 import LeavesAnimation from '@/components/_shared/LeavesAnimation';
@@ -16,7 +16,6 @@ interface OtherService {
 
 interface OtherServicesSectionProps {
   services: OtherService[];
-  baseUrl?: string;
 }
 
 const OtherServicesSection = ({ services }: OtherServicesSectionProps) => {
@@ -25,13 +24,20 @@ const OtherServicesSection = ({ services }: OtherServicesSectionProps) => {
   }
 
   return (
-    <section className='section-container relative py-20 md:py-32'>
+    <section className='section-container relative pt-96 pb-20 lg:py-32'>
       <LeavesAnimation />
-      <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-32'>
+      <Image
+        src='/images/leaves.webp'
+        alt='Decorative leaves'
+        width={300}
+        height={300}
+        className='absolute top-0 right-0 z-10 h-auto min-w-[26.8rem] shrink-0 translate-x-16 -translate-y-20 -scale-x-100 rotate-[260deg] lg:hidden'
+      />
+      <div className='relative z-10 flex max-w-[42.6875rem] flex-col gap-35 lg:ml-30'>
         {services.map((service) => (
           <div
             key={service.id}
-            className='flex flex-col gap-9'
+            className='flex flex-col gap-7'
           >
             {/* Nadpis */}
             <h2>{czechTypography(service.title)}</h2>
@@ -40,7 +46,10 @@ const OtherServicesSection = ({ services }: OtherServicesSectionProps) => {
             {service.sluzbyAcf?.introText && <p className='text-lg'>{czechTypography(service.sluzbyAcf.introText)}</p>}
 
             {/* CTA tlačítko */}
-            <Link href={`/${service.slug}`}>
+            <Link
+              href={`/${service.slug}`}
+              className='mt-2 w-fit'
+            >
               <Button buttonText='Detail služby' />
             </Link>
           </div>

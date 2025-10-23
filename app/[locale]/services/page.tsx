@@ -34,7 +34,7 @@ const ServicesPage = async () => {
         description={formatTranslation(t('services.hero.description'))}
         branchesCount={branchesCount}
         pageTitle={t('services.hero.page-title')}
-        contentClassName='mt-18 md:mt-38 pb-[20rem] sm:pb-60'
+        contentClassName='mt-18 lg:ml-30 md:mt-38 pb-[20rem] sm:pb-60'
         imageClassName='top-[50rem] md:top-[38rem] max-w-[75%]'
       />
 
@@ -94,7 +94,7 @@ const ServicesPage = async () => {
         buttonText={t('home.about-us.button-text')}
         link={t('home.about-us.link')}
         imagePosition='left'
-        className='pb-40 lg:py-80'
+        className='lg:py-80'
         image={{ src: '/images/about-us.webp', alt: t('home.about-us.alt') }}
       />
 

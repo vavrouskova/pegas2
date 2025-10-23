@@ -24,7 +24,6 @@ interface ServicesGridSectionProps {
   title: string;
   description: string;
   services: ServicePost[];
-  baseUrl?: string;
 }
 
 const ServicesGridSection = ({ title, description, services }: ServicesGridSectionProps) => {
@@ -35,7 +34,7 @@ const ServicesGridSection = ({ title, description, services }: ServicesGridSecti
   return (
     <section className='section-container py-20 md:py-32'>
       {/* Nadpis a popis sekce */}
-      <div className='mb-16 flex max-w-[42.6875rem] flex-col gap-8'>
+      <div className='mb-16 flex max-w-[42.6875rem] flex-col gap-8 lg:ml-30'>
         <h2>{czechTypography(title)}</h2>
         <p className='text-lg leading-relaxed'>{czechTypography(description)}</p>
       </div>

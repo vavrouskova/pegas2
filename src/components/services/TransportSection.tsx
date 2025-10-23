@@ -25,7 +25,7 @@ interface TransportSectionProps {
 const TransportSection = ({ title, description, features, primaryButton, secondaryButton }: TransportSectionProps) => {
   return (
     <section className='section-container py-20 md:py-32 lg:py-40'>
-      <div className='max-w-[42.6875rem]'>
+      <div className='max-w-[42.6875rem] lg:ml-30'>
         {/* Hlavní nadpis a popis */}
         <div className='mb-9 flex flex-col gap-8'>
           <h2>{czechTypography(title)}</h2>
