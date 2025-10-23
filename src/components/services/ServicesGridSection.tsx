@@ -41,7 +41,7 @@ const ServicesGridSection = ({ title, description, services }: ServicesGridSecti
       </div>
 
       {/* Grid služeb */}
-      <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4'>
+      <div className='grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4'>
         {services.map((service) => {
           const imageUrl = service.featuredImage?.node?.sourceUrl || '/images/placeholder.webp';
           const imageAlt = service.featuredImage?.node?.altText || service.title;
