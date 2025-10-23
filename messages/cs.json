@@ -177,6 +177,11 @@
       },
       "primary-button": "Chci zajistit převoz",
       "secondary-button": "Repatriace ze zahraničí"
+    },
+    "contact-us": {
+      "title": "Vaše představa je začátek,'{{br:max-lg:hidden}}' zbytek je na nás.",
+      "description": "Společně vytvoříme prostor pro rozloučení, jaké si opravdu představujete.",
+      "button-text": "Domluvme si setkání"
     }
   }
 }

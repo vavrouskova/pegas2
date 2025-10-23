@@ -46,6 +46,14 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
       />
 
       <ContentSection
+        title={t('services.contact-us.title')}
+        description={t('services.contact-us.description')}
+        buttonText={t('services.contact-us.button-text')}
+        link={t('routes.contacts')}
+        sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
+      />
+
+      <ContentSection
         title={t('home.organized-by-us.title')}
         description={t('home.organized-by-us.description')}
         buttonText={t('home.organized-by-us.button-text')}
