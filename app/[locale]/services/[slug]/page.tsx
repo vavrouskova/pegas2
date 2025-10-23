@@ -6,6 +6,7 @@ import { getServiceBySlug } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
+import ServiceContentSection from '@/components/services/ServiceContentSection';
 import { getSeoDataBySlug } from '@/utils/seo';
 
 interface ServiceDetailPageProps {
@@ -30,7 +31,7 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
     notFound();
   }
 
-  const { title, sluzbyAcf } = serviceData;
+  const { title, sluzbyAcf, components } = serviceData;
   const introText = sluzbyAcf?.introText || '';
   const image = sluzbyAcf?.introImageSluzby?.node?.sourceUrl || '/images/team-pegas.webp';
   const imageAlt = sluzbyAcf?.introImageSluzby?.node?.altText || title;
@@ -45,20 +46,14 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
         pageTitle={title}
       />
 
-      <ContentSection
-        title={t('services.contact-us.title')}
-        description={t('services.contact-us.description')}
-        buttonText={t('services.contact-us.button-text')}
-        link={t('routes.contacts')}
-        sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
-      />
+      <ServiceContentSection components={components} />
 
       <ContentSection
         title={t('home.organized-by-us.title')}
         description={t('home.organized-by-us.description')}
         buttonText={t('home.organized-by-us.button-text')}
         link={t('home.organized-by-us.link')}
-        sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
+        sectionClassName='pt-[15rem] pb-[21rem]'
         withFeathers
       />
 

@@ -542,6 +542,34 @@ export async function getServiceBySlug(slug: string) {
             }
           }
         }
+        components {
+          components {
+            ... on ComponentsComponentsWysiwygLayout {
+              fieldGroupName
+              editor
+            }
+            ... on ComponentsComponentsMediaLayout {
+              fieldGroupName
+              mediaType
+              youtubeEmbedLink
+              image {
+                node {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+            ... on ComponentsComponentsGalleryLayout {
+              fieldGroupName
+              gallery {
+                nodes {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+          }
+        }
       }
     }
   `;
