@@ -1,7 +1,11 @@
+import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
+import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
+import Socials from '@/components/_shared/Socials';
 
 interface WysiwygComponent {
   fieldGroupName: 'ComponentsComponentsWysiwygLayout';
@@ -36,11 +40,26 @@ interface ServiceContentSectionProps {
   components?: {
     components?: ComponentType[];
   };
+  categorySlug?: string;
 }
 
-const ServiceContentSection = ({ components }: ServiceContentSectionProps) => {
+const ServiceContentSection = async ({ components, categorySlug }: ServiceContentSectionProps) => {
   if (!components?.components || components.components.length === 0) {
     return null;
+  }
+
+  const t = await getTranslations();
+
+  // Určení správného linku a textu podle kategorie
+  let backLink = `/${t('routes.services')}#dalsi-sluzby`;
+  let backLinkText = t('services.back-to-services.other-services');
+
+  if (categorySlug === 'smutecni-obrady') {
+    backLink = `/${t('routes.services')}#smutecni-obrady`;
+    backLinkText = t('services.back-to-services.ceremony-variants');
+  } else if (categorySlug === 'nalezitosti-pohrbu') {
+    backLink = `/${t('routes.services')}#nalezitosti-pohrbu`;
+    backLinkText = t('services.back-to-services.funeral-essentials');
   }
 
   const renderWysiwygContent = (content: string) => {
@@ -309,8 +328,20 @@ const ServiceContentSection = ({ components }: ServiceContentSectionProps) => {
 
   return (
     <section className='section-container relative py-12 md:py-16 lg:py-20'>
+      <Socials />
       <div className='mx-auto flex max-w-[683px] flex-col items-start gap-8 px-4 md:gap-10 md:px-6 lg:px-0'>
         {components.components.map((component, index) => renderComponent(component, index))}
+        <Link
+          href={backLink}
+          className='text-primary'
+        >
+          <Button
+            buttonText={backLinkText}
+            variant='white'
+            arrowPosition='left'
+            reverseArrow
+          />
+        </Link>
       </div>
     </section>
   );

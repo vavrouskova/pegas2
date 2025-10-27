@@ -87,7 +87,10 @@ const ServicesPage = async () => {
         services={funeralEssentials.posts}
       />
 
-      <OtherServicesSection services={otherServices} />
+      <OtherServicesSection
+        services={otherServices}
+        id='dalsi-sluzby'
+      />
 
       <ContentSection
         title={t('home.about-us.title')}

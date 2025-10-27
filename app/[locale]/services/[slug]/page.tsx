@@ -33,7 +33,7 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
 
   const { title, sluzbyAcf, components, typSluzby } = serviceData;
   const introText = sluzbyAcf?.introText || '';
-  const image = sluzbyAcf?.introImageSluzby?.node?.sourceUrl || '/images/team-pegas.webp';
+  const image = sluzbyAcf?.introImageSluzby?.node?.sourceUrl;
   const imageAlt = sluzbyAcf?.introImageSluzby?.node?.altText || title;
 
   // Sestavení breadcrumb items
@@ -64,7 +64,10 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
         breadcrumbItems={breadcrumbItems}
       />
 
-      <ServiceContentSection components={components} />
+      <ServiceContentSection
+        components={components}
+        categorySlug={typSluzby?.nodes?.[0]?.slug}
+      />
 
       <ContentSection
         title={t('home.organized-by-us.title')}

@@ -46,14 +46,16 @@ const BasicHeroSection = ({
             className='text-primary text-xl'
           />
         </div>
-        <Image
-          src={image}
-          alt={imageAlt}
-          width={1272}
-          height={1272}
-          className='relative z-0 h-auto w-full'
-          priority
-        />
+        {image && (
+          <Image
+            src={image}
+            alt={imageAlt}
+            width={1272}
+            height={1272}
+            className='relative z-0 h-auto w-full'
+            priority
+          />
+        )}
       </div>
       <Image
         src='/images/leaves.webp'

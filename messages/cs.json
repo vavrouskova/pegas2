@@ -158,6 +158,11 @@
       "title": "Není třeba vědět vše.'{{br:max-lg:hidden}}' Jsme tu, abychom vás provedli.",
       "description": "Nadechněte se. Všechno má svůj čas. Není nutné rozhodovat hned – stačí jeden klidný hovor. Vyslechneme, poradíme, citlivě pomůžeme. Postaráme se."
     },
+    "back-to-services": {
+      "ceremony-variants": "Varianty obřadů",
+      "funeral-essentials": "Náležitosti pohřbu",
+      "other-services": "Další služby"
+    },
     "transport": {
       "title": "Převoz zesnulých",
       "description": "Z místa posledního odchodu se stává začátek rozloučení.\nPřevozy zajišťujeme tiše a s respektem – s využitím převozových rakví, špičkového technického zázemí a zkušeného týmu, který jedná citlivě, s empatií a důstojností.",

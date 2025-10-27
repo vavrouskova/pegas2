@@ -16,15 +16,19 @@ interface OtherService {
 
 interface OtherServicesSectionProps {
   services: OtherService[];
+  id?: string;
 }
 
-const OtherServicesSection = ({ services }: OtherServicesSectionProps) => {
+const OtherServicesSection = ({ services, id }: OtherServicesSectionProps) => {
   if (!services || services.length === 0) {
     return null;
   }
 
   return (
-    <section className='section-container relative pt-96 pb-20 lg:py-32'>
+    <section
+      id={id}
+      className='section-container relative pt-96 pb-20 lg:py-32'
+    >
       <LeavesAnimation />
       <Image
         src='/images/leaves.webp'

@@ -9,6 +9,8 @@ interface ButtonProps {
   variant?: 'primary' | 'white' | 'destructive';
   size?: 'default' | 'small';
   className?: string;
+  arrowPosition?: 'left' | 'right';
+  reverseArrow?: boolean;
 }
 
 const variantStyles = {
@@ -29,8 +31,13 @@ const Button = ({
   variant = 'primary',
   size = 'default',
   className,
+  arrowPosition = 'right',
+  reverseArrow = false,
 }: ButtonProps) => {
   const arrowSize = size === 'small' ? 'h-4 w-4' : 'h-6 w-6';
+  const arrowClasses = cn(arrowSize, reverseArrow && 'rotate-180');
+
+  const arrow = <ArrowRight className={arrowClasses} />;
 
   return (
     <RippleButton
@@ -44,8 +51,9 @@ const Button = ({
         className
       )}
     >
+      {arrowPosition === 'left' && arrow}
       {buttonText}
-      <ArrowRight className={arrowSize} />
+      {arrowPosition === 'right' && arrow}
       <RippleButtonRipples />
     </RippleButton>
   );
