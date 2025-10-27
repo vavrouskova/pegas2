@@ -83,7 +83,7 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
         withFeathers
       />
 
-      <FooterClaim />
+      <FooterClaim className='mt-0' />
     </main>
   );
 };

@@ -3,11 +3,18 @@ import Image from 'next/image';
 import React from 'react';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
+import { cn } from '@/lib/utils';
+import { ClassNameProps } from '@/utils/types';
 
-const FooterClaim = async () => {
+const FooterClaim = async ({ className }: ClassNameProps) => {
   const t = await getTranslations('home.footer-bg');
   return (
-    <section className='max-w-container relative z-5 -mx-4 mt-28 h-[24.375rem] w-screen overflow-hidden sm:-mx-14 lg:mt-0 lg:h-[36.3rem]'>
+    <section
+      className={cn(
+        'max-w-container relative z-5 -mx-4 mt-28 h-[24.375rem] w-screen overflow-hidden sm:-mx-14 lg:mt-0 lg:h-[36.3rem]',
+        className
+      )}
+    >
       <Image
         src='/images/feather-bg.webp'
         alt={t('alt')}

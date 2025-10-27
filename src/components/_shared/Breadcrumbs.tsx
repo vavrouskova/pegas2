@@ -20,7 +20,7 @@ const Breadcrumbs = async ({ pageTitle, items = [] }: BreadcrumbsProps) => {
   const secondItemHref = items[0]?.href;
 
   return (
-    <div className='relative z-10 flex items-center gap-2 pt-12'>
+    <div className='relative z-10 flex flex-wrap items-center gap-2 pt-12 max-lg:pr-20'>
       <Link
         href='/'
         className='font-text text-sm underline underline-offset-2 hover:no-underline'
@@ -49,7 +49,7 @@ const Breadcrumbs = async ({ pageTitle, items = [] }: BreadcrumbsProps) => {
       </div>
 
       {/* Mobile: zobrazit pouze ... s linkem na druhý item */}
-      <div className='flex items-center gap-2 lg:hidden'>
+      <div className='flex flex-wrap items-center gap-2 lg:hidden'>
         {hasMultipleItems && secondItemHref && (
           <>
             -
