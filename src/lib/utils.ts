@@ -45,9 +45,10 @@ export function czechTypography(text: string): string {
   // Regexp pro jednopísmenná slova následovaná běžnou mezerou
   // \b = word boundary (začátek/konec slova)
   // [aáiíoóuúvzksAÁIÍOÓUÚVZKS] = jednopísmenné předložky (včetně verzí s diakritikou)
+  // \b za skupinou zajistí, že se jedná o celé jednopísmenné slovo, ne poslední písmeno delšího slova
   // \s+ = jedna nebo více mezer
   // (?=\S) = positive lookahead - následuje non-whitespace znak (nenahradí mezeru na konci věty)
-  const pattern = /\b([aáiíoóuúvzksAÁIÍOÓUÚVZKS])\s+(?=\S)/g;
+  const pattern = /\b([aáiíoóuúvzksAÁIÍOÓUÚVZKS])\b\s+(?=\S)/g;
 
   return text.replace(pattern, `$1${nbsp}`);
 }
