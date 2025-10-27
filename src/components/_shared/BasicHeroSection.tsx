@@ -4,19 +4,35 @@ import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import LeavesAnimation from '@/components/_shared/LeavesAnimation';
 
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
 interface BasicHeroSectionProps {
   title: string;
   description: string;
   image: string;
   imageAlt: string;
   pageTitle: string;
+  breadcrumbItems?: BreadcrumbItem[];
 }
 
-const BasicHeroSection = ({ title, description, image, imageAlt, pageTitle }: Readonly<BasicHeroSectionProps>) => {
+const BasicHeroSection = ({
+  title,
+  description,
+  image,
+  imageAlt,
+  pageTitle,
+  breadcrumbItems,
+}: Readonly<BasicHeroSectionProps>) => {
   return (
     <section className='relative px-4 sm:px-14 lg:px-44'>
       <LeavesAnimation />
-      <Breadcrumbs pageTitle={pageTitle} />
+      <Breadcrumbs
+        pageTitle={pageTitle}
+        items={breadcrumbItems}
+      />
       <div className='mx-auto max-w-[1272px] pt-[7.75rem]'>
         <div className='relative z-10 mb-5 flex max-w-[35.75rem] flex-col gap-8 lg:mb-8'>
           <FormattedText

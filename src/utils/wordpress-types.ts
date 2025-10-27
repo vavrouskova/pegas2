@@ -34,6 +34,16 @@ export interface ReferencePost {
   referenceACF?: ReferenceACF;
 }
 
+// Sluzby (Services) Taxonomy Types
+export interface TypSluzbyNode {
+  name: string;
+  slug: string;
+}
+
+export interface TypSluzby {
+  nodes: TypSluzbyNode[];
+}
+
 // Sluzby (Services) Types
 export interface SluzbyPost {
   id: string;
@@ -41,6 +51,7 @@ export interface SluzbyPost {
   title: string;
   slug: string;
   featuredImage?: MediaItemEdge;
+  typSluzby?: TypSluzby;
 }
 
 // Pobocky (Branches) ACF Types

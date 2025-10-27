@@ -31,10 +31,27 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
     notFound();
   }
 
-  const { title, sluzbyAcf, components } = serviceData;
+  const { title, sluzbyAcf, components, typSluzby } = serviceData;
   const introText = sluzbyAcf?.introText || '';
   const image = sluzbyAcf?.introImageSluzby?.node?.sourceUrl || '/images/team-pegas.webp';
   const imageAlt = sluzbyAcf?.introImageSluzby?.node?.altText || title;
+
+  // Sestavení breadcrumb items
+  const breadcrumbItems = [
+    {
+      label: t('header.services'),
+      href: `/${t('routes.services')}`,
+    },
+  ];
+
+  // Pokud má služba kategorii, přidej ji do breadcrumbs
+  if (typSluzby?.nodes && typSluzby.nodes.length > 0) {
+    const category = typSluzby.nodes[0];
+    breadcrumbItems.push({
+      label: category.name,
+      href: `/${t('routes.services')}#${category.slug}`,
+    });
+  }
 
   return (
     <main className='max-w-container mx-auto'>
@@ -44,6 +61,7 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
         image={image}
         imageAlt={imageAlt}
         pageTitle={title}
+        breadcrumbItems={breadcrumbItems}
       />
 
       <ServiceContentSection components={components} />

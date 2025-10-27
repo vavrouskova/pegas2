@@ -24,15 +24,19 @@ interface ServicesGridSectionProps {
   title: string;
   description: string;
   services: ServicePost[];
+  id?: string;
 }
 
-const ServicesGridSection = ({ title, description, services }: ServicesGridSectionProps) => {
+const ServicesGridSection = ({ title, description, services, id }: ServicesGridSectionProps) => {
   if (!services || services.length === 0) {
     return null;
   }
 
   return (
-    <section className='section-container py-20 md:py-32'>
+    <section
+      id={id}
+      className='section-container py-20 md:py-32'
+    >
       {/* Nadpis a popis sekce */}
       <div className='mb-16 flex max-w-[42.6875rem] flex-col gap-8 lg:ml-30'>
         <FormattedText

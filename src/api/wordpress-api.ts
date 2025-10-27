@@ -533,6 +533,12 @@ export async function getServiceBySlug(slug: string) {
         databaseId
         title
         slug
+        typSluzby {
+          nodes {
+            name
+            slug
+          }
+        }
         sluzbyAcf {
           introText
           introImageSluzby {

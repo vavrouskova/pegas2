@@ -65,6 +65,7 @@ const ServicesPage = async () => {
       />
 
       <ServicesGridSection
+        id='smutecni-obrady'
         title={funeralCeremonies.taxonomy?.name || 'Smuteční obřady'}
         description={funeralCeremonies.taxonomy?.description || ''}
         services={funeralCeremonies.posts}
@@ -80,6 +81,7 @@ const ServicesPage = async () => {
       />
 
       <ServicesGridSection
+        id='nalezitosti-pohrbu'
         title={funeralEssentials.taxonomy?.name || 'Náležitosti pohřbu'}
         description={funeralEssentials.taxonomy?.description || ''}
         services={funeralEssentials.posts}
