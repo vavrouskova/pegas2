@@ -69,7 +69,7 @@ interface FormattedTextProps {
    * HTML tag použitý pro obalení textu
    * @default 'span'
    */
-  as?: 'span' | 'div' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  as?: 'span' | 'div' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote';
   /**
    * CSS třídy pro obalující element
    */
