@@ -53,9 +53,9 @@ const StickyContact = () => {
         <Phone className='text-white-smoke size-[1.9375rem]' />
       </div>
       <div className='flex flex-col justify-between pr-2'>
-        <span className='text-base text-white'>{t('nonstop')}</span>
+        <span className='text-base !leading-none text-white'>{t('nonstop')}</span>
         <Link
-          className='text-2xl text-white transition-all duration-300 hover:opacity-70'
+          className='text-2xl !leading-none text-white transition-all duration-300 hover:opacity-70'
           href={`tel:${PhoneNumber}`}
         >
           {PhoneNumber}

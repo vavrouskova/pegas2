@@ -86,7 +86,7 @@
   }
 
   body {
-    @apply text-primary leading-loose;
+    @apply text-primary;
     overflow-x: hidden;
     font-variation-settings: var(--font-text);
   }
@@ -98,8 +98,7 @@
   h4,
   h5,
   h6 {
-    @apply text-primary;
-    line-height: 144% !important;
+    @apply text-primary leading-[144%];
     font-variation-settings: var(--font-heading);
   }
 
@@ -130,15 +129,14 @@
   /* Buttons and Links */
   button,
   a[href] {
+    @apply leading-[150%];
     cursor: pointer;
     font-variation-settings: var(--font-cta);
-    line-height: 150% !important;
   }
 
   p,
   span {
-    @apply text-secondary;
-    line-height: 200% !important;
+    @apply text-secondary leading-[200%];
   }
 }
 

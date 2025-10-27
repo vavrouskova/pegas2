@@ -26,7 +26,6 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
   const { slug } = await params;
   const [t, serviceData] = await Promise.all([getTranslations(), getServiceBySlug(slug)]);
 
-  // Pokud služba nebyla nalezena, zobraz 404
   if (!serviceData) {
     notFound();
   }
@@ -36,7 +35,6 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
   const image = sluzbyAcf?.introImageSluzby?.node?.sourceUrl;
   const imageAlt = sluzbyAcf?.introImageSluzby?.node?.altText || title;
 
-  // Sestavení breadcrumb items
   const breadcrumbItems = [
     {
       label: t('header.services'),
@@ -44,7 +42,6 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
     },
   ];
 
-  // Pokud má služba kategorii, přidej ji do breadcrumbs
   if (typSluzby?.nodes && typSluzby.nodes.length > 0) {
     const category = typSluzby.nodes[0];
     breadcrumbItems.push({
