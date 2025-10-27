@@ -301,7 +301,7 @@ export async function getZamestnanciPosts(first = 100) {
         query,
         variables: { first },
       }),
-      cache: 'no-store',
+      next: { revalidate: 3600 },
     });
 
     if (!response.ok) {
