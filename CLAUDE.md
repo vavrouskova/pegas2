@@ -22,6 +22,8 @@ npm start
 npm run lint
 ```
 
+**IMPORTANT**: Do NOT restart the dev server or run builds. The developer handles these tasks separately in their own terminal.
+
 ## Architecture
 
 ### Internationalization (i18n)

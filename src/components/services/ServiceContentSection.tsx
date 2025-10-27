@@ -49,12 +49,15 @@ const ServiceContentSection = ({ components }: ServiceContentSectionProps) => {
     let key = 0;
 
     // Odstranění HTML tagů a získání čistého textu, ale zachování <br>
-    // eslint-disable-next-line sonarjs/slow-regex, unicorn/consistent-function-scoping
+    // eslint-disable-next-line unicorn/consistent-function-scoping
     const stripHtml = (html: string) => {
-      return html
-        .replace(/<br\s*\/?>/gi, '\n') // Zachování line breaks
-        .replace(/<[^>]*>/g, '') // Odstranění všech ostatních tagů
-        .trim();
+      return (
+        html
+          .replace(/<br\s*\/?>/gi, '\n') // Zachování line breaks
+          // eslint-disable-next-line sonarjs/slow-regex
+          .replace(/<[^>]*>/g, '') // Odstranění všech ostatních tagů
+          .trim()
+      );
     };
 
     // Najdeme všechny HTML elementy s jejich pozicemi
@@ -94,33 +97,44 @@ const ServiceContentSection = ({ components }: ServiceContentSectionProps) => {
 
       if (!text) continue; // Skip prázdné elementy
 
-      if (item.tag === 'h2') {
-        elements.push(
-          <FormattedText
-            key={`h2-${key++}`}
-            text={text}
-            as='h2'
-            className='text-deep mb-6 text-2xl leading-[1.44] font-black tracking-[1px] lg:mb-7 lg:text-3xl'
-          />
-        );
-      } else if (item.tag === 'h3') {
-        elements.push(
-          <FormattedText
-            key={`h3-${key++}`}
-            text={text}
-            as='h3'
-            className='text-deep text-xl leading-[1.44] font-black tracking-[1px] lg:text-2xl'
-          />
-        );
-      } else if (item.tag === 'p') {
-        elements.push(
-          <FormattedText
-            key={`p-${key++}`}
-            text={text}
-            as='p'
-            className='font-regular text-deep text-base leading-[2] tracking-[0.7px] lg:text-lg'
-          />
-        );
+      switch (item.tag) {
+        case 'h2': {
+          elements.push(
+            <FormattedText
+              key={`h2-${key++}`}
+              text={text}
+              as='h2'
+              className='text-deep mb-6 text-2xl leading-[1.44] font-black tracking-[1px] lg:mb-7 lg:text-3xl'
+            />
+          );
+
+          break;
+        }
+        case 'h3': {
+          elements.push(
+            <FormattedText
+              key={`h3-${key++}`}
+              text={text}
+              as='h3'
+              className='text-deep text-xl leading-[1.44] font-black tracking-[1px] lg:text-2xl'
+            />
+          );
+
+          break;
+        }
+        case 'p': {
+          elements.push(
+            <FormattedText
+              key={`p-${key++}`}
+              text={text}
+              as='p'
+              className='font-regular text-deep text-base leading-[2] tracking-[0.7px] lg:text-lg'
+            />
+          );
+
+          break;
+        }
+        // No default
       }
     }
 

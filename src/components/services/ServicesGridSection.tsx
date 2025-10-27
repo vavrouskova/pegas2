@@ -1,8 +1,8 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
+import ServiceCard from '@/components/_shared/ServiceCard';
+import { getUniqueId } from '@/utils/helper';
 
 interface ServicePost {
   id: string;
@@ -48,36 +48,15 @@ const ServicesGridSection = ({ title, description, services }: ServicesGridSecti
 
       {/* Grid služeb */}
       <div className='grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4'>
-        {services.map((service) => {
-          const imageUrl = service.featuredImage?.node?.sourceUrl || '/images/placeholder.webp';
-          const imageAlt = service.featuredImage?.node?.altText || service.title;
-
-          return (
-            <Link
-              key={service.id}
-              href={`/${service.slug}`}
-              className='group flex flex-col gap-8 transition-opacity duration-300 hover:opacity-80'
-            >
-              {/* Obrázek */}
-              <div className='relative aspect-square w-full overflow-hidden'>
-                <Image
-                  src={imageUrl}
-                  alt={imageAlt}
-                  fill
-                  sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'
-                  className='object-cover'
-                />
-              </div>
-
-              {/* Nadpis */}
-              <FormattedText
-                text={service.title}
-                as='h3'
-                className='text-2xl leading-tight font-black tracking-wide'
-              />
-            </Link>
-          );
-        })}
+        {services.map((service) => (
+          <ServiceCard
+            key={getUniqueId()}
+            id={service.id}
+            title={service.title}
+            slug={service.slug}
+            featuredImage={service.featuredImage}
+          />
+        ))}
       </div>
     </section>
   );
