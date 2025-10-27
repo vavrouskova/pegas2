@@ -49,6 +49,7 @@
   :root,
   .default {
     --max-w: 94.5rem;
+    --tw-leading: leading-loose;
 
     /* Colors */
     --primary: 0.3529 0.0868 326.35; /* Deep */
@@ -86,7 +87,7 @@
   }
 
   body {
-    @apply text-primary;
+    @apply text-primary leading-loose;
     overflow-x: hidden;
     font-variation-settings: var(--font-text);
   }

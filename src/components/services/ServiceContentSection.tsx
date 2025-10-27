@@ -217,43 +217,87 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
 
         const images = component.gallery.nodes;
 
-        // Layout podle počtu obrázků
+        // Mobile: obrázky pod sebou, lichý čtvercový, sudý podlouhlý
+        // Desktop: původní layouty podle počtu obrázků
+
+        // Layout pro 2 obrázky
         if (images.length === 2) {
           return (
             <div
               key={index}
-              className='flex w-full flex-col gap-3 md:flex-row md:gap-4'
+              className='flex w-full flex-col gap-3 md:gap-4 lg:flex-row'
             >
-              <div className='relative h-[180px] w-full md:h-[239px] md:w-[239px] md:shrink-0'>
-                <Image
-                  src={images[0].sourceUrl || ''}
-                  alt={images[0].altText || ''}
-                  fill
-                  className='object-cover'
-                  unoptimized
-                />
-              </div>
-              <div className='relative h-[180px] flex-1 md:h-[239px]'>
-                <Image
-                  src={images[1].sourceUrl || ''}
-                  alt={images[1].altText || ''}
-                  fill
-                  className='object-cover'
-                  unoptimized
-                />
-              </div>
+              {images.map((image, imgIndex) => {
+                const isSquare = imgIndex % 2 === 0;
+
+                return (
+                  <div
+                    key={imgIndex}
+                    className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-[16/9]'} lg:aspect-auto ${
+                      imgIndex === 0 ? 'lg:h-[239px] lg:w-[239px] lg:flex-none lg:shrink-0' : 'lg:h-[239px] lg:flex-1'
+                    }`}
+                  >
+                    <Image
+                      src={image.sourceUrl || ''}
+                      alt={image.altText || ''}
+                      fill
+                      className='object-cover'
+                      unoptimized
+                    />
+                  </div>
+                );
+              })}
             </div>
           );
         }
 
+        // Layout pro 4 obrázky
         if (images.length === 4) {
           return (
             <div
               key={index}
               className='flex w-full flex-col gap-3 md:gap-4'
             >
-              <div className='flex gap-3 md:gap-4'>
-                <div className='relative h-[180px] w-full md:h-[239px] md:w-[239px] md:shrink-0'>
+              {images.map((image, imgIndex) => {
+                const isSquare = imgIndex % 2 === 0;
+
+                // Desktop: 2x2 grid
+                if (imgIndex < 2) {
+                  return (
+                    <div
+                      key={imgIndex}
+                      className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-[16/9]'} lg:hidden`}
+                    >
+                      <Image
+                        src={image.sourceUrl || ''}
+                        alt={image.altText || ''}
+                        fill
+                        className='object-cover'
+                        unoptimized
+                      />
+                    </div>
+                  );
+                }
+
+                return (
+                  <div
+                    key={imgIndex}
+                    className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-[16/9]'} lg:hidden`}
+                  >
+                    <Image
+                      src={image.sourceUrl || ''}
+                      alt={image.altText || ''}
+                      fill
+                      className='object-cover'
+                      unoptimized
+                    />
+                  </div>
+                );
+              })}
+
+              {/* Desktop layout pro 4 obrázky */}
+              <div className='hidden lg:flex lg:gap-4'>
+                <div className='relative aspect-auto h-[239px] w-[239px] shrink-0'>
                   <Image
                     src={images[0].sourceUrl || ''}
                     alt={images[0].altText || ''}
@@ -262,7 +306,7 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
                     unoptimized
                   />
                 </div>
-                <div className='relative h-[180px] flex-1 md:h-[239px]'>
+                <div className='relative aspect-auto h-[239px] flex-1'>
                   <Image
                     src={images[1].sourceUrl || ''}
                     alt={images[1].altText || ''}
@@ -272,8 +316,8 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
                   />
                 </div>
               </div>
-              <div className='flex gap-3 md:gap-4'>
-                <div className='relative h-[180px] flex-1 md:h-[239px]'>
+              <div className='hidden lg:flex lg:gap-4'>
+                <div className='relative aspect-auto h-[239px] flex-1'>
                   <Image
                     src={images[2].sourceUrl || ''}
                     alt={images[2].altText || ''}
@@ -282,7 +326,7 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
                     unoptimized
                   />
                 </div>
-                <div className='relative h-[180px] w-full md:h-[239px] md:w-[239px] md:shrink-0'>
+                <div className='relative aspect-auto h-[239px] w-[239px] shrink-0'>
                   <Image
                     src={images[3].sourceUrl || ''}
                     alt={images[3].altText || ''}
@@ -296,26 +340,32 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
           );
         }
 
-        // Fallback pro jiný počet obrázků - simple grid
+        // Ostatní počty obrázků
         return (
           <div
             key={index}
-            className='grid w-full grid-cols-1 gap-3 md:grid-cols-2 md:gap-4'
+            className='flex w-full flex-col gap-3 md:gap-4 lg:grid lg:grid-cols-2'
           >
-            {images.map((image, imgIndex) => (
-              <div
-                key={imgIndex}
-                className='relative h-[180px] md:h-[239px]'
-              >
-                <Image
-                  src={image.sourceUrl || ''}
-                  alt={image.altText || ''}
-                  fill
-                  className='object-cover'
-                  unoptimized
-                />
-              </div>
-            ))}
+            {images.map((image, imgIndex) => {
+              const isSquare = imgIndex % 2 === 0;
+
+              return (
+                <div
+                  key={imgIndex}
+                  className={`relative w-full ${
+                    isSquare ? 'aspect-square' : 'aspect-[16/9]'
+                  } lg:aspect-auto lg:h-[239px]`}
+                >
+                  <Image
+                    src={image.sourceUrl || ''}
+                    alt={image.altText || ''}
+                    fill
+                    className='object-cover'
+                    unoptimized
+                  />
+                </div>
+              );
+            })}
           </div>
         );
       }
@@ -327,9 +377,9 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
   };
 
   return (
-    <section className='section-container relative py-12 md:py-16 lg:py-20'>
+    <section className='section-container 2lg:py-16 relative pt-32 lg:pb-16'>
       <Socials />
-      <div className='mx-auto flex max-w-[683px] flex-col items-start gap-8 px-4 md:gap-10 md:px-6 lg:px-0'>
+      <div className='mx-auto flex max-w-[683px] flex-col items-start gap-8 md:gap-10'>
         {components.components.map((component, index) => renderComponent(component, index))}
         <Link
           href={backLink}

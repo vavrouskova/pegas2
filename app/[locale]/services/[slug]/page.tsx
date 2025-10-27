@@ -70,11 +70,19 @@ const ServiceDetailPage = async ({ params }: ServiceDetailPageProps) => {
       />
 
       <ContentSection
+        title={t('services.service-detail.contact-us.title')}
+        description={t('services.service-detail.contact-us.description')}
+        buttonText={t('services.service-detail.contact-us.button-text')}
+        link={t('routes.contacts')}
+        sectionClassName='py-30 lg:py-40'
+      />
+
+      <ContentSection
         title={t('home.organized-by-us.title')}
         description={t('home.organized-by-us.description')}
         buttonText={t('home.organized-by-us.button-text')}
         link={t('home.organized-by-us.link')}
-        sectionClassName='pt-[15rem] pb-[21rem]'
+        sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
         withFeathers
       />
 
