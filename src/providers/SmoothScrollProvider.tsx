@@ -1,7 +1,6 @@
 'use client';
 
 import ReactLenis from 'lenis/react';
-import { Suspense } from 'react';
 
 import Scroll from '@/components/_shared/Scroll';
 
@@ -22,9 +21,7 @@ const SmoothScrollProvider = ({ children }: ProviderProps) => {
         },
       }}
     >
-      <Suspense fallback>
-        <Scroll />
-      </Suspense>
+      <Scroll />
       {children}
     </ReactLenis>
   );

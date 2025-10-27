@@ -9,80 +9,100 @@ const LenisScrollEffect = () => {
   const searchParameters = useSearchParams();
   const lenis = useLenis();
 
-  // Prevent native scroll restoration interfering with Lenis, especially on Safari
+  // Prevent native scroll restoration interfering with Lenis
   useEffect(() => {
     if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
-      const previous = window.history.scrollRestoration as string;
       window.history.scrollRestoration = 'manual';
-      return () => {
-        window.history.scrollRestoration = previous as History['scrollRestoration'];
-      };
     }
   }, []);
 
+  // Reset scroll position on route change
   useEffect(() => {
-    // Check if URL contains a hash fragment
     const hash = window.location.hash;
 
     if (hash) {
-      // If there's a hash, scroll to that element instead of top
+      // For hash navigation, use native browser scrolling (bypass Lenis)
       const scrollToHash = () => {
         const elementId = hash.replace('#', '');
+        // eslint-disable-next-line unicorn/prefer-query-selector
         const element = document.getElementById(elementId);
 
-        if (element && lenis) {
-          // Use Lenis smooth scroll to the element
+        if (element) {
+          // Disable Lenis temporarily
+          if (lenis) {
+            lenis.stop();
+          }
+
+          // First scroll to top immediately
+          window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+
+          // Then scroll to element with native browser scroll
           setTimeout(() => {
-            lenis.scrollTo(element, {
-              offset: -100, // Optional: offset for fixed headers
-              duration: 1,
-            });
-          }, 100);
-        } else if (element) {
-          // Fallback if Lenis isn't ready
-          setTimeout(() => {
-            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const elementTop = element.getBoundingClientRect().top + window.scrollY - 100;
+            window.scrollTo({ top: elementTop, left: 0, behavior: 'smooth' });
+
+            // Re-enable Lenis after scroll completes
+            // eslint-disable-next-line sonarjs/no-nested-functions
+            setTimeout(() => {
+              if (lenis) {
+                lenis.start();
+              }
+            }, 1000);
           }, 100);
         }
       };
 
       scrollToHash();
     } else {
-      // No hash: reset to top on route/search change with Safari fallbacks
-      const resetScrollTop = () => {
-        // Try Lenis immediate reset first
-        if (lenis) {
-          lenis.scrollTo(0, { immediate: true });
-          // Safari sometimes needs a second tick
-          requestAnimationFrame(() => {
-            lenis.scrollTo(0, { immediate: true });
-          });
-        }
+      // No hash: scroll to top with Lenis
+      if (lenis) {
+        lenis.stop();
+        lenis.scrollTo(0, { immediate: true, force: true });
+        setTimeout(() => lenis.start(), 50);
+      }
 
-        // Fallbacks for browsers where Lenis isn't ready or overridden
-        requestAnimationFrame(() => {
-          if (typeof window !== 'undefined') {
-            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-            // Extra Safari guard
-            // Some Safari versions rely on setting both documentElement and body
-            if ((window as unknown as { pageYOffset?: number }).pageYOffset) {
-              (document.documentElement || document.body).scrollTop = 0;
-            }
-          }
-        });
-
-        // Final guard after layout settles
-        setTimeout(() => {
-          if (typeof window !== 'undefined' && Math.round(window.scrollY) !== 0) {
-            window.scrollTo(0, 0);
-            (document.documentElement || document.body).scrollTop = 0;
-          }
-        }, 60);
-      };
-
-      resetScrollTop();
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      }
     }
   }, [pathname, searchParameters, lenis]);
+
+  // Handle hash changes within the same page (without Lenis)
+  useEffect(() => {
+    const handleHashChange = () => {
+      const newHash = window.location.hash;
+
+      if (newHash) {
+        const elementId = newHash.replace('#', '');
+        // eslint-disable-next-line unicorn/prefer-query-selector
+        const element = document.getElementById(elementId);
+
+        if (element) {
+          // Disable Lenis for hash scroll
+          if (lenis) {
+            lenis.stop();
+          }
+
+          // Use native browser scroll
+          const elementTop = element.getBoundingClientRect().top + window.scrollY - 100;
+          window.scrollTo({ top: elementTop, left: 0, behavior: 'smooth' });
+
+          // Re-enable Lenis after scroll
+          setTimeout(() => {
+            if (lenis) {
+              lenis.start();
+            }
+          }, 1000);
+        }
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, [lenis]);
 
   return null;
 };
