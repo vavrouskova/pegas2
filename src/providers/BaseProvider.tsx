@@ -6,6 +6,9 @@ import React, { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import { ImageGalleryProvider } from '@/providers/ImageGalleryProvider';
+import { ImageLightbox } from '@/components/_shared/ImageLightbox';
+
 interface ProviderProps {
   children: React.ReactNode;
 }
@@ -15,14 +18,17 @@ const BaseProvider = ({ children }: ProviderProps) => {
 
   return (
     <QueryClientProvider client={client}>
-      {children}
-      <ReactQueryDevtools initialIsOpen={false} />
-      <HolyLoader
-        color='#6F5577'
-        height='0.15rem'
-        speed={250}
-        easing='linear'
-      />
+      <ImageGalleryProvider>
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+        <HolyLoader
+          color='oklch(var(--tertiary))'
+          height='0.15rem'
+          speed={250}
+          easing='linear'
+        />
+        <ImageLightbox />
+      </ImageGalleryProvider>
     </QueryClientProvider>
   );
 };

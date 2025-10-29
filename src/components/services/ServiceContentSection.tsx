@@ -1,11 +1,11 @@
 import { getTranslations } from 'next-intl/server';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import Socials from '@/components/_shared/Socials';
+import { GalleryImageWrapper } from '@/components/services/GalleryImageWrapper';
 
 interface WysiwygComponent {
   fieldGroupName: 'ComponentsComponentsWysiwygLayout';
@@ -14,7 +14,7 @@ interface WysiwygComponent {
 
 interface MediaComponent {
   fieldGroupName: 'ComponentsComponentsMediaLayout';
-  mediaType: 'image' | 'video';
+  mediaType: 'image' | 'video' | string[] | string;
   youtubeEmbedLink?: string;
   image?: {
     node: {
@@ -174,7 +174,13 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
       }
 
       case 'ComponentsComponentsMediaLayout': {
-        if (component.mediaType === 'video' && component.youtubeEmbedLink) {
+        // Handle mediaType as both string and array
+        const mediaTypeValue = Array.isArray(component.mediaType)
+          ? component.mediaType[0]?.toLowerCase()
+          : component.mediaType?.toLowerCase();
+
+        // Check for video
+        if (mediaTypeValue === 'video' && component.youtubeEmbedLink) {
           return (
             <div
               key={index}
@@ -191,22 +197,19 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
           );
         }
 
-        if (component.mediaType === 'image' && component.image?.node?.sourceUrl) {
+        // Check for image
+        const hasImage = component.image?.node?.sourceUrl;
+        if ((mediaTypeValue === 'image' || !component.mediaType) && hasImage) {
           return (
-            <div
+            <GalleryImageWrapper
               key={index}
+              src={component.image?.node?.sourceUrl || ''}
+              alt={component.image?.node?.altText || ''}
               className='relative h-[200px] w-full md:h-[300px] lg:h-[381px]'
-            >
-              <Image
-                src={component.image.node.sourceUrl}
-                alt={component.image.node.altText || ''}
-                fill
-                className='object-cover'
-                unoptimized
-              />
-            </div>
+            />
           );
         }
+
         return null;
       }
 
@@ -231,20 +234,14 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
                 const isSquare = imgIndex % 2 === 0;
 
                 return (
-                  <div
+                  <GalleryImageWrapper
                     key={imgIndex}
+                    src={image.sourceUrl || ''}
+                    alt={image.altText || ''}
                     className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-[16/9]'} lg:aspect-auto ${
                       imgIndex === 0 ? 'lg:h-[239px] lg:w-[239px] lg:flex-none lg:shrink-0' : 'lg:h-[239px] lg:flex-1'
                     }`}
-                  >
-                    <Image
-                      src={image.sourceUrl || ''}
-                      alt={image.altText || ''}
-                      fill
-                      className='object-cover'
-                      unoptimized
-                    />
-                  </div>
+                  />
                 );
               })}
             </div>
@@ -261,80 +258,40 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
               {images.map((image, imgIndex) => {
                 const isSquare = imgIndex % 2 === 0;
 
-                // Desktop: 2x2 grid
-                if (imgIndex < 2) {
-                  return (
-                    <div
-                      key={imgIndex}
-                      className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-[16/9]'} lg:hidden`}
-                    >
-                      <Image
-                        src={image.sourceUrl || ''}
-                        alt={image.altText || ''}
-                        fill
-                        className='object-cover'
-                        unoptimized
-                      />
-                    </div>
-                  );
-                }
-
                 return (
-                  <div
+                  <GalleryImageWrapper
                     key={imgIndex}
+                    src={image.sourceUrl || ''}
+                    alt={image.altText || ''}
                     className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-[16/9]'} lg:hidden`}
-                  >
-                    <Image
-                      src={image.sourceUrl || ''}
-                      alt={image.altText || ''}
-                      fill
-                      className='object-cover'
-                      unoptimized
-                    />
-                  </div>
+                  />
                 );
               })}
 
               {/* Desktop layout pro 4 obrázky */}
               <div className='hidden lg:flex lg:gap-4'>
-                <div className='relative aspect-auto h-[239px] w-[239px] shrink-0'>
-                  <Image
-                    src={images[0].sourceUrl || ''}
-                    alt={images[0].altText || ''}
-                    fill
-                    className='object-cover'
-                    unoptimized
-                  />
-                </div>
-                <div className='relative aspect-auto h-[239px] flex-1'>
-                  <Image
-                    src={images[1].sourceUrl || ''}
-                    alt={images[1].altText || ''}
-                    fill
-                    className='object-cover'
-                    unoptimized
-                  />
-                </div>
+                <GalleryImageWrapper
+                  src={images[0].sourceUrl || ''}
+                  alt={images[0].altText || ''}
+                  className='relative aspect-auto h-[239px] w-[239px] shrink-0'
+                />
+                <GalleryImageWrapper
+                  src={images[1].sourceUrl || ''}
+                  alt={images[1].altText || ''}
+                  className='relative aspect-auto h-[239px] flex-1'
+                />
               </div>
               <div className='hidden lg:flex lg:gap-4'>
-                <div className='relative aspect-auto h-[239px] flex-1'>
-                  <Image
-                    src={images[2].sourceUrl || ''}
-                    alt={images[2].altText || ''}
-                    fill
-                    className='object-cover'
-                    unoptimized
-                  />
-                </div>
-                <div className='relative aspect-auto h-[239px] w-[239px] shrink-0'>
-                  <Image
-                    src={images[3].sourceUrl || ''}
-                    alt={images[3].altText || ''}
-                    fill
-                    className='object-cover'
-                    unoptimized
-                  />
-                </div>
+                <GalleryImageWrapper
+                  src={images[2].sourceUrl || ''}
+                  alt={images[2].altText || ''}
+                  className='relative aspect-auto h-[239px] flex-1'
+                />
+                <GalleryImageWrapper
+                  src={images[3].sourceUrl || ''}
+                  alt={images[3].altText || ''}
+                  className='relative aspect-auto h-[239px] w-[239px] shrink-0'
+                />
               </div>
             </div>
           );
@@ -350,20 +307,14 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
               const isSquare = imgIndex % 2 === 0;
 
               return (
-                <div
+                <GalleryImageWrapper
                   key={imgIndex}
+                  src={image.sourceUrl || ''}
+                  alt={image.altText || ''}
                   className={`relative w-full ${
                     isSquare ? 'aspect-square' : 'aspect-[16/9]'
                   } lg:aspect-auto lg:h-[239px]`}
-                >
-                  <Image
-                    src={image.sourceUrl || ''}
-                    alt={image.altText || ''}
-                    fill
-                    className='object-cover'
-                    unoptimized
-                  />
-                </div>
+                />
               );
             })}
           </div>
