@@ -4,7 +4,7 @@ import { IMAGE_GALLERY_CONFIG } from '@/config/imageGallery.config';
 
 export const useImageZoom = () => {
   const { maxZoom, minZoom, zoomStep, doubleClickZoom } = IMAGE_GALLERY_CONFIG.gestures;
-  const [scale, setScale] = useState(minZoom);
+  const [scale, setScale] = useState<number>(minZoom);
 
   const setScaleClamped = (newScale: number) => {
     setScale(Math.min(Math.max(newScale, minZoom), maxZoom));
