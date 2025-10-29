@@ -14,8 +14,8 @@ interface WysiwygComponent {
 
 interface MediaComponent {
   fieldGroupName: 'ComponentsComponentsMediaLayout';
-  mediaType: 'image' | 'video' | string[] | string;
-  youtubeEmbedLink?: string;
+  mediaType: 'image' | 'video' | 'youtube' | string[] | string;
+  youtubeEmbedLink?: string | null;
   image?: {
     node: {
       altText?: string;
@@ -179,8 +179,8 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
           ? component.mediaType[0]?.toLowerCase()
           : component.mediaType?.toLowerCase();
 
-        // Check for video
-        if (mediaTypeValue === 'video' && component.youtubeEmbedLink) {
+        // Check for video (backend can send 'video' or 'youtube')
+        if ((mediaTypeValue === 'video' || mediaTypeValue === 'youtube') && component.youtubeEmbedLink) {
           return (
             <div
               key={index}
