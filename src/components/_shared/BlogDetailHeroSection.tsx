@@ -84,7 +84,7 @@ const BlogDetailHeroSection = ({
           <FormattedText
             text={description}
             as='p'
-            className='text-primary font-bold-text mx-auto max-w-[684px] text-xl'
+            className='text-primary font-bold-text mx-auto max-w-[684px] text-lg'
           />
         )}
       </div>

@@ -6,6 +6,7 @@ import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import Socials from '@/components/_shared/Socials';
 import { GalleryImageWrapper } from '@/components/services/GalleryImageWrapper';
+import { cn } from '@/lib/utils';
 
 interface WysiwygComponent {
   fieldGroupName: 'ComponentsComponentsWysiwygLayout';
@@ -44,6 +45,7 @@ interface DynamicContentSectionProps {
   backLink?: string;
   backLinkText?: string;
   socials?: boolean;
+  className?: string;
 }
 
 const DynamicContentSection = async ({
@@ -52,6 +54,7 @@ const DynamicContentSection = async ({
   backLink: customBackLink,
   backLinkText: customBackLinkText,
   socials = true,
+  className,
 }: DynamicContentSectionProps) => {
   if (!components?.components || components.components.length === 0) {
     return null;
@@ -164,7 +167,7 @@ const DynamicContentSection = async ({
           elements.push(
             <ListTag
               key={`${item.listType}-${key++}`}
-              className={`font-regular text-deep my-6 ml-6 ${listStyleClass} space-y-2 text-base leading-[2] tracking-[0.7px] lg:text-lg`}
+              className={`font-regular text-deep ml-6 ${listStyleClass} space-y-2 text-base lg:text-lg`}
             >
               {listItems.map((listItem, itemIndex) => (
                 <li
@@ -194,7 +197,7 @@ const DynamicContentSection = async ({
               key={`h2-${key++}`}
               text={text}
               as='h2'
-              className='text-deep mb-6 text-2xl leading-[1.44] font-black tracking-[1px] lg:mb-7 lg:text-3xl'
+              className='text-deep text-2xl lg:text-3xl'
             />
           );
 
@@ -206,7 +209,7 @@ const DynamicContentSection = async ({
               key={`h3-${key++}`}
               text={text}
               as='h3'
-              className='text-deep text-xl leading-[1.44] font-black tracking-[1px] lg:text-2xl'
+              className='text-deep text-xl lg:text-2xl'
             />
           );
 
@@ -218,7 +221,7 @@ const DynamicContentSection = async ({
               key={`p-${key++}`}
               text={text}
               as='p'
-              className='font-regular text-deep text-base leading-[2] tracking-[0.7px] lg:text-lg'
+              className='font-regular text-deep text-base lg:text-lg'
             />
           );
 
@@ -237,7 +240,7 @@ const DynamicContentSection = async ({
         return (
           <div
             key={index}
-            className='flex w-full flex-col gap-6'
+            className='flex w-full flex-col gap-10'
           >
             {renderWysiwygContent(component.editor)}
           </div>
@@ -399,9 +402,9 @@ const DynamicContentSection = async ({
   };
 
   return (
-    <section className='section-container 2lg:py-16 relative pt-32 lg:pb-16'>
+    <section className={cn('section-container 2lg:py-16 relative pt-32 lg:pb-16', className)}>
       {socials && <Socials />}
-      <div className='mx-auto flex max-w-[684px] flex-col items-start gap-8 md:gap-10'>
+      <div className='mx-auto flex max-w-[684px] flex-col items-start gap-10'>
         {components.components.map((component, index) => renderComponent(component, index))}
         <Link
           href={backLink}

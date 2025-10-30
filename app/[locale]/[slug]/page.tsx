@@ -21,7 +21,6 @@ interface SlugPageProps {
 export async function generateMetadata({ params }: SlugPageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  // Rychlá kontrola typu pro optimalizaci
   const slugType = await checkSlugType(slug);
   if (slugType === 'post') {
     return getSeoDataBySlug('post', slug);
@@ -34,14 +33,12 @@ const SlugPage = async ({ params }: SlugPageProps) => {
   const { slug } = await params;
   const t = await getTranslations();
 
-  // Rychlá kontrola typu - načteme pouze potřebná data
   const slugType = await checkSlugType(slug);
 
   if (!slugType) {
     notFound();
   }
 
-  // Načteme pouze data pro správný typ
   if (slugType === 'post') {
     const blogData = await getBlogPostBySlug(slug);
 
@@ -60,8 +57,9 @@ const SlugPage = async ({ params }: SlugPageProps) => {
       },
     ];
 
-    if (categories?.nodes && categories.nodes.length > 0) {
-      const category = categories.nodes[0];
+    const validCategories = categories?.nodes?.filter((cat) => cat.databaseId !== 1) || [];
+    if (validCategories.length > 0) {
+      const category = validCategories[0];
       breadcrumbItems.push({
         label: category.name,
         href: `/${t('routes.blog')}?category=${category.databaseId}`,
@@ -84,6 +82,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
 
         {hasComponents && (
           <DynamicContentSection
+            className='2lg:py-10 pt-10'
             socials={false}
             components={components}
             categorySlug={categories?.nodes?.[0]?.slug}
@@ -93,15 +92,6 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         )}
 
         <ContentSection
-          title={t('home.faq.title')}
-          description={t('home.faq.description')}
-          buttonText={t('home.faq.button-text')}
-          link={t('home.faq.link')}
-          image={{ src: '/images/faq-image.webp', alt: t('home.faq.alt') }}
-          sectionClassName='py-30 lg:py-40'
-        />
-
-        <ContentSection
           title={t('home.organized-by-us.title')}
           description={t('home.organized-by-us.description')}
           buttonText={t('home.organized-by-us.button-text')}
@@ -109,13 +99,10 @@ const SlugPage = async ({ params }: SlugPageProps) => {
           sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
           withFeathers
         />
-
-        <FooterClaim className='mt-0' />
       </main>
     );
   }
 
-  // Slug je služba
   const serviceData = await getServiceBySlug(slug);
 
   if (!serviceData) {
