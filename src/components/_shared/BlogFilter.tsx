@@ -70,12 +70,7 @@ const BlogFilter = ({ categories }: BlogFilterProps) => {
           isAllActive ? 'bg-primary' : 'bg-white'
         )}
       >
-        <span
-          className={cn(
-            'text-base leading-[1.44] font-black tracking-[1px] whitespace-pre',
-            isAllActive ? 'text-white-smoke' : 'text-primary'
-          )}
-        >
+        <span className={cn('text-base whitespace-pre', isAllActive ? 'text-white-smoke' : 'text-primary')}>
           {t('all')}
         </span>
       </button>
@@ -92,12 +87,7 @@ const BlogFilter = ({ categories }: BlogFilterProps) => {
               isActive ? 'bg-primary' : 'bg-white'
             )}
           >
-            <span
-              className={cn(
-                'text-base leading-[1.44] font-black tracking-[1px] whitespace-pre',
-                isActive ? 'text-white-smoke' : 'text-primary'
-              )}
-            >
+            <span className={cn('text-base whitespace-pre', isActive ? 'text-white-smoke' : 'text-primary')}>
               {category.name}
             </span>
           </button>
@@ -109,13 +99,13 @@ const BlogFilter = ({ categories }: BlogFilterProps) => {
         onSubmit={handleSearchSubmit}
         className='relative box-border flex h-[40px] shrink-0 items-center gap-1 bg-white px-4'
       >
-        <Search className='text-primary h-[19px] w-[19px] shrink-0' />
+        <Search className='text-primary size-[19px] shrink-0' />
         <input
           type='text'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t('search')}
-          className='text-primary min-w-0 flex-1 border-none bg-transparent text-base leading-[1.44] font-black tracking-[1px] outline-none'
+          className='text-primary min-w-0 flex-1 border-none bg-transparent text-base outline-none'
         />
         <button
           type='submit'

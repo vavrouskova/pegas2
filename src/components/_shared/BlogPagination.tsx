@@ -53,9 +53,57 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
   const canScrollPrev = currentPage > 1;
   const canScrollNext = currentPage < totalPages;
 
+  // Helper funkce pro určení, které stránky zobrazit
+  const getVisiblePages = (): number[] => {
+    const maxVisible = 7; // Maximální počet viditelných stránek na desktopu
+    if (totalPages <= maxVisible) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    const pages: number[] = [];
+    const sidePages = Math.floor((maxVisible - 3) / 2); // Počet stránek na každé straně od aktuální
+
+    let start = Math.max(1, currentPage - sidePages);
+    let end = Math.min(totalPages, currentPage + sidePages);
+
+    // Upravíme rozsah, pokud jsme blízko začátku nebo konce
+    if (end - start < maxVisible - 2) {
+      if (start === 1) {
+        end = Math.min(totalPages, start + maxVisible - 2);
+      } else if (end === totalPages) {
+        start = Math.max(1, end - maxVisible + 2);
+      }
+    }
+
+    // Přidáme první stránku
+    if (start > 1) {
+      pages.push(1);
+      if (start > 2) {
+        pages.push(-1); // Ellipsis marker
+      }
+    }
+
+    // Přidáme stránky v rozsahu
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    // Přidáme poslední stránku
+    if (end < totalPages) {
+      if (end < totalPages - 1) {
+        pages.push(-1); // Ellipsis marker
+      }
+      pages.push(totalPages);
+    }
+
+    return pages;
+  };
+
+  const visiblePages = getVisiblePages();
+
   return (
     <div className='relative mt-34'>
-      <div className='flex items-center justify-center gap-10'>
+      <div className='flex items-center justify-center gap-4 md:gap-10'>
         {/* Previous button */}
         <button
           onClick={handlePrevious}
@@ -70,10 +118,28 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
           <ArrowRight className='h-6 w-6 rotate-180' />
         </button>
 
-        {/* Page numbers */}
-        <div className='flex items-center space-x-2.5'>
-          {Array.from({ length: totalPages }).map((_, index) => {
-            const pageNumber = index + 1;
+        {/* Mobile: Zobrazit pouze aktuální stránku */}
+        <div className='flex items-center gap-2 md:hidden'>
+          <span className='text-primary text-base'>
+            {currentPage} / {totalPages}
+          </span>
+        </div>
+
+        {/* Desktop: Page numbers */}
+        <div className='hidden items-center space-x-2.5 md:flex'>
+          {visiblePages.map((pageNumber, index) => {
+            if (pageNumber === -1) {
+              // Ellipsis
+              return (
+                <span
+                  key={`ellipsis-${index}`}
+                  className='text-primary flex min-w-[24px] items-center justify-center px-2 py-1 text-base'
+                >
+                  ...
+                </span>
+              );
+            }
+
             const isActive = currentPage === pageNumber;
 
             return (

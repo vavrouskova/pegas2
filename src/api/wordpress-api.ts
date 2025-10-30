@@ -1,4 +1,4 @@
-import { MAX_POSTS_FETCH, MIN_POSTS_FOR_TESTING, POSTS_PER_PAGE, UNCATEGORIZED_CATEGORY_ID } from '@/constants/blog';
+import { MAX_POSTS_FETCH, POSTS_PER_PAGE, UNCATEGORIZED_CATEGORY_ID } from '@/constants/blog';
 import type { BlogPost } from '@/utils/wordpress-types';
 
 /**
@@ -746,81 +746,6 @@ export async function getBlogCategories(first = 100) {
 }
 
 /**
- * Pomocná funkce pro generování mock dat v development módu
- * Duplikuje existující články do požadovaného počtu
- */
-function generateMockPosts(originalPosts: BlogPost[], targetCount: number): BlogPost[] {
-  if (originalPosts.length === 0) {
-    return [];
-  }
-
-  const mockPosts: BlogPost[] = [...originalPosts];
-  const mockTitles = [
-    'Dušičky: datum, tradice a citáty Památky zesnulých',
-    'Vzpomínkové verše pro zesnulé: Katalog citátů na parte',
-    'Vokovický hřbitov (Praha-Vokovice, Liboc)',
-    'Právní záležitosti při úmrtí blízké osoby',
-    'Finanční záležitosti po úmrtí člena rodiny',
-    'Jak postupovat při organizaci pohřbu',
-    'Účast na pohřbu: Etiketa a zvyklosti',
-    'Pražské hřbitovy: Přehled a informace',
-    'Objednání pohřbu: Krok za krokem',
-    'Pohřební obřady: Tradice a moderní přístupy',
-    'Kremace vs. pohřeb: Výhody a nevýhody',
-    'Životní pojištění a úmrtí',
-    'Závěť a dědictví: Právní průvodce',
-    'Smuteční květiny: Výběr a symbolika',
-    'Pohřební řeč: Jak ji napsat',
-    'Hřbitovní pomníky: Výběr a údržba',
-    'Zpopelnění a uložení urny',
-    'Církevní pohřeb: Organizace a průběh',
-    'Občanský pohřeb: Alternativní možnosti',
-    'Pohřební průvod: Tradice a organizace',
-  ];
-
-  const mockExcerpts = [
-    'Dušičky neboli Památka zesnulých jsou tradičním svátkem pro uctění a vzpomínku na naše milované.',
-    'Vzpomínkové verše bývají součástí smutečního oznámení a kondolenčních projevů.',
-    'Hřbitov se nachází v Praze a nabízí klidné místo pro poslední rozloučení.',
-    'Po úmrtí blízké osoby je nutné vyřídit řadu právních formalit.',
-    'Finanční záležitosti spojené s úmrtím vyžadují pozornost a organizaci.',
-    'Organizace pohřbu je proces, který vyžaduje citlivý přístup.',
-    'Účast na pohřbu má svá pravidla a zvyklosti, které je dobré respektovat.',
-    'Praha nabízí mnoho hřbitovů s různou historií a atmosférou.',
-    'Objednání pohřbu je důležitý krok v procesu rozloučení.',
-    'Pohřební obřady mohou být tradiční i moderní, podle přání zesnulého.',
-    'Volba mezi kremací a pohřbem závisí na víře a přáních.',
-    'Životní pojištění může významně pomoci pozůstalým.',
-    'Správně sepsaná závěť ušetří pozůstalým komplikace.',
-    'Výběr smutečních květin má svou symboliku a význam.',
-    'Pohřební řeč je důležitým způsobem, jak se rozloučit.',
-    'Pomník je trvalou vzpomínkou na naše blízké.',
-    'Zpopelnění je moderní a ekologická alternativa.',
-    'Církevní pohřeb respektuje náboženské tradice.',
-    'Občanský pohřeb umožňuje osobnější přístup.',
-    'Pohřební průvod je tradiční součást rozloučení.',
-  ];
-
-  while (mockPosts.length < targetCount) {
-    const basePost = originalPosts[mockPosts.length % originalPosts.length];
-    const index = mockPosts.length;
-    const mockTitle = mockTitles[index % mockTitles.length];
-    const mockExcerpt = mockExcerpts[index % mockExcerpts.length];
-
-    mockPosts.push({
-      ...basePost,
-      id: `mock-${index}`,
-      databaseId: 1000 + index,
-      title: mockTitle,
-      slug: `mock-clanek-${index}`,
-      excerpt: `<p>${mockExcerpt}</p>`,
-    });
-  }
-
-  return mockPosts;
-}
-
-/**
  * Získá seznam blog postů (posts) s podporou filtrování a paginace
  * @param postsPerPage - Počet postů na stránku (výchozí 9)
  * @param page - Číslo stránky (výchozí 1)
@@ -828,21 +753,13 @@ function generateMockPosts(originalPosts: BlogPost[], targetCount: number): Blog
  * @param search - Vyhledávací dotaz (volitelné)
  * @returns Promise s daty blog postů včetně paginace
  */
-export async function getBlogPosts(
-  postsPerPage = POSTS_PER_PAGE,
-  page = 1,
-  categoryId?: string,
-  search?: string
-) {
+export async function getBlogPosts(postsPerPage = POSTS_PER_PAGE, page = 1, categoryId?: string, search?: string) {
   const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
 
-  // Pro mock data použijeme GraphQL dotaz bez filtru a filtrování provedeme až po vygenerování
-  // Kromě případu, kdy máme categoryId - pak použijeme GraphQL filtr
   const whereClause: Record<string, unknown> = {};
   if (categoryId) {
     whereClause.categoryId = parseInt(categoryId, 10);
   }
-  // Search filtrujeme až po mock generování, aby fungoval i na mock data
 
   const hasFilters = Object.keys(whereClause).length > 0;
   const finalWhereClause = hasFilters ? whereClause : undefined;
@@ -915,27 +832,12 @@ export async function getBlogPosts(
 
     let allNodes = result.data?.posts?.nodes || [];
 
-    // V development módu: pokud máme málo článků a nepoužíváme categoryId filtr,
-    // vygenerujeme mock data pro testování
-    const isDevelopment = process.env.NODE_ENV === 'development';
-
-    // Mock data generujeme pouze pokud nemáme categoryId filtr (mock data nemají kategorie)
-    if (
-      isDevelopment &&
-      !categoryId &&
-      allNodes.length < MIN_POSTS_FOR_TESTING &&
-      allNodes.length > 0
-    ) {
-      allNodes = generateMockPosts(allNodes, MIN_POSTS_FOR_TESTING);
-    }
-
-    // Aplikujeme search filtr na všechna data (reálná i mock)
+    // Aplikujeme search filtr
     if (search) {
       const searchLower = search.toLowerCase();
       allNodes = allNodes.filter(
-        (post) =>
-          post.title.toLowerCase().includes(searchLower) ||
-          post.excerpt?.toLowerCase().includes(searchLower)
+        (post: BlogPost) =>
+          post.title.toLowerCase().includes(searchLower) || post.excerpt?.toLowerCase().includes(searchLower)
       );
     }
 
