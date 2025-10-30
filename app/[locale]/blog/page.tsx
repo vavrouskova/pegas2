@@ -40,11 +40,11 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
 
   return (
     <main className='max-w-container mx-auto'>
-      <section className='section-container'>
-        <Breadcrumbs pageTitle={t('blog.page-title')} />
-      </section>
-
-      <section className='section-container pt-18 pb-14 lg:pt-43 lg:pb-26'>
+      <section className='section-container pb-14 lg:pb-26'>
+        <Breadcrumbs
+          className='pb-18 lg:pb-43'
+          pageTitle={t('blog.page-title')}
+        />
         <BlogHeroSection
           title={t('blog.hero.title')}
           description={t('blog.hero.description')}

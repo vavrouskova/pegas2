@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import React from 'react';
@@ -10,9 +11,10 @@ interface BreadcrumbItem {
 interface BreadcrumbsProps {
   pageTitle: string;
   items?: BreadcrumbItem[];
+  className?: string;
 }
 
-const Breadcrumbs = async ({ pageTitle, items = [] }: BreadcrumbsProps) => {
+const Breadcrumbs = async ({ pageTitle, items = [], className }: BreadcrumbsProps) => {
   const t = await getTranslations();
 
   // Pro mobilní zobrazení: zobrazit pouze první a poslední item, prostřední nahradit "..."
@@ -20,7 +22,7 @@ const Breadcrumbs = async ({ pageTitle, items = [] }: BreadcrumbsProps) => {
   const secondItemHref = items[0]?.href;
 
   return (
-    <div className='relative z-10 flex flex-wrap items-center gap-2 pt-12 max-lg:pr-20'>
+    <div className={cn('relative z-10 flex flex-wrap items-center gap-2 pt-12 max-lg:pr-20', className)}>
       <Link
         href='/'
         className='font-text text-sm underline underline-offset-2 hover:no-underline'
