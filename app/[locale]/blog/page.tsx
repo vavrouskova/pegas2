@@ -3,15 +3,17 @@ import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 
 import { getBlogCategories, getBlogPosts } from '@/api/wordpress-api';
-import BlogFilter from '@/components/_shared/BlogFilter';
+import BlogFilterClient from '@/components/_shared/BlogFilterClient';
 import BlogGridSection from '@/components/_shared/BlogGridSection';
 import BlogHeroSection from '@/components/_shared/BlogHeroSection';
-import BlogPagination from '@/components/_shared/BlogPagination';
+import BlogPaginationClient from '@/components/_shared/BlogPaginationClient';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import ContentSection from '@/components/_shared/ContentSection';
 import { POSTS_PER_PAGE } from '@/constants/blog';
 import { parsePageNumber } from '@/utils/blog-helpers';
 import { getSeoDataByUri } from '@/utils/seo';
+
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('routes');
@@ -54,12 +56,10 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
 
       <section className='section-container relative pb-12 lg:pb-20'>
         <div className='mb-8 lg:mb-16'>
-          <Suspense fallback={<div className='h-[40px]' />}>
-            <BlogFilter categories={categories} />
-          </Suspense>
+          <BlogFilterClient categories={categories} />
         </div>
         <BlogGridSection posts={blogData.nodes} />
-        <BlogPagination
+        <BlogPaginationClient
           totalPages={blogData.totalPages}
           currentPage={blogData.currentPage}
         />
