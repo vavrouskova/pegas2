@@ -132,6 +132,40 @@ export interface BlogCategory {
   slug: string;
 }
 
+// Blog Post Component Types (ACF)
+export interface WysiwygComponent {
+  fieldGroupName: 'ComponentsComponentsWysiwygLayout';
+  editor: string;
+}
+
+export interface MediaComponent {
+  fieldGroupName: 'ComponentsComponentsMediaLayout';
+  mediaType: 'image' | 'youtube' | string[] | string;
+  youtubeEmbedLink?: string | null;
+  image?: {
+    node: {
+      altText?: string;
+      sourceUrl?: string;
+    };
+  };
+}
+
+export interface GalleryComponent {
+  fieldGroupName: 'ComponentsComponentsGalleryLayout';
+  gallery?: {
+    nodes: Array<{
+      altText?: string;
+      sourceUrl?: string;
+    }>;
+  };
+}
+
+export type BlogComponent = WysiwygComponent | MediaComponent | GalleryComponent;
+
+export interface BlogComponents {
+  components?: BlogComponent[];
+}
+
 // Blog Post Types
 export interface BlogPost {
   id: string;
@@ -143,4 +177,11 @@ export interface BlogPost {
   categories?: {
     nodes: BlogCategory[];
   };
+}
+
+// Blog Post Detail Types (with content and components)
+export interface BlogPostDetail extends BlogPost {
+  content?: string;
+  date?: string;
+  components?: BlogComponents;
 }

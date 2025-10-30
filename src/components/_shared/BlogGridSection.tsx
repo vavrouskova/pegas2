@@ -26,11 +26,10 @@ const BlogGridSection = async ({ posts }: BlogGridSectionProps) => {
 
         return (
           <Link
-            href={`/blog/${post.slug}`}
+            href={`/${post.slug}`}
             key={post.id}
             className='flex flex-col gap-8'
           >
-            {/* Obrázek */}
             <div className='relative h-[326px] w-full overflow-hidden'>
               <Image
                 src={imageUrl}
@@ -41,16 +40,11 @@ const BlogGridSection = async ({ posts }: BlogGridSectionProps) => {
               />
             </div>
 
-            {/* Obsah */}
             <div className='text-primary flex flex-col gap-2'>
-              {/* Nadpis */}
               <h3 className='text-2xl'>{post.title}</h3>
-
-              {/* Popis */}
               {excerpt && <p className='font-text line-clamp-3 text-lg'>{excerpt}</p>}
             </div>
 
-            {/* Tlačítko */}
             <Button
               buttonText={t('post-detail')}
               variant='white'

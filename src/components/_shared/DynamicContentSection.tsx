@@ -36,30 +36,45 @@ interface GalleryComponent {
 
 type ComponentType = WysiwygComponent | MediaComponent | GalleryComponent;
 
-interface ServiceContentSectionProps {
+interface DynamicContentSectionProps {
   components?: {
     components?: ComponentType[];
   };
   categorySlug?: string;
+  backLink?: string;
+  backLinkText?: string;
+  socials?: boolean;
 }
 
-const ServiceContentSection = async ({ components, categorySlug }: ServiceContentSectionProps) => {
+const DynamicContentSection = async ({
+  components,
+  categorySlug,
+  backLink: customBackLink,
+  backLinkText: customBackLinkText,
+  socials = true,
+}: DynamicContentSectionProps) => {
   if (!components?.components || components.components.length === 0) {
     return null;
   }
 
   const t = await getTranslations();
 
-  // Určení správného linku a textu podle kategorie
-  let backLink = `/${t('routes.services')}#dalsi-sluzby`;
-  let backLinkText = t('services.back-to-services.other-services');
+  // Pokud jsou poskytnuty vlastní linky pro blog, použijeme je
+  // Jinak určíme správný link a text podle kategorie služeb
+  let backLink = customBackLink;
+  let backLinkText = customBackLinkText;
 
-  if (categorySlug === 'smutecni-obrady') {
-    backLink = `/${t('routes.services')}#smutecni-obrady`;
-    backLinkText = t('services.back-to-services.ceremony-variants');
-  } else if (categorySlug === 'nalezitosti-pohrbu') {
-    backLink = `/${t('routes.services')}#nalezitosti-pohrbu`;
-    backLinkText = t('services.back-to-services.funeral-essentials');
+  if (!backLink || !backLinkText) {
+    backLink = `/${t('routes.services')}#dalsi-sluzby`;
+    backLinkText = t('services.back-to-services.other-services');
+
+    if (categorySlug === 'smutecni-obrady') {
+      backLink = `/${t('routes.services')}#smutecni-obrady`;
+      backLinkText = t('services.back-to-services.ceremony-variants');
+    } else if (categorySlug === 'nalezitosti-pohrbu') {
+      backLink = `/${t('routes.services')}#nalezitosti-pohrbu`;
+      backLinkText = t('services.back-to-services.funeral-essentials');
+    }
   }
 
   const renderWysiwygContent = (content: string) => {
@@ -79,18 +94,47 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
       );
     };
 
+    // Parsování seznamu - extrahuje všechny <li> položky
+    // eslint-disable-next-line unicorn/consistent-function-scoping
+    const parseListItems = (listContent: string): string[] => {
+      const items: string[] = [];
+      const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi;
+      let match;
+      while ((match = liRegex.exec(listContent)) !== null) {
+        const itemText = stripHtml(match[1]);
+        if (itemText) {
+          items.push(itemText);
+        }
+      }
+      return items;
+    };
+
     // Najdeme všechny HTML elementy s jejich pozicemi
     interface ElementMatch {
       index: number;
       tag: string;
       content: string;
+      isList?: boolean;
+      listType?: 'ul' | 'ol';
     }
 
     const matches: ElementMatch[] = [];
 
+    // Hledáme UL (unordered lists)
+    const ulRegex = /<ul[^>]*>([\s\S]*?)<\/ul>/gi;
+    let match;
+    while ((match = ulRegex.exec(content)) !== null) {
+      matches.push({ index: match.index, tag: 'ul', content: match[1], isList: true, listType: 'ul' });
+    }
+
+    // Hledáme OL (ordered lists)
+    const olRegex = /<ol[^>]*>([\s\S]*?)<\/ol>/gi;
+    while ((match = olRegex.exec(content)) !== null) {
+      matches.push({ index: match.index, tag: 'ol', content: match[1], isList: true, listType: 'ol' });
+    }
+
     // Hledáme H2
     const h2Regex = /<h2[^>]*>([\s\S]*?)<\/h2>/gi;
-    let match;
     while ((match = h2Regex.exec(content)) !== null) {
       matches.push({ index: match.index, tag: 'h2', content: match[1] });
     }
@@ -112,6 +156,33 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
 
     // Renderujeme v pořadí
     for (const item of matches) {
+      if (item.isList && item.listType) {
+        const listItems = parseListItems(item.content);
+        if (listItems.length > 0) {
+          const ListTag = item.listType === 'ul' ? 'ul' : 'ol';
+          const listStyleClass = item.listType === 'ul' ? 'list-disc' : 'list-decimal';
+          elements.push(
+            <ListTag
+              key={`${item.listType}-${key++}`}
+              className={`font-regular text-deep my-6 ml-6 ${listStyleClass} space-y-2 text-base leading-[2] tracking-[0.7px] lg:text-lg`}
+            >
+              {listItems.map((listItem, itemIndex) => (
+                <li
+                  key={itemIndex}
+                  className='ml-4'
+                >
+                  <FormattedText
+                    text={listItem}
+                    as='span'
+                  />
+                </li>
+              ))}
+            </ListTag>
+          );
+        }
+        continue;
+      }
+
       const text = stripHtml(item.content);
 
       if (!text) continue; // Skip prázdné elementy
@@ -329,8 +400,8 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
 
   return (
     <section className='section-container 2lg:py-16 relative pt-32 lg:pb-16'>
-      <Socials />
-      <div className='mx-auto flex max-w-[683px] flex-col items-start gap-8 md:gap-10'>
+      {socials && <Socials />}
+      <div className='mx-auto flex max-w-[684px] flex-col items-start gap-8 md:gap-10'>
         {components.components.map((component, index) => renderComponent(component, index))}
         <Link
           href={backLink}
@@ -348,4 +419,4 @@ const ServiceContentSection = async ({ components, categorySlug }: ServiceConten
   );
 };
 
-export default ServiceContentSection;
+export default DynamicContentSection;

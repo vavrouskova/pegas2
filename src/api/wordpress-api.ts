@@ -1,5 +1,5 @@
 import { MAX_POSTS_FETCH, POSTS_PER_PAGE, UNCATEGORIZED_CATEGORY_ID } from '@/constants/blog';
-import type { BlogPost } from '@/utils/wordpress-types';
+import type { BlogPost, BlogPostDetail } from '@/utils/wordpress-types';
 
 /**
  * Získá počet poboček (pobockaPosts)
@@ -742,6 +742,163 @@ export async function getBlogCategories(first = 100) {
   } catch (error) {
     console.error('Error fetching blog categories:', error);
     return [];
+  }
+}
+
+/**
+ * Rychlá kontrola, zda slug existuje jako blog post nebo služba
+ * @param slug - Slug k ověření
+ * @returns 'post' | 'sluzbyPost' | null
+ */
+export async function checkSlugType(slug: string): Promise<'post' | 'sluzbyPost' | null> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  // Jeden GraphQL dotaz, který zkontroluje oba typy najednou
+  const query = `
+    query CheckSlugType($slug: ID!) {
+      post(id: $slug, idType: SLUG) {
+        id
+      }
+      sluzbyPost(id: $slug, idType: SLUG) {
+        id
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { slug },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      return null;
+    }
+
+    // Prioritizujeme blog post pokud existuje
+    if (result.data?.post) {
+      return 'post';
+    }
+
+    if (result.data?.sluzbyPost) {
+      return 'sluzbyPost';
+    }
+
+    return null;
+  } catch (error) {
+    console.error(`Error checking slug type for ${slug}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Získá detail blog postu podle slugu
+ * @param slug - Slug blog postu
+ * @returns Promise s detailem blog postu
+ */
+export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | null> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetBlogPostBySlug($slug: ID!) {
+      post(id: $slug, idType: SLUG) {
+        id
+        databaseId
+        title
+        slug
+        excerpt
+        date
+        categories {
+          nodes {
+            id
+            databaseId
+            name
+            slug
+          }
+        }
+        featuredImage {
+          node {
+            altText
+            sourceUrl
+            mediaDetails {
+              width
+              height
+            }
+          }
+        }
+        components {
+          components {
+            ... on ComponentsComponentsWysiwygLayout {
+              fieldGroupName
+              editor
+            }
+            ... on ComponentsComponentsMediaLayout {
+              fieldGroupName
+              mediaType
+              youtubeEmbedLink
+              image {
+                node {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+            ... on ComponentsComponentsGalleryLayout {
+              fieldGroupName
+              gallery {
+                nodes {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { slug },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.post || null;
+  } catch (error) {
+    console.error(`Error fetching blog post with slug ${slug}:`, error);
+    return null;
   }
 }
 

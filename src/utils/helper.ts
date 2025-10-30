@@ -162,6 +162,7 @@ export function isOfferExpired(expiryDate: string | null | undefined): boolean {
 /**
  * Formats a date in a consistent, locale-aware way
  * Defaults to en-GB with format: D Mon YYYY (e.g., 5 Jan 2025)
+ * If hour and minute options are provided, will include time in the output
  */
 export function formatDate(
   dateInput: string | number | Date,
@@ -177,7 +178,34 @@ export function formatDate(
     year: 'numeric',
   };
 
-  return date.toLocaleDateString(locale, options ?? fallbackOptions);
+  const formatOptions = options ?? fallbackOptions;
+  
+  // If time options are provided, use toLocaleString instead of toLocaleDateString
+  if (formatOptions.hour !== undefined || formatOptions.minute !== undefined) {
+    return date.toLocaleString(locale, formatOptions);
+  }
+
+  return date.toLocaleDateString(locale, formatOptions);
+}
+
+/**
+ * Formats a date with time in Czech format: "26. 11. 2025 – 10:00"
+ * @param dateInput - date string, number, or Date object
+ * @returns formatted date string or empty string if invalid
+ */
+export function formatBlogDate(dateInput: string | number | Date | undefined): string {
+  if (!dateInput) return '';
+
+  const dateObj = new Date(dateInput);
+  if (Number.isNaN(dateObj.getTime())) return '';
+
+  const day = dateObj.getDate();
+  const month = dateObj.getMonth() + 1;
+  const year = dateObj.getFullYear();
+  const hours = dateObj.getHours().toString().padStart(2, '0');
+  const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+
+  return `${day}. ${month}. ${year} – ${hours}:${minutes}`;
 }
 
 /**

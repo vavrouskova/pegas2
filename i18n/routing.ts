@@ -16,15 +16,13 @@ export const pathnames = {
 
   '/blog': { cs: '/blog' },
 
-  '/blog/[slug]': { cs: '/blog/[slug]' },
-
   '/about-us': { cs: '/o-nas' },
 
   '/faq': { cs: '/jak-postupovat' },
 
   '/services': { cs: '/sluzby' },
 
-  '/services/[slug]': { cs: '/[slug]' },
+  '/[slug]': { cs: '/[slug]' },
 } satisfies Pathnames<typeof locales>;
 
 export const routing = defineRouting({

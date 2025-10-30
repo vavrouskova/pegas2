@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import { Suspense } from 'react';
 
 import { getBlogCategories, getBlogPosts } from '@/api/wordpress-api';
 import BlogFilter from '@/components/_shared/BlogFilter';
@@ -53,7 +54,9 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
 
       <section className='section-container relative pb-12 lg:pb-20'>
         <div className='mb-8 lg:mb-16'>
-          <BlogFilter categories={categories} />
+          <Suspense fallback={<div className='h-[40px]' />}>
+            <BlogFilter categories={categories} />
+          </Suspense>
         </div>
         <BlogGridSection posts={blogData.nodes} />
         <BlogPagination
