@@ -21,11 +21,13 @@
     "find-out-more": "Zjistěte podrobnosti",
     "where": "Kde",
     "when": "Kdy",
-    "home": "Domů"
+    "home": "Domů",
+    "post-detail": "Detail článku"
   },
 
   "routes": {
     "home": "uvod",
+    "blog": "blog",
     "faq": "jak-postupovat",
     "services": "sluzby",
     "organized-by-us": "organizovali-jsme",
@@ -194,6 +196,13 @@
         "description": "Společně vytvoříme prostor pro rozloučení, jaké si opravdu představujete.",
         "button-text": "Domluvme si setkání"
       }
+    }
+  },
+  "blog": {
+    "page-title": "Blog",
+    "hero": {
+      "title": "Tiché články o životě a loučení",
+      "description": "Najděte články, které nehodnotí ani nepoučují. Jen otevírají témata, která mohou pomoci – pochopit, přijmout, nebo jen být chvíli v klidu."
     }
   }
 }

@@ -14,6 +14,10 @@ export const defaultLocale = 'cs';
 export const pathnames = {
   '/': { cs: '/' },
 
+  '/blog': { cs: '/blog' },
+
+  '/blog/[slug]': { cs: '/blog/[slug]' },
+
   '/about-us': { cs: '/o-nas' },
 
   '/faq': { cs: '/jak-postupovat' },

@@ -123,3 +123,24 @@ export interface ZamestnanciPost {
   title?: string;
   zamestnanciACF?: ZamestnanciACF;
 }
+
+// Blog Category Types
+export interface BlogCategory {
+  id: string;
+  databaseId: number;
+  name: string;
+  slug: string;
+}
+
+// Blog Post Types
+export interface BlogPost {
+  id: string;
+  databaseId: number;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  featuredImage?: MediaItemEdge;
+  categories?: {
+    nodes: BlogCategory[];
+  };
+}
