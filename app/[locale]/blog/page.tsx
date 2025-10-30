@@ -3,16 +3,17 @@ import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 
 import { getBlogCategories, getBlogPosts } from '@/api/wordpress-api';
-import BlogFilterClient from '@/components/_shared/BlogFilterClient';
+import BlogFilter from '@/components/_shared/BlogFilter';
 import BlogGridSection from '@/components/_shared/BlogGridSection';
 import BlogHeroSection from '@/components/_shared/BlogHeroSection';
-import BlogPaginationClient from '@/components/_shared/BlogPaginationClient';
+import BlogPagination from '@/components/_shared/BlogPagination';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import ContentSection from '@/components/_shared/ContentSection';
 import { POSTS_PER_PAGE } from '@/constants/blog';
 import { parsePageNumber } from '@/utils/blog-helpers';
 import { getSeoDataByUri } from '@/utils/seo';
 
+// Blog page needs to be dynamic because it uses searchParams for filtering
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -56,13 +57,17 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
 
       <section className='section-container relative pb-12 lg:pb-20'>
         <div className='mb-8 lg:mb-16'>
-          <BlogFilterClient categories={categories} />
+          <Suspense fallback={<div className='h-[40px]' />}>
+            <BlogFilter categories={categories} />
+          </Suspense>
         </div>
         <BlogGridSection posts={blogData.nodes} />
-        <BlogPaginationClient
-          totalPages={blogData.totalPages}
-          currentPage={blogData.currentPage}
-        />
+        <Suspense fallback={null}>
+          <BlogPagination
+            totalPages={blogData.totalPages}
+            currentPage={blogData.currentPage}
+          />
+        </Suspense>
       </section>
 
       <ContentSection
