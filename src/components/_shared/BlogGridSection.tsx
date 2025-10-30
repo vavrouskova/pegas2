@@ -3,14 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import Button from '@/components/_shared/Button';
+import { stripHtmlTags } from '@/utils/helper';
 import { BlogPost } from '@/utils/wordpress-types';
 
 interface BlogGridSectionProps {
   posts: BlogPost[];
-}
-
-function stripHtmlTags(html: string): string {
-  return html.replace(/<[^>]*>/g, '').trim();
 }
 
 const BlogGridSection = async ({ posts }: BlogGridSectionProps) => {
@@ -21,7 +18,7 @@ const BlogGridSection = async ({ posts }: BlogGridSectionProps) => {
   }
 
   return (
-    <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
+    <div className='grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-3'>
       {posts.map((post) => {
         const imageUrl = post.featuredImage?.node?.sourceUrl || '/images/placeholder.webp';
         const imageAlt = post.featuredImage?.node?.altText || post.title;
@@ -29,7 +26,7 @@ const BlogGridSection = async ({ posts }: BlogGridSectionProps) => {
 
         return (
           <Link
-            href={`/${post.slug}`}
+            href={`/blog/${post.slug}`}
             key={post.id}
             className='flex flex-col gap-8'
           >
@@ -47,10 +44,10 @@ const BlogGridSection = async ({ posts }: BlogGridSectionProps) => {
             {/* Obsah */}
             <div className='text-primary flex flex-col gap-2'>
               {/* Nadpis */}
-              <h3 className='text-2xl leading-[1.44] font-black tracking-[1px]'>{post.title}</h3>
+              <h3 className='text-2xl'>{post.title}</h3>
 
               {/* Popis */}
-              {excerpt && <p className='line-clamp-2 text-lg leading-[2] font-normal tracking-[0.7px]'>{excerpt}</p>}
+              {excerpt && <p className='font-text line-clamp-3 text-lg'>{excerpt}</p>}
             </div>
 
             {/* Tlačítko */}

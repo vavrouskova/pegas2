@@ -22,7 +22,12 @@
     "where": "Kde",
     "when": "Kdy",
     "home": "Domů",
-    "post-detail": "Detail článku"
+    "post-detail": "Detail článku",
+    "go-to-page": "Přejít na stránku",
+    "previous-page": "Předchozí stránka",
+    "next-page": "Další stránka",
+    "all": "Vše",
+    "search": "Vyhledat"
   },
 
   "routes": {

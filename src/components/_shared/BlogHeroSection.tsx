@@ -7,7 +7,7 @@ interface BlogHeroSectionProps {
 
 const BlogHeroSection = ({ title, description }: BlogHeroSectionProps) => {
   return (
-    <section className='section-container flex flex-col gap-8'>
+    <section className='flex flex-col gap-8 lg:px-30'>
       <FormattedText
         text={title}
         as='h1'

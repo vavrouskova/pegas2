@@ -98,10 +98,20 @@ export const truncateByMillions = (number: number) => {
   return `${truncated} mil.`;
 };
 
+/**
+ * Odstraní všechny HTML tagy ze stringu
+ * @param html - string obsahující HTML tagy
+ * @returns string bez HTML tagů
+ */
+export const stripHtmlTags = (html: string): string => {
+  if (!html) return '';
+  return html.replace(/<[^>]*>/g, '').trim();
+};
+
 export const truncateText = (text: string, maxLength: number = 100) => {
   if (!text) return '';
   // eslint-disable-next-line sonarjs/slow-regex
-  const strippedText = text.replace(/<\/?[^>]+(>|$)/g, '');
+  const strippedText = stripHtmlTags(text);
   if (strippedText.length <= maxLength) return strippedText;
   return `${strippedText.slice(0, maxLength)}...`;
 };

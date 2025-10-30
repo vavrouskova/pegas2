@@ -8,6 +8,8 @@ import BlogHeroSection from '@/components/_shared/BlogHeroSection';
 import BlogPagination from '@/components/_shared/BlogPagination';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import ContentSection from '@/components/_shared/ContentSection';
+import { POSTS_PER_PAGE } from '@/constants/blog';
+import { parsePageNumber } from '@/utils/blog-helpers';
 import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -28,34 +30,29 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
   const params = await searchParams;
   const categoryId = params.category;
   const search = params.search;
-  const page = parseInt(params.page || '1', 10);
+  const page = parsePageNumber(params.page);
 
   const [t, blogData, categories] = await Promise.all([
     getTranslations(),
-    getBlogPosts(9, page, categoryId, search),
+    getBlogPosts(POSTS_PER_PAGE, page, categoryId, search),
     getBlogCategories(),
   ]);
 
   return (
     <main className='max-w-container mx-auto'>
-      {/* Breadcrumbs */}
       <section className='section-container'>
         <Breadcrumbs pageTitle={t('blog.page-title')} />
       </section>
 
-      {/* Blog Hero Section */}
-      <section className='section-container pt-12 pb-8 lg:pt-20 lg:pb-12'>
+      <section className='section-container pt-18 pb-14 lg:pt-43 lg:pb-26'>
         <BlogHeroSection
           title={t('blog.hero.title')}
           description={t('blog.hero.description')}
         />
       </section>
 
-      {/* Blog Filter */}
-
-      {/* Blog Grid Section */}
       <section className='section-container relative pb-12 lg:pb-20'>
-        <div className='mb-8 lg:mb-12'>
+        <div className='mb-8 lg:mb-16'>
           <BlogFilter categories={categories} />
         </div>
         <BlogGridSection posts={blogData.nodes} />

@@ -1,3 +1,4 @@
+import { MAX_POSTS_FETCH, MIN_POSTS_FOR_TESTING, POSTS_PER_PAGE, UNCATEGORIZED_CATEGORY_ID } from '@/constants/blog';
 import type { BlogPost } from '@/utils/wordpress-types';
 
 /**
@@ -828,7 +829,7 @@ function generateMockPosts(originalPosts: BlogPost[], targetCount: number): Blog
  * @returns Promise s daty blog postů včetně paginace
  */
 export async function getBlogPosts(
-  postsPerPage = 9,
+  postsPerPage = POSTS_PER_PAGE,
   page = 1,
   categoryId?: string,
   search?: string
@@ -894,7 +895,7 @@ export async function getBlogPosts(
       body: JSON.stringify({
         query,
         variables: {
-          first: 1000, // Získáme až 1000 postů najednou
+          first: MAX_POSTS_FETCH,
           where: finalWhereClause,
         },
       }),
@@ -917,16 +918,15 @@ export async function getBlogPosts(
     // V development módu: pokud máme málo článků a nepoužíváme categoryId filtr,
     // vygenerujeme mock data pro testování
     const isDevelopment = process.env.NODE_ENV === 'development';
-    const minPostsForTesting = 20;
 
     // Mock data generujeme pouze pokud nemáme categoryId filtr (mock data nemají kategorie)
     if (
       isDevelopment &&
       !categoryId &&
-      allNodes.length < minPostsForTesting &&
+      allNodes.length < MIN_POSTS_FOR_TESTING &&
       allNodes.length > 0
     ) {
-      allNodes = generateMockPosts(allNodes, minPostsForTesting);
+      allNodes = generateMockPosts(allNodes, MIN_POSTS_FOR_TESTING);
     }
 
     // Aplikujeme search filtr na všechna data (reálná i mock)

@@ -1,10 +1,13 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 
 import ArrowRight from '@/components/icons/ArrowRight';
+import { BLOG_QUERY_PARAMS } from '@/constants/blog';
 import { cn } from '@/lib/utils';
+import { updateSearchParams } from '@/utils/blog-helpers';
 
 interface BlogPaginationProps {
   totalPages: number;
@@ -14,6 +17,7 @@ interface BlogPaginationProps {
 const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const t = useTranslations('common');
 
   const handlePageChange = useCallback(
     (page: number) => {
@@ -21,15 +25,11 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
         return;
       }
 
-      const params = new URLSearchParams(searchParams.toString());
+      const updatedParams = updateSearchParams(searchParams, {
+        [BLOG_QUERY_PARAMS.PAGE]: page === 1 ? null : page.toString(),
+      });
 
-      if (page === 1) {
-        params.delete('page');
-      } else {
-        params.set('page', page.toString());
-      }
-
-      router.push(`?${params.toString()}`);
+      router.push(`?${updatedParams.toString()}`);
     },
     [router, searchParams, totalPages, currentPage]
   );
@@ -54,7 +54,7 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
   const canScrollNext = currentPage < totalPages;
 
   return (
-    <div className='relative mt-8'>
+    <div className='relative mt-34'>
       <div className='flex items-center justify-center gap-10'>
         {/* Previous button */}
         <button
@@ -65,7 +65,7 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
             'disabled:cursor-not-allowed disabled:opacity-50',
             'transition-opacity hover:opacity-80'
           )}
-          aria-label='Předchozí stránka'
+          aria-label={t('previous-page')}
         >
           <ArrowRight className='h-6 w-6 rotate-180' />
         </button>
@@ -81,16 +81,14 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
                 key={`page-${pageNumber}`}
                 onClick={() => handlePageChange(pageNumber)}
                 className={cn(
-                  'flex cursor-pointer items-center justify-center transition-all duration-500',
+                  'flex cursor-pointer items-center justify-center transition-all duration-500 hover:opacity-80',
                   'min-w-[24px] px-2 py-1',
-                  isActive ? 'bg-primary' : 'hover:bg-primary/10 bg-white'
+                  isActive && 'bg-primary'
                 )}
-                aria-label={`Přejít na stránku ${pageNumber}`}
+                aria-label={`${t('go-to-page')} ${pageNumber}`}
                 aria-current={isActive ? 'page' : undefined}
               >
-                <span
-                  className={cn('text-base leading-none font-black', isActive ? 'text-white-smoke' : 'text-primary')}
-                >
+                <span className={cn('text-base leading-[1.5]', isActive ? 'text-white' : 'text-primary')}>
                   {pageNumber}
                 </span>
               </button>
@@ -107,7 +105,7 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
             'disabled:cursor-not-allowed disabled:opacity-50',
             'transition-opacity hover:opacity-80'
           )}
-          aria-label='Další stránka'
+          aria-label={t('next-page')}
         >
           <ArrowRight className='h-6 w-6' />
         </button>

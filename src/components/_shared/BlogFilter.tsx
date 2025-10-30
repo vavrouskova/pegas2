@@ -1,11 +1,14 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useCallback, useMemo, useState } from 'react';
 
 import Search from '@/components/icons/Search';
-import { BlogCategory } from '@/utils/wordpress-types';
+import { BLOG_QUERY_PARAMS, UNCATEGORIZED_CATEGORY_ID } from '@/constants/blog';
 import { cn } from '@/lib/utils';
+import { resetPagination, updateSearchParams } from '@/utils/blog-helpers';
+import { BlogCategory } from '@/utils/wordpress-types';
 
 interface BlogFilterProps {
   categories: BlogCategory[];
@@ -14,26 +17,30 @@ interface BlogFilterProps {
 const BlogFilter = ({ categories }: BlogFilterProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const t = useTranslations('common');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get(BLOG_QUERY_PARAMS.SEARCH) || '');
 
-  const selectedCategory = searchParams.get('category');
+  const selectedCategory = searchParams.get(BLOG_QUERY_PARAMS.CATEGORY);
+  const hasActiveSearch = Boolean(searchParams.get(BLOG_QUERY_PARAMS.SEARCH));
+
+  // Filtrovat kategorie - odstranit "Nezařazené" podle databaseId
+  const filteredCategories = useMemo(
+    () => categories.filter((category) => category.databaseId !== UNCATEGORIZED_CATEGORY_ID),
+    [categories]
+  );
+
+  const isAllActive = !selectedCategory && !hasActiveSearch;
 
   const handleCategoryClick = useCallback(
     (categoryId: string | null) => {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = resetPagination(searchParams);
+      const updatedParams = updateSearchParams(params, {
+        [BLOG_QUERY_PARAMS.CATEGORY]: categoryId,
+        [BLOG_QUERY_PARAMS.SEARCH]: null,
+      });
 
-      if (categoryId) {
-        params.set('category', categoryId);
-      } else {
-        params.delete('category');
-      }
-
-      // Smazat search a page při změně kategorie
-      params.delete('search');
-      params.delete('page');
       setSearchQuery('');
-
-      router.push(`?${params.toString()}`);
+      router.push(`?${updatedParams.toString()}`);
     },
     [router, searchParams]
   );
@@ -41,25 +48,17 @@ const BlogFilter = ({ categories }: BlogFilterProps) => {
   const handleSearchSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      const params = new URLSearchParams(searchParams.toString());
+      const params = resetPagination(searchParams);
+      const trimmedQuery = searchQuery.trim();
+      const updatedParams = updateSearchParams(params, {
+        [BLOG_QUERY_PARAMS.SEARCH]: trimmedQuery || null,
+        [BLOG_QUERY_PARAMS.CATEGORY]: null,
+      });
 
-      if (searchQuery.trim()) {
-        params.set('search', searchQuery.trim());
-      } else {
-        params.delete('search');
-      }
-
-      // Smazat category a page při vyhledávání
-      params.delete('category');
-      params.delete('page');
-
-      router.push(`?${params.toString()}`);
+      router.push(`?${updatedParams.toString()}`);
     },
     [router, searchParams, searchQuery]
   );
-
-  // Filtrovat kategorie - odstranit "Nezařazené" podle databaseId
-  const filteredCategories = categories.filter((category) => category.databaseId !== 1);
 
   return (
     <div className='flex flex-wrap items-center gap-1'>
@@ -68,16 +67,16 @@ const BlogFilter = ({ categories }: BlogFilterProps) => {
         onClick={() => handleCategoryClick(null)}
         className={cn(
           'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-4 py-[10px]',
-          !selectedCategory && !searchParams.get('search') ? 'bg-primary' : 'bg-white'
+          isAllActive ? 'bg-primary' : 'bg-white'
         )}
       >
         <span
           className={cn(
             'text-base leading-[1.44] font-black tracking-[1px] whitespace-pre',
-            !selectedCategory && !searchParams.get('search') ? 'text-white-smoke' : 'text-primary'
+            isAllActive ? 'text-white-smoke' : 'text-primary'
           )}
         >
-          Vše
+          {t('all')}
         </span>
       </button>
 
@@ -115,15 +114,15 @@ const BlogFilter = ({ categories }: BlogFilterProps) => {
           type='text'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder='Vyhledat'
+          placeholder={t('search')}
           className='text-primary min-w-0 flex-1 border-none bg-transparent text-base leading-[1.44] font-black tracking-[1px] outline-none'
         />
         <button
           type='submit'
           className='sr-only'
-          aria-label='Vyhledat'
+          aria-label={t('search')}
         >
-          Vyhledat
+          {t('search')}
         </button>
       </form>
     </div>
