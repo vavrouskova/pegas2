@@ -35,7 +35,6 @@ const ContentSection = ({
   const isImageLeft = imagePosition === 'left';
 
   if (!hasImage) {
-    // ContentBox pouze (původní ContentBoxSection)
     return (
       <section className={cn('section-container', withFeathers ? 'relative' : '', sectionClassName)}>
         <ContentBox
@@ -55,7 +54,6 @@ const ContentSection = ({
     );
   }
 
-  // ContentBox s obrázkem (původní ContentWithImages)
   if (!image) return null;
 
   const { src: imageSource, alt: imageAlt } = image;
@@ -76,7 +74,7 @@ const ContentSection = ({
         link={link}
         className={cn('max-w-[28.375rem] lg:mx-auto lg:flex-shrink-0', contentBoxClassName)}
       />
-      <div className='min-w-0 lg:max-w-[43.25rem] lg:flex-1'>
+      <div className='min-w-0 lg:max-w-[29.375rem] lg:flex-1'>
         <Image
           src={imageSource}
           alt={imageAlt}

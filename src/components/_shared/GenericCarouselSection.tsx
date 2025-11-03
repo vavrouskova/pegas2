@@ -39,12 +39,12 @@ const GenericCarouselSection = <T extends CarouselItemData>({
   const { currentIndex, setApi, carouselRef, setIsHovering, goToSlide } = useCarouselAutoplay();
 
   const defaultRenderImage = (item: T) => (
-    <picture className='relative aspect-square h-auto w-full'>
+    <picture className='relative aspect-square h-auto w-full flex-shrink-0'>
       <Image
         src={item.image}
         alt={item.title}
         fill
-        sizes='(max-width: 768px) 160px, 256px'
+        sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 600px'
         className='object-cover'
       />
     </picture>

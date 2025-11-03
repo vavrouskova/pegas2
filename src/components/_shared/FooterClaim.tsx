@@ -26,7 +26,7 @@ const FooterClaim = async ({ className }: ClassNameProps) => {
         <FormattedText
           text={t('claim')}
           as='h2'
-          className='text-3xl font-thin md:text-4xl'
+          className='text-3xl font-text md:text-4xl'
         />
       </div>
     </section>
