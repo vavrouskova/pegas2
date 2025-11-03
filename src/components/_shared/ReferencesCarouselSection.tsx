@@ -65,7 +65,7 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
             <FormattedText
               text={item.title}
               as='h3'
-              className='text-white-smoke mb-6 text-2xl'
+              className='text-white-smoke mb-6 text-xl'
             />
             {item.where && (
               <p className='text-tertiary text-lg'>

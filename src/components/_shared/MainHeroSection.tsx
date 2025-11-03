@@ -41,7 +41,7 @@ const MainHeroSection = async ({
         <FormattedText
           text={description}
           as='p'
-          className='text-xl'
+          className='text-lg'
         />
         <div className='flex flex-col justify-between gap-4 text-lg md:flex-row'>
           <div className='flex flex-col'>
@@ -79,7 +79,7 @@ const MainHeroSection = async ({
           alt='Background Image'
           width={2000}
           height={2000}
-          className={cn('absolute top-6 right-0 z-[-1] w-[81rem] min-w-[35rem] md:top-12', imageClassName)}
+          className={cn('absolute top-6 right-0 z-[-1] w-[61rem] min-w-[35rem] md:top-20 xl:top-40', imageClassName)}
         />
       )}
     </section>

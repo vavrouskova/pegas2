@@ -48,7 +48,7 @@
 @layer base {
   :root,
   .default {
-    --max-w: 94.5rem;
+    --max-w: 75.75rem;
 
     /* Colors */
     --primary: 0.3529 0.0868 326.35; /* Deep */
@@ -104,25 +104,22 @@
   }
 
   h1 {
-    @apply text-4xl;
-  }
-
-  h2 {
     @apply text-3xl;
   }
 
-  h3 {
+  h2 {
     @apply text-2xl;
   }
 
-  h4 {
+  h3 {
     @apply text-xl;
   }
 
-  h5 {
+  h4 {
     @apply text-lg;
   }
 
+  h5,
   h6 {
     @apply text-base;
   }
