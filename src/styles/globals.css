@@ -134,7 +134,7 @@
 
   p,
   span {
-    @apply text-secondary leading-[200%];
+    @apply text-secondary text-lg leading-[200%];
   }
 }
 

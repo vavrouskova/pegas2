@@ -88,14 +88,6 @@ const BlogDetailHeroSection = ({
           />
         )}
       </div>
-
-      <Image
-        src='/images/leaves.webp'
-        alt='Decorative leaves'
-        width={300}
-        height={300}
-        className='absolute top-0 right-0 z-0 h-auto w-[17.40625rem] shrink-0 translate-x-34 -translate-y-10 -scale-x-100 -rotate-[60deg] lg:hidden'
-      />
     </section>
   );
 };
