@@ -292,6 +292,28 @@ export function formatFarewellDateTime(dateString?: string): string {
 }
 
 /**
+ * Formátuje datum rozloučení bez dne v týdnu a času
+ * @param dateString - datum jako string z WordPressu (např. "2025-10-07T14:00:00+00:00")
+ * @returns formátované datum v češtině (např. "7. 10. 2025")
+ */
+export function formatFarewellDate(dateString?: string): string {
+  if (!dateString) return '';
+  try {
+    // Odstranit timezone suffix a interpretovat jako lokální čas
+    const dateWithoutTZ = dateString.replace(/([+-]\d{2}:\d{2}|Z)$/, '');
+    const date = new Date(dateWithoutTZ);
+
+    return new Intl.DateTimeFormat('cs-CZ', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    }).format(date);
+  } catch {
+    return dateString;
+  }
+}
+
+/**
  * Filtruje zaměstnance podle typu pozice na vedení a tým
  * @param employees - pole zaměstnanců
  * @param managementType - typ pozice pro vedení (default: 'company_management')

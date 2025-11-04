@@ -19,6 +19,21 @@ export interface ReferenceACF {
   farewellDate?: string;
   farewellPlace?: string;
   description?: string;
+  introImage?: {
+    node: {
+      sourceUrl: string;
+      altText?: string;
+    };
+  };
+}
+
+// Reference Taxonomy Types
+export interface ReferenceCategory {
+  id: string;
+  databaseId: number;
+  name: string;
+  slug: string;
+  description?: string;
 }
 
 // Reference Posts Types
@@ -32,6 +47,10 @@ export interface ReferencePost {
   excerpt?: string;
   featuredImage?: MediaItemEdge;
   referenceACF?: ReferenceACF;
+  components?: BlogComponents;
+  typReference?: {
+    nodes: ReferenceCategory[];
+  };
 }
 
 // Sluzby (Services) Taxonomy Types

@@ -22,6 +22,8 @@ export const pathnames = {
 
   '/services': { cs: '/sluzby' },
 
+  '/references': { cs: '/reference' },
+
   '/[slug]': { cs: '/[slug]' },
 } satisfies Pathnames<typeof locales>;
 

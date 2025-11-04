@@ -16,8 +16,8 @@ export const getHeaderLinks = async () => {
       href: tRoutes('services'),
     },
     {
-      label: tHeader('organized-by-us'),
-      href: tRoutes('organized-by-us'),
+      label: tHeader('references'),
+      href: tRoutes('references'),
     },
     {
       label: tHeader('media'),

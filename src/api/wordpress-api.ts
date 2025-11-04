@@ -1,5 +1,6 @@
 import { MAX_POSTS_FETCH, POSTS_PER_PAGE, UNCATEGORIZED_CATEGORY_ID } from '@/constants/blog';
-import type { BlogPost, BlogPostDetail } from '@/utils/wordpress-types';
+import { MAX_REFERENCES_FETCH } from '@/constants/references';
+import type { BlogPost, BlogPostDetail, ReferenceCategory, ReferencePost } from '@/utils/wordpress-types';
 
 /**
  * Získá počet poboček (pobockaPosts)
@@ -140,6 +141,12 @@ export async function getHomepageData() {
                   farewellDate
                   farewellPlace
                   description
+                  introImage {
+                    node {
+                      sourceUrl
+                      altText
+                    }
+                  }
                 }
               }
             }
@@ -898,6 +905,286 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
     return result.data?.post || null;
   } catch (error) {
     console.error(`Error fetching blog post with slug ${slug}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Získá seznam taxonomií pro reference (typReference)
+ * @param first - Počet taxonomií k načtení (výchozí 100)
+ * @returns Promise se seznamem taxonomií
+ */
+export async function getReferenceTaxonomies(first = 100): Promise<ReferenceCategory[]> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetReferenceTaxonomies($first: Int!) {
+      allTypReference(first: $first) {
+        nodes {
+          id
+          databaseId
+          name
+          slug
+          description
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { first },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.allTypReference?.nodes || [];
+  } catch (error) {
+    console.error('Error fetching reference taxonomies:', error);
+    return [];
+  }
+}
+
+/**
+ * Získá seznam referenčních postů (referencePosts) s podporou paginace a filtrování podle kategorie
+ * @param referencesPerPage - Počet referencí na stránku (výchozí 9)
+ * @param page - Číslo stránky (výchozí 1)
+ * @param categoryId - ID kategorie pro filtrování (volitelné)
+ * @returns Promise s daty referencí včetně paginace
+ */
+export async function getReferencePosts(referencesPerPage = 9, page = 1, categoryId?: string) {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  // Získáme větší množství postů (max 1000) pro výpočet paginace
+  const query = `
+    query GetReferencePosts($first: Int!) {
+      referencePosts(first: $first) {
+        nodes {
+          id
+          databaseId
+          title
+          slug
+          date
+          featuredImage {
+            node {
+              sourceUrl
+              altText
+              mediaDetails {
+                width
+                height
+              }
+            }
+          }
+          referenceACF {
+            farewellDate
+            farewellPlace
+            description
+            introImage {
+              node {
+                sourceUrl
+                altText
+              }
+            }
+          }
+          typReference {
+            nodes {
+              id
+              databaseId
+              name
+              slug
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { first: MAX_REFERENCES_FETCH },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    let allNodes = result.data?.referencePosts?.nodes || [];
+
+    // Aplikujeme category filtr
+    if (categoryId) {
+      allNodes = allNodes.filter((reference: ReferencePost) =>
+        reference.typReference?.nodes?.some((cat) => cat.databaseId.toString() === categoryId)
+      );
+    }
+
+    const totalCount = allNodes.length;
+    const totalPages = Math.ceil(totalCount / referencesPerPage);
+
+    // Rozdělíme reference na stránky
+    const startIndex = (page - 1) * referencesPerPage;
+    const endIndex = startIndex + referencesPerPage;
+    const nodes = allNodes.slice(startIndex, endIndex);
+
+    const hasNextPage = endIndex < totalCount;
+    const hasPreviousPage = page > 1;
+
+    return {
+      nodes,
+      pageInfo: {
+        hasNextPage,
+        hasPreviousPage,
+        startCursor: null,
+        endCursor: null,
+      },
+      totalCount,
+      totalPages,
+      currentPage: page,
+    };
+  } catch (error) {
+    console.error('Error fetching reference posts:', error);
+    return {
+      nodes: [],
+      pageInfo: {
+        hasNextPage: false,
+        hasPreviousPage: false,
+        startCursor: null,
+        endCursor: null,
+      },
+      totalCount: 0,
+      totalPages: 0,
+      currentPage: page,
+    };
+  }
+}
+
+/**
+ * Získá detail referenčního postu podle slugu
+ * @param slug - Slug referenčního postu
+ * @returns Promise s detailem referenčního postu
+ */
+export async function getReferenceBySlug(slug: string) {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetReferenceBySlug($slug: ID!) {
+      referencePost(id: $slug, idType: SLUG) {
+        id
+        databaseId
+        title
+        slug
+        date
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+            mediaDetails {
+              width
+              height
+            }
+          }
+        }
+        referenceACF {
+          farewellDate
+          farewellPlace
+          description
+          introImage {
+            node {
+              sourceUrl
+              altText
+            }
+          }
+        }
+        components {
+          components {
+            ... on ComponentsComponentsWysiwygLayout {
+              fieldGroupName
+              editor
+            }
+            ... on ComponentsComponentsMediaLayout {
+              fieldGroupName
+              mediaType
+              youtubeEmbedLink
+              image {
+                node {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+            ... on ComponentsComponentsGalleryLayout {
+              fieldGroupName
+              gallery {
+                nodes {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { slug },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.referencePost || null;
+  } catch (error) {
+    console.error(`Error fetching reference post with slug ${slug}:`, error);
     return null;
   }
 }

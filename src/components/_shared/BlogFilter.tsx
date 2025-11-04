@@ -66,7 +66,7 @@ const BlogFilter = ({ categories }: BlogFilterProps) => {
       <button
         onClick={() => handleCategoryClick(null)}
         className={cn(
-          'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-4 py-[10px]',
+          'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-4 py-[10px] transition-opacity duration-300 hover:opacity-70',
           isAllActive ? 'bg-primary' : 'bg-white'
         )}
       >
@@ -83,7 +83,7 @@ const BlogFilter = ({ categories }: BlogFilterProps) => {
             key={category.id}
             onClick={() => handleCategoryClick(category.databaseId.toString())}
             className={cn(
-              'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-4 py-[10px]',
+              'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-4 py-[10px] transition-opacity duration-300 hover:opacity-70',
               isActive ? 'bg-primary' : 'bg-white'
             )}
           >

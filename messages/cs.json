@@ -35,7 +35,7 @@
     "blog": "blog",
     "faq": "jak-postupovat",
     "services": "sluzby",
-    "organized-by-us": "organizovali-jsme",
+    "references": "reference",
     "media": "media-a-verejnost",
     "about-us": "o-nas",
     "contacts": "kontakty",
@@ -48,7 +48,7 @@
   "header": {
     "faq": "Jak postupovat",
     "services": "Služby",
-    "organized-by-us": "Organizovali jsme",
+    "references": "Organizovali jsme",
     "media": "Média a veřejnost",
     "about-us": "O nás",
     "contacts": "Kontakty"
@@ -99,7 +99,7 @@
       "title": "Jsme tu. Tiše, ale pevně.",
       "description": "Už 30 let děláme osobitá rozloučení, které mají hluboký smysl.  Nasloucháme, plníme přání.'{{br}}{{br}}' Věříme, že důstojný závěr si zaslouží každý z nás.",
       "button-text": "Organizovali jsme",
-      "link": "organizovali-jsme"
+      "link": "reference"
     },
     "about-us": {
       "title": "O nás",
@@ -213,5 +213,13 @@
       "description": "Najděte články, které nehodnotí ani nepoučují. Jen otevírají témata, která mohou pomoci – pochopit, přijmout, nebo jen být chvíli v klidu."
     },
     "back-to-blog": "Zpět na přehled článků"
+  },
+
+  "references": {
+    "page-title": "Organizovali jsme",
+    "hero": {
+      "title": "Organizovali jsme",
+      "description": "Každý příběh je jiný. Rozloučení může být přesně takové, jaké si přejete Vy."
+    }
   }
 }

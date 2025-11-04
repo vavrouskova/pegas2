@@ -12,8 +12,8 @@ interface BreadcrumbItem {
 interface BasicHeroSectionProps {
   title: string;
   description: string;
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
   pageTitle: string;
   breadcrumbItems?: BreadcrumbItem[];
 }
@@ -22,8 +22,8 @@ const BasicHeroSection = ({
   title,
   description,
   image,
-  imageAlt,
-  pageTitle,
+  imageAlt = '',
+  pageTitle = '',
   breadcrumbItems,
 }: Readonly<BasicHeroSectionProps>) => {
   return (
