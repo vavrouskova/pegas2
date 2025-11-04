@@ -46,10 +46,12 @@ const AboutUsPage = async () => {
           <FormattedText
             text={t('about-us.experience.title')}
             as='h2'
+            className='text-3xl'
           />
           <FormattedText
             text={t('about-us.experience.description')}
             as='p'
+            className='text-lg'
           />
         </div>
       </section>
@@ -86,6 +88,8 @@ const AboutUsPage = async () => {
         image={{ src: '/images/room.webp', alt: t('about-us.branches.alt') }}
         imagePosition='left'
       />
+
+      <FoundationSection />
 
       <PartnersSection />
 

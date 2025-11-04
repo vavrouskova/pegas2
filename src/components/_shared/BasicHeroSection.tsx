@@ -38,11 +38,12 @@ const BasicHeroSection = ({
           <FormattedText
             text={title}
             as='h1'
+            className='text-4xl'
           />
           <FormattedText
             text={description}
             as='p'
-            className='text-primary'
+            className='text-primary text-xl'
           />
         </div>
         {image && (
