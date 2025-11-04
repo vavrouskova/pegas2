@@ -757,16 +757,21 @@ export async function getBlogCategories(first = 100) {
  * @param slug - Slug k ověření
  * @returns 'post' | 'sluzbyPost' | null
  */
-export async function checkSlugType(slug: string): Promise<'post' | 'sluzbyPost' | null> {
+export async function checkSlugType(
+  slug: string
+): Promise<'post' | 'sluzbyPost' | 'referencePost' | null> {
   const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
 
-  // Jeden GraphQL dotaz, který zkontroluje oba typy najednou
+  // Jeden GraphQL dotaz, který zkontroluje všechny typy najednou
   const query = `
     query CheckSlugType($slug: ID!) {
       post(id: $slug, idType: SLUG) {
         id
       }
       sluzbyPost(id: $slug, idType: SLUG) {
+        id
+      }
+      referencePost(id: $slug, idType: SLUG) {
         id
       }
     }
@@ -802,6 +807,10 @@ export async function checkSlugType(slug: string): Promise<'post' | 'sluzbyPost'
 
     if (result.data?.sluzbyPost) {
       return 'sluzbyPost';
+    }
+
+    if (result.data?.referencePost) {
+      return 'referencePost';
     }
 
     return null;
@@ -1125,33 +1134,19 @@ export async function getReferenceBySlug(slug: string) {
               altText
             }
           }
+          gallery {
+            nodes {
+              sourceUrl
+              altText
+            }
+          }
         }
-        components {
-          components {
-            ... on ComponentsComponentsWysiwygLayout {
-              fieldGroupName
-              editor
-            }
-            ... on ComponentsComponentsMediaLayout {
-              fieldGroupName
-              mediaType
-              youtubeEmbedLink
-              image {
-                node {
-                  altText
-                  sourceUrl
-                }
-              }
-            }
-            ... on ComponentsComponentsGalleryLayout {
-              fieldGroupName
-              gallery {
-                nodes {
-                  altText
-                  sourceUrl
-                }
-              }
-            }
+        typReference {
+          nodes {
+            id
+            databaseId
+            name
+            slug
           }
         }
       }

@@ -2,12 +2,14 @@ import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-import { checkSlugType, getBlogPostBySlug, getServiceBySlug } from '@/api/wordpress-api';
+import { checkSlugType, getBlogPostBySlug, getReferenceBySlug, getServiceBySlug } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
 import BlogDetailHeroSection from '@/components/_shared/BlogDetailHeroSection';
 import ContentSection from '@/components/_shared/ContentSection';
-import FooterClaim from '@/components/_shared/FooterClaim';
 import DynamicContentSection from '@/components/_shared/DynamicContentSection';
+import FooterClaim from '@/components/_shared/FooterClaim';
+import ReferenceDetailHeroSection from '@/components/_shared/ReferenceDetailHeroSection';
+import ReferenceGallery from '@/components/_shared/ReferenceGallery';
 import { decodeHtmlEntitiesServer, stripHtmlTags } from '@/utils/helper';
 import { getSeoDataBySlug } from '@/utils/seo';
 
@@ -24,6 +26,10 @@ export async function generateMetadata({ params }: SlugPageProps): Promise<Metad
   const slugType = await checkSlugType(slug);
   if (slugType === 'post') {
     return getSeoDataBySlug('post', slug);
+  }
+
+  if (slugType === 'referencePost') {
+    return getSeoDataBySlug('referencePost', slug);
   }
 
   return getSeoDataBySlug('sluzbyPost', slug);
@@ -99,6 +105,69 @@ const SlugPage = async ({ params }: SlugPageProps) => {
           sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
           withFeathers
         />
+      </main>
+    );
+  }
+
+  if (slugType === 'referencePost') {
+    const referenceData = await getReferenceBySlug(slug);
+
+    if (!referenceData) {
+      notFound();
+    }
+
+    const { title, referenceACF, featuredImage, typReference } = referenceData;
+    const description = referenceACF?.description || '';
+    const farewellDate = referenceACF?.farewellDate || '';
+    const farewellPlace = referenceACF?.farewellPlace || '';
+    const image = referenceACF?.introImage?.node?.sourceUrl || featuredImage?.node?.sourceUrl;
+    const imageAlt = referenceACF?.introImage?.node?.altText || featuredImage?.node?.altText || title || '';
+    const gallery = referenceACF?.gallery?.nodes || [];
+
+    const breadcrumbItems = [
+      {
+        label: t('references.page-title'),
+        href: `/${t('routes.references')}`,
+      },
+    ];
+
+    if (typReference?.nodes && typReference.nodes.length > 0) {
+      const category = typReference.nodes[0];
+      breadcrumbItems.push({
+        label: category.name,
+        href: `/${t('routes.references')}?category=${category.databaseId}`,
+      });
+    }
+
+    return (
+      <main className='max-w-container mx-auto'>
+        <ReferenceDetailHeroSection
+          title={title}
+          farewellDate={farewellDate}
+          farewellPlace={farewellPlace}
+          image={image}
+          imageAlt={imageAlt}
+          description={description}
+          pageTitle={title}
+          breadcrumbItems={breadcrumbItems}
+        />
+
+        {gallery.length > 0 && (
+          <section className='section-container py-12 lg:py-20'>
+            <ReferenceGallery images={gallery} />
+          </section>
+        )}
+
+        <ContentSection
+          title={t('home.about-us.title')}
+          description={t('home.about-us.description')}
+          buttonText={t('home.about-us.button-text')}
+          link={t('home.about-us.link')}
+          imagePosition='left'
+          image={{ src: '/images/about-us.webp', alt: t('home.about-us.alt') }}
+        />
+
+        <FooterClaim />
       </main>
     );
   }

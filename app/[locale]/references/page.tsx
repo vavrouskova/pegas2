@@ -75,7 +75,6 @@ const ReferencesPage = async ({ searchParams }: ReferencesPageProps) => {
         buttonText={t('home.about-us.button-text')}
         link={t('home.about-us.link')}
         imagePosition='left'
-        className='pb-40 lg:py-80'
         image={{ src: '/images/about-us.webp', alt: t('home.about-us.alt') }}
       />
 

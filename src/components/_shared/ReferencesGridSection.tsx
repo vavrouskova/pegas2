@@ -23,7 +23,7 @@ const ReferencesGridSection = ({ referencePosts }: ReferencesGridSectionProps) =
 
         return (
           <Link
-            href={`/reference/${reference.slug}`}
+            href={`/${reference.slug}`}
             key={reference.id}
             className='group flex flex-col gap-2 transition-opacity duration-300 hover:opacity-80'
           >

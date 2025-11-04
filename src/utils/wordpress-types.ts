@@ -25,6 +25,12 @@ export interface ReferenceACF {
       altText?: string;
     };
   };
+  gallery?: {
+    nodes: Array<{
+      sourceUrl?: string;
+      altText?: string;
+    }>;
+  };
 }
 
 // Reference Taxonomy Types
