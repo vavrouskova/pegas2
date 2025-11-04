@@ -48,6 +48,10 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
     >
       <head>
         <link
+          rel='icon'
+          href='/favicon.ico'
+        />
+        <link
           rel='stylesheet'
           href='https://use.typekit.net/dnw8jfr.css'
         />
