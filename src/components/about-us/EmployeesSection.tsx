@@ -30,7 +30,7 @@ const EmployeeCard = ({ employee, className }: Readonly<EmployeeCardProps>) => {
   const imageAlt = zamestnanciACF?.profileImage?.node?.altText || employee.title || 'Employee';
 
   return (
-    <article className={cn('group flex flex-col gap-4 max-lg:max-w-[16.625rem]', className)}>
+    <article className={cn('group flex flex-col max-lg:max-w-[16.625rem]', className)}>
       <div className='relative aspect-square w-full overflow-hidden'>
         {imageUrl ? (
           <Image
@@ -46,7 +46,7 @@ const EmployeeCard = ({ employee, className }: Readonly<EmployeeCardProps>) => {
           </div>
         )}
       </div>
-      <div className='flex flex-col gap-1'>
+      <div className='flex flex-col bg-white px-3.5 py-6'>
         {employee.title && (
           <FormattedText
             text={employee.title}
@@ -58,7 +58,14 @@ const EmployeeCard = ({ employee, className }: Readonly<EmployeeCardProps>) => {
           <FormattedText
             text={zamestnanciACF.positionDescription}
             as='p'
-            className='text-primary text-sm'
+            className='text-primary text-lg'
+          />
+        )}
+        {zamestnanciACF?.employeeQuote && (
+          <FormattedText
+            text={zamestnanciACF.employeeQuote}
+            as='p'
+            className='mt-7.5 text-sm italic'
           />
         )}
       </div>

@@ -1,5 +1,5 @@
 import { MAX_POSTS_FETCH, POSTS_PER_PAGE, UNCATEGORIZED_CATEGORY_ID } from '@/constants/blog';
-import type { BlogPost, BlogPostDetail } from '@/utils/wordpress-types';
+import type { BlogPost, BlogPostDetail, ZamestnanciPost } from '@/utils/wordpress-types';
 
 /**
  * Získá počet poboček (pobockaPosts)
@@ -269,7 +269,7 @@ export async function getAboutUsTimeline() {
  * @param first - Počet zaměstnanců k načtení (výchozí 100)
  * @returns Promise se seznamem zaměstnanců
  */
-export async function getZamestnanciPosts(first = 100) {
+export async function getZamestnanciPosts(first = 100): Promise<ZamestnanciPost[]> {
   const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
 
   const query = `
@@ -282,6 +282,7 @@ export async function getZamestnanciPosts(first = 100) {
           zamestnanciACF {
             positionDescription
             positonType
+            employeeQuote
             profileImage {
               node {
                 altText

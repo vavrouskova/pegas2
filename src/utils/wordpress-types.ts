@@ -109,6 +109,7 @@ export interface AboutUsPageData {
 export interface ZamestnanciACF {
   positionDescription?: string;
   positonType?: string[];
+  employeeQuote?: string;
   profileImage?: {
     node: {
       altText: string;
