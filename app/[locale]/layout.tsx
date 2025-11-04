@@ -55,10 +55,6 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
           name='color-scheme'
           content='light'
         />
-        <link
-          rel='icon'
-          href='/favicon.ico'
-        />
       </head>
 
       <GoogleTagManagerComponent gtmId={process.env.GTM_ID as string} />
