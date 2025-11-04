@@ -13,15 +13,15 @@ export const CarouselNavigation = ({ itemsCount, currentIndex, onDotClick }: Car
     <>
       <CarouselPrevious
         variant='ghost'
-        className='top-full left-1/2 mt-9.5 -translate-x-[6.75rem] translate-y-0'
+        className='top-full left-1/2 mt-2 -translate-x-[6.75rem] translate-y-0'
       />
       <CarouselNext
         variant='ghost'
-        className='top-full left-1/2 mt-9.5 translate-x-[4.75rem] translate-y-0'
+        className='top-full left-1/2 mt-2 translate-x-[4.75rem] translate-y-0'
       />
 
       {itemsCount > 1 && (
-        <div className='absolute -bottom-14 left-1/2 flex -translate-x-1/2 space-x-2.5'>
+        <div className='absolute -bottom-7 left-1/2 flex -translate-x-1/2 space-x-2.5'>
           {Array.from({ length: itemsCount }).map((_, index) => (
             <span
               key={`slide n.${index + 1}`}

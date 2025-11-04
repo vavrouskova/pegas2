@@ -1,12 +1,7 @@
-'use client';
-
-import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 
-import ChevronDown from '@/components/icons/ChevronDown';
 import { FormattedText } from '@/components/_shared/FormattedText';
-import { cn } from '@/lib/utils';
 import type { TimelineItem } from '@/utils/wordpress-types';
 
 interface TimelineSectionProps {
@@ -15,7 +10,6 @@ interface TimelineSectionProps {
 
 // Constants
 const IMAGE_ASPECT_RATIO = 120 / 67;
-const MAX_VISIBLE_ITEMS = 6;
 
 // Subcomponents
 interface TimelineImageProps {
@@ -146,54 +140,9 @@ const TimelineItemComponent = ({ item, isEven }: Readonly<TimelineItemComponentP
 };
 
 const TimelineSection = ({ timeline }: Readonly<TimelineSectionProps>) => {
-  const t = useTranslations('about-us.timeline');
-  const [showAll, setShowAll] = useState(false);
-  const itemsContainerRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
-
   if (!timeline?.length) {
     return null;
   }
-
-  const hasMoreItems = timeline.length > MAX_VISIBLE_ITEMS;
-  const visibleItems = showAll ? timeline : timeline.slice(0, MAX_VISIBLE_ITEMS);
-
-  useEffect(() => {
-    if (!itemsContainerRef.current || !lineRef.current) return;
-
-    const updateLineHeight = () => {
-      const items = itemsContainerRef.current?.children;
-      if (!items || items.length === 0) return;
-
-      const lastItem = items[items.length - 1] as HTMLElement;
-      const firstItem = items[0] as HTMLElement;
-
-      if (firstItem && lastItem && lineRef.current && itemsContainerRef.current) {
-        const containerRect = itemsContainerRef.current.getBoundingClientRect();
-        const firstItemRect = firstItem.getBoundingClientRect();
-        const lastItemRect = lastItem.getBoundingClientRect();
-
-        // Pozice středu prvního itemu relativně k containeru
-        const lineTop = firstItemRect.top - containerRect.top + firstItemRect.height / 2;
-        // Pozice středu posledního itemu relativně k containeru
-        const lineBottom = lastItemRect.top - containerRect.top + lastItemRect.height / 2;
-        // Výška linky od středu prvního do středu posledního itemu
-        const lineHeight = lineBottom - lineTop;
-
-        lineRef.current.style.top = `${lineTop}px`;
-        lineRef.current.style.height = `${lineHeight}px`;
-      }
-    };
-
-    // Použijeme setTimeout, aby se DOM aktualizoval před výpočtem
-    const timeoutId = setTimeout(updateLineHeight, 0);
-    window.addEventListener('resize', updateLineHeight);
-
-    return () => {
-      clearTimeout(timeoutId);
-      window.removeEventListener('resize', updateLineHeight);
-    };
-  }, [visibleItems, showAll]);
 
   return (
     <section
@@ -203,17 +152,13 @@ const TimelineSection = ({ timeline }: Readonly<TimelineSectionProps>) => {
       <div className='relative'>
         {/* Central vertical line */}
         <div
-          ref={lineRef}
-          className='bg-tertiary absolute left-1/2 hidden -translate-x-1/2 md:block'
+          className='bg-tertiary absolute top-0 left-1/2 hidden h-full -translate-x-1/2 md:block'
           style={{ width: '1px' }}
           aria-hidden='true'
         />
 
-        <div
-          ref={itemsContainerRef}
-          className='space-y-12'
-        >
-          {visibleItems.map((item, index) => (
+        <div className='space-y-12'>
+          {timeline.map((item, index) => (
             <TimelineItemComponent
               key={item.year || index}
               item={item}
@@ -221,18 +166,6 @@ const TimelineSection = ({ timeline }: Readonly<TimelineSectionProps>) => {
             />
           ))}
         </div>
-
-        {hasMoreItems && !showAll && (
-          <div className='mt-12 flex justify-center'>
-            <button
-              onClick={() => setShowAll(true)}
-              className={cn('font-cta text-primary inline-flex items-center gap-2 transition-opacity hover:opacity-70')}
-            >
-              <span className='text-lg'>{t('show-more')}</span>
-              <ChevronDown className='h-5 w-5' />
-            </button>
-          </div>
-        )}
       </div>
     </section>
   );
