@@ -153,7 +153,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         />
 
         {gallery.length > 0 && (
-          <section className='section-container py-12 lg:py-20'>
+          <section className='mx-auto max-w-[684px] py-12 lg:py-20'>
             <ReferenceGallery images={gallery} />
           </section>
         )}
