@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import { getBranchesCount, getHomepageData } from '@/api/wordpress-api';
-import BlogCarouselSectionWrapper from '@/components/_shared/BlogCarouselSectionWrapper';
+import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
@@ -70,7 +70,7 @@ const Homepage = async () => {
         withFeathers
       />
 
-      <BlogCarouselSectionWrapper />
+      <BlogCarouselSection />
 
       <ContentSection
         title={t('about-us.title')}

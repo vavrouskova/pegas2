@@ -22,7 +22,7 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
       <FormattedText
         text={t('home.services-nav.title')}
         as='h2'
-        className='mb-9 text-2xl md:mb-25 md:text-center'
+        className='mb-9 text-3xl md:mb-40 md:text-center'
       />
       <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:flex'>
         {services.map((service) => (
@@ -43,7 +43,7 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
           <FormattedText
             text={t('home.services-nav.all-services')}
             as='h3'
-            className='text-lg'
+            className='text-2xl'
           />
         </Link>
       </div>

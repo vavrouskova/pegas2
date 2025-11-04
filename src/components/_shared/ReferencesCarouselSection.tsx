@@ -65,7 +65,7 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
             <FormattedText
               text={item.title}
               as='h3'
-              className='text-white-smoke'
+              className='text-white-smoke mb-6 text-xl'
             />
             {item.where && (
               <p className='text-tertiary text-lg'>
@@ -77,7 +77,6 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
                 <FormattedText
                   text={item.where}
                   as='span'
-                  className='text-tertiary'
                 />
               </p>
             )}
@@ -91,7 +90,6 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
                 <FormattedText
                   text={item.when}
                   as='span'
-                  className='text-tertiary'
                 />
               </p>
             )}

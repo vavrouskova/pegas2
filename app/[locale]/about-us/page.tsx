@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { getAboutUsTimeline, getZamestnanciPosts } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
-import BlogCarouselSectionWrapper from '@/components/_shared/BlogCarouselSectionWrapper';
+import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PartnersSection from '@/components/_shared/PartnersSection';
@@ -68,7 +68,7 @@ const AboutUsPage = async () => {
         teamTitle={t('about-us.employees.team-title')}
       />
 
-      <BlogCarouselSectionWrapper />
+      <BlogCarouselSection />
 
       <ContentSection
         title={t('about-us.faq.title')}
