@@ -11,13 +11,13 @@ interface CitationSectionProps {
 const CitationSection = ({ quote, author, position }: Readonly<CitationSectionProps>) => {
   return (
     <section className='section-container relative pt-16 pb-40'>
-      <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-14 lg:gap-24'>
+      <div className='mx-auto flex max-w-[48rem] flex-col gap-12'>
         <FormattedText
           text={quote}
           as='blockquote'
-          className='text-2xl leading-[2.0] lg:text-3xl'
+          className='text-xl leading-[2.0] lg:text-2xl'
         />
-        <footer>
+        <div className='ml-auto w-fit'>
           <FormattedText
             text={author}
             as='p'
@@ -28,7 +28,7 @@ const CitationSection = ({ quote, author, position }: Readonly<CitationSectionPr
             as='p'
             className='text-sm'
           />
-        </footer>
+        </div>
       </div>
       <Image
         src='/images/leaves.webp'

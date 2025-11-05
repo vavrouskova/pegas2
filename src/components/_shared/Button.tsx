@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { RippleButton, RippleButtonRipples } from '@/components/animate-ui/primitives/buttons/ripple';
 import ArrowRight from '@/components/icons/ArrowRight';
 import { cn } from '@/lib/utils';
@@ -11,6 +13,7 @@ interface ButtonProps {
   className?: string;
   arrowPosition?: 'left' | 'right';
   reverseArrow?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const variantStyles = {
@@ -33,6 +36,7 @@ const Button = ({
   className,
   arrowPosition = 'right',
   reverseArrow = false,
+  onClick,
 }: ButtonProps) => {
   const arrowSize = size === 'small' ? 'h-4 w-4' : 'h-6 w-6';
   const arrowClasses = cn(arrowSize, reverseArrow && 'rotate-180');
@@ -44,6 +48,7 @@ const Button = ({
       key={`${hoverScale}-${tapScale}`}
       hoverScale={hoverScale}
       tapScale={tapScale}
+      onClick={onClick}
       className={cn(
         'flex items-center justify-center gap-1 leading-none',
         sizeStyles[size],

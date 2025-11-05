@@ -10,7 +10,6 @@ import PartnersSection from '@/components/_shared/PartnersSection';
 import Socials from '@/components/_shared/Socials';
 import CitationSection from '@/components/about-us/CitationSection';
 import EmployeesSection from '@/components/about-us/EmployeesSection';
-import FoundationSection from '@/components/about-us/FoundationSection';
 import TimelineSection from '@/components/about-us/TimelineSection';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import { getSeoDataByUri } from '@/utils/seo';
@@ -46,12 +45,10 @@ const AboutUsPage = async () => {
           <FormattedText
             text={t('about-us.experience.title')}
             as='h2'
-            className='text-3xl'
           />
           <FormattedText
             text={t('about-us.experience.description')}
             as='p'
-            className='text-lg'
           />
         </div>
       </section>
@@ -88,8 +85,6 @@ const AboutUsPage = async () => {
         image={{ src: '/images/room.webp', alt: t('about-us.branches.alt') }}
         imagePosition='left'
       />
-
-      <FoundationSection />
 
       <PartnersSection />
 
