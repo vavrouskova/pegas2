@@ -5,17 +5,17 @@ import { ClassNameProps } from '@/utils/types';
 const Facebook = ({ className }: ClassNameProps) => {
   return (
     <svg
-      xmlns='http://www.w3.org/2000/svg'
-      width='16'
-      height='30'
-      viewBox='0 0 16 30'
+      width='11'
+      height='22'
+      viewBox='0 0 11 22'
       fill='none'
+      xmlns='http://www.w3.org/2000/svg'
       className={className}
     >
       <path
         fillRule='evenodd'
         clipRule='evenodd'
-        d='M10.2371 29.25V16.2508H14.6578L15.3211 11.1832H10.2371V7.94834C10.2371 6.48163 10.6482 5.48209 12.7824 5.48209L15.5 5.48099V0.948403C15.03 0.888147 13.4168 0.75 11.5392 0.75C7.61838 0.75 4.93414 3.11118 4.93414 7.44646V11.1832H0.5V16.2508H4.93414V29.25H10.2371Z'
+        d='M7.14952 22V11.9619H10.3905L10.8742 8.05302H7.13984V5.55628C7.13984 4.42046 7.43975 3.65302 9.00704 3.65302H11V0.153488C10.6517 0.102326 9.47142 0 8.08795 0C5.22427 0 3.25066 1.8214 3.25066 5.16744V8.05302H0V11.9619H3.25066V22H7.13984H7.14952Z'
         fill='currentColor'
       />
     </svg>
