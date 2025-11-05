@@ -1,6 +1,6 @@
-export const PhoneNumber = '800 176 423';
+export const PhoneNumber = '+420 800 176 423';
 
-export const SecondaryPhoneNumber = '224 942 048';
+export const SecondaryPhoneNumber = '+420 224 942 048';
 
 export const FacebookUrl = 'https://www.facebook.com/pohrebpegascz/?locale=cs_CZ';
 export const InstagramUrl = 'https://www.instagram.com/pohrebpegas/?hl=cs';

@@ -23,20 +23,22 @@ const Footer = async () => {
         <div className='flex flex-col-reverse justify-between gap-11 md:flex-col md:gap-0'>
           <div className='flex flex-col-reverse gap-11 md:flex-col md:gap-0'>
             <div className='mb-7.5 flex flex-col gap-2 md:gap-11'>
-              <Image
-                src='/images/icons/logo-white.svg'
-                alt='Logo'
-                width={100}
-                height={100}
-                className='mb-8 w-[7.5rem]'
-              />
+              <Link href='/'>
+                <Image
+                  src='/images/icons/logo-white.svg'
+                  alt='Logo'
+                  width={100}
+                  height={100}
+                  className='mb-8 w-[7.5rem]'
+                />
+              </Link>
               <div className='flex flex-col'>
                 <span className='font-text text-white-smoke text-base'>{t('common.nonstop')}</span>
                 <Link
-                  className='text-white-smoke w-fit text-2xl transition-all duration-300 hover:opacity-70'
+                  className='text-white-smoke w-fit text-xl transition-all duration-300 hover:opacity-70'
                   href={`tel:${PhoneNumber}`}
                 >
-                  +420 {PhoneNumber}
+                  {PhoneNumber}
                 </Link>
               </div>
             </div>
@@ -61,29 +63,28 @@ const Footer = async () => {
 
         <div>
           <div className='flex flex-col'>
-            <span className='font-heading text-white-smoke mb-6 text-lg text-balance'>{t('footer.all-branches')}</span>
+            <span className='font-heading text-white-smoke mb-5.5 text-lg text-balance'>
+              {t('footer.all-branches')}
+            </span>
             <div className='flex flex-col gap-4'>
               {pobockyData.map((pobocka: PobockaPost) => (
                 <Link
                   key={pobocka.id}
                   href={`/${pobocka.slug}`}
-                  className='text-tertiary font-text text-base transition-all duration-300 hover:opacity-70'
+                  className='font-text text-base text-white transition-all duration-300 hover:opacity-70'
                 >
                   {pobocka.pobockyACF?.city && (
-                    <span className='font-cta text-base text-white'>{pobocka.pobockyACF.city}</span>
+                    <span className='font-bold-cta text-base text-white'>{pobocka.pobockyACF.city}</span>
                   )}{' '}
                   {pobocka.title}
                 </Link>
               ))}
             </div>
           </div>
-          <div className='md:hidden'>
-            <DirectorateInfo />
-          </div>
         </div>
         <div className='flex flex-col justify-between'>
-          <div className='flex flex-col gap-6'>
-            <span className='font-heading text-white-smoke max-w-[19.5rem] text-lg text-balance'>
+          <div className='flex flex-col'>
+            <span className='font-heading text-white-smoke mb-5.5 max-w-[19.5rem] text-lg text-balance'>
               {t('footer.nonstop-branches')}
             </span>
             <div className='flex flex-col gap-4'>
@@ -93,46 +94,44 @@ const Footer = async () => {
                   <Link
                     key={pobocka.id}
                     href={`/${pobocka.slug}`}
-                    className='text-tertiary font-text text-base transition-all duration-300 hover:opacity-70'
+                    className='font-text text-base text-white transition-all duration-300 hover:opacity-70'
                   >
                     {pobocka.pobockyACF?.city && (
-                      <span className='font-cta mr-1 text-base text-white'>{pobocka.pobockyACF.city}</span>
+                      <span className='font-bold-cta mr-1 text-base text-white'>{pobocka.pobockyACF.city}</span>
                     )}
                     {pobocka.title}
                   </Link>
                 ))}
             </div>
           </div>
-          <div className='max-md:hidden'>
-            <DirectorateInfo />
-          </div>
+          <DirectorateInfo />
         </div>
       </div>
       <div className='max-w-container mt-10 flex flex-col gap-6 pt-4 md:mt-24'>
         <div className='text-tertiary flex gap-6 text-sm max-lg:flex-col lg:items-center lg:gap-4'>
           <Link
-            className='font-text transition-all duration-300 hover:opacity-70'
+            className='font-text text-sm transition-all duration-300 hover:opacity-70'
             href={t('routes.gdpr')}
           >
             {t('footer.gdpr')}
           </Link>{' '}
           |
           <Link
-            className='font-text transition-all duration-300 hover:opacity-70'
+            className='font-text text-sm transition-all duration-300 hover:opacity-70'
             href={t('routes.consumer-information')}
           >
             {t('footer.consumer-information')}
           </Link>{' '}
           |
           <Link
-            className='font-text transition-all duration-300 hover:opacity-70'
+            className='font-text text-sm transition-all duration-300 hover:opacity-70'
             href={t('routes.cookies')}
           >
             {t('footer.cookies')}
           </Link>{' '}
           |
           <Link
-            className='font-text transition-all duration-300 hover:opacity-70'
+            className='font-text text-sm transition-all duration-300 hover:opacity-70'
             href={t('routes.terms-of-use')}
           >
             {t('footer.terms-of-use')}

@@ -33,55 +33,57 @@ const MainHeroSection = async ({
   return (
     <section className={cn('section-container pb-60', sectionClassName)}>
       {pageTitle && <Breadcrumbs pageTitle={pageTitle} />}
-      <div className={cn('mt-96 flex max-w-[36rem] flex-col justify-center gap-8 md:mt-[29.57rem]', contentClassName)}>
-        <div className='space-y-2.5'>
-          <FormattedText
-            text={title}
-            as='h1'
-          />
-          <FormattedText
-            text={description}
-            as='p'
-            className='text-lg'
-          />
-        </div>
-        <div className='flex flex-col justify-between gap-4 text-lg md:flex-row'>
-          <div className='flex flex-col'>
-            <span className='leading-9'>{t('contact-us')}</span>
-            <Link
-              className='link'
-              href={`tel:${PhoneNumber}`}
-            >
-              {PhoneNumber}
-            </Link>
+      <div className='max-w-section mt-96 md:mt-[28.5rem]'>
+        <div className={cn('flex max-w-[37.5rem] flex-col justify-center gap-25 ', contentClassName)}>
+          <div className='space-y-2.5'>
+            <FormattedText
+              text={title}
+              as='h1'
+            />
+            <FormattedText
+              text={description}
+              as='p'
+              className='text-lg'
+            />
           </div>
-          <div className='flex flex-col'>
-            <span className='leading-9'>{t('prepare')}</span>
-            <Link
-              className='link'
-              href='/'
-            >
-              {t('needed-documents')}
-            </Link>
-          </div>
-          <div className='flex flex-col'>
-            <span className='leading-9'>{t('visit-us')}</span>
-            <Link
-              className='link'
-              href='/contacts'
-            >
-              {branchesCount} {t('branches')}
-            </Link>
+          <div className='flex flex-col justify-between gap-4 text-lg md:flex-row'>
+            <div className='flex flex-col'>
+              <span className='leading-9'>{t('contact-us')}</span>
+              <Link
+                className='link'
+                href={`tel:${PhoneNumber}`}
+              >
+                {PhoneNumber}
+              </Link>
+            </div>
+            <div className='flex flex-col'>
+              <span className='leading-9'>{t('prepare')}</span>
+              <Link
+                className='link'
+                href='/'
+              >
+                {t('needed-documents')}
+              </Link>
+            </div>
+            <div className='flex flex-col'>
+              <span className='leading-9'>{t('visit-us')}</span>
+              <Link
+                className='link'
+                href='/contacts'
+              >
+                {branchesCount} {t('branches')}
+              </Link>
+            </div>
           </div>
         </div>
       </div>
       {!noImage && (
         <Image
-          src='/images/wing.webp'
+          src='/images/wing-hp.webp'
           alt='Background Image'
           width={2000}
           height={2000}
-          className={cn('absolute top-6 right-0 z-[-1] w-[61rem] min-w-[35rem] md:top-20 xl:top-40', imageClassName)}
+          className={cn('absolute top-6 right-0 z-[-1] w-[58rem] min-w-[35rem] md:top-20 xl:top-40', imageClassName)}
         />
       )}
     </section>

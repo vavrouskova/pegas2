@@ -10,34 +10,34 @@ const DirectorateInfo = async ({ className }: ClassNameProps) => {
   const t = await getTranslations();
 
   return (
-    <div className={cn('flex flex-col gap-3', className)}>
-      <span className='font-heading text-white-smoke text-lg text-balance'>{t('footer.directorate')}</span>
-      <div className='flex flex-col gap-4'>
-        <span className='text-tertiary text-sm'>{DirectorateInformation.name}</span>
-        <span className='text-tertiary text-sm'>{DirectorateInformation.address}</span>
-        <span className='text-tertiary text-sm'>{DirectorateInformation.openingHours}</span>
-        <span className='text-tertiary text-sm'>{DirectorateInformation.openingHoursWeekend}</span>
+    <div className={cn('flex flex-col', className)}>
+      <span className='font-heading text-white-smoke mb-5.5 text-lg text-balance'>{t('footer.directorate')}</span>
+      <div className='flex flex-col gap-2'>
+        <span className='text-tertiary text-base'>{DirectorateInformation.name}</span>
+        <span className='text-tertiary text-base'>{DirectorateInformation.address}</span>
+        <span className='text-tertiary text-base'>{DirectorateInformation.openingHours}</span>
+        <span className='text-tertiary text-base'>{DirectorateInformation.openingHoursWeekend}</span>
       </div>
-      <div className='mt-3 flex flex-col gap-4 md:mt-6'>
+      <div className='mt-3 flex flex-col gap-2'>
         <Link
-          className='text-sm text-white transition-all duration-300 hover:opacity-70'
+          className='text-base text-white transition-all duration-300 hover:opacity-70'
           href={`mailto:${Email}`}
         >
           {Email}
         </Link>
         <div className='flex flex-wrap items-center gap-2 text-white'>
           <Link
-            className='text-sm text-white transition-all duration-300 hover:opacity-70'
+            className='text-base text-white transition-all duration-300 hover:opacity-70'
             href={`tel:${PhoneNumber}`}
           >
-            +420 {PhoneNumber}
+            {PhoneNumber}
           </Link>
           |
           <Link
-            className='text-sm text-white transition-all duration-300 hover:opacity-70'
+            className='text-base text-white transition-all duration-300 hover:opacity-70'
             href={`tel:${SecondaryPhoneNumber}`}
           >
-            +420 {SecondaryPhoneNumber}
+            {SecondaryPhoneNumber}
           </Link>
         </div>
       </div>

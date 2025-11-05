@@ -49,6 +49,7 @@
   :root,
   .default {
     --max-w: 75.75rem;
+    --section-w: 66.875rem;
 
     /* Colors */
     --primary: 0.3529 0.0868 326.35; /* Deep */
@@ -61,10 +62,10 @@
     --black-rich: 0.1321 0.0048 345.11; /* Black Rich */
 
     /* Font Variation Settings */
-    --font-thin: 'slnt' 1, 'wdth' 80, 'wght' 20;
-    --font-text: 'slnt' 1, 'wdth' 80, 'wght' 30;
+    --font-text: 'slnt' 1, 'wdth' 80, 'wght' 20;
     --font-heading: 'slnt' 1, 'wdth' 80, 'wght' 40;
     --font-cta: 'slnt' 1, 'wdth' 80, 'wght' 40;
+    --font-bold-cta: 'slnt' 1, 'wdth' 80, 'wght' 50;
     --font-bold-text: 'slnt' 1, 'wdth' 80, 'wght' 65;
   }
 }
@@ -90,6 +91,7 @@
     @apply text-primary;
     overflow-x: hidden;
     font-variation-settings: var(--font-text);
+    letter-spacing: 0.04375rem;
   }
 
   /* Headings */
@@ -134,7 +136,7 @@
 
   p,
   span {
-    @apply text-secondary text-lg leading-[200%];
+    @apply text-secondary text-lg leading-[190%];
   }
 }
 
@@ -148,10 +150,6 @@
   }
 
   /* Font Variation Utilities */
-
-  .font-thin {
-    font-variation-settings: var(--font-thin);
-  }
 
   .font-text {
     font-variation-settings: var(--font-text);
@@ -169,9 +167,17 @@
     font-variation-settings: var(--font-bold-text);
   }
 
+  .font-bold-cta {
+    font-variation-settings: var(--font-bold-cta);
+  }
+
   /* Layout Utilities */
   .max-w-container {
     @apply mx-auto max-w-[var(--max-w)];
+  }
+
+  .max-w-section {
+    @apply mx-auto max-w-[var(--section-w)];
   }
 
   .section-container {
