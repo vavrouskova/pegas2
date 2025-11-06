@@ -1186,6 +1186,69 @@ export async function getReferenceBySlug(slug: string) {
 }
 
 /**
+ * Získá blog posty pro carousel (omezený počet s potřebnými daty)
+ * @param first - Počet postů k načtení (výchozí 6)
+ * @returns Promise se seznamem blog postů pro carousel
+ */
+export async function getBlogPostsForCarousel(first = 6): Promise<BlogPost[]> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetBlogPostsForCarousel($first: Int!) {
+      posts(first: $first) {
+        nodes {
+          id
+          databaseId
+          title
+          slug
+          excerpt
+          featuredImage {
+            node {
+              sourceUrl
+              altText
+              mediaDetails {
+                width
+                height
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { first },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.posts?.nodes || [];
+  } catch (error) {
+    console.error('Error fetching blog posts for carousel:', error);
+    return [];
+  }
+}
+
+/**
  * Získá seznam blog postů (posts) s podporou filtrování a paginace
  * @param postsPerPage - Počet postů na stránku (výchozí 9)
  * @param page - Číslo stránky (výchozí 1)

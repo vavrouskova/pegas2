@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
-import { getAboutUsTimeline, getZamestnanciPosts } from '@/api/wordpress-api';
+import { getAboutUsTimeline, getBlogPostsForCarousel, getZamestnanciPosts } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
 import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
@@ -21,10 +21,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const AboutUsPage = async () => {
-  const [t, aboutUsData, employees] = await Promise.all([
+  const [t, aboutUsData, employees, blogPosts] = await Promise.all([
     getTranslations(),
     getAboutUsTimeline(),
     getZamestnanciPosts(),
+    getBlogPostsForCarousel(6),
   ]);
 
   const timeline = aboutUsData?.oNasACF?.timeline ?? [];
@@ -67,7 +68,7 @@ const AboutUsPage = async () => {
         teamTitle={t('about-us.employees.team-title')}
       />
 
-      <BlogCarouselSection />
+      <BlogCarouselSection posts={blogPosts} />
 
       <ContentSection
         title={t('about-us.faq.title')}

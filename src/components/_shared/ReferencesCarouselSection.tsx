@@ -49,7 +49,7 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
       articleClassName='flex min-h-[10rem] items-stretch max-md:flex-col md:min-h-[14.375rem]'
       imageFirst
       renderImage={(item) => (
-        <picture className='relative aspect-square h-auto flex-shrink-0 basis-[10rem] md:basis-[16rem]'>
+        <picture className='relative aspect-square h-auto max-h-[14.375rem] w-full max-w-[14.375rem]'>
           <Image
             src={item.image}
             alt={item.title}

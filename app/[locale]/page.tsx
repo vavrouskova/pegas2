@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
-import { getBranchesCount, getHomepageData } from '@/api/wordpress-api';
+import { getBlogPostsForCarousel, getBranchesCount, getHomepageData } from '@/api/wordpress-api';
 import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
@@ -18,9 +18,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const Homepage = async () => {
-  const [homepageData, branchesCount, t] = await Promise.all([
+  const [homepageData, branchesCount, blogPosts, t] = await Promise.all([
     getHomepageData(),
     getBranchesCount(),
+    getBlogPostsForCarousel(6),
     getTranslations('home'),
   ]);
 
@@ -73,7 +74,7 @@ const Homepage = async () => {
         featherPosition='right'
       />
 
-      <BlogCarouselSection />
+      <BlogCarouselSection posts={blogPosts} />
 
       <ContentSection
         title={t('about-us.title')}
