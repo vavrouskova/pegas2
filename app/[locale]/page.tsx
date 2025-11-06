@@ -42,7 +42,7 @@ const Homepage = async () => {
         description={t('faq.description')}
         buttonText={t('faq.button-text')}
         link={t('faq.link')}
-        image={{ src: '/images/faq-image.webp', alt: t('faq.alt') }}
+        image={{ src: '/images/ceremonies.webp', alt: t('faq.alt') }}
       />
 
       <ContentSection
@@ -51,6 +51,8 @@ const Homepage = async () => {
         buttonText={t('services.button-text')}
         link={t('services.link')}
         sectionClassName='pt-12 md:pt-40 pb-20 md:pb-48'
+        withFeathers
+        featherPosition='left'
       />
 
       <ContentSection
@@ -68,6 +70,7 @@ const Homepage = async () => {
         link={t('organized-by-us.link')}
         sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
         withFeathers
+        featherPosition='right'
       />
 
       <BlogCarouselSection />

@@ -9,7 +9,6 @@ interface ButtonProps {
   tapScale?: number;
   buttonText: string;
   variant?: 'primary' | 'white' | 'destructive';
-  size?: 'default' | 'small';
   className?: string;
   arrowPosition?: 'left' | 'right';
   reverseArrow?: boolean;
@@ -22,26 +21,17 @@ const variantStyles = {
   destructive: 'bg-transparent text-primary [--ripple-button-ripple-color:oklch(var(--primary))]',
 };
 
-const sizeStyles = {
-  small: 'h-13 px-8 py-4 text-base',
-  default: 'h-14 px-8 py-4 text-lg',
-};
-
 const Button = ({
   hoverScale,
   tapScale,
   buttonText,
   variant = 'primary',
-  size = 'default',
   className,
   arrowPosition = 'right',
   reverseArrow = false,
   onClick,
 }: ButtonProps) => {
-  const arrowSize = size === 'small' ? 'h-4 w-4' : 'h-6 w-6';
-  const arrowClasses = cn(arrowSize, reverseArrow && 'rotate-180');
-
-  const arrow = <ArrowRight className={arrowClasses} />;
+  const arrow = <ArrowRight className={cn('h-5 w-5', reverseArrow && 'rotate-180')} />;
 
   return (
     <RippleButton
@@ -50,8 +40,7 @@ const Button = ({
       tapScale={tapScale}
       onClick={onClick}
       className={cn(
-        'flex items-center justify-center gap-1 leading-none',
-        sizeStyles[size],
+        'flex h-14 items-center justify-center gap-5 px-16 py-2.5 text-lg leading-[2rem] transition-opacity duration-300 hover:opacity-90',
         variantStyles[variant],
         className
       )}

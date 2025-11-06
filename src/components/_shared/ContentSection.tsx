@@ -6,6 +6,8 @@ import FeatherAnimation from '@/components/_shared/FeatherAnimation';
 import FeatherStatic from '@/components/_shared/FeatherStatic';
 import { cn } from '@/lib/utils';
 
+type FeatherPosition = 'left' | 'right';
+
 interface ContentSectionProps {
   title: string;
   description: string;
@@ -17,6 +19,7 @@ interface ContentSectionProps {
   image?: { src: string; alt: string };
   imagePosition?: 'left' | 'right';
   withFeathers?: boolean;
+  featherPosition?: FeatherPosition;
 }
 
 const ContentSection = ({
@@ -30,6 +33,7 @@ const ContentSection = ({
   image,
   imagePosition = 'right',
   withFeathers = false,
+  featherPosition = 'left',
 }: ContentSectionProps) => {
   const hasImage = Boolean(image);
   const isImageLeft = imagePosition === 'left';
@@ -47,8 +51,8 @@ const ContentSection = ({
         />
         {withFeathers && (
           <>
-            <FeatherAnimation />
-            <FeatherStatic />
+            <FeatherAnimation featherPosition={featherPosition} />
+            <FeatherStatic featherPosition={featherPosition} />
           </>
         )}
       </section>
@@ -74,7 +78,7 @@ const ContentSection = ({
         description={description}
         buttonText={buttonText}
         link={link}
-        className={cn('max-w-[28.375rem] lg:mx-auto lg:flex-shrink-0', contentBoxClassName)}
+        className={cn('max-w-[31.25rem] lg:flex-shrink-0', contentBoxClassName)}
       />
       <div className='min-w-0 lg:max-w-[29.375rem] lg:flex-1'>
         <Image

@@ -45,8 +45,8 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
   return (
     <GenericCarouselSection
       data={data}
-      carouselMaxWidth='max-w-88 section-container md:max-w-[52.125rem]'
-      articleClassName='flex min-h-[10rem] items-stretch max-md:flex-col md:min-h-[16rem]'
+      carouselMaxWidth='max-w-88 md:max-w-[48.1875rem]'
+      articleClassName='flex min-h-[10rem] items-stretch max-md:flex-col md:min-h-[14.375rem]'
       imageFirst
       renderImage={(item) => (
         <picture className='relative aspect-square h-auto flex-shrink-0 basis-[10rem] md:basis-[16rem]'>
@@ -60,44 +60,32 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
         </picture>
       )}
       renderContent={(item, t) => (
-        <div className='flex flex-1 flex-col space-y-2 px-4 py-5 max-md:h-full max-md:justify-between md:px-10 md:py-9'>
-          <div className='flex flex-col space-y-2'>
+        <div className='flex flex-1 flex-col space-y-2 px-4 py-5 max-md:h-full max-md:justify-between md:px-17.5 md:py-7.5'>
+          <div className='flex flex-col'>
             <FormattedText
               text={item.title}
               as='h3'
-              className='text-white-smoke mb-6 text-xl'
+              className='text-white-smoke mb-2.5 text-xl'
             />
             {item.where && (
-              <p className='text-tertiary text-lg'>
-                <FormattedText
-                  text={`${t('where')}:`}
-                  as='span'
-                  className='font-heading text-white-smoke'
-                />{' '}
-                <FormattedText
-                  text={item.where}
-                  as='span'
-                />
-              </p>
+              <FormattedText
+                text={item.where}
+                as='span'
+                className='text-lg text-white'
+              />
             )}
             {item.when && (
-              <p className='text-tertiary text-lg'>
-                <FormattedText
-                  text={`${t('when')}:`}
-                  as='span'
-                  className='font-heading text-white-smoke'
-                />{' '}
-                <FormattedText
-                  text={item.when}
-                  as='span'
-                />
-              </p>
+              <FormattedText
+                text={item.when}
+                as='span'
+                className='text-lg text-white'
+              />
             )}
           </div>
           <Link href={item.link}>
             <Button
               buttonText={t('find-out-more')}
-              className='-ml-8'
+              className='-ml-16'
             />
           </Link>
         </div>

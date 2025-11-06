@@ -7,7 +7,13 @@ import { useRef } from 'react';
 import { MotionDiv } from '@/components/animate-ui/MotionWrappers';
 import useMediaQuery from '@/hooks/useMediaQuery';
 
-const FeatherAnimation = () => {
+type FeatherPosition = 'left' | 'right';
+
+interface FeatherAnimationProps {
+  featherPosition?: FeatherPosition;
+}
+
+const FeatherAnimation = ({ featherPosition = 'left' }: FeatherAnimationProps) => {
   const isLargeScreen = useMediaQuery('(min-width: 1024px)');
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -45,46 +51,50 @@ const FeatherAnimation = () => {
       {isLargeScreen && (
         <>
           {/* Levé pírko */}
-          <MotionDiv
-            className='absolute top-3/4 left-1/2 z-10 -translate-x-[700px]'
-            style={{
-              y: smoothLeftFeatherY,
-              x: leftFeatherX,
-              rotate: leftFeatherRotate,
-              scale: leftFeatherScale,
-              opacity: leftFeatherOpacity,
-            }}
-          >
-            <Image
-              src='/images/feather1.webp'
-              alt='Feather 1'
-              width={80}
-              height={120}
-              className='h-[11.08013rem] w-[16.822rem] shrink-0'
-              style={{ willChange: 'transform, opacity' }}
-            />
-          </MotionDiv>
+          {featherPosition === 'left' && (
+            <MotionDiv
+              className='absolute top-1/2 left-1/2 z-10 -translate-x-[700px]'
+              style={{
+                y: smoothLeftFeatherY,
+                x: leftFeatherX,
+                rotate: leftFeatherRotate,
+                scale: leftFeatherScale,
+                opacity: leftFeatherOpacity,
+              }}
+            >
+              <Image
+                src='/images/feather1.webp'
+                alt='Feather 1'
+                width={80}
+                height={120}
+                className='h-[11.08013rem] w-[16.822rem] shrink-0'
+                style={{ willChange: 'transform, opacity' }}
+              />
+            </MotionDiv>
+          )}
 
           {/* Pravé pírko */}
-          <MotionDiv
-            className='absolute top-1/2 right-1/2 z-10 translate-x-[700px]'
-            style={{
-              y: smoothRightFeatherY,
-              x: rightFeatherX,
-              rotate: rightFeatherRotate,
-              scale: rightFeatherScale,
-              opacity: rightFeatherOpacity,
-            }}
-          >
-            <Image
-              src='/images/feather2.webp'
-              alt='Feather 2'
-              width={386}
-              height={586}
-              className='h-[36.62163rem] w-[24.1215rem] shrink-0 rotate-[-77.654deg] mix-blend-darken blur-[9.5px]'
-              style={{ willChange: 'transform, opacity' }}
-            />
-          </MotionDiv>
+          {featherPosition === 'right' && (
+            <MotionDiv
+              className='absolute top-1/2 right-1/2 z-10 translate-x-[700px]'
+              style={{
+                y: smoothRightFeatherY,
+                x: rightFeatherX,
+                rotate: rightFeatherRotate,
+                scale: rightFeatherScale,
+                opacity: rightFeatherOpacity,
+              }}
+            >
+              <Image
+                src='/images/feather2.webp'
+                alt='Feather 2'
+                width={386}
+                height={586}
+                className='h-[26.3345rem] w-[17.34569rem] shrink-0 rotate-[-77.654deg] mix-blend-darken'
+                style={{ willChange: 'transform, opacity' }}
+              />
+            </MotionDiv>
+          )}
         </>
       )}
     </div>

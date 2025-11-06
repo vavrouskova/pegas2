@@ -29,8 +29,8 @@ type RippleButtonProps = WithAsChild<
 const RippleButton = ({
   ref,
   onClick,
-  hoverScale = 1.05,
-  tapScale = 0.95,
+  hoverScale = 1,
+  tapScale = 1,
   asChild = false,
   style,
   ...props
