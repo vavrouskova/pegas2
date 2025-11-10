@@ -33,8 +33,8 @@ const ServicesPage = async () => {
         description={t('services.hero.description')}
         branchesCount={branchesCount}
         pageTitle={t('services.hero.page-title')}
-        contentClassName='mt-18 lg:ml-30 md:mt-38 pb-[20rem] sm:pb-60'
-        imageClassName='top-[54rem] md:top-[42rem] max-w-[75%]'
+        contentClassName='lg:ml-30 mt-[15.25rem] pb-[30.75rem] lg:pb-[41.5rem]'
+        imageClassName='top-260 sm:top-230 md:top-200 lg:top-250 xl:top-250'
       />
 
       <TransportSection
@@ -76,8 +76,8 @@ const ServicesPage = async () => {
         description={t('home.organized-by-us.description')}
         buttonText={t('home.organized-by-us.button-text')}
         link={t('home.organized-by-us.link')}
-        sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
         withFeathers
+        featherPosition='right'
       />
 
       <ServicesGridSection

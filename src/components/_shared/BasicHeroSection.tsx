@@ -31,7 +31,7 @@ const BasicHeroSection = ({
         pageTitle={pageTitle}
         items={breadcrumbItems}
       />
-      <div className='max-w-section mx-auto pt-12.5 lg:pt-[11.65rem]'>
+      <div className='max-w-section mx-auto pt-18 lg:pt-[11.65rem]'>
         <div className='max-w-lg-content relative z-10 mb-5 flex flex-col gap-2 lg:mb-12.5'>
           <FormattedText
             text={title}

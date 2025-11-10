@@ -27,7 +27,7 @@ const OtherServicesSection = ({ services, id }: OtherServicesSectionProps) => {
   return (
     <section
       id={id}
-      className='section-container relative pt-96 pb-20 lg:py-32'
+      className='section-container relative'
     >
       <LeavesAnimation />
       <Image
@@ -37,7 +37,7 @@ const OtherServicesSection = ({ services, id }: OtherServicesSectionProps) => {
         height={300}
         className='absolute top-0 right-0 z-10 h-auto min-w-[26.8rem] shrink-0 translate-x-16 -translate-y-20 -scale-x-100 rotate-[260deg] lg:hidden'
       />
-      <div className='relative z-10 flex max-w-[42.6875rem] flex-col gap-35 lg:ml-30'>
+      <div className='max-w-content relative z-10 flex flex-col gap-35 lg:ml-30'>
         {services.map((service) => (
           <div
             key={service.id}

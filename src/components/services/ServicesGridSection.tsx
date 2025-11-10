@@ -35,10 +35,10 @@ const ServicesGridSection = ({ title, description, services, id }: ServicesGridS
   return (
     <section
       id={id}
-      className='section-container py-20 md:py-32'
+      className='section-container'
     >
       {/* Nadpis a popis sekce */}
-      <div className='mb-16 flex max-w-[42.6875rem] flex-col gap-8 lg:ml-30'>
+      <div className='max-w-lg-content mb-16 flex flex-col gap-8 lg:ml-30'>
         <FormattedText
           text={title}
           as='h2'
