@@ -2,7 +2,6 @@ import Image from 'next/image';
 
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import { FormattedText } from '@/components/_shared/FormattedText';
-import LeavesAnimation from '@/components/_shared/LeavesAnimation';
 
 interface BreadcrumbItem {
   label: string;
@@ -27,14 +26,13 @@ const BasicHeroSection = ({
   breadcrumbItems,
 }: Readonly<BasicHeroSectionProps>) => {
   return (
-    <section className='relative px-4 sm:px-14 lg:px-44'>
-      <LeavesAnimation />
+    <section className='relative px-4 lg:px-14'>
       <Breadcrumbs
         pageTitle={pageTitle}
         items={breadcrumbItems}
       />
-      <div className='mx-auto max-w-[1272px] pt-[7.75rem]'>
-        <div className='relative z-10 mb-5 flex max-w-[35.75rem] flex-col gap-8 lg:mb-8'>
+      <div className='max-w-section mx-auto pt-[7.75rem]'>
+        <div className='max-w-lg-content relative z-10 mb-5 flex flex-col gap-8 lg:mb-8'>
           <FormattedText
             text={title}
             as='h1'
@@ -61,7 +59,7 @@ const BasicHeroSection = ({
         alt='Decorative leaves'
         width={300}
         height={300}
-        className='absolute top-0 right-0 z-0 h-auto w-[17.40625rem] shrink-0 translate-x-34 -translate-y-10 -scale-x-100 -rotate-[60deg] lg:hidden'
+        className='absolute top-5 left-1/2 z-10 h-auto w-[31.8725rem] translate-x-[31rem] -scale-x-100 rotate-[260deg]'
       />
     </section>
   );

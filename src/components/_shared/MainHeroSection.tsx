@@ -33,8 +33,8 @@ const MainHeroSection = async ({
   return (
     <section className={cn('px-4 pb-12.5 sm:px-14 lg:pb-35', sectionClassName)}>
       {pageTitle && <Breadcrumbs pageTitle={pageTitle} />}
-      <div className='max-w-section mt-[28.5rem]'>
-        <div className={cn('max-w-hero-content flex flex-col justify-center gap-12 lg:gap-25 ', contentClassName)}>
+      <div className='mx-auto mt-[28.5rem] max-w-[66.875rem]'>
+        <div className={cn('max-w-lg-content flex flex-col justify-center gap-12 lg:gap-25 ', contentClassName)}>
           <div className='space-y-2.5'>
             <FormattedText
               text={title}

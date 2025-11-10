@@ -19,7 +19,7 @@ const Header = async () => {
             <Link
               href={link.href}
               key={getUniqueId()}
-              className='hover:text-secondary transition-all duration-300 hover:opacity-70'
+              className='hover:text-secondary text-sm transition-all duration-300 hover:opacity-70 xl:text-base'
             >
               {link.label}
             </Link>

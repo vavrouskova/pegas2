@@ -36,13 +36,11 @@ const LeavesAnimation = ({
   const firstLeafY = useTransform(scrollYProgress, [0, 1], [-200, 120]);
   const firstLeafX = useTransform(scrollYProgress, [0, 1], [0, -30]);
   const firstLeafScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1.02, 0.98]);
-  const firstLeafOpacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.5, 0.95, 0.95, 0.6]);
 
   // Druhý list - o něco rychlejší pro efekt hloubky
   const secondLeafY = useTransform(scrollYProgress, [0, 1], [-120, 80]);
   const secondLeafX = useTransform(scrollYProgress, [0, 1], [0, 25]);
   const secondLeafScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.92, 1.04, 0.96]);
-  const secondLeafOpacity = useTransform(scrollYProgress, [0, 0.12, 0.88, 1], [0.45, 1, 1, 0.55]);
 
   // Spring pro extra hladký pohyb
   const smoothFirstLeafY = useSpring(firstLeafY, springConfig);
@@ -62,7 +60,6 @@ const LeavesAnimation = ({
               y: smoothSecondLeafY,
               x: secondLeafX,
               scale: secondLeafScale,
-              opacity: secondLeafOpacity,
             }}
           >
             <Image
@@ -71,7 +68,7 @@ const LeavesAnimation = ({
               width={300}
               height={300}
               className={cn('h-auto w-[27rem] shrink-0 -scale-x-100 rotate-[260deg]', leaves2ClassName)}
-              style={{ willChange: 'transform, opacity' }}
+              style={{ willChange: 'transform' }}
             />
           </MotionDiv>
 
@@ -82,7 +79,6 @@ const LeavesAnimation = ({
               y: smoothFirstLeafY,
               x: firstLeafX,
               scale: firstLeafScale,
-              opacity: firstLeafOpacity,
             }}
           >
             <Image
@@ -90,11 +86,8 @@ const LeavesAnimation = ({
               alt='Leaves 1'
               width={300}
               height={300}
-              className={cn(
-                'h-auto w-[34.7rem] shrink-0 -scale-x-100 rotate-[-20deg] mix-blend-darken blur-[9px]',
-                leaves1ClassName
-              )}
-              style={{ willChange: 'transform, opacity' }}
+              className={cn('h-auto w-[34.7rem] shrink-0 -scale-x-100 rotate-[-20deg]', leaves1ClassName)}
+              style={{ willChange: 'transform' }}
             />
           </MotionDiv>
         </>

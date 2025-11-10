@@ -49,8 +49,8 @@
   :root,
   .default {
     --max-w: 75.75rem;
-    --section-w: 66.875rem;
-    --hero-content-w: 37.5rem;
+    --section-w: 60.625rem;
+    --lg-content-w: 37.5rem;
     --content-w: 29.375rem;
 
     /* Colors */
@@ -186,8 +186,8 @@
     @apply px-4 py-12.5 sm:px-14 lg:py-35;
   }
 
-  .max-w-hero-content {
-    @apply max-w-[var(--hero-content-w)];
+  .max-w-lg-content {
+    @apply max-w-[var(--lg-content-w)];
   }
 
   .max-w-content {

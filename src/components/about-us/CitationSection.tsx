@@ -11,11 +11,11 @@ interface CitationSectionProps {
 const CitationSection = ({ quote, author, position }: Readonly<CitationSectionProps>) => {
   return (
     <section className='section-container relative pt-16 pb-40'>
-      <div className='mx-auto flex max-w-[48rem] flex-col gap-12'>
+      <div className='max-w-lg-content mx-auto flex flex-col gap-12'>
         <FormattedText
           text={quote}
           as='blockquote'
-          className='text-xl leading-[2.0] lg:text-2xl'
+          className='text-2xl leading-[1.8]'
         />
         <div className='ml-auto w-fit'>
           <FormattedText

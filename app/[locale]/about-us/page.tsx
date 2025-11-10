@@ -7,7 +7,6 @@ import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PartnersSection from '@/components/_shared/PartnersSection';
-import Socials from '@/components/_shared/Socials';
 import CitationSection from '@/components/about-us/CitationSection';
 import EmployeesSection from '@/components/about-us/EmployeesSection';
 import TimelineSection from '@/components/about-us/TimelineSection';
@@ -40,17 +39,18 @@ const AboutUsPage = async () => {
         pageTitle={t('about-us.basic-hero.page-title')}
       />
 
-      <section className='section-container 2lg:py-16 relative pt-32 lg:pb-16'>
-        <Socials />
-        <div className='mx-auto flex max-w-[42.6875rem] flex-col gap-6'>
-          <FormattedText
-            text={t('about-us.experience.title')}
-            as='h2'
-          />
-          <FormattedText
-            text={t('about-us.experience.description')}
-            as='p'
-          />
+      <section className='relative px-4 pt-25 pb-12.5 lg:px-14 '>
+        <div className='max-w-section mx-auto'>
+          <div className='max-w-lg-content flex flex-col gap-6'>
+            <FormattedText
+              text={t('about-us.experience.title')}
+              as='h2'
+            />
+            <FormattedText
+              text={t('about-us.experience.description')}
+              as='p'
+            />
+          </div>
         </div>
       </section>
 
