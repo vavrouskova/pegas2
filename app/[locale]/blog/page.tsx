@@ -12,6 +12,7 @@ import ContentSection from '@/components/_shared/ContentSection';
 import { POSTS_PER_PAGE } from '@/constants/blog';
 import { parsePageNumber } from '@/utils/blog-helpers';
 import { getSeoDataByUri } from '@/utils/seo';
+import FooterClaim from '@/components/_shared/FooterClaim';
 
 // Blog page needs to be dynamic because it uses searchParams for filtering
 export const dynamic = 'force-dynamic';
@@ -94,6 +95,8 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
         image={{ src: '/images/detail-service.webp', alt: t('home.about-us.alt') }}
         imagePosition='left'
       />
+
+      <FooterClaim />
     </main>
   );
 };
