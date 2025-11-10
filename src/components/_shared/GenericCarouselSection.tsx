@@ -51,7 +51,7 @@ const GenericCarouselSection = <T extends CarouselItemData>({
   );
 
   return (
-    <section className={cn('py-12.5 lg:py-35', sectionClassName)}>
+    <section className={cn('pt-12.5 pb-20.5 lg:pt-35 lg:pb-43', sectionClassName)}>
       <div
         ref={carouselRef}
         className='relative'

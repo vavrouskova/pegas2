@@ -18,13 +18,13 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
     return null;
   }
   return (
-    <section className='section-container'>
+    <section className='px-14 py-12.5 lg:py-35'>
       <FormattedText
         text={t('home.services-nav.title')}
         as='h2'
         className='mb-12 text-center md:mb-25'
       />
-      <div className='grid grid-cols-1 gap-8 md:grid-cols-2 lg:flex'>
+      <div className='grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:flex'>
         {services.map((service) => (
           <ServiceCard
             key={getUniqueId()}
