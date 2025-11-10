@@ -51,7 +51,7 @@ const EmployeeCard = ({ employee, className }: Readonly<EmployeeCardProps>) => {
           <FormattedText
             text={employee.title}
             as='h3'
-            className='font-heading text-xl'
+            className='text-xl'
           />
         )}
         {zamestnanciACF?.positionDescription && (
@@ -82,12 +82,12 @@ const ManagementGrid = ({ employees, title }: Readonly<ManagementGridProps>) => 
   if (employees.length === 0) return null;
 
   return (
-    <div className='relative z-10 pt-40 pb-16'>
+    <div className='relative z-10 pb-16 lg:pt-40'>
       <div className='mx-auto max-w-7xl'>
         <FormattedText
           text={title}
           as='h2'
-          className='font-heading mb-12 text-3xl'
+          className='mb-12'
         />
         <div className='flex flex-wrap gap-4 lg:gap-8'>
           {employees.map((employee) => (
@@ -119,7 +119,7 @@ const TeamCarousel = ({ employees, title }: Readonly<TeamCarouselProps>) => {
         <FormattedText
           text={title}
           as='h2'
-          className='font-heading mb-12 text-3xl'
+          className='mb-12'
         />
       </div>
       <div

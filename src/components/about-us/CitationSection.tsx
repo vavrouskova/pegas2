@@ -10,7 +10,7 @@ interface CitationSectionProps {
 
 const CitationSection = ({ quote, author, position }: Readonly<CitationSectionProps>) => {
   return (
-    <section className='section-container relative pt-16 pb-40'>
+    <section className='relative px-4 pt-72 pb-40 lg:px-14 lg:pt-16'>
       <div className='max-w-lg-content mx-auto flex flex-col gap-12'>
         <FormattedText
           text={quote}
@@ -35,7 +35,7 @@ const CitationSection = ({ quote, author, position }: Readonly<CitationSectionPr
         alt='Decorative leaves'
         width={300}
         height={300}
-        className='absolute bottom-0 left-1/2 z-10 h-auto w-[20.8rem] shrink-0 -translate-x-1/8 translate-y-1/3 -scale-x-100 rotate-[260deg] lg:hidden'
+        className='absolute top-0 right-0 z-10 h-auto w-[18rem] translate-x-10 -translate-y-10 -scale-x-100 rotate-[260deg] lg:hidden'
       />
     </section>
   );

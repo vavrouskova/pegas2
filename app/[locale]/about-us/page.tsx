@@ -68,15 +68,15 @@ const AboutUsPage = async () => {
         teamTitle={t('about-us.employees.team-title')}
       />
 
-      <BlogCarouselSection posts={blogPosts} />
-
       <ContentSection
         title={t('about-us.faq.title')}
         description={t('about-us.faq.description')}
         buttonText={t('about-us.faq.button-text')}
         link={t('about-us.faq.link')}
-        image={{ src: '/images/faq-image.webp', alt: t('about-us.faq.alt') }}
+        image={{ src: '/images/support.webp', alt: t('about-us.faq.alt') }}
       />
+
+      <BlogCarouselSection posts={blogPosts} />
 
       <ContentSection
         title={t('about-us.branches.title')}
@@ -84,7 +84,6 @@ const AboutUsPage = async () => {
         buttonText={t('about-us.branches.button-text')}
         link={t('about-us.branches.link')}
         image={{ src: '/images/room.webp', alt: t('about-us.branches.alt') }}
-        imagePosition='left'
       />
 
       <PartnersSection />

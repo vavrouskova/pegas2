@@ -10,10 +10,7 @@ const FooterClaim = async ({ className }: ClassNameProps) => {
   const t = await getTranslations('home.footer-bg');
   return (
     <section
-      className={cn(
-        'max-w-container relative z-5 -mx-4 h-[24.375rem] w-screen overflow-hidden sm:-mx-14  lg:h-[36.3rem]',
-        className
-      )}
+      className={cn('max-w-container relative z-5 -mx-4 h-[25rem] w-screen overflow-hidden sm:-mx-14', className)}
     >
       <Image
         src='/images/feather-bg.webp'
