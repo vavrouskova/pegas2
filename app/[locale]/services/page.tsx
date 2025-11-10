@@ -93,13 +93,13 @@ const ServicesPage = async () => {
       />
 
       <ContentSection
-        title={t('home.about-us.title')}
-        description={t('home.about-us.description')}
-        buttonText={t('home.about-us.button-text')}
-        link={t('home.about-us.link')}
+        title={t('services.b2b.title')}
+        description={t('services.b2b.description')}
+        buttonText={t('services.b2b.button-text')}
+        link={t('services.b2b.link')}
         imagePosition='left'
         className='lg:py-80'
-        image={{ src: '/images/about-us.webp', alt: t('home.about-us.alt') }}
+        image={{ src: '/images/room.webp', alt: t('home.about-us.alt') }}
       />
 
       <PartnersSection />

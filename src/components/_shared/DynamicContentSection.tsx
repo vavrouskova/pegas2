@@ -402,9 +402,8 @@ const DynamicContentSection = async ({
   };
 
   return (
-    <section className={cn('section-container 2lg:py-16 relative pt-32 lg:pb-16', className)}>
-      {socials && <Socials />}
-      <div className='mx-auto flex max-w-[684px] flex-col items-start gap-10'>
+    <section className={cn('section-container relative', className)}>
+      <div className='max-w-dynamic-content mx-auto flex flex-col items-start gap-10'>
         {components.components.map((component, index) => renderComponent(component, index))}
         <Link
           href={backLink}

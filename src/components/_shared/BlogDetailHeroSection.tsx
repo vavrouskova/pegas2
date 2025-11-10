@@ -40,7 +40,7 @@ const BlogDetailHeroSection = ({
         pageTitle={pageTitle}
         items={breadcrumbItems}
       />
-      <div className='mx-auto max-w-[684px] pt-[7.75rem]'>
+      <div className='max-w-dynamic-content mx-auto pt-18 lg:pt-[11.65rem]'>
         <div className='relative z-10 flex flex-col gap-6 lg:gap-8'>
           {/* Title */}
           <FormattedText

@@ -2,6 +2,7 @@ import Image from 'next/image';
 
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import { FormattedText } from '@/components/_shared/FormattedText';
+import { cn } from '@/lib/utils';
 
 interface BreadcrumbItem {
   label: string;
@@ -15,6 +16,7 @@ interface BasicHeroSectionProps {
   imageAlt?: string;
   pageTitle: string;
   breadcrumbItems?: BreadcrumbItem[];
+  contentClassName?: string;
 }
 
 const BasicHeroSection = ({
@@ -24,6 +26,7 @@ const BasicHeroSection = ({
   imageAlt = '',
   pageTitle = '',
   breadcrumbItems,
+  contentClassName,
 }: Readonly<BasicHeroSectionProps>) => {
   return (
     <section className='relative px-4 lg:px-14'>
@@ -31,7 +34,7 @@ const BasicHeroSection = ({
         pageTitle={pageTitle}
         items={breadcrumbItems}
       />
-      <div className='max-w-section mx-auto pt-18 lg:pt-[11.65rem]'>
+      <div className={cn('max-w-section mx-auto pt-18 lg:pt-[11.65rem]', contentClassName)}>
         <div className='max-w-lg-content relative z-10 mb-5 flex flex-col gap-2 lg:mb-12.5'>
           <FormattedText
             text={title}

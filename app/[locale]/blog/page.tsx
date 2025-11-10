@@ -43,8 +43,8 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
   ]);
 
   return (
-    <main className='max-w-container mx-auto'>
-      <section className='section-container pb-14 lg:pb-26'>
+    <main className='max-w-container relative mx-auto'>
+      <section className='px-4 pb-12.5 sm:px-14 lg:pb-35'>
         <Breadcrumbs
           className='pb-18 lg:pb-43'
           pageTitle={t('blog.page-title')}
@@ -55,7 +55,7 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
         />
       </section>
 
-      <section className='section-container relative pb-12 lg:pb-20'>
+      <section className='section-container relative'>
         <div className='mb-8 lg:mb-16'>
           <Suspense fallback={<div className='h-[40px]' />}>
             <BlogFilter categories={categories} />
@@ -75,7 +75,7 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
         description={t('home.faq.description')}
         buttonText={t('home.faq.button-text')}
         link={t('home.faq.link')}
-        image={{ src: '/images/faq-image.webp', alt: t('home.faq.alt') }}
+        image={{ src: '/images/ceremonies.webp', alt: t('home.faq.alt') }}
       />
 
       <ContentSection
@@ -84,7 +84,6 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
         buttonText={t('about-us.branches.button-text')}
         link={t('about-us.branches.link')}
         image={{ src: '/images/room.webp', alt: t('about-us.branches.alt') }}
-        imagePosition='left'
       />
 
       <ContentSection
@@ -92,8 +91,8 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
         description={t('home.organized-by-us.description')}
         buttonText={t('home.organized-by-us.button-text')}
         link={t('home.organized-by-us.link')}
-        sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
-        withFeathers
+        image={{ src: '/images/detail-service.webp', alt: t('home.about-us.alt') }}
+        imagePosition='left'
       />
     </main>
   );

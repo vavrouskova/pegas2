@@ -41,7 +41,7 @@ const ReferenceDetailHeroSection = ({
         pageTitle={pageTitle}
         items={breadcrumbItems}
       />
-      <div className='mx-auto max-w-[684px] pt-[7.75rem]'>
+      <div className='max-w-dynamic-content mx-auto pt-18 lg:pt-[11.65rem]'>
         <div className='relative z-10 flex flex-col gap-6 lg:gap-8'>
           {/* Title */}
           <FormattedText
@@ -52,9 +52,7 @@ const ReferenceDetailHeroSection = ({
 
           {/* Farewell Place and Date */}
           <div className='flex flex-col gap-2'>
-            {farewellPlace && (
-              <p className='text-primary text-lg font-light'>{farewellPlace}</p>
-            )}
+            {farewellPlace && <p className='text-primary text-lg font-light'>{farewellPlace}</p>}
             {formattedDate && (
               <div className='flex items-center gap-2'>
                 <Calendar className='text-primary size-6' />

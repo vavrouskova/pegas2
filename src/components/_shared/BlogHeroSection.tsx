@@ -8,7 +8,7 @@ interface BlogHeroSectionProps {
 
 const BlogHeroSection = ({ title, description }: BlogHeroSectionProps) => {
   return (
-    <section className='relative flex flex-col gap-8 lg:px-30'>
+    <section className='flex flex-col gap-8 lg:px-30'>
       <FormattedText
         text={title}
         as='h1'
@@ -20,11 +20,11 @@ const BlogHeroSection = ({ title, description }: BlogHeroSectionProps) => {
         className='max-w-[549px] text-xl'
       />
       <Image
-        src='/images/flowers.webp'
-        alt='Blog Hero Image'
-        width={1000}
-        height={1000}
-        className='absolute -top-full left-1/2 z-0 h-auto w-full max-w-[29.9375rem] min-w-[29.9375rem] translate-x-[80%] rotate-[-59.175deg]'
+        src='/images/leaves.webp'
+        alt='Decorative leaves'
+        width={300}
+        height={300}
+        className='absolute top-5 left-1/2 z-10 h-auto w-[31.8725rem] translate-x-[31rem] -scale-x-100 rotate-[260deg] max-lg:hidden'
       />
     </section>
   );

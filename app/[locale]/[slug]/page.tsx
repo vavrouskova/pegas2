@@ -88,7 +88,6 @@ const SlugPage = async ({ params }: SlugPageProps) => {
 
         {hasComponents && (
           <DynamicContentSection
-            className='2lg:py-10 pt-10'
             socials={false}
             components={components}
             categorySlug={categories?.nodes?.[0]?.slug}
@@ -102,7 +101,6 @@ const SlugPage = async ({ params }: SlugPageProps) => {
           description={t('home.organized-by-us.description')}
           buttonText={t('home.organized-by-us.button-text')}
           link={t('home.organized-by-us.link')}
-          sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
           withFeathers
         />
       </main>
@@ -153,7 +151,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         />
 
         {gallery.length > 0 && (
-          <section className='mx-auto max-w-[684px] py-12 lg:py-20'>
+          <section className='max-w-dynamic-content mx-auto py-12 lg:py-20'>
             <ReferenceGallery images={gallery} />
           </section>
         )}
@@ -207,6 +205,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         imageAlt={imageAlt}
         pageTitle={title}
         breadcrumbItems={breadcrumbItems}
+        contentClassName='max-w-dynamic-content'
       />
 
       <DynamicContentSection
@@ -219,7 +218,6 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         description={t('services.service-detail.contact-us.description')}
         buttonText={t('services.service-detail.contact-us.button-text')}
         link={t('routes.contacts')}
-        sectionClassName='py-30 lg:py-40'
       />
 
       <ContentSection
@@ -227,11 +225,11 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         description={t('home.organized-by-us.description')}
         buttonText={t('home.organized-by-us.button-text')}
         link={t('home.organized-by-us.link')}
-        sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
-        withFeathers
+        image={{ src: '/images/detail-service.webp', alt: t('home.about-us.alt') }}
+        imagePosition='left'
       />
 
-      <FooterClaim className='mt-0' />
+      <FooterClaim />
     </main>
   );
 };

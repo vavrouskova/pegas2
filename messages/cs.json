@@ -204,6 +204,12 @@
         "description": "Společně vytvoříme prostor pro rozloučení, jaké si opravdu představujete.",
         "button-text": "Domluvme si setkání"
       }
+    },
+    "b2b": {
+      "title": "B2B Pro partnery",
+      "description": "Poskytujeme zázemí a služby pro nemocnice, pohřební ústavy, pojišťovny i instituce.",
+      "button-text": "Co umíme",
+      "link": "kontakty"
     }
   },
   "blog": {

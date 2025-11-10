@@ -50,6 +50,7 @@
   .default {
     --max-w: 75.75rem;
     --section-w: 60.625rem;
+    --dynamic-content-w: 41.875rem;
     --lg-content-w: 37.5rem;
     --content-w: 29.375rem;
 
@@ -188,6 +189,10 @@
 
   .max-w-lg-content {
     @apply max-w-[var(--lg-content-w)];
+  }
+
+  .max-w-dynamic-content {
+    @apply max-w-[var(--dynamic-content-w)];
   }
 
   .max-w-content {
