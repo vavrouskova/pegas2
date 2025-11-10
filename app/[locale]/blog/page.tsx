@@ -45,7 +45,7 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
 
   return (
     <main className='max-w-container relative mx-auto'>
-      <section className='px-4 pb-12.5 sm:px-14 lg:pb-35'>
+      <section className='px-4 sm:px-14'>
         <Breadcrumbs
           className='pb-18 lg:pb-43'
           pageTitle={t('blog.page-title')}
