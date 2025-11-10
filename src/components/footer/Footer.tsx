@@ -1,144 +1,55 @@
 import { getTranslations } from 'next-intl/server';
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 
 import { getPobockyPosts } from '@/api/wordpress-api';
+import { BranchLinks } from '@/components/footer/BranchLinks';
 import DirectorateInfo from '@/components/footer/DirectorateInfo';
-import Facebook from '@/components/icons/Facebook';
-import Instagram from '@/components/icons/Instagram';
-import { FacebookUrl, InstagramUrl, PhoneNumber } from '@/lib/constants';
-import { PobockaPost } from '@/utils/wordpress-types';
+import { FooterNavLinks } from '@/components/footer/FooterNavLinks';
+import { LogoAndContact } from '@/components/footer/LogoAndContact';
 
 const Footer = async () => {
   const t = await getTranslations();
   const pobockyData = await getPobockyPosts();
 
+  const navLinks = [
+    { href: t('routes.gdpr'), label: t('footer.gdpr') },
+    { href: t('routes.consumer-information'), label: t('footer.consumer-information') },
+    { href: t('routes.cookies'), label: t('footer.cookies') },
+    { href: t('routes.terms-of-use'), label: t('footer.terms-of-use') },
+  ];
+
   return (
     <footer
       id='main-footer'
-      className='bg-primary mx-auto px-4 pt-11 pb-10 md:px-14 md:pt-[7.75rem] md:pb-[3.75rem]'
+      className='bg-primary mx-auto px-9 py-10 md:px-14 md:pt-[7.75rem] md:pb-[3.75rem]'
     >
-      <div className='max-w-container grid gap-9 md:grid-cols-3 md:gap-4 lg:grid-cols-3'>
+      <div className='max-w-container grid gap-10 lg:grid-cols-3 lg:gap-4'>
         <div className='flex flex-col-reverse justify-between gap-11 md:flex-col md:gap-0'>
-          <div className='flex flex-col-reverse gap-11 md:flex-col md:gap-0'>
-            <div className='mb-7.5 flex flex-col gap-2 md:gap-11'>
-              <Link href='/'>
-                <Image
-                  src='/images/icons/logo-white.svg'
-                  alt='Logo'
-                  width={100}
-                  height={100}
-                  className='mb-8 w-[7.5rem]'
-                />
-              </Link>
-              <div className='flex flex-col'>
-                <span className='font-text text-white-smoke text-base'>{t('common.nonstop')}</span>
-                <Link
-                  className='text-white-smoke w-fit text-xl transition-all duration-300 hover:opacity-70'
-                  href={`tel:${PhoneNumber}`}
-                >
-                  {PhoneNumber}
-                </Link>
-              </div>
-            </div>
-            <div className='flex items-center gap-2'>
-              <div className='flex gap-8'>
-                <Link
-                  className='flex items-center justify-center transition-all duration-300 hover:opacity-70'
-                  href={InstagramUrl}
-                >
-                  <Instagram className='text-white-smoke' />
-                </Link>
-                <Link
-                  className='flex items-center justify-center transition-all duration-300 hover:opacity-70'
-                  href={FacebookUrl}
-                >
-                  <Facebook className='text-white-smoke' />
-                </Link>
-              </div>
-            </div>
-          </div>
+          <LogoAndContact nonstopText={t('common.nonstop')} />
         </div>
 
         <div>
-          <div className='flex flex-col'>
-            <span className='font-heading text-white-smoke mb-5.5 text-lg text-balance'>
-              {t('footer.all-branches')}
-            </span>
-            <div className='flex flex-col gap-4'>
-              {pobockyData.map((pobocka: PobockaPost) => (
-                <Link
-                  key={pobocka.id}
-                  href={`/${pobocka.slug}`}
-                  className='font-text text-base text-white transition-all duration-300 hover:opacity-70'
-                >
-                  {pobocka.pobockyACF?.city && (
-                    <span className='font-bold-cta text-base text-white'>{pobocka.pobockyACF.city}</span>
-                  )}{' '}
-                  {pobocka.title}
-                </Link>
-              ))}
-            </div>
-          </div>
+          <BranchLinks
+            title={t('footer.all-branches')}
+            branches={pobockyData}
+          />
         </div>
+
         <div className='flex flex-col justify-between'>
-          <div className='flex flex-col'>
-            <span className='font-heading text-white-smoke mb-5.5 max-w-[19.5rem] text-lg text-balance'>
-              {t('footer.nonstop-branches')}
-            </span>
-            <div className='flex flex-col gap-4'>
-              {pobockyData
-                .filter((pobocka: PobockaPost) => pobocka.pobockyACF?.openSwitcher === true)
-                .map((pobocka: PobockaPost) => (
-                  <Link
-                    key={pobocka.id}
-                    href={`/${pobocka.slug}`}
-                    className='font-text text-base text-white transition-all duration-300 hover:opacity-70'
-                  >
-                    {pobocka.pobockyACF?.city && (
-                      <span className='font-bold-cta mr-1 text-base text-white'>{pobocka.pobockyACF.city}</span>
-                    )}
-                    {pobocka.title}
-                  </Link>
-                ))}
-            </div>
-          </div>
+          <BranchLinks
+            title={t('footer.nonstop-branches')}
+            branches={pobockyData}
+            filterNonstop
+            maxWidth='19.5rem'
+          />
           <DirectorateInfo />
         </div>
       </div>
-      <div className='max-w-container mt-10 flex flex-col gap-6 pt-4 md:mt-24'>
-        <div className='text-tertiary flex gap-6 text-sm max-lg:flex-col lg:items-center lg:gap-4'>
-          <Link
-            className='font-text text-sm transition-all duration-300 hover:opacity-70'
-            href={t('routes.gdpr')}
-          >
-            {t('footer.gdpr')}
-          </Link>{' '}
-          |
-          <Link
-            className='font-text text-sm transition-all duration-300 hover:opacity-70'
-            href={t('routes.consumer-information')}
-          >
-            {t('footer.consumer-information')}
-          </Link>{' '}
-          |
-          <Link
-            className='font-text text-sm transition-all duration-300 hover:opacity-70'
-            href={t('routes.cookies')}
-          >
-            {t('footer.cookies')}
-          </Link>{' '}
-          |
-          <Link
-            className='font-text text-sm transition-all duration-300 hover:opacity-70'
-            href={t('routes.terms-of-use')}
-          >
-            {t('footer.terms-of-use')}
-          </Link>
-        </div>
-        <p className='text-tertiary text-sm'>© 2025 PEGAS | {t('footer.copyright')}</p>
-      </div>
+
+      <FooterNavLinks
+        links={navLinks}
+        copyrightText={`© 2025 PEGAS | ${t('footer.copyright')}`}
+      />
     </footer>
   );
 };
