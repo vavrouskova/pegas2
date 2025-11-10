@@ -15,7 +15,7 @@ interface ContentBoxProps {
 
 const ContentBox = ({ title, description, buttonText, link, className }: ContentBoxProps) => {
   return (
-    <div className={cn('flex w-full flex-col gap-7', className)}>
+    <div className={cn('flex w-full flex-col gap-2.5 lg:gap-7', className)}>
       <FormattedText
         text={title}
         as='h2'
@@ -23,7 +23,7 @@ const ContentBox = ({ title, description, buttonText, link, className }: Content
       <FormattedText
         text={description}
         as='p'
-        className='mb-3 text-lg'
+        className='mb-10 text-lg lg:mb-3'
       />
       <Link href={`/${link}`}>
         <Button buttonText={buttonText} />

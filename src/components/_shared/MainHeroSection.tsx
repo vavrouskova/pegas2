@@ -31,10 +31,10 @@ const MainHeroSection = async ({
   const t = await getTranslations('home.hero');
 
   return (
-    <section className={cn('section-container pb-60', sectionClassName)}>
+    <section className={cn('section-container pb-25 lg:pb-70', sectionClassName)}>
       {pageTitle && <Breadcrumbs pageTitle={pageTitle} />}
-      <div className='max-w-section mt-96 md:mt-[28.5rem]'>
-        <div className={cn('flex max-w-[37.5rem] flex-col justify-center gap-25 ', contentClassName)}>
+      <div className='max-w-section mt-[28.5rem]'>
+        <div className={cn('max-w-hero-content flex flex-col justify-center gap-12 lg:gap-25 ', contentClassName)}>
           <div className='space-y-2.5'>
             <FormattedText
               text={title}
@@ -46,7 +46,7 @@ const MainHeroSection = async ({
               className='text-lg'
             />
           </div>
-          <div className='flex flex-col justify-between gap-4 text-lg md:flex-row'>
+          <div className='flex flex-col justify-between gap-7.5 text-lg md:flex-row lg:gap-4'>
             <div className='flex flex-col'>
               <span className='leading-9'>{t('contact-us')}</span>
               <Link
@@ -79,11 +79,14 @@ const MainHeroSection = async ({
       </div>
       {!noImage && (
         <Image
-          src='/images/wing-hp.webp'
+          src='/images/wing.webp'
           alt='Background Image'
           width={2000}
           height={2000}
-          className={cn('absolute top-6 right-0 z-[-1] w-[58rem] min-w-[35rem] md:top-20 xl:top-40', imageClassName)}
+          className={cn(
+            'absolute top-20 right-0 z-[-1] w-[45rem] min-w-[35rem] lg:w-[50rem] xl:top-40 xl:w-[58rem]',
+            imageClassName
+          )}
         />
       )}
     </section>

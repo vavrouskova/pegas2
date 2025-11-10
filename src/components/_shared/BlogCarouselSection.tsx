@@ -42,8 +42,7 @@ const BlogCarouselSection = ({ posts = [] }: BlogCarouselSectionProps) => {
   return (
     <GenericCarouselSection
       data={carouselData}
-      sectionClassName='pb-14'
-      carouselMaxWidth='section-container max-lg:max-w-[28.375rem]'
+      carouselMaxWidth='max-w-[23.125rem] lg:max-w-[59rem]'
       articleClassName='flex flex-col-reverse items-center lg:flex-row'
       renderImage={(item) => (
         <picture className='relative aspect-square h-auto max-h-[23.125rem] w-full max-w-[23.125rem] lg:col-span-2'>

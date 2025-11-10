@@ -45,11 +45,11 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
   return (
     <GenericCarouselSection
       data={data}
-      carouselMaxWidth='max-w-88 md:max-w-[48.1875rem]'
-      articleClassName='flex min-h-[10rem] items-stretch max-md:flex-col md:min-h-[14.375rem]'
+      carouselMaxWidth='max-w-88 lg:max-w-[48.1875rem]'
+      articleClassName='flex min-h-[10rem] mx-auto items-stretch max-lg:flex-col lg:max-h-[14.375rem]'
       imageFirst
       renderImage={(item) => (
-        <picture className='relative aspect-square h-auto max-h-[14.375rem] w-full max-w-[14.375rem]'>
+        <picture className='relative aspect-square h-auto w-full lg:max-h-[14.375rem] lg:max-w-[14.375rem]'>
           <Image
             src={item.image}
             alt={item.title}
@@ -60,7 +60,7 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
         </picture>
       )}
       renderContent={(item, t) => (
-        <div className='flex flex-1 flex-col space-y-2 px-4 py-5 max-md:h-full max-md:justify-between md:px-17.5 md:py-7.5'>
+        <div className='flex flex-1 flex-col space-y-2 px-4 py-5 max-lg:h-full max-lg:justify-between lg:px-17.5 lg:py-7.5'>
           <div className='flex flex-col'>
             <FormattedText
               text={item.title}

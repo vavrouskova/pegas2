@@ -41,13 +41,19 @@ const ContentSection = ({
   if (!hasImage) {
     // ContentBox pouze (původní ContentBoxSection)
     return (
-      <section className={cn('section-container', withFeathers ? 'relative' : '', sectionClassName)}>
+      <section
+        className={cn(
+          'section-container relative',
+          withFeathers && featherPosition === 'right' ? '!pt-[26rem] lg:!pt-[15rem]' : '',
+          sectionClassName
+        )}
+      >
         <ContentBox
           title={title}
           description={description}
           buttonText={buttonText}
           link={link}
-          className={cn('relative z-20 max-w-[42.6875rem] lg:mx-auto', contentBoxClassName)}
+          className={cn('max-w-content relative z-20 lg:mx-auto', contentBoxClassName)}
         />
         {withFeathers && (
           <>
@@ -67,7 +73,7 @@ const ContentSection = ({
   return (
     <section
       className={cn(
-        'section-container flex flex-col-reverse justify-between gap-12 py-20 lg:gap-10',
+        'section-container flex flex-col-reverse justify-between gap-7.5 lg:gap-28',
         isImageLeft ? 'lg:flex-row-reverse lg:items-center' : 'lg:flex-row lg:items-center',
         sectionClassName,
         className
@@ -78,9 +84,9 @@ const ContentSection = ({
         description={description}
         buttonText={buttonText}
         link={link}
-        className={cn('max-w-[31.25rem] lg:flex-shrink-0', contentBoxClassName)}
+        className={cn('max-w-content lg:flex-shrink-0', contentBoxClassName)}
       />
-      <div className='min-w-0 lg:max-w-[29.375rem] lg:flex-1'>
+      <div className='lg:max-w-content min-w-0 lg:flex-1'>
         <Image
           src={imageSource}
           alt={imageAlt}

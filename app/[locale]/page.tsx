@@ -51,7 +51,6 @@ const Homepage = async () => {
         description={t('services.description')}
         buttonText={t('services.button-text')}
         link={t('services.link')}
-        sectionClassName='pt-12 md:pt-40 pb-20 md:pb-48'
         withFeathers
         featherPosition='left'
       />
@@ -69,7 +68,6 @@ const Homepage = async () => {
         description={t('organized-by-us.description')}
         buttonText={t('organized-by-us.button-text')}
         link={t('organized-by-us.link')}
-        sectionClassName='pt-[26rem] lg:pt-[15rem] pb-[21rem]'
         withFeathers
         featherPosition='right'
       />
@@ -82,7 +80,6 @@ const Homepage = async () => {
         buttonText={t('about-us.button-text')}
         link={t('about-us.link')}
         imagePosition='left'
-        className='pb-40 lg:py-80'
         image={{ src: '/images/about-us.webp', alt: t('about-us.alt') }}
       />
 

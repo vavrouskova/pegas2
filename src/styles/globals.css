@@ -50,6 +50,8 @@
   .default {
     --max-w: 75.75rem;
     --section-w: 66.875rem;
+    --hero-content-w: 37.5rem;
+    --content-w: 29.375rem;
 
     /* Colors */
     --primary: 0.3529 0.0868 326.35; /* Deep */
@@ -181,7 +183,15 @@
   }
 
   .section-container {
-    @apply px-4 sm:px-14;
+    @apply px-4 py-12.5 sm:px-14 lg:py-35;
+  }
+
+  .max-w-hero-content {
+    @apply max-w-[var(--hero-content-w)];
+  }
+
+  .max-w-content {
+    @apply max-w-[var(--content-w)];
   }
 }
 

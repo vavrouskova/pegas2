@@ -27,7 +27,7 @@ const ServiceCard = ({ title, slug, featuredImage, className }: ServiceCardProps
   return (
     <Link
       href={`/${slug}`}
-      className={`group flex flex-col gap-8 transition-opacity duration-300 hover:opacity-80 ${className}`}
+      className={`group flex flex-col gap-2.5 transition-opacity duration-300 hover:opacity-80 ${className}`}
     >
       <div className='bg-grey-warm p-[2.12rem]'>
         <div className='relative aspect-square w-full overflow-hidden'>
@@ -45,7 +45,7 @@ const ServiceCard = ({ title, slug, featuredImage, className }: ServiceCardProps
       <FormattedText
         text={title}
         as='h3'
-        className='text-2xl leading-tight font-black tracking-wide'
+        className='text-lg leading-tight font-black tracking-wide'
       />
     </Link>
   );
