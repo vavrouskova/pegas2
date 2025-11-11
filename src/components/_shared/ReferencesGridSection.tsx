@@ -1,7 +1,4 @@
-import Image from 'next/image';
-import Link from 'next/link';
-
-import { FormattedText } from '@/components/_shared/FormattedText';
+import GridCard from '@/components/_shared/GridCard';
 import { formatFarewellDate } from '@/utils/helper';
 import { ReferencePost } from '@/utils/wordpress-types';
 
@@ -22,32 +19,15 @@ const ReferencesGridSection = ({ referencePosts }: ReferencesGridSectionProps) =
         const farewellDate = formatFarewellDate(reference.referenceACF?.farewellDate);
 
         return (
-          <Link
-            href={`/${reference.slug}`}
+          <GridCard
             key={reference.id}
-            className='group flex flex-col gap-2 transition-opacity duration-300 hover:opacity-80'
+            href={`/${reference.slug}`}
+            imageUrl={imageUrl}
+            imageAlt={imageAlt}
+            title={reference.title}
           >
-            <div className='bg-grey-warm p-[2.375rem]'>
-              <div className='relative aspect-[4/3] w-full overflow-hidden'>
-                <Image
-                  src={imageUrl}
-                  alt={imageAlt}
-                  fill
-                  sizes='(max-width: 1024px) 100vw, 33vw'
-                  className='object-cover'
-                />
-              </div>
-            </div>
-
-            <div className='flex flex-col gap-2'>
-              <FormattedText
-                text={reference.title}
-                as='h3'
-                className='text-lg'
-              />
-              {farewellDate && <p className='font-text text-primary text-sm'>{farewellDate}</p>}
-            </div>
-          </Link>
+            {farewellDate && <p className='font-text text-primary text-sm'>{farewellDate}</p>}
+          </GridCard>
         );
       })}
     </div>

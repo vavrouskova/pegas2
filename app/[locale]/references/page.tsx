@@ -3,10 +3,10 @@ import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 
 import { getReferencePosts, getReferenceTaxonomies } from '@/api/wordpress-api';
-import BlogHeroSection from '@/components/_shared/BlogHeroSection';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
+import PageHeroSection from '@/components/_shared/PageHeroSection';
 import ReferencesFilter from '@/components/_shared/ReferencesFilter';
 import ReferencesGridSection from '@/components/_shared/ReferencesGridSection';
 import ReferencesPagination from '@/components/_shared/ReferencesPagination';
@@ -42,19 +42,19 @@ const ReferencesPage = async ({ searchParams }: ReferencesPageProps) => {
   ]);
 
   return (
-    <main className='max-w-container mx-auto'>
-      <section className='section-container pb-14 lg:pb-26'>
+    <main className='max-w-container relative mx-auto'>
+      <section className='px-4 sm:px-14'>
         <Breadcrumbs
           className='pb-18 lg:pb-43'
           pageTitle={t('references.page-title')}
         />
-        <BlogHeroSection
+        <PageHeroSection
           title={t('references.hero.title')}
           description={t('references.hero.description')}
         />
       </section>
 
-      <section className='section-container relative pb-12 lg:pb-20'>
+      <section className='section-container relative'>
         <div className='mb-8 lg:mb-16'>
           <Suspense fallback={<div className='h-[40px]' />}>
             <ReferencesFilter categories={categories} />

@@ -5,10 +5,10 @@ import { Suspense } from 'react';
 import { getBlogCategories, getBlogPosts } from '@/api/wordpress-api';
 import BlogFilter from '@/components/_shared/BlogFilter';
 import BlogGridSection from '@/components/_shared/BlogGridSection';
-import BlogHeroSection from '@/components/_shared/BlogHeroSection';
 import BlogPagination from '@/components/_shared/BlogPagination';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import ContentSection from '@/components/_shared/ContentSection';
+import PageHeroSection from '@/components/_shared/PageHeroSection';
 import { POSTS_PER_PAGE } from '@/constants/blog';
 import { parsePageNumber } from '@/utils/blog-helpers';
 import { getSeoDataByUri } from '@/utils/seo';
@@ -50,7 +50,7 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
           className='pb-18 lg:pb-43'
           pageTitle={t('blog.page-title')}
         />
-        <BlogHeroSection
+        <PageHeroSection
           title={t('blog.hero.title')}
           description={t('blog.hero.description')}
         />

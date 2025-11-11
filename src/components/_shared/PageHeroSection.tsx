@@ -1,14 +1,15 @@
-import { FormattedText } from '@/components/_shared/FormattedText';
 import Image from 'next/image';
 
-interface BlogHeroSectionProps {
+import { FormattedText } from '@/components/_shared/FormattedText';
+
+interface PageHeroSectionProps {
   title: string;
   description: string;
 }
 
-const BlogHeroSection = ({ title, description }: BlogHeroSectionProps) => {
+const PageHeroSection = ({ title, description }: PageHeroSectionProps) => {
   return (
-    <section className='flex flex-col gap-8 lg:px-30'>
+    <section className='flex flex-col gap-2.5 lg:px-30'>
       <FormattedText
         text={title}
         as='h1'
@@ -30,4 +31,4 @@ const BlogHeroSection = ({ title, description }: BlogHeroSectionProps) => {
   );
 };
 
-export default BlogHeroSection;
+export default PageHeroSection;
