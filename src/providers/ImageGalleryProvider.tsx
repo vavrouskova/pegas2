@@ -91,16 +91,19 @@ export const ImageGalleryProvider = ({ children }: ImageGalleryProviderProps) =>
 
   useEffect(() => {
     if (isOpen) {
-      // Zakázat scroll na body
+      // Uložit aktuální pozici scrollu
+      const scrollY = window.scrollY;
+      
+      // Zakázat scroll na body pomocí position: fixed
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.overflow = 'hidden';
       document.body.style.paddingRight = `${scrollbarWidth}px`;
       document.body.style.position = 'fixed';
       document.body.style.width = '100%';
-      document.body.style.top = `-${window.scrollY}px`;
+      document.body.style.top = `-${scrollY}px`;
 
       // Zakázat touch scrolling na celé stránce
-      const preventScroll = (e: TouchEvent) => {
+      const preventTouchScroll = (e: TouchEvent) => {
         // Povolit scroll pouze v lightbox kontejneru
         const target = e.target as HTMLElement;
         if (!target.closest('[data-lightbox-container]')) {
@@ -108,30 +111,76 @@ export const ImageGalleryProvider = ({ children }: ImageGalleryProviderProps) =>
         }
       };
 
-      // Zakázat wheel scroll na celé stránce
+      // Zakázat wheel scroll na celé stránce (včetně touchpadu)
       const preventWheel = (e: WheelEvent) => {
         // Povolit wheel pouze v lightbox kontejneru
         const target = e.target as HTMLElement;
         if (!target.closest('[data-lightbox-container]')) {
           e.preventDefault();
+          e.stopPropagation();
+          // Okamžitě resetovat scroll pozici pro touchpad gesta
+          window.scrollTo(0, scrollY);
         }
       };
 
-      document.addEventListener('touchmove', preventScroll, { passive: false });
-      document.addEventListener('wheel', preventWheel, { passive: false });
+      // Kontrola a reset scroll pozice pomocí requestAnimationFrame (pro touchpad gesta)
+      let rafId: number | null = null;
+      const checkScrollPosition = () => {
+        if (window.scrollY !== scrollY) {
+          window.scrollTo(0, scrollY);
+        }
+        rafId = requestAnimationFrame(checkScrollPosition);
+      };
+      rafId = requestAnimationFrame(checkScrollPosition);
+
+      // Zakázat scroll event - resetovat pozici pokud se změnila
+      const resetScrollPosition = () => {
+        if (window.scrollY !== scrollY) {
+          window.scrollTo(0, scrollY);
+        }
+      };
+
+      // Zakázat keyboard scroll
+      const preventKeyboardScroll = (e: KeyboardEvent) => {
+        const scrollKeys = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End'];
+        if (scrollKeys.includes(e.key)) {
+          const target = e.target as HTMLElement;
+          if (!target.closest('[data-lightbox-container]')) {
+            e.preventDefault();
+          }
+        }
+      };
+
+      // Přidat všechny event listenery
+      document.addEventListener('touchmove', preventTouchScroll, { passive: false });
+      document.addEventListener('wheel', preventWheel, { passive: false, capture: true });
+      window.addEventListener('scroll', resetScrollPosition, { passive: false, capture: true });
+      document.addEventListener('scroll', resetScrollPosition, { passive: false, capture: true });
+      document.addEventListener('keydown', preventKeyboardScroll, { passive: false });
+
+      // Zajistit, že scroll je skutečně na správné pozici
+      window.scrollTo(0, scrollY);
 
       return () => {
+        // Zastavit requestAnimationFrame loop
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+        }
+
         // Obnovit pozici scrollu
-        const scrollY = document.body.style.top;
         document.body.style.overflow = '';
         document.body.style.paddingRight = '';
         document.body.style.position = '';
         document.body.style.width = '';
         document.body.style.top = '';
-        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+        window.scrollTo(0, scrollY);
 
-        document.removeEventListener('touchmove', preventScroll);
-        document.removeEventListener('wheel', preventWheel);
+        // Odstranit všechny event listenery
+        document.removeEventListener('touchmove', preventTouchScroll);
+        document.removeEventListener('wheel', preventWheel, { capture: true });
+        window.removeEventListener('scroll', resetScrollPosition, { capture: true });
+        document.removeEventListener('scroll', resetScrollPosition, { capture: true });
+        document.removeEventListener('keydown', preventKeyboardScroll);
       };
     }
   }, [isOpen]);
