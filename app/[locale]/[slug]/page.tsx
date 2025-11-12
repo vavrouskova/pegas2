@@ -4,11 +4,10 @@ import { notFound } from 'next/navigation';
 
 import { checkSlugType, getBlogPostBySlug, getReferenceBySlug, getServiceBySlug } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
-import BlogDetailHeroSection from '@/components/_shared/BlogDetailHeroSection';
 import ContentSection from '@/components/_shared/ContentSection';
+import DetailHeroSection from '@/components/_shared/DetailHeroSection';
 import DynamicContentSection from '@/components/_shared/DynamicContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
-import ReferenceDetailHeroSection from '@/components/_shared/ReferenceDetailHeroSection';
 import { decodeHtmlEntitiesServer, stripHtmlTags } from '@/utils/helper';
 import { getSeoDataBySlug } from '@/utils/seo';
 
@@ -75,7 +74,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
 
     return (
       <main className='max-w-container mx-auto'>
-        <BlogDetailHeroSection
+        <DetailHeroSection
           title={title}
           date={date}
           image={image}
@@ -141,7 +140,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
 
     return (
       <main className='max-w-container mx-auto'>
-        <ReferenceDetailHeroSection
+        <DetailHeroSection
           title={title}
           farewellDate={farewellDate}
           farewellPlace={farewellPlace}
