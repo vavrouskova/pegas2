@@ -35,7 +35,7 @@ const BlogGridSection = async ({ posts }: BlogGridSectionProps) => {
             <FormattedText
               text={excerpt}
               as='p'
-              className='font-text text-sm'
+              className='font-text line-clamp-3 text-sm'
             />
             <Button
               buttonText={t('post-detail')}
