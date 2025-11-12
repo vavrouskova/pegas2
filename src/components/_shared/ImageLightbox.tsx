@@ -9,6 +9,7 @@ import { useImageKeyboardNavigation } from '@/hooks/useImageKeyboardNavigation';
 import { useImagePan } from '@/hooks/useImagePan';
 import { useImageTouchGestures } from '@/hooks/useImageTouchGestures';
 import { useImageZoom } from '@/hooks/useImageZoom';
+import { useViewportHeight } from '@/hooks/useViewportHeight';
 import type { GalleryImage } from '@/providers/ImageGalleryProvider';
 import { useImageGallery } from '@/providers/ImageGalleryProvider';
 import { createImageGalleryNavigation } from '@/utils/imageGalleryNavigation';
@@ -16,7 +17,10 @@ import { createImageGalleryNavigation } from '@/utils/imageGalleryNavigation';
 const LightboxOverlay = () => (
   <Dialog.Overlay
     className='data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50'
-    style={{ backgroundColor: IMAGE_GALLERY_CONFIG.colors.overlayBg }}
+    style={{
+      backgroundColor: IMAGE_GALLERY_CONFIG.colors.overlayBg,
+      height: 'calc(var(--vh, 1vh) * 100)',
+    }}
   />
 );
 
@@ -162,7 +166,7 @@ const LightboxImage = ({
 }: LightboxImageProps) => (
   <div
     ref={containerRef}
-    className='relative flex h-full w-full items-center justify-center overflow-hidden p-4 pb-20'
+    className='relative flex h-full w-full items-center justify-center overflow-hidden p-4 pb-12 md:pb-20'
     onWheel={onWheel}
     onMouseDown={onMouseDown}
     onMouseMove={onMouseMove}
@@ -201,6 +205,9 @@ export const ImageLightbox = () => {
   const { images, currentIndex, isOpen, closeLightbox, nextImage, prevImage } = useImageGallery();
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const currentImage = images[currentIndex];
+
+  // Handle mobile viewport height changes (address bar show/hide)
+  useViewportHeight();
 
   const { scale, setScale, handleWheel, handleDoubleClick, resetZoom } = useImageZoom();
 
@@ -243,7 +250,10 @@ export const ImageLightbox = () => {
         <LightboxOverlay />
 
         <Dialog.Content
-          className='fixed inset-0 z-50 flex items-center justify-center'
+          className='fixed inset-0 z-50 flex items-center justify-center overflow-hidden'
+          style={{
+            height: 'calc(var(--vh, 1vh) * 100)',
+          }}
           onPointerDownOutside={(event) => {
             if (event.target === event.currentTarget) {
               closeLightbox();

@@ -18,7 +18,7 @@ const PageHeroSection = ({ title, description }: PageHeroSectionProps) => {
       <FormattedText
         text={description}
         as='p'
-        className='max-w-[549px] text-xl'
+        className='max-w-content'
       />
       <Image
         src='/images/leaves.webp'
