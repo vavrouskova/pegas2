@@ -16,7 +16,6 @@ interface ReferenceDetailHeroSectionProps {
   farewellPlace?: string;
   image?: string;
   imageAlt: string;
-  description: string;
   pageTitle: string;
   breadcrumbItems?: BreadcrumbItem[];
 }
@@ -27,7 +26,6 @@ const ReferenceDetailHeroSection = ({
   farewellPlace,
   image,
   imageAlt,
-  description,
   pageTitle,
   breadcrumbItems,
 }: Readonly<ReferenceDetailHeroSectionProps>) => {
@@ -65,7 +63,7 @@ const ReferenceDetailHeroSection = ({
 
           {/* Featured Image */}
           {image && (
-            <div className='bg-grey-warm mb-12.5 w-full p-[8%]'>
+            <div className='bg-grey-warm w-full p-[8%]'>
               <div className='relative w-full overflow-hidden'>
                 <Image
                   src={image}
@@ -79,15 +77,6 @@ const ReferenceDetailHeroSection = ({
             </div>
           )}
         </div>
-      </div>
-
-      <div className='2lg:pt-11 relative z-10 pt-30'>
-        {description && (
-          <div
-            className='text-primary mx-auto max-w-[684px] text-lg font-light [&_p]:mb-4 [&_p]:last:mb-0'
-            dangerouslySetInnerHTML={{ __html: description }}
-          />
-        )}
       </div>
 
       <Image

@@ -1050,7 +1050,6 @@ export async function getReferencePosts(referencesPerPage = 9, page = 1, categor
           referenceACF {
             farewellDate
             farewellPlace
-            description
             introImage {
               node {
                 sourceUrl
@@ -1183,17 +1182,60 @@ export async function getReferenceBySlug(slug: string) {
         referenceACF {
           farewellDate
           farewellPlace
-          description
           introImage {
             node {
               sourceUrl
               altText
             }
           }
-          gallery {
-            nodes {
-              sourceUrl
-              altText
+        }
+        components {
+          components {
+            ... on ComponentsComponentsWysiwygLayout {
+              fieldGroupName
+              editor
+            }
+            ... on ComponentsComponentsMediaLayout {
+              fieldGroupName
+              mediaType
+              youtubeEmbedLink
+              image {
+                node {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+            ... on ComponentsComponentsGalleryLayout {
+              fieldGroupName
+              gallery {
+                nodes {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+            ... on ComponentsComponentsImageBoxesLayout {
+              fieldGroupName
+              imageBoxes {
+                boxHeadline
+                boxDescription
+                imageBox {
+                  node {
+                    altText
+                    sourceUrl
+                  }
+                }
+              }
+            }
+            ... on ComponentsComponentsImageSliderLayout {
+              fieldGroupName
+              imageSlider {
+                nodes {
+                  altText
+                  sourceUrl
+                }
+              }
             }
           }
         }

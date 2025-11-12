@@ -9,7 +9,6 @@ import ContentSection from '@/components/_shared/ContentSection';
 import DynamicContentSection from '@/components/_shared/DynamicContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import ReferenceDetailHeroSection from '@/components/_shared/ReferenceDetailHeroSection';
-import ReferenceGallery from '@/components/_shared/ReferenceGallery';
 import { decodeHtmlEntitiesServer, stripHtmlTags } from '@/utils/helper';
 import { getSeoDataBySlug } from '@/utils/seo';
 
@@ -92,6 +91,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
             categorySlug={categories?.nodes?.[0]?.slug}
             backLink={`/${t('routes.blog')}`}
             backLinkText={t('blog.back-to-blog')}
+            className='lg:!pt-12.5'
           />
         )}
 
@@ -116,13 +116,11 @@ const SlugPage = async ({ params }: SlugPageProps) => {
       notFound();
     }
 
-    const { title, referenceACF, featuredImage, typReference } = referenceData;
-    const description = referenceACF?.description || '';
+    const { title, referenceACF, featuredImage, typReference, components } = referenceData;
     const farewellDate = referenceACF?.farewellDate || '';
     const farewellPlace = referenceACF?.farewellPlace || '';
     const image = referenceACF?.introImage?.node?.sourceUrl || featuredImage?.node?.sourceUrl;
     const imageAlt = referenceACF?.introImage?.node?.altText || featuredImage?.node?.altText || title || '';
-    const gallery = referenceACF?.gallery?.nodes || [];
 
     const breadcrumbItems = [
       {
@@ -139,6 +137,8 @@ const SlugPage = async ({ params }: SlugPageProps) => {
       });
     }
 
+    const hasComponents = components?.components && components.components.length > 0;
+
     return (
       <main className='max-w-container mx-auto'>
         <ReferenceDetailHeroSection
@@ -147,15 +147,18 @@ const SlugPage = async ({ params }: SlugPageProps) => {
           farewellPlace={farewellPlace}
           image={image}
           imageAlt={imageAlt}
-          description={description}
           pageTitle={title}
           breadcrumbItems={breadcrumbItems}
         />
 
-        {gallery.length > 0 && (
-          <section className='max-w-dynamic-content mx-auto py-12 lg:py-20'>
-            <ReferenceGallery images={gallery} />
-          </section>
+        {hasComponents && (
+          <DynamicContentSection
+            components={components}
+            categorySlug={typReference?.nodes?.[0]?.slug}
+            backLink={`/${t('routes.references')}`}
+            backLinkText={t('references.back-to-references')}
+            className='lg:!pt-12.5'
+          />
         )}
 
         <ContentSection
@@ -214,6 +217,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
       <DynamicContentSection
         components={components}
         categorySlug={typSluzby?.nodes?.[0]?.slug}
+        className='lg:!pt-12.5'
       />
 
       <ContentSection
