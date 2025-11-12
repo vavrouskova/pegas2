@@ -1017,13 +1017,14 @@ export async function getReferenceTaxonomies(first = 100): Promise<ReferenceCate
 }
 
 /**
- * Získá seznam referenčních postů (referencePosts) s podporou paginace a filtrování podle kategorie
+ * Získá seznam referenčních postů (referencePosts) s podporou paginace, filtrování podle kategorie a vyhledávání
  * @param referencesPerPage - Počet referencí na stránku (výchozí 9)
  * @param page - Číslo stránky (výchozí 1)
  * @param categoryId - ID kategorie pro filtrování (volitelné)
+ * @param search - Vyhledávací dotaz (hledá v title a description, volitelné)
  * @returns Promise s daty referencí včetně paginace
  */
-export async function getReferencePosts(referencesPerPage = 9, page = 1, categoryId?: string) {
+export async function getReferencePosts(referencesPerPage = 9, page = 1, categoryId?: string, search?: string) {
   const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
 
   // Získáme větší množství postů (max 1000) pro výpočet paginace
@@ -1100,6 +1101,16 @@ export async function getReferencePosts(referencesPerPage = 9, page = 1, categor
     if (categoryId) {
       allNodes = allNodes.filter((reference: ReferencePost) =>
         reference.typReference?.nodes?.some((cat) => cat.databaseId.toString() === categoryId)
+      );
+    }
+
+    // Aplikujeme search filtr
+    if (search) {
+      const searchLower = search.toLowerCase();
+      allNodes = allNodes.filter(
+        (reference: ReferencePost) =>
+          reference.title.toLowerCase().includes(searchLower) ||
+          reference.referenceACF?.description?.toLowerCase().includes(searchLower)
       );
     }
 

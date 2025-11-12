@@ -12,4 +12,5 @@ export const MAX_REFERENCES_FETCH = 1000;
 export const REFERENCES_QUERY_PARAMS = {
   CATEGORY: 'category',
   PAGE: 'page',
+  SEARCH: 'search',
 } as const;

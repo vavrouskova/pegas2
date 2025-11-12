@@ -90,11 +90,50 @@ export const ImageGalleryProvider = ({ children }: ImageGalleryProviderProps) =>
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    if (isOpen) {
+      // Zakázat scroll na body
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = `-${window.scrollY}px`;
 
-    return () => {
-      document.body.style.overflow = '';
-    };
+      // Zakázat touch scrolling na celé stránce
+      const preventScroll = (e: TouchEvent) => {
+        // Povolit scroll pouze v lightbox kontejneru
+        const target = e.target as HTMLElement;
+        if (!target.closest('[data-lightbox-container]')) {
+          e.preventDefault();
+        }
+      };
+
+      // Zakázat wheel scroll na celé stránce
+      const preventWheel = (e: WheelEvent) => {
+        // Povolit wheel pouze v lightbox kontejneru
+        const target = e.target as HTMLElement;
+        if (!target.closest('[data-lightbox-container]')) {
+          e.preventDefault();
+        }
+      };
+
+      document.addEventListener('touchmove', preventScroll, { passive: false });
+      document.addEventListener('wheel', preventWheel, { passive: false });
+
+      return () => {
+        // Obnovit pozici scrollu
+        const scrollY = document.body.style.top;
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.top = '';
+        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+
+        document.removeEventListener('touchmove', preventScroll);
+        document.removeEventListener('wheel', preventWheel);
+      };
+    }
   }, [isOpen]);
 
   const nextImage = useCallback(() => {

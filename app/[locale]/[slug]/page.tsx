@@ -100,8 +100,11 @@ const SlugPage = async ({ params }: SlugPageProps) => {
           description={t('home.organized-by-us.description')}
           buttonText={t('home.organized-by-us.button-text')}
           link={t('home.organized-by-us.link')}
-          withFeathers
+          image={{ src: '/images/detail-service.webp', alt: t('home.about-us.alt') }}
+          imagePosition='left'
         />
+
+        <FooterClaim />
       </main>
     );
   }

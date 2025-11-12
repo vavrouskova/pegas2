@@ -2,8 +2,9 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
+import Search from '@/components/icons/Search';
 import { REFERENCES_QUERY_PARAMS } from '@/constants/references';
 import { cn } from '@/lib/utils';
 import { resetPagination, updateSearchParams } from '@/utils/references-helpers';
@@ -17,21 +18,40 @@ const ReferencesFilter = ({ categories }: ReferencesFilterProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useTranslations('common');
+  const [searchQuery, setSearchQuery] = useState(searchParams.get(REFERENCES_QUERY_PARAMS.SEARCH) || '');
 
   const selectedCategory = searchParams.get(REFERENCES_QUERY_PARAMS.CATEGORY);
+  const hasActiveSearch = Boolean(searchParams.get(REFERENCES_QUERY_PARAMS.SEARCH));
 
-  const isAllActive = !selectedCategory;
+  const isAllActive = !selectedCategory && !hasActiveSearch;
 
   const handleCategoryClick = useCallback(
     (categoryId: string | null) => {
       const params = resetPagination(searchParams);
       const updatedParams = updateSearchParams(params, {
         [REFERENCES_QUERY_PARAMS.CATEGORY]: categoryId,
+        [REFERENCES_QUERY_PARAMS.SEARCH]: null,
+      });
+
+      setSearchQuery('');
+      router.push(`?${updatedParams.toString()}`);
+    },
+    [router, searchParams]
+  );
+
+  const handleSearchSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const params = resetPagination(searchParams);
+      const trimmedQuery = searchQuery.trim();
+      const updatedParams = updateSearchParams(params, {
+        [REFERENCES_QUERY_PARAMS.SEARCH]: trimmedQuery || null,
+        [REFERENCES_QUERY_PARAMS.CATEGORY]: null,
       });
 
       router.push(`?${updatedParams.toString()}`);
     },
-    [router, searchParams]
+    [router, searchParams, searchQuery]
   );
 
   return (
@@ -67,6 +87,28 @@ const ReferencesFilter = ({ categories }: ReferencesFilterProps) => {
           </button>
         );
       })}
+
+      {/* Vyhledávání */}
+      <form
+        onSubmit={handleSearchSubmit}
+        className='relative box-border flex h-[40px] shrink-0 items-center gap-1 bg-white px-4'
+      >
+        <Search className='text-primary size-[19px] shrink-0' />
+        <input
+          type='text'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder={t('search')}
+          className='text-primary min-w-0 flex-1 border-none bg-transparent text-base outline-none'
+        />
+        <button
+          type='submit'
+          className='sr-only'
+          aria-label={t('search')}
+        >
+          {t('search')}
+        </button>
+      </form>
     </div>
   );
 };

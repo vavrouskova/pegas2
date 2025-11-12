@@ -62,11 +62,7 @@ const EmployeeCard = ({ employee, className }: Readonly<EmployeeCardProps>) => {
           />
         )}
         {zamestnanciACF?.employeeQuote && (
-          <FormattedText
-            text={zamestnanciACF.employeeQuote}
-            as='p'
-            className='mt-7.5 text-sm italic'
-          />
+          <p className='font-italic mt-7.5 text-sm tracking-[0.03125rem]'>„{zamestnanciACF.employeeQuote}"</p>
         )}
       </div>
     </article>

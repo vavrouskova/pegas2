@@ -27,6 +27,7 @@ interface ReferencesPageProps {
   searchParams: Promise<{
     category?: string;
     page?: string;
+    search?: string;
   }>;
 }
 
@@ -34,10 +35,11 @@ const ReferencesPage = async ({ searchParams }: ReferencesPageProps) => {
   const params = await searchParams;
   const categoryId = params.category;
   const page = parsePageNumber(params.page);
+  const search = params.search;
 
   const [t, referencesData, categories] = await Promise.all([
     getTranslations(),
-    getReferencePosts(REFERENCES_PER_PAGE, page, categoryId),
+    getReferencePosts(REFERENCES_PER_PAGE, page, categoryId, search),
     getReferenceTaxonomies(),
   ]);
 

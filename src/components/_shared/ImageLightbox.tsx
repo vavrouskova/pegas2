@@ -166,6 +166,7 @@ const LightboxImage = ({
 }: LightboxImageProps) => (
   <div
     ref={containerRef}
+    data-lightbox-container
     className='relative flex h-full w-full items-center justify-center overflow-hidden p-4 pb-12 md:pb-20'
     onWheel={onWheel}
     onMouseDown={onMouseDown}

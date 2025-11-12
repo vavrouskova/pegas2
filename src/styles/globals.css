@@ -70,6 +70,7 @@
     --font-cta: 'slnt' 1, 'wdth' 80, 'wght' 40;
     --font-bold-cta: 'slnt' 1, 'wdth' 80, 'wght' 50;
     --font-bold-text: 'slnt' 1, 'wdth' 80, 'wght' 65;
+    --font-italic: 'slnt' 110, 'wdth' 80, 'wght' 20;
   }
 }
 
@@ -173,6 +174,10 @@
 
   .font-bold-cta {
     font-variation-settings: var(--font-bold-cta);
+  }
+
+  .font-italic {
+    font-variation-settings: var(--font-italic);
   }
 
   /* Layout Utilities */
