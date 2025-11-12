@@ -88,7 +88,6 @@ const SlugPage = async ({ params }: SlugPageProps) => {
 
         {hasComponents && (
           <DynamicContentSection
-            socials={false}
             components={components}
             categorySlug={categories?.nodes?.[0]?.slug}
             backLink={`/${t('routes.blog')}`}
@@ -206,6 +205,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         pageTitle={title}
         breadcrumbItems={breadcrumbItems}
         contentClassName='max-w-dynamic-content'
+        decorativeImage='flowers'
       />
 
       <DynamicContentSection

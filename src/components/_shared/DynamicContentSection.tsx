@@ -4,7 +4,8 @@ import React from 'react';
 
 import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
-import Socials from '@/components/_shared/Socials';
+import { ImageBoxesSection } from '@/components/_shared/ImageBoxesSection';
+import { ImageSliderSection } from '@/components/_shared/ImageSliderSection';
 import { GalleryImageWrapper } from '@/components/services/GalleryImageWrapper';
 import { cn } from '@/lib/utils';
 
@@ -35,7 +36,31 @@ interface GalleryComponent {
   };
 }
 
-type ComponentType = WysiwygComponent | MediaComponent | GalleryComponent;
+interface ImageBoxesComponent {
+  fieldGroupName: 'ComponentsComponentsImageBoxesLayout';
+  imageBoxes?: Array<{
+    boxHeadline?: string;
+    boxDescription?: string;
+    imageBox?: {
+      node: {
+        altText?: string;
+        sourceUrl?: string;
+      };
+    };
+  }>;
+}
+
+interface ImageSliderComponent {
+  fieldGroupName: 'ComponentsComponentsImageSliderLayout';
+  imageSlider?: {
+    nodes: Array<{
+      altText?: string;
+      sourceUrl?: string;
+    }>;
+  };
+}
+
+type ComponentType = WysiwygComponent | MediaComponent | GalleryComponent | ImageBoxesComponent | ImageSliderComponent;
 
 interface DynamicContentSectionProps {
   components?: {
@@ -44,7 +69,6 @@ interface DynamicContentSectionProps {
   categorySlug?: string;
   backLink?: string;
   backLinkText?: string;
-  socials?: boolean;
   className?: string;
 }
 
@@ -53,7 +77,6 @@ const DynamicContentSection = async ({
   categorySlug,
   backLink: customBackLink,
   backLinkText: customBackLinkText,
-  socials = true,
   className,
 }: DynamicContentSectionProps) => {
   if (!components?.components || components.components.length === 0) {
@@ -62,8 +85,6 @@ const DynamicContentSection = async ({
 
   const t = await getTranslations();
 
-  // Pokud jsou poskytnuty vlastní linky pro blog, použijeme je
-  // Jinak určíme správný link a text podle kategorie služeb
   let backLink = customBackLink;
   let backLinkText = customBackLinkText;
 
@@ -80,24 +101,21 @@ const DynamicContentSection = async ({
     }
   }
 
-  const renderWysiwygContent = (content: string) => {
-    // Parsování HTML obsahu v pořadí výskytu (server-safe)
+  const renderWysiwygContent = (content: string, isLastComponent: boolean) => {
     const elements: React.ReactElement[] = [];
     let key = 0;
 
-    // Odstranění HTML tagů a získání čistého textu, ale zachování <br>
     // eslint-disable-next-line unicorn/consistent-function-scoping
     const stripHtml = (html: string) => {
       return (
         html
-          .replace(/<br\s*\/?>/gi, '\n') // Zachování line breaks
+          .replace(/<br\s*\/?>/gi, '\n')
           // eslint-disable-next-line sonarjs/slow-regex
-          .replace(/<[^>]*>/g, '') // Odstranění všech ostatních tagů
+          .replace(/<[^>]*>/g, '')
           .trim()
       );
     };
 
-    // Parsování seznamu - extrahuje všechny <li> položky
     // eslint-disable-next-line unicorn/consistent-function-scoping
     const parseListItems = (listContent: string): string[] => {
       const items: string[] = [];
@@ -112,7 +130,6 @@ const DynamicContentSection = async ({
       return items;
     };
 
-    // Najdeme všechny HTML elementy s jejich pozicemi
     interface ElementMatch {
       index: number;
       tag: string;
@@ -123,51 +140,49 @@ const DynamicContentSection = async ({
 
     const matches: ElementMatch[] = [];
 
-    // Hledáme UL (unordered lists)
     const ulRegex = /<ul[^>]*>([\s\S]*?)<\/ul>/gi;
     let match;
     while ((match = ulRegex.exec(content)) !== null) {
       matches.push({ index: match.index, tag: 'ul', content: match[1], isList: true, listType: 'ul' });
     }
 
-    // Hledáme OL (ordered lists)
     const olRegex = /<ol[^>]*>([\s\S]*?)<\/ol>/gi;
     while ((match = olRegex.exec(content)) !== null) {
       matches.push({ index: match.index, tag: 'ol', content: match[1], isList: true, listType: 'ol' });
     }
 
-    // Hledáme H2
     const h2Regex = /<h2[^>]*>([\s\S]*?)<\/h2>/gi;
     while ((match = h2Regex.exec(content)) !== null) {
       matches.push({ index: match.index, tag: 'h2', content: match[1] });
     }
 
-    // Hledáme H3
     const h3Regex = /<h3[^>]*>([\s\S]*?)<\/h3>/gi;
     while ((match = h3Regex.exec(content)) !== null) {
       matches.push({ index: match.index, tag: 'h3', content: match[1] });
     }
 
-    // Hledáme P
     const pRegex = /<p[^>]*>([\s\S]*?)<\/p>/gi;
     while ((match = pRegex.exec(content)) !== null) {
       matches.push({ index: match.index, tag: 'p', content: match[1] });
     }
 
-    // Seřadíme podle pozice v HTML
     matches.sort((a, b) => a.index - b.index);
 
-    // Renderujeme v pořadí
-    for (const item of matches) {
+    for (let i = 0; i < matches.length; i++) {
+      const item = matches[i];
+      const isLastElement = i === matches.length - 1;
+      const nextItem = matches[i + 1];
+
       if (item.isList && item.listType) {
         const listItems = parseListItems(item.content);
         if (listItems.length > 0) {
           const ListTag = item.listType === 'ul' ? 'ul' : 'ol';
           const listStyleClass = item.listType === 'ul' ? 'list-disc' : 'list-decimal';
+          const marginClass = isLastElement && isLastComponent ? '' : 'mb-12.5';
           elements.push(
             <ListTag
               key={`${item.listType}-${key++}`}
-              className={`font-regular text-deep ml-6 ${listStyleClass} space-y-2 text-base lg:text-lg`}
+              className={`font-regular text-deep ml-6 ${listStyleClass} space-y-2 text-base lg:text-lg ${marginClass}`}
             >
               {listItems.map((listItem, itemIndex) => (
                 <li
@@ -188,77 +203,83 @@ const DynamicContentSection = async ({
 
       const text = stripHtml(item.content);
 
-      if (!text) continue; // Skip prázdné elementy
+      if (!text) continue;
 
       switch (item.tag) {
         case 'h2': {
+          const isNextTextOrList = nextItem && (nextItem.tag === 'p' || nextItem.tag === 'h3' || nextItem.isList);
+          const marginClass = isLastElement && isLastComponent ? '' : isNextTextOrList ? 'mb-2.5' : 'mb-12.5';
           elements.push(
             <FormattedText
               key={`h2-${key++}`}
               text={text}
               as='h2'
-              className='text-deep text-2xl lg:text-3xl'
+              className={`text-deep text-2xl lg:text-3xl ${marginClass}`}
             />
           );
 
           break;
         }
         case 'h3': {
+          const isNextTextOrList = nextItem && (nextItem.tag === 'p' || nextItem.isList);
+          const marginClass = isLastElement && isLastComponent ? '' : isNextTextOrList ? 'mb-2.5' : 'mb-12.5';
           elements.push(
             <FormattedText
               key={`h3-${key++}`}
               text={text}
               as='h3'
-              className='text-deep text-xl lg:text-2xl'
+              className={`text-deep text-xl lg:text-2xl ${marginClass}`}
             />
           );
 
           break;
         }
         case 'p': {
+          const marginClass = isLastElement && isLastComponent ? '' : 'mb-12.5';
           elements.push(
             <FormattedText
               key={`p-${key++}`}
               text={text}
               as='p'
-              className='font-regular text-deep text-base lg:text-lg'
+              className={`font-regular text-deep text-base lg:text-lg ${marginClass}`}
             />
           );
 
           break;
         }
-        // No default
       }
     }
 
     return elements;
   };
 
-  const renderComponent = (component: ComponentType, index: number) => {
+  const renderComponent = (component: ComponentType, index: number, totalComponents: number) => {
+    const isLastComponent = index === totalComponents - 1;
+
     switch (component.fieldGroupName) {
       case 'ComponentsComponentsWysiwygLayout': {
         return (
           <div
             key={index}
-            className='flex w-full flex-col gap-10'
+            className='flex w-full flex-col'
           >
-            {renderWysiwygContent(component.editor)}
+            {renderWysiwygContent(component.editor, isLastComponent)}
           </div>
         );
       }
 
       case 'ComponentsComponentsMediaLayout': {
-        // Handle mediaType as both string and array
         const mediaTypeValue = Array.isArray(component.mediaType)
           ? component.mediaType[0]?.toLowerCase()
           : component.mediaType?.toLowerCase();
 
-        // Check for video (backend can send 'video' or 'youtube')
+        const marginClass = isLastComponent ? '' : 'mb-25';
+
         if (mediaTypeValue === 'youtube' && component.youtubeEmbedLink) {
           return (
             <div
               key={index}
-              className='relative aspect-video w-full'
+              className={`relative aspect-video w-full ${marginClass}`}
             >
               <iframe
                 src={component.youtubeEmbedLink}
@@ -271,7 +292,6 @@ const DynamicContentSection = async ({
           );
         }
 
-        // Check for image
         const hasImage = component.image?.node?.sourceUrl;
         if ((mediaTypeValue === 'image' || !component.mediaType) && hasImage) {
           return (
@@ -279,7 +299,7 @@ const DynamicContentSection = async ({
               key={index}
               src={component.image?.node?.sourceUrl || ''}
               alt={component.image?.node?.altText || ''}
-              className='relative h-[200px] w-full md:h-[300px] lg:h-[381px]'
+              className={`relative h-[200px] w-full md:h-[300px] lg:h-[381px] ${marginClass}`}
             />
           );
         }
@@ -293,16 +313,12 @@ const DynamicContentSection = async ({
         }
 
         const images = component.gallery.nodes;
-
-        // Mobile: obrázky pod sebou, lichý čtvercový, sudý podlouhlý
-        // Desktop: původní layouty podle počtu obrázků
-
-        // Layout pro 2 obrázky
+        const marginClass = isLastComponent ? '' : 'mb-25';
         if (images.length === 2) {
           return (
             <div
               key={index}
-              className='flex w-full flex-col gap-3 md:gap-4 lg:flex-row'
+              className={`flex w-full flex-col gap-3 md:gap-4 lg:flex-row ${marginClass}`}
             >
               {images.map((image, imgIndex) => {
                 const isSquare = imgIndex % 2 === 0;
@@ -322,12 +338,11 @@ const DynamicContentSection = async ({
           );
         }
 
-        // Layout pro 4 obrázky
         if (images.length === 4) {
           return (
             <div
               key={index}
-              className='flex w-full flex-col gap-3 md:gap-4'
+              className={`flex w-full flex-col gap-3 md:gap-4 ${marginClass}`}
             >
               {images.map((image, imgIndex) => {
                 const isSquare = imgIndex % 2 === 0;
@@ -342,7 +357,6 @@ const DynamicContentSection = async ({
                 );
               })}
 
-              {/* Desktop layout pro 4 obrázky */}
               <div className='hidden lg:flex lg:gap-4'>
                 <GalleryImageWrapper
                   src={images[0].sourceUrl || ''}
@@ -371,11 +385,10 @@ const DynamicContentSection = async ({
           );
         }
 
-        // Ostatní počty obrázků
         return (
           <div
             key={index}
-            className='flex w-full flex-col gap-3 md:gap-4 lg:grid lg:grid-cols-2'
+            className={`flex w-full flex-col gap-3 md:gap-4 lg:grid lg:grid-cols-2 ${marginClass}`}
           >
             {images.map((image, imgIndex) => {
               const isSquare = imgIndex % 2 === 0;
@@ -395,16 +408,48 @@ const DynamicContentSection = async ({
         );
       }
 
+      case 'ComponentsComponentsImageBoxesLayout': {
+        if (!component.imageBoxes || component.imageBoxes.length === 0) {
+          return null;
+        }
+
+        return (
+          <div
+            key={index}
+            className='mb-25 w-full'
+          >
+            <ImageBoxesSection imageBoxes={component.imageBoxes} />
+          </div>
+        );
+      }
+
+      case 'ComponentsComponentsImageSliderLayout': {
+        if (!component.imageSlider?.nodes || component.imageSlider.nodes.length === 0) {
+          return null;
+        }
+
+        return (
+          <div
+            key={index}
+            className='mb-25 w-full'
+          >
+            <ImageSliderSection images={component.imageSlider.nodes} />
+          </div>
+        );
+      }
+
       default: {
         return null;
       }
     }
   };
 
+  const totalComponents = components.components?.length || 0;
+
   return (
     <section className={cn('section-container relative', className)}>
-      <div className='max-w-dynamic-content mx-auto flex flex-col items-start gap-10'>
-        {components.components.map((component, index) => renderComponent(component, index))}
+      <div className='max-w-dynamic-content mx-auto flex flex-col items-start'>
+        {components.components.map((component, index) => renderComponent(component, index, totalComponents))}
         <Link
           href={backLink}
           className='text-primary'

@@ -17,6 +17,7 @@ interface BasicHeroSectionProps {
   pageTitle: string;
   breadcrumbItems?: BreadcrumbItem[];
   contentClassName?: string;
+  decorativeImage?: 'leaves' | 'flowers';
 }
 
 const BasicHeroSection = ({
@@ -27,6 +28,7 @@ const BasicHeroSection = ({
   pageTitle = '',
   breadcrumbItems,
   contentClassName,
+  decorativeImage = 'leaves',
 }: Readonly<BasicHeroSectionProps>) => {
   return (
     <section className='relative px-4 lg:px-14'>
@@ -57,13 +59,24 @@ const BasicHeroSection = ({
           />
         )}
       </div>
-      <Image
-        src='/images/leaves.webp'
-        alt='Decorative leaves'
-        width={300}
-        height={300}
-        className='absolute top-5 left-1/2 z-10 h-auto w-[31.8725rem] translate-x-[31rem] -scale-x-100 rotate-[260deg] max-lg:hidden'
-      />
+      {decorativeImage === 'leaves' && (
+        <Image
+          src='/images/leaves.webp'
+          alt='Decorative leaves'
+          width={300}
+          height={300}
+          className='absolute top-5 left-1/2 z-10 h-auto w-[31.8725rem] translate-x-[31rem] -scale-x-100 rotate-[260deg] max-lg:hidden'
+        />
+      )}
+      {decorativeImage === 'flowers' && (
+        <Image
+          src='/images/flowers.webp'
+          alt='Decorative flowers'
+          width={300}
+          height={300}
+          className='absolute top-20 left-1/2 z-10 h-auto w-[24rem] translate-x-[35rem] -scale-x-100 -rotate-45 max-lg:hidden'
+        />
+      )}
     </section>
   );
 };

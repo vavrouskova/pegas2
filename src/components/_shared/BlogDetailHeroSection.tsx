@@ -5,7 +5,6 @@ import { FormattedText } from '@/components/_shared/FormattedText';
 import LeavesAnimation from '@/components/_shared/LeavesAnimation';
 import Calendar from '@/components/icons/Calendar';
 import { formatBlogDate } from '@/utils/helper';
-import Socials from '@/components/_shared/Socials';
 
 interface BreadcrumbItem {
   label: string;
@@ -79,7 +78,6 @@ const BlogDetailHeroSection = ({
       </div>
 
       <div className='2lg:pt-11 relative z-10 pt-30'>
-        <Socials className='2lg:top-14 absolute top-11 lg:left-0' />
         {description && (
           <FormattedText
             text={description}

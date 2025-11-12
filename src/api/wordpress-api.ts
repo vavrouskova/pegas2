@@ -585,6 +585,28 @@ export async function getServiceBySlug(slug: string) {
                 }
               }
             }
+            ... on ComponentsComponentsImageBoxesLayout {
+              fieldGroupName
+              imageBoxes {
+                boxHeadline
+                boxDescription
+                imageBox {
+                  node {
+                    altText
+                    sourceUrl
+                  }
+                }
+              }
+            }
+            ... on ComponentsComponentsImageSliderLayout {
+              fieldGroupName
+              imageSlider {
+                nodes {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
           }
         }
       }
@@ -876,6 +898,28 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
             ... on ComponentsComponentsGalleryLayout {
               fieldGroupName
               gallery {
+                nodes {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+            ... on ComponentsComponentsImageBoxesLayout {
+              fieldGroupName
+              imageBoxes {
+                boxHeadline
+                boxDescription
+                imageBox {
+                  node {
+                    altText
+                    sourceUrl
+                  }
+                }
+              }
+            }
+            ... on ComponentsComponentsImageSliderLayout {
+              fieldGroupName
+              imageSlider {
                 nodes {
                   altText
                   sourceUrl
