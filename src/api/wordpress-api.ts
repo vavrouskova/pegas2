@@ -140,7 +140,6 @@ export async function getHomepageData() {
                 referenceACF {
                   farewellDate
                   farewellPlace
-                  description
                   introImage {
                     node {
                       sourceUrl
@@ -196,8 +195,8 @@ export async function getHomepageData() {
     const result = await response.json();
 
     if (result.errors) {
-      console.error('GraphQL errors:', result.errors);
-      throw new Error('GraphQL query failed');
+      console.error('GraphQL errors:', JSON.stringify(result.errors, null, 2));
+      throw new Error(`GraphQL query failed: ${JSON.stringify(result.errors[0]?.message || result.errors)}`);
     }
 
     if (!result.data?.page) {
