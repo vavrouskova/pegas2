@@ -182,7 +182,7 @@ const DynamicContentSection = async ({
           elements.push(
             <ListTag
               key={`${item.listType}-${key++}`}
-              className={`font-regular text-deep ml-6 ${listStyleClass} space-y-2 text-base lg:text-lg ${marginClass}`}
+              className={`ml-6 ${listStyleClass} space-y-2 ${marginClass}`}
             >
               {listItems.map((listItem, itemIndex) => (
                 <li
@@ -214,7 +214,7 @@ const DynamicContentSection = async ({
               key={`h2-${key++}`}
               text={text}
               as='h2'
-              className={`text-deep text-2xl lg:text-3xl ${marginClass}`}
+              className={marginClass}
             />
           );
 
@@ -228,7 +228,7 @@ const DynamicContentSection = async ({
               key={`h3-${key++}`}
               text={text}
               as='h3'
-              className={`text-deep text-xl lg:text-2xl ${marginClass}`}
+              className={marginClass}
             />
           );
 
@@ -241,7 +241,7 @@ const DynamicContentSection = async ({
               key={`p-${key++}`}
               text={text}
               as='p'
-              className={`font-regular text-deep text-base lg:text-lg ${marginClass}`}
+              className={marginClass}
             />
           );
 

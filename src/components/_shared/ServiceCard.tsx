@@ -29,7 +29,7 @@ const ServiceCard = ({ title, slug, featuredImage, className }: ServiceCardProps
       href={`/${slug}`}
       className={`group flex flex-col gap-2.5 transition-opacity duration-300 hover:opacity-80 ${className}`}
     >
-      <div className='bg-grey-warm p-[2.12rem]'>
+      <div className='bg-grey-warm p-[13%]'>
         <div className='relative aspect-square w-full overflow-hidden'>
           <Image
             src={imageUrl}

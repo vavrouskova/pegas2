@@ -29,18 +29,18 @@ const LeavesAnimation = ({
     offset: ['start end', 'end start'],
   });
 
-  // Jemný spring config pro hladký, elegantní pohyb
-  const springConfig = { stiffness: 60, damping: 40, restDelta: 0.001 };
+  // Decentní spring config pro velmi jemný, sotva znatelný pohyb
+  const springConfig = { stiffness: 40, damping: 60, restDelta: 0.001 };
 
-  // První list - jemný parallax s lehkým fade efektem
-  const firstLeafY = useTransform(scrollYProgress, [0, 1], [-200, 120]);
-  const firstLeafX = useTransform(scrollYProgress, [0, 1], [0, -30]);
-  const firstLeafScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1.02, 0.98]);
+  // První list - velmi jemný parallax s minimálním pohybem
+  const firstLeafY = useTransform(scrollYProgress, [0, 1], [-80, 50]);
+  const firstLeafX = useTransform(scrollYProgress, [0, 1], [0, -12]);
+  const firstLeafScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.98, 1.01, 0.99]);
 
-  // Druhý list - o něco rychlejší pro efekt hloubky
-  const secondLeafY = useTransform(scrollYProgress, [0, 1], [-120, 80]);
-  const secondLeafX = useTransform(scrollYProgress, [0, 1], [0, 25]);
-  const secondLeafScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.92, 1.04, 0.96]);
+  // Druhý list - subtilní efekt hloubky
+  const secondLeafY = useTransform(scrollYProgress, [0, 1], [-50, 30]);
+  const secondLeafX = useTransform(scrollYProgress, [0, 1], [0, 10]);
+  const secondLeafScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.97, 1.02, 0.98]);
 
   // Spring pro extra hladký pohyb
   const smoothFirstLeafY = useSpring(firstLeafY, springConfig);

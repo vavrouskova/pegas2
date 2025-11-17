@@ -40,7 +40,7 @@ const Button = ({
       tapScale={tapScale}
       onClick={onClick}
       className={cn(
-        'flex items-center justify-center gap-5 px-16 py-3 text-lg transition-opacity duration-300 hover:opacity-90',
+        'flex items-center justify-center gap-5 px-8 py-3 text-lg transition-opacity duration-300 hover:opacity-90 lg:px-16',
         variantStyles[variant],
         className
       )}

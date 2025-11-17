@@ -85,7 +85,7 @@ const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSection
           <Link href={item.link}>
             <Button
               buttonText={t('find-out-more')}
-              className='-ml-16'
+              className='-ml-8 lg:-ml-16'
             />
           </Link>
         </div>

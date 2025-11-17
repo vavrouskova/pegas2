@@ -18,7 +18,7 @@ const GridCard = ({ href, imageUrl, imageAlt, title, children }: GridCardProps) 
       href={href}
       className='group flex flex-col gap-2 transition-opacity duration-300 hover:opacity-80'
     >
-      <div className='bg-grey-warm p-[2.375rem]'>
+      <div className='bg-grey-warm p-[9.4%]'>
         <div className='relative aspect-[4/3] w-full overflow-hidden'>
           <Image
             src={imageUrl}

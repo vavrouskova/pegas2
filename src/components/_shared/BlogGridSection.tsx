@@ -40,7 +40,7 @@ const BlogGridSection = async ({ posts }: BlogGridSectionProps) => {
             <Button
               buttonText={t('post-detail')}
               variant='destructive'
-              className='-ml-16 w-fit'
+              className='-ml-8 w-fit lg:-ml-16'
             />
           </GridCard>
         );
