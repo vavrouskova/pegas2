@@ -21,6 +21,7 @@ const [RippleButtonProvider, useRippleButton] = getStrictContext<RippleButtonCon
 
 type RippleButtonProps = WithAsChild<
   HTMLMotionProps<'button'> & {
+    disabled?: boolean;
     hoverScale?: number;
     tapScale?: number;
   }
@@ -29,6 +30,7 @@ type RippleButtonProps = WithAsChild<
 const RippleButton = ({
   ref,
   onClick,
+  disabled = false,
   hoverScale = 1,
   tapScale = 1,
   asChild = false,
@@ -96,6 +98,7 @@ type RippleButtonRipplesProps = WithAsChild<
   HTMLMotionProps<'span'> & {
     color?: string;
     scale?: number;
+    disabled?: boolean;
   }
 >;
 
@@ -105,6 +108,7 @@ function RippleButtonRipples({
   transition = { duration: 0.6, ease: 'easeOut' },
   asChild = false,
   style,
+  disabled = false,
   ...props
 }: RippleButtonRipplesProps) {
   const { ripples } = useRippleButton();
@@ -114,7 +118,7 @@ function RippleButtonRipples({
   return ripples.map((ripple) => (
     <Component
       key={ripple.id}
-      initial={{ scale: 0, opacity: 0.5 }}
+      initial={disabled ? { scale: 0, opacity: 0 } : { scale: 0, opacity: 0.5 }}
       animate={{ scale, opacity: 0 }}
       transition={transition}
       style={{

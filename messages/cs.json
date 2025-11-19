@@ -228,5 +228,35 @@
       "title": "Organizovali jsme",
       "description": "Každý příběh je jiný. Rozloučení může být přesně takové, jaké si přejete Vy."
     }
+  },
+
+  "forms": {
+    "title": "Kontaktní formulář",
+    "description": "Prosíme, vyplňte několik základních údajů. Jsme tu pro Vás – ať už řešíte rozloučení, nebo se jen potřebujete na něco zeptat.",
+    "button-text": "Odeslat",
+    "gdpr-prefix": "Odesláním souhlasíte se",
+    "gdpr-link": "zpracováním osobních údajů",
+    "farewell-title": "Vyřizujete rozloučení? Klidněte pro uvedení podrobností",
+    "farewell-description": "Tuto část vyplňte jen pokud chcete – pomůže nám lépe se připravit.",
+    "success": {
+      "title": "Děkujeme za zprávu!",
+      "description": "Vaši zprávu jsme přijali a brzy se vám ozveme."
+    },
+    "fields": {
+      "name": "Vaše jméno a příjmení*",
+      "email": "E-mail*",
+      "phone": "Telefon",
+      "message": "Vaše zpráva nebo přání",
+      "deceased-name": "Jméno a příjmení zesnulého",
+      "deceased-date": "Datum odchodu",
+      "deceased-place": "Místo úmrtí (prosíme, uveďte celou adresu)",
+      "note": "Poznámka k situaci (nepovinné)"
+    },
+    "errors": {
+      "name_required": "Prosím, vyplňte své jméno a příjmení",
+      "email_required": "Prosím, vyplňte svůj e-mail",
+      "invalid_email": "Prosím, zadejte platnou e-mailovou adresu",
+      "invalid_phone": "Prosím, zadejte platné telefonní číslo"
+    }
   }
 }

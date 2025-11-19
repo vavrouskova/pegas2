@@ -12,6 +12,7 @@ import EmployeesSection from '@/components/about-us/EmployeesSection';
 import TimelineSection from '@/components/about-us/TimelineSection';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import { getSeoDataByUri } from '@/utils/seo';
+import ContactForm from '@/components/forms/contact/ContactForm';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('routes');
@@ -87,6 +88,8 @@ const AboutUsPage = async () => {
       />
 
       <PartnersSection />
+
+      <ContactForm />
 
       <FooterClaim />
     </main>

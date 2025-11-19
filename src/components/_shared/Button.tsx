@@ -5,6 +5,8 @@ import ArrowRight from '@/components/icons/ArrowRight';
 import { cn } from '@/lib/utils';
 
 interface ButtonProps {
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
   hoverScale?: number;
   tapScale?: number;
   buttonText: string;
@@ -22,6 +24,8 @@ const variantStyles = {
 };
 
 const Button = ({
+  disabled = false,
+  type = 'button',
   hoverScale,
   tapScale,
   buttonText,
@@ -39,15 +43,19 @@ const Button = ({
       hoverScale={hoverScale}
       tapScale={tapScale}
       onClick={onClick}
+      type={type}
+      disabled={disabled}
       className={cn(
         'flex items-center justify-center gap-5 px-8 py-3 text-lg transition-opacity duration-300 hover:opacity-90 lg:px-16',
+        type === 'submit' && 'lg:px-8',
         variantStyles[variant],
+        disabled && 'cursor-not-allowed',
         className
       )}
     >
-      {arrowPosition === 'left' && arrow}
+      {arrowPosition === 'left' && type !== 'submit' && arrow}
       {buttonText}
-      {arrowPosition === 'right' && arrow}
+      {arrowPosition === 'right' && type !== 'submit' && arrow}
       <RippleButtonRipples />
     </RippleButton>
   );
