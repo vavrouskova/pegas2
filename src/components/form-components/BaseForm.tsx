@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 import Button from '@/components/_shared/Button';
@@ -33,7 +33,17 @@ const BaseForm = (props: BaseFormProps) => {
 
   const [isSending, setIsSending] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const successMessageRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('forms');
+
+  useEffect(() => {
+    if (isSubmitted && successMessageRef.current) {
+      successMessageRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [isSubmitted]);
 
   const handleSubmit = async (values: any) => {
     try {
@@ -49,7 +59,10 @@ const BaseForm = (props: BaseFormProps) => {
 
   if (isSubmitted) {
     return (
-      <div className={`mx-auto h-full w-full ${className ?? ''}`}>
+      <div
+        ref={successMessageRef}
+        className={`mx-auto h-full w-full ${className ?? ''}`}
+      >
         <div className='text-primary flex flex-col items-center justify-center py-12 text-center'>
           <h3 className='font-heading mb-4 text-2xl'>{successText || t('success.title')}</h3>
           <p className='font-text text-lg'>{t('success.description')}</p>
