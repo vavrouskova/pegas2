@@ -2,14 +2,15 @@
 
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { MotionDiv } from '@/components/animate-ui/MotionWrappers';
-import Phone from '@/components/icons/Phone';
 import { PhoneNumber } from '@/lib/constants';
 
 const StickyContact = () => {
   const t = useTranslations('common');
+  const pathname = usePathname();
 
   const [isFooterVisible, setIsFooterVisible] = useState(false);
 
@@ -41,6 +42,10 @@ const StickyContact = () => {
     () => (isFooterVisible ? { x: 120, opacity: 0 } : { x: 0, opacity: 1 }),
     [isFooterVisible]
   );
+
+  if (pathname === '/o-nas' || pathname === '/cs/o-nas') {
+    return null;
+  }
 
   return (
     <MotionDiv

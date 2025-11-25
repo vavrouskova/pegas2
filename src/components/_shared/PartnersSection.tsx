@@ -14,7 +14,7 @@ const PartnersSection = async () => {
           text={t('partners.title')}
           as='h2'
         />
-        <div className='mx-auto grid max-w-[1000px] grid-cols-2 gap-7.5 md:grid-cols-6'>
+        <div className='grid grid-cols-2 gap-7.5 md:grid-cols-6'>
           {PARTNERS.map((partner) => (
             <div
               key={partner.id}

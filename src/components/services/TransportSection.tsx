@@ -59,25 +59,24 @@ const TransportSection = ({ title, description, features, primaryButton, seconda
             </div>
           ))}
         </div>
-
-        {/* CTA tlačítka */}
-        <div className='flex flex-col flex-wrap items-start gap-6 sm:flex-row sm:items-center'>
-          <Link
-            className='w-fit'
-            href={`/${primaryButton.link}`}
-          >
-            <Button buttonText={primaryButton.text} />
-          </Link>
-          <Link
-            href={`/${secondaryButton.link}`}
-            className='w-fit'
-          >
-            <Button
-              variant='white'
-              buttonText={secondaryButton.text}
-            />
-          </Link>
-        </div>
+      </div>
+      {/* CTA tlačítka */}
+      <div className='flex flex-col flex-wrap items-start gap-6 sm:flex-row sm:items-center lg:ml-30'>
+        <Link
+          className='w-fit'
+          href={`/${primaryButton.link}`}
+        >
+          <Button buttonText={primaryButton.text} />
+        </Link>
+        <Link
+          href={`/${secondaryButton.link}`}
+          className='w-fit'
+        >
+          <Button
+            variant='white'
+            buttonText={secondaryButton.text}
+          />
+        </Link>
       </div>
     </section>
   );

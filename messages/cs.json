@@ -27,7 +27,7 @@
     "previous-page": "Předchozí stránka",
     "next-page": "Další stránka",
     "all": "Vše",
-    "search": "Vyhledat"
+    "search": "Hledat"
   },
 
   "routes": {
@@ -125,7 +125,7 @@
       "page-title": "O nás"
     },
     "experience": {
-      "title": "30 let zkušeností,'{{br}}'30 let lidského přístupu",
+      "title": "30 let zkušeností, 30 let lidského přístupu",
       "description": "Připravujeme rozloučení s péčí a důstojností – od veřejných obřadů po tichá setkání v rodinném kruhu. Jsme citlivá a profesionální služba, která propojuje tradici s přáním těch, kdo zůstávají. Každý okamžik utváříme tak, aby dával smysl právě Vám."
     },
     "citation": {
