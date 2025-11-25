@@ -107,7 +107,7 @@ const Filter = ({ categories, config }: FilterProps) => {
       <button
         onClick={() => handleCategoryClick(null)}
         className={cn(
-          'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-4 py-[10px] transition-opacity duration-300 hover:opacity-70',
+          'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
           isAllActive ? 'bg-primary' : 'bg-white'
         )}
       >
@@ -124,7 +124,7 @@ const Filter = ({ categories, config }: FilterProps) => {
             key={category.id}
             onClick={() => handleCategoryClick(category.databaseId.toString())}
             className={cn(
-              'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-4 py-[10px] transition-opacity duration-300 hover:opacity-70',
+              'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
               isActive ? 'bg-primary' : 'bg-white'
             )}
           >
@@ -138,7 +138,7 @@ const Filter = ({ categories, config }: FilterProps) => {
       {/* Vyhledávání */}
       <form
         onSubmit={handleSearchSubmit}
-        className='relative box-border flex h-[40px] w-full max-w-[200px] shrink-0 items-center gap-1 bg-white px-4'
+        className='relative box-border flex h-[40px] w-full max-w-[120px] shrink-0 items-center gap-1 bg-white pr-4 pl-3'
       >
         <Search className='text-primary size-[19px] shrink-0' />
         <input
@@ -161,4 +161,3 @@ const Filter = ({ categories, config }: FilterProps) => {
 };
 
 export default Filter;
-
