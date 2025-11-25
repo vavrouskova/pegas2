@@ -258,5 +258,52 @@
       "invalid_email": "Prosím, zadejte platnou e-mailovou adresu",
       "invalid_phone": "Prosím, zadejte platné telefonní číslo"
     }
+  },
+
+  "contacts": {
+    "page-title": "Kontakty",
+    "info-section": {
+      "billing-address": {
+        "title": "Fakturační adresa",
+        "company": "PEGAS CZ s.r.o.",
+        "address": "V Úvalu 87/18, Praha 5, 150 00",
+        "ico": "IČO: 25631845",
+        "dic": "DIČ: CZ25631845",
+        "account": "Číslo účtu: 2111035002/2700",
+        "registry": "Zapsáno 15. 12. 97 OR MOS v Praze odd. c, vložka 56424"
+      },
+      "correspondence-address": {
+        "title": "Korespondenční adresa",
+        "company": "PEGAS CZ s.r.o.",
+        "address": "Kateřinská 13, Praha 2, 120 00",
+        "map-link": "Zobrazit na mapě",
+        "map-url": "https://maps.google.com/?q=Kateřinská+13,+Praha+2,+120+00"
+      },
+      "contact-info": {
+        "title": "Kontaktní informace",
+        "phone": "+420 800 176 423",
+        "email": "pegas@pegascz.cz",
+        "data-box": "Datová schránka: c76sqby"
+      },
+      "cooling-facility": {
+        "title": "Chladicí zařízení",
+        "address": "Studničkova 2, Praha 2, 120 00",
+        "hours": "Po–Pá: 8:30–13.00 hod.",
+        "phone": "+420 606 614 022",
+        "map-link": "Zobrazit na mapě",
+        "map-url": "https://maps.google.com/?q=Studničkova+2,+Praha+2,+120+00"
+      },
+      "repatriation": {
+        "title": "Zahraniční repatriace",
+        "address": "Kateřinská 13, Praha 2, 120 00",
+        "coordinator-name": "Monika Langerová",
+        "coordinator-title": "Repatriations Coordinator",
+        "phone1": "+420 606 614 013",
+        "phone1-raw": "+420606614013",
+        "phone2": "+420 606 614 089",
+        "phone2-raw": "+420606614089",
+        "email": "repatriations@pegascz.cz"
+      }
+    }
   }
 }

@@ -10,6 +10,7 @@ export interface FormInputProps extends BaseFormFieldProps {
   onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   inputClassName?: string;
+  inputRef?: React.Ref<HTMLInputElement>;
 }
 
 const FormInput = (props: FormInputProps) => {
@@ -24,6 +25,7 @@ const FormInput = (props: FormInputProps) => {
     onBlur,
     tabIndex,
     required = false,
+    inputRef,
   } = props;
 
   return (
@@ -36,6 +38,7 @@ const FormInput = (props: FormInputProps) => {
             <FormControl>
               <Input
                 {...field}
+                ref={inputRef}
                 value={field.value || ''}
                 type={type}
                 placeholder={placeholder}

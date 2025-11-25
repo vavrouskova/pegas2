@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { AnimatePresence } from 'framer-motion';
 
@@ -22,6 +22,13 @@ const ContactForm = (props: ContactFormProps) => {
   const { form, handleSubmit } = useContactForm();
   const t = useTranslations('forms');
   const [isFarewellSectionOpen, setIsFarewellSectionOpen] = useState(false);
+  const dateInputRef = useRef<HTMLInputElement>(null);
+
+  const handleCalendarClick = () => {
+    if (dateInputRef.current) {
+      dateInputRef.current.showPicker?.();
+    }
+  };
 
   return (
     <section className={cn('section-container', className)}>
@@ -119,11 +126,17 @@ const ContactForm = (props: ContactFormProps) => {
                         />
 
                         <div className='relative'>
-                          <Calendar className='text-primary pointer-events-none absolute bottom-6 left-5.25 size-6' />
+                          <div
+                            onClick={handleCalendarClick}
+                            className='absolute bottom-6 left-5.25 z-10 cursor-pointer'
+                          >
+                            <Calendar className='text-primary size-6' />
+                          </div>
                           <FormInput
                             name='deceasedDate'
                             label={t('fields.deceased-date')}
                             type='date'
+                            inputRef={dateInputRef}
                             inputClassName='pl-14 [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-datetime-edit-fields-wrapper]:opacity-0 [&::-webkit-datetime-edit-text]:opacity-0 [&::-webkit-datetime-edit-month-field]:opacity-0 [&::-webkit-datetime-edit-day-field]:opacity-0 [&::-webkit-datetime-edit-year-field]:opacity-0 [&:not(:placeholder-shown)::-webkit-datetime-edit-fields-wrapper]:opacity-100 [&:not(:placeholder-shown)::-webkit-datetime-edit-text]:opacity-100 [&:not(:placeholder-shown)::-webkit-datetime-edit-month-field]:opacity-100 [&:not(:placeholder-shown)::-webkit-datetime-edit-day-field]:opacity-100 [&:not(:placeholder-shown)::-webkit-datetime-edit-year-field]:opacity-100'
                           />
                         </div>
