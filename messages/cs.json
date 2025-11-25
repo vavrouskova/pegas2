@@ -262,7 +262,9 @@
 
   "contacts": {
     "page-title": "Kontakty",
+    "people-section-title": "Kontaktní osoby",
     "info-section": {
+      "title": "Pro partnery",
       "billing-address": {
         "title": "Fakturační adresa",
         "company": "PEGAS CZ s.r.o.",

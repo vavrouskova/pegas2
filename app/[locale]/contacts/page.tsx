@@ -6,6 +6,8 @@ import FooterClaim from '@/components/_shared/FooterClaim';
 import PartnersSection from '@/components/_shared/PartnersSection';
 import ContactForm from '@/components/forms/contact/ContactForm';
 import ContactInfoSection from '@/components/contacts/ContactInfoSection';
+import ContactPeopleSection from '@/components/contacts/ContactPeopleSection';
+import { getContactPeople } from '@/api/wordpress-api';
 import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -15,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const ContactsPage = async () => {
-  const [t] = await Promise.all([getTranslations()]);
+  const [t, contactPeople] = await Promise.all([getTranslations(), getContactPeople()]);
 
   return (
     <main className='max-w-container relative mx-auto'>
@@ -29,6 +31,11 @@ const ContactsPage = async () => {
       <ContactForm />
 
       <ContactInfoSection />
+
+      <ContactPeopleSection
+        people={contactPeople}
+        title={t('contacts.people-section-title')}
+      />
 
       <PartnersSection />
 

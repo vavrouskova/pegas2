@@ -1479,3 +1479,68 @@ export async function getBlogPosts(postsPerPage = POSTS_PER_PAGE, page = 1, cate
     };
   }
 }
+
+/**
+ * Získá kontaktní osoby ze stránky "kontakty"
+ * @returns Promise se seznamem kontaktních osob
+ */
+export async function getContactPeople(): Promise<ZamestnanciPost[]> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query Page {
+      page(id: "kontakty", idType: URI) {
+        kontaktyACF {
+          personSelection {
+            nodes {
+              ... on ZamestnanecPost {
+                id
+                databaseId
+                title
+                zamestnanciACF {
+                  employeeEmail
+                  positionDescription
+                  profileImage {
+                    node {
+                      altText
+                      sourceUrl
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.page?.kontaktyACF?.personSelection?.nodes || [];
+  } catch (error) {
+    console.error('Error fetching contact people:', error);
+    return [];
+  }
+}

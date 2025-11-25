@@ -135,6 +135,7 @@ export interface ZamestnanciACF {
   positionDescription?: string;
   positonType?: string[];
   employeeQuote?: string;
+  employeeEmail?: string;
   profileImage?: {
     node: {
       altText: string;

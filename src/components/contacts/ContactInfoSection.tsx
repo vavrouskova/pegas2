@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
+import { cn } from '@/lib/utils';
 
 interface ContactInfoCardProps {
   title: string;
@@ -11,25 +12,33 @@ interface ContactInfoCardProps {
     type: 'text' | 'link' | 'phone' | 'email';
     content: string;
     href?: string;
+    marginTop?: string;
+    large?: boolean;
+    bold?: boolean;
   }>;
+  className?: string;
 }
 
-const ContactInfoCard = ({ title, items }: Readonly<ContactInfoCardProps>) => {
+const ContactInfoCard = ({ title, items, className }: Readonly<ContactInfoCardProps>) => {
   return (
-    <div className='flex w-full max-w-[22.8125rem] flex-col'>
+    <div className={cn('flex w-full flex-col', className)}>
       <FormattedText
         text={title}
         as='h3'
-        className='text-primary mb-12 text-[1.375rem] font-black leading-[1.5] tracking-[0.04375rem]'
+        className='mb-4'
       />
-      <div className='flex flex-col gap-2'>
+      <div className='flex flex-col'>
         {items.map((item, index) => {
           if (item.type === 'link' && item.href) {
             return (
               <Link
                 key={index}
                 href={item.href}
-                className='text-primary text-[0.9375rem] leading-[1.8] tracking-[0.04375rem] underline decoration-from-font transition-opacity hover:opacity-70'
+                className={cn(
+                  'text-primary font-text text-sm underline hover:no-underline',
+                  item.marginTop,
+                  item.large && 'text-lg'
+                )}
                 target='_blank'
                 rel='noopener noreferrer'
               >
@@ -43,7 +52,11 @@ const ContactInfoCard = ({ title, items }: Readonly<ContactInfoCardProps>) => {
               <Link
                 key={index}
                 href={`tel:${item.href}`}
-                className='text-primary text-[0.9375rem] font-black leading-[1.5] tracking-[0.04375rem] underline decoration-from-font transition-opacity hover:opacity-70'
+                className={cn(
+                  'text-primary text-sm underline hover:no-underline',
+                  item.marginTop,
+                  item.large && 'text-lg'
+                )}
               >
                 {item.content}
               </Link>
@@ -55,7 +68,11 @@ const ContactInfoCard = ({ title, items }: Readonly<ContactInfoCardProps>) => {
               <Link
                 key={index}
                 href={`mailto:${item.href}`}
-                className='text-primary text-[0.9375rem] font-black leading-[1.5] tracking-[0.04375rem] underline decoration-from-font transition-opacity hover:opacity-70'
+                className={cn(
+                  'text-primary text-sm underline hover:no-underline',
+                  item.marginTop,
+                  item.large && 'text-lg'
+                )}
               >
                 {item.content}
               </Link>
@@ -67,7 +84,12 @@ const ContactInfoCard = ({ title, items }: Readonly<ContactInfoCardProps>) => {
               key={index}
               text={item.content}
               as='p'
-              className='text-primary text-[0.9375rem] leading-[1.8] tracking-[0.04375rem]'
+              className={cn(
+                'text-primary text-sm',
+                item.bold && 'font-heading',
+                item.marginTop,
+                item.large && 'text-lg'
+              )}
             />
           );
         })}
@@ -84,7 +106,7 @@ const ContactInfoSection = () => {
     items: [
       { type: 'text' as const, content: t('billing-address.company') },
       { type: 'text' as const, content: t('billing-address.address') },
-      { type: 'text' as const, content: t('billing-address.ico') },
+      { type: 'text' as const, content: t('billing-address.ico'), marginTop: 'mt-5' },
       { type: 'text' as const, content: t('billing-address.dic') },
       { type: 'text' as const, content: t('billing-address.account') },
       { type: 'text' as const, content: t('billing-address.registry') },
@@ -100,6 +122,7 @@ const ContactInfoSection = () => {
         type: 'link' as const,
         content: t('correspondence-address.map-link'),
         href: t('correspondence-address.map-url'),
+        marginTop: 'mt-5',
       },
     ],
   };
@@ -107,9 +130,9 @@ const ContactInfoSection = () => {
   const contactInfo = {
     title: t('contact-info.title'),
     items: [
-      { type: 'text' as const, content: t('contact-info.phone') },
-      { type: 'text' as const, content: t('contact-info.email') },
-      { type: 'text' as const, content: t('contact-info.data-box') },
+      { type: 'phone' as const, content: t('contact-info.phone'), href: '+420800176423' },
+      { type: 'email' as const, content: t('contact-info.email'), href: t('contact-info.email') },
+      { type: 'text' as const, content: t('contact-info.data-box'), marginTop: 'mt-5' },
     ],
   };
 
@@ -117,12 +140,13 @@ const ContactInfoSection = () => {
     title: t('cooling-facility.title'),
     items: [
       { type: 'text' as const, content: t('cooling-facility.address') },
-      { type: 'text' as const, content: t('cooling-facility.hours') },
+      { type: 'text' as const, content: t('cooling-facility.hours'), marginTop: 'mt-5' },
       { type: 'text' as const, content: t('cooling-facility.phone') },
       {
         type: 'link' as const,
         content: t('cooling-facility.map-link'),
         href: t('cooling-facility.map-url'),
+        marginTop: 'mt-5',
       },
     ],
   };
@@ -131,29 +155,46 @@ const ContactInfoSection = () => {
     title: t('repatriation.title'),
     items: [
       { type: 'text' as const, content: t('repatriation.address') },
-      { type: 'text' as const, content: t('repatriation.coordinator-name') },
-      { type: 'text' as const, content: t('repatriation.coordinator-title') },
+      {
+        type: 'text' as const,
+        content: t('repatriation.coordinator-name'),
+        marginTop: 'mt-5',
+        bold: true,
+        large: true,
+      },
+      { type: 'text' as const, content: t('repatriation.coordinator-title'), large: true },
       {
         type: 'phone' as const,
         content: t('repatriation.phone1'),
         href: t('repatriation.phone1-raw'),
+        marginTop: 'mt-5',
+        large: true,
       },
       {
         type: 'phone' as const,
         content: t('repatriation.phone2'),
         href: t('repatriation.phone2-raw'),
+        marginTop: 'mt-2.5',
+        large: true,
       },
       {
         type: 'email' as const,
         content: t('repatriation.email'),
         href: t('repatriation.email'),
+        marginTop: 'mt-2.5',
+        large: true,
       },
     ],
   };
 
   return (
     <section className='section-container pb-40'>
-      <div className='flex flex-wrap gap-y-16 gap-x-8 lg:gap-y-32 lg:gap-x-9'>
+      <FormattedText
+        text={t('title')}
+        as='h2'
+        className='mb-25 text-center'
+      />
+      <div className='grid grid-cols-1 gap-x-8 gap-y-12.5 lg:grid-cols-3 lg:gap-x-9 lg:gap-y-32'>
         <ContactInfoCard
           title={billingAddress.title}
           items={billingAddress.items}
@@ -173,6 +214,7 @@ const ContactInfoSection = () => {
         <ContactInfoCard
           title={repatriation.title}
           items={repatriation.items}
+          className='lg:col-span-2'
         />
       </div>
     </section>
