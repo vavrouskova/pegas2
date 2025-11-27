@@ -1,6 +1,6 @@
 import { MAX_POSTS_FETCH, POSTS_PER_PAGE, UNCATEGORIZED_CATEGORY_ID } from '@/constants/blog';
 import { MAX_REFERENCES_FETCH } from '@/constants/references';
-import type { BlogPost, BlogPostDetail, ReferenceCategory, ReferencePost, ZamestnanciPost } from '@/utils/wordpress-types';
+import type { BlogPost, BlogPostDetail, PobockaPost, ReferenceCategory, ReferencePost, ZamestnanciPost } from '@/utils/wordpress-types';
 
 /**
  * Získá počet poboček (pobockaPosts)
@@ -1541,6 +1541,72 @@ export async function getContactPeople(): Promise<ZamestnanciPost[]> {
     return result.data?.page?.kontaktyACF?.personSelection?.nodes || [];
   } catch (error) {
     console.error('Error fetching contact people:', error);
+    return [];
+  }
+}
+
+/**
+ * Získá seznam všech poboček
+ * @returns Promise se seznamem poboček
+ */
+export async function getBranches(): Promise<PobockaPost[]> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query PobockaPosts {
+      pobockaPosts {
+        nodes {
+          id
+          databaseId
+          title
+          slug
+          featuredImage {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          pobockyACF {
+            city
+            dateCloseFrom
+            dateCloseTo
+            openDaysWeekend
+            openDaysWorking
+            openSwitcher
+            phoneNumber
+            showRoom
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.pobockaPosts?.nodes || [];
+  } catch (error) {
+    console.error('Error fetching branches:', error);
     return [];
   }
 }

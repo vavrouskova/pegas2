@@ -7,7 +7,10 @@ import PartnersSection from '@/components/_shared/PartnersSection';
 import ContactForm from '@/components/forms/contact/ContactForm';
 import ContactInfoSection from '@/components/contacts/ContactInfoSection';
 import ContactPeopleSection from '@/components/contacts/ContactPeopleSection';
-import { getContactPeople } from '@/api/wordpress-api';
+import BranchesSection from '@/components/branches/BranchesSection';
+import ShowroomBranchesSection from '@/components/branches/ShowroomBranchesSection';
+import WeekendBranchesSection from '@/components/branches/WeekendBranchesSection';
+import { getBranches, getContactPeople } from '@/api/wordpress-api';
 import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -17,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const ContactsPage = async () => {
-  const [t, contactPeople] = await Promise.all([getTranslations(), getContactPeople()]);
+  const [t, contactPeople, branches] = await Promise.all([getTranslations(), getContactPeople(), getBranches()]);
 
   return (
     <main className='max-w-container relative mx-auto'>
@@ -28,14 +31,29 @@ const ContactsPage = async () => {
         />
       </section>
 
-      <ContactForm />
+      <WeekendBranchesSection
+        branches={branches}
+        title={t('contacts.weekend-branches-section-title')}
+      />
 
-      <ContactInfoSection />
+      <ShowroomBranchesSection
+        branches={branches}
+        title={t('contacts.showroom-branches-section-title')}
+      />
+
+      <BranchesSection
+        branches={branches}
+        title={t('contacts.branches-section-title')}
+      />
+
+      <ContactForm />
 
       <ContactPeopleSection
         people={contactPeople}
         title={t('contacts.people-section-title')}
       />
+
+      <ContactInfoSection />
 
       <PartnersSection />
 

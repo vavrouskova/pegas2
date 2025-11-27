@@ -11,6 +11,7 @@ interface ButtonProps {
   tapScale?: number;
   buttonText: string;
   variant?: 'primary' | 'white' | 'destructive';
+  size?: 'default' | 'small';
   className?: string;
   arrowPosition?: 'left' | 'right';
   reverseArrow?: boolean;
@@ -23,6 +24,11 @@ const variantStyles = {
   destructive: 'bg-transparent text-primary [--ripple-button-ripple-color:oklch(var(--primary))]',
 };
 
+const sizeStyles = {
+  default: 'px-8 py-3 text-lg lg:px-16',
+  small: 'px-4 py-2 text-lg lg:px-8',
+};
+
 const Button = ({
   disabled = false,
   type = 'button',
@@ -30,12 +36,14 @@ const Button = ({
   tapScale,
   buttonText,
   variant = 'primary',
+  size = 'default',
   className,
   arrowPosition = 'right',
   reverseArrow = false,
   onClick,
 }: ButtonProps) => {
-  const arrow = <ArrowRight className={cn('h-5 w-5', reverseArrow && 'rotate-180')} />;
+  const arrowSize = size === 'small' ? 'h-4 w-4' : 'h-5 w-5';
+  const arrow = <ArrowRight className={cn(arrowSize, reverseArrow && 'rotate-180')} />;
 
   return (
     <RippleButton
@@ -46,7 +54,8 @@ const Button = ({
       type={type}
       disabled={disabled}
       className={cn(
-        'flex items-center justify-center gap-5 px-8 py-3 text-lg transition-opacity duration-300 hover:opacity-90 lg:px-16',
+        'flex items-center justify-center gap-5 transition-opacity duration-300 hover:opacity-90',
+        sizeStyles[size],
         type === 'submit' && 'lg:px-8',
         variantStyles[variant],
         disabled && 'cursor-not-allowed',

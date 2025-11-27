@@ -314,6 +314,74 @@ export function formatFarewellDate(dateString?: string): string {
 }
 
 /**
+ * Formátuje datum z WordPress ACF pole do českého formátu
+ * @param dateString - datum jako string z WordPressu (např. "2025-12-01T00:00:00+00:00")
+ * @returns formátované datum v češtině (např. "1. 12. 2025")
+ */
+export function formatSimpleDate(dateString?: string): string {
+  if (!dateString) return '';
+  try {
+    // Odstranit timezone suffix a interpretovat jako lokální čas
+    const dateWithoutTZ = dateString.replace(/([+-]\d{2}:\d{2}|Z)$/, '');
+    const date = new Date(dateWithoutTZ);
+
+    return new Intl.DateTimeFormat('cs-CZ', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    }).format(date);
+  } catch {
+    return dateString;
+  }
+}
+
+/**
+ * Formátuje rozsah dvou datumů z WordPress ACF polí
+ * Pokud jsou roky stejné, zobrazí rok jen u druhého data
+ * @param dateFromString - počáteční datum (např. "2025-12-01T00:00:00+00:00")
+ * @param dateToString - konečné datum (např. "2025-11-27T00:00:00+00:00")
+ * @returns formátovaný rozsah datumů (např. "1. 12. – 27. 11. 2025")
+ */
+export function formatDateRange(dateFromString?: string, dateToString?: string): string {
+  if (!dateFromString || !dateToString) return '';
+
+  try {
+    const dateFromWithoutTZ = dateFromString.replace(/([+-]\d{2}:\d{2}|Z)$/, '');
+    const dateToWithoutTZ = dateToString.replace(/([+-]\d{2}:\d{2}|Z)$/, '');
+
+    const dateFrom = new Date(dateFromWithoutTZ);
+    const dateTo = new Date(dateToWithoutTZ);
+
+    const yearFrom = dateFrom.getFullYear();
+    const yearTo = dateTo.getFullYear();
+
+    // Pokud jsou roky stejné, zobraz rok jen u druhého data
+    if (yearFrom === yearTo) {
+      const fromFormatted = new Intl.DateTimeFormat('cs-CZ', {
+        day: 'numeric',
+        month: 'numeric',
+      }).format(dateFrom);
+
+      const toFormatted = new Intl.DateTimeFormat('cs-CZ', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+      }).format(dateTo);
+
+      return `${fromFormatted} – ${toFormatted}`;
+    }
+
+    // Pokud jsou roky různé, zobraz rok u obou datumů
+    const fromFormatted = formatSimpleDate(dateFromString);
+    const toFormatted = formatSimpleDate(dateToString);
+
+    return `${fromFormatted} – ${toFormatted}`;
+  } catch {
+    return `${dateFromString} – ${dateToString}`;
+  }
+}
+
+/**
  * Filtruje zaměstnance podle typu pozice na vedení a tým
  * @param employees - pole zaměstnanců
  * @param managementType - typ pozice pro vedení (default: 'company_management')

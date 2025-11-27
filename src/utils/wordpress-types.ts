@@ -83,6 +83,12 @@ export interface SluzbyPost {
 export interface PobockyACF {
   city?: string;
   openSwitcher?: boolean;
+  showRoom?: boolean;
+  dateCloseFrom?: string;
+  dateCloseTo?: string;
+  openDaysWeekend?: string;
+  openDaysWorking?: string;
+  phoneNumber?: string;
 }
 
 // Pobocky (Branches) Types
@@ -91,6 +97,12 @@ export interface PobockaPost {
   databaseId: number;
   title: string;
   slug: string;
+  featuredImage?: {
+    node: {
+      altText: string;
+      sourceUrl: string;
+    };
+  };
   pobockyACF?: PobockyACF;
 }
 
