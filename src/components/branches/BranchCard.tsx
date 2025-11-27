@@ -1,12 +1,10 @@
-import Image from 'next/image';
-import Link from 'next/link';
-
-import Button from '@/components/_shared/Button';
-import { FormattedText } from '@/components/_shared/FormattedText';
 import Parking from '@/components/icons/Parking';
 import { cn } from '@/lib/utils';
 import { formatDateRange } from '@/utils/helper';
 import type { PobockaPost } from '@/utils/wordpress-types';
+
+import BranchCardContent from './BranchCardContent';
+import BranchCardImage from './BranchCardImage';
 
 interface BranchCardProps {
   branch: PobockaPost;
@@ -51,67 +49,22 @@ const BranchCard = ({
   if (layout === 'horizontal') {
     return (
       <article className={cn('flex gap-4 min-h-[120px]', className)}>
-        <div className='relative max-lg:hidden size-[13.25rem] overflow-hidden'>
-          {imageUrl ? (
-            <Image
-              src={imageUrl}
-              alt={imageAlt}
-              fill
-              sizes='120px'
-              className='object-cover'
-            />
-          ) : (
-            <div className='flex h-full w-full items-center justify-center bg-gray-200'>
-              <span className='text-gray-400 text-xs'>{t.noImage}</span>
-            </div>
-          )}
-        </div>
-
-        <div className='flex flex-1 flex-col py-1'>
-          {city && (
-            <FormattedText
-              text={city}
-              as='p'
-              className='text-primary font-heading text-lg'
-            />
-          )}
-          {branch.title && (
-            <FormattedText
-              text={branch.title}
-              as='h3'
-              className='mb-2 text-lg'
-            />
-          )}
-
-          {openDaysWorking && (
-            <FormattedText
-              text={openDaysWorking}
-              as='p'
-              className={cn('text-primary text-sm', !openDaysWeekend && 'mb-12')}
-            />
-          )}
-
-          {openDaysWeekend && (
-            <FormattedText
-              text={openDaysWeekend}
-              as='p'
-              className='text-primary mb-12 text-sm'
-            />
-          )}
-
-          {phoneNumber && (
-            <Link
-              href={`tel:${phoneNumber}`}
-              className='text-primary text-lg underline hover:no-underline'
-            >
-              {phoneNumber}
-            </Link>
-          )}
-
-          <Link href={`/${branch.slug}`} className='-ml-4 lg:-ml-8 mt-2'>
-            <Button buttonText={t.detailButton} size='small' variant='destructive' />
-          </Link>
-        </div>
+        <BranchCardImage
+          imageUrl={imageUrl}
+          imageAlt={imageAlt}
+          noImageText={t.noImage}
+          layout='horizontal'
+        />
+        <BranchCardContent
+          city={city}
+          title={branch.title}
+          openDaysWorking={openDaysWorking}
+          openDaysWeekend={openDaysWeekend}
+          phoneNumber={phoneNumber}
+          slug={branch.slug}
+          detailButtonText={t.detailButton}
+          layout='horizontal'
+        />
       </article>
     );
   }
@@ -119,19 +72,12 @@ const BranchCard = ({
   return (
     <article className={cn('group flex h-full flex-col', className)}>
       <div className='relative aspect-square w-full overflow-hidden'>
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt={imageAlt}
-            fill
-            sizes='(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
-            className='object-cover'
-          />
-        ) : (
-          <div className='flex h-full w-full items-center justify-center bg-gray-200'>
-            <span className='text-gray-400'>{t.noImage}</span>
-          </div>
-        )}
+        <BranchCardImage
+          imageUrl={imageUrl}
+          imageAlt={imageAlt}
+          noImageText={t.noImage}
+          layout='vertical'
+        />
         {isClosed && (
           <div className='bg-primary min-h-[70px] z-10 absolute bottom-0 left-0 w-full p-3 pr-[70px]'>
             <p className='text-white-smoke leading-[150%] font-heading text-sm'>
@@ -148,51 +94,16 @@ const BranchCard = ({
           </div>
         )}
       </div>
-      <div className='flex flex-1 flex-col py-5'>
-        {city && (
-          <FormattedText
-            text={city}
-            as='p'
-            className='text-primary font-heading text-lg'
-          />
-        )}
-        {branch.title && (
-          <FormattedText
-            text={branch.title}
-            as='h3'
-            className='mb-2 text-lg'
-          />
-        )}
-
-        {openDaysWorking && (
-            <FormattedText
-              text={openDaysWorking}
-              as='p'
-              className={cn('text-primary text-sm', !openDaysWeekend && 'mb-12')}
-            />
-        )}
-
-        {openDaysWeekend && (
-            <FormattedText
-              text={openDaysWeekend}
-              as='p'
-              className='text-primary text-sm mb-12'
-            />
-        )}
-
-        {phoneNumber && (
-          <Link
-            href={`tel:${phoneNumber}`}
-            className='text-primary text-lg underline hover:no-underline'
-          >
-            {phoneNumber}
-          </Link>
-        )}
-
-        <Link href={`/${branch.slug}`} className='-ml-4 lg:-ml-8 mt-2'>
-          <Button buttonText={t.detailButton} size='small' variant='destructive' />
-        </Link>
-      </div>
+      <BranchCardContent
+        city={city}
+        title={branch.title}
+        openDaysWorking={openDaysWorking}
+        openDaysWeekend={openDaysWeekend}
+        phoneNumber={phoneNumber}
+        slug={branch.slug}
+        detailButtonText={t.detailButton}
+        layout='vertical'
+      />
     </article>
   );
 };
