@@ -90,6 +90,7 @@ export interface PobockyACF {
   openDaysWorking?: string;
   phoneNumber?: string;
   parking?: string;
+  gPS?: string;
 }
 
 // Pobocky (Branches) Types

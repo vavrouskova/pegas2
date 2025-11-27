@@ -66,52 +66,48 @@ const BranchCard = ({ branch, className }: Readonly<BranchCardProps>) => {
           </div>
         )}
       </div>
-      <div className='flex flex-1 flex-col py-6'>
+      <div className='flex flex-1 flex-col py-5'>
         {city && (
           <FormattedText
             text={city}
             as='p'
-            className='text-primary font-heading text-xl'
+            className='text-primary font-heading text-lg'
           />
         )}
         {branch.title && (
           <FormattedText
             text={branch.title}
             as='h3'
-            className='mb-2 text-xl'
+            className='mb-2 text-lg'
           />
         )}
 
         {openDaysWorking && (
-          <div className='mb-2'>
             <FormattedText
               text={openDaysWorking}
               as='p'
-              className='text-primary text-sm'
+              className={cn('text-primary text-sm', !openDaysWeekend && 'mb-12')}
             />
-          </div>
         )}
 
         {openDaysWeekend && (
-          <div className='mb-4'>
             <FormattedText
               text={openDaysWeekend}
               as='p'
-              className='text-primary text-sm'
+              className='text-primary text-sm mb-12'
             />
-          </div>
         )}
 
         {phoneNumber && (
           <Link
             href={`tel:${phoneNumber}`}
-            className='text-primary text-lg underline transition-opacity hover:opacity-70'
+            className='text-primary text-lg underline hover:no-underline'
           >
             {phoneNumber}
           </Link>
         )}
 
-        <Link href={`/${branch.slug}`} className='-ml-4 lg:-ml-8 mt-4'>
+        <Link href={`/${branch.slug}`} className='-ml-4 lg:-ml-8 mt-2'>
           <Button buttonText={t('detail-button')} size='small' variant='destructive' />
         </Link>
       </div>

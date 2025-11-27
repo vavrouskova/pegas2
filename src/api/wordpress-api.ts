@@ -1576,6 +1576,7 @@ export async function getBranches(): Promise<PobockaPost[]> {
             phoneNumber
             showRoom
             parking
+            gPS
           }
         }
       }
