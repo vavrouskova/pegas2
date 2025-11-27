@@ -1,19 +1,13 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
 import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
+import Parking from '@/components/icons/Parking';
 import { cn } from '@/lib/utils';
 import { formatDateRange } from '@/utils/helper';
 import type { PobockaPost } from '@/utils/wordpress-types';
-
-interface WeekendBranchesSectionProps {
-  branches: PobockaPost[];
-  title?: string;
-}
 
 interface BranchCardProps {
   branch: PobockaPost;
@@ -31,9 +25,12 @@ const BranchCard = ({ branch, className }: Readonly<BranchCardProps>) => {
   const openDaysWeekend = pobockyACF?.openDaysWeekend;
   const dateCloseFrom = pobockyACF?.dateCloseFrom;
   const dateCloseTo = pobockyACF?.dateCloseTo;
+  const parking = pobockyACF?.parking;
 
   // Check if branch is currently closed
   const isClosed = dateCloseFrom && dateCloseTo;
+  // Check if branch has parking
+  const hasParking = parking && parking.trim() !== '';
 
   const formattedDateRange = formatDateRange(dateCloseFrom, dateCloseTo);
 
@@ -54,13 +51,18 @@ const BranchCard = ({ branch, className }: Readonly<BranchCardProps>) => {
           </div>
         )}
         {isClosed && (
-          <div className='bg-primary z-10 absolute bottom-0 left-0 w-full p-3'>
-            <p className='text-white-smoke font-heading text-sm'>
+          <div className='bg-primary min-h-[70px] z-10 absolute bottom-0 left-0 w-full p-3 pr-[70px]'>
+            <p className='text-white-smoke leading-[150%] font-heading text-sm'>
               {t('closed')}
             </p>
-            <p className='text-white-smoke font-heading text-sm'>
+            <p className='text-white-smoke leading-[150%] font-heading text-sm'>
               {formattedDateRange}
             </p>
+          </div>
+        )}
+        {hasParking && (
+          <div className='z-10 absolute bottom-0 right-0'>
+            <Parking />
           </div>
         )}
       </div>
@@ -117,35 +119,4 @@ const BranchCard = ({ branch, className }: Readonly<BranchCardProps>) => {
   );
 };
 
-const WeekendBranchesSection = ({ branches, title }: Readonly<WeekendBranchesSectionProps>) => {
-  // Filter branches that are open on weekends and holidays (openSwitcher === true)
-  const weekendBranches = branches.filter((branch) => branch.pobockyACF?.openSwitcher === true);
-
-  if (weekendBranches.length === 0) return null;
-
-  return (
-    <section className='section-container'>
-      <div className='max-w-container mx-auto'>
-        {title && (
-          <FormattedText
-            text={title}
-            as='h2'
-            className='mb-12.5'
-          />
-        )}
-
-        <div className='flex flex-wrap justify-center gap-x-7.5 gap-y-12.5 lg:gap-7.5'>
-          {weekendBranches.map((branch) => (
-            <BranchCard
-              key={branch.id}
-              branch={branch}
-              className='w-full max-w-[15.75rem] min-w-[15.75rem]'
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default WeekendBranchesSection;
+export default BranchCard;

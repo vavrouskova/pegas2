@@ -89,6 +89,7 @@ export interface PobockyACF {
   openDaysWeekend?: string;
   openDaysWorking?: string;
   phoneNumber?: string;
+  parking?: string;
 }
 
 // Pobocky (Branches) Types

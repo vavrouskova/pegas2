@@ -1575,6 +1575,7 @@ export async function getBranches(): Promise<PobockaPost[]> {
             openSwitcher
             phoneNumber
             showRoom
+            parking
           }
         }
       }

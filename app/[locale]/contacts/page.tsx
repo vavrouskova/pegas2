@@ -8,8 +8,6 @@ import ContactForm from '@/components/forms/contact/ContactForm';
 import ContactInfoSection from '@/components/contacts/ContactInfoSection';
 import ContactPeopleSection from '@/components/contacts/ContactPeopleSection';
 import BranchesSection from '@/components/branches/BranchesSection';
-import ShowroomBranchesSection from '@/components/branches/ShowroomBranchesSection';
-import WeekendBranchesSection from '@/components/branches/WeekendBranchesSection';
 import { getBranches, getContactPeople } from '@/api/wordpress-api';
 import { getSeoDataByUri } from '@/utils/seo';
 
@@ -31,14 +29,16 @@ const ContactsPage = async () => {
         />
       </section>
 
-      <WeekendBranchesSection
+      <BranchesSection
         branches={branches}
         title={t('contacts.weekend-branches-section-title')}
+        filterType='weekend'
       />
 
-      <ShowroomBranchesSection
+      <BranchesSection
         branches={branches}
         title={t('contacts.showroom-branches-section-title')}
+        filterType='showroom'
       />
 
       <BranchesSection
