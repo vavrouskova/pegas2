@@ -2,7 +2,7 @@ import { FormattedText } from '@/components/_shared/FormattedText';
 import { filterAllBranches, filterShowroomBranches, filterWeekendBranches } from '@/utils/branch-filters';
 import type { PobockaPost } from '@/utils/wordpress-types';
 
-import BranchCard from '@/components/branches/BranchCard';
+import BranchCardClient from '@/components/branches/BranchCardClient';
 
 type FilterType = 'all' | 'showroom' | 'weekend';
 
@@ -37,7 +37,7 @@ const BranchesSection = ({ branches, title, filterType = 'all' }: Readonly<Branc
 
         <div className='flex flex-wrap gap-x-7.5 gap-y-12.5 max-lg:justify-center lg:gap-7.5'>
           {filteredBranches.map((branch) => (
-            <BranchCard
+            <BranchCardClient
               key={branch.id}
               branch={branch}
               className='w-full max-w-[15.75rem] min-w-[15.75rem]'

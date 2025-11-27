@@ -8,6 +8,7 @@ import ContactForm from '@/components/forms/contact/ContactForm';
 import ContactInfoSection from '@/components/contacts/ContactInfoSection';
 import ContactPeopleSection from '@/components/contacts/ContactPeopleSection';
 import BranchesSection from '@/components/branches/BranchesSection';
+import BranchesMapSection from '@/components/branches/BranchesMapSection';
 import { getBranches, getContactPeople } from '@/api/wordpress-api';
 import { getSeoDataByUri } from '@/utils/seo';
 
@@ -28,6 +29,11 @@ const ContactsPage = async () => {
           pageTitle={t('contacts.page-title')}
         />
       </section>
+
+      <BranchesMapSection
+        branches={branches}
+        title={t('contacts.map-section-title')}
+      />
 
       <BranchesSection
         branches={branches}

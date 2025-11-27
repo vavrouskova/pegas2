@@ -52,7 +52,7 @@ const StickyContact = () => {
       initial={{ x: 120, opacity: 0 }}
       animate={animateTarget}
       transition={{ type: 'spring', stiffness: 260, damping: 24 }}
-      className='bg-primary fixed right-0 bottom-5 z-50 flex gap-4 p-4 pr-12 shadow-lg will-change-transform lg:bottom-1/2'
+      className='bg-primary fixed right-0 bottom-5 z-[1000] flex gap-4 p-4 pr-12 shadow-lg will-change-transform lg:bottom-1/2'
     >
       <div className='flex flex-col justify-between pr-2'>
         <span className='text-base text-white'>{t('nonstop')}</span>
