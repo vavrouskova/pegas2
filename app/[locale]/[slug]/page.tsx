@@ -9,6 +9,7 @@ import DetailHeroSection from '@/components/_shared/DetailHeroSection';
 import DynamicContentSection from '@/components/_shared/DynamicContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import BranchDetailSection from '@/components/branches/BranchDetailSection';
+import ContactForm from '@/components/forms/contact/ContactForm';
 import { decodeHtmlEntitiesServer, stripHtmlTags } from '@/utils/helper';
 import { getSeoDataBySlug } from '@/utils/seo';
 
@@ -183,6 +184,10 @@ const SlugPage = async ({ params }: SlugPageProps) => {
     return (
       <main className='max-w-container mx-auto'>
         <BranchDetailSection slug={slug} />
+
+        <ContactForm />
+
+        <FooterClaim />
       </main>
     );
   }

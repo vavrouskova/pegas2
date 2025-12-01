@@ -30,7 +30,6 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
   const externalImageAlt = featuredImage?.node?.altText || '';
 
   return (
-    <>
       <section className='grid grid-cols-1 gap-8 px-4 py-12 lg:grid-cols-2 lg:gap-12 lg:px-14 lg:py-20'>
         {/* Left column - Branch info */}
         <div className='space-y-8'>
@@ -113,10 +112,6 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
         </div>
       </section>
 
-      <ContactForm />
-
-      <FooterClaim />
-    </>
   );
 };
 
