@@ -23,9 +23,9 @@ const ContactsPage = async () => {
 
   return (
     <main className='max-w-container relative mx-auto'>
-      <section className='px-4 sm:px-14'>
+      <section className='px-4 lg:px-14'>
         <Breadcrumbs
-          className='pb-18 lg:pb-43'
+          className='pb-23'
           pageTitle={t('contacts.page-title')}
         />
       </section>

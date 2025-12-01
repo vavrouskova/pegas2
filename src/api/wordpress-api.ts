@@ -775,13 +775,13 @@ export async function getBlogCategories(first = 100) {
 }
 
 /**
- * Rychlá kontrola, zda slug existuje jako blog post nebo služba
+ * Rychlá kontrola, zda slug existuje jako blog post, služba, reference nebo pobočka
  * @param slug - Slug k ověření
- * @returns 'post' | 'sluzbyPost' | null
+ * @returns 'post' | 'sluzbyPost' | 'referencePost' | 'pobockaPost' | null
  */
 export async function checkSlugType(
   slug: string
-): Promise<'post' | 'sluzbyPost' | 'referencePost' | null> {
+): Promise<'post' | 'sluzbyPost' | 'referencePost' | 'pobockaPost' | null> {
   const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
 
   // Jeden GraphQL dotaz, který zkontroluje všechny typy najednou
@@ -794,6 +794,9 @@ export async function checkSlugType(
         id
       }
       referencePost(id: $slug, idType: SLUG) {
+        id
+      }
+      pobockaPost(id: $slug, idType: SLUG) {
         id
       }
     }
@@ -833,6 +836,10 @@ export async function checkSlugType(
 
     if (result.data?.referencePost) {
       return 'referencePost';
+    }
+
+    if (result.data?.pobockaPost) {
+      return 'pobockaPost';
     }
 
     return null;
@@ -1610,5 +1617,83 @@ export async function getBranches(): Promise<PobockaPost[]> {
   } catch (error) {
     console.error('Error fetching branches:', error);
     return [];
+  }
+}
+
+/**
+ * Získá detail pobočky podle slugu
+ * @param slug - Slug pobočky
+ * @returns Promise s detailem pobočky
+ */
+export async function getBranchBySlug(slug: string): Promise<PobockaPost | null> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetBranchBySlug($slug: ID!) {
+      pobockaPost(id: $slug, idType: SLUG) {
+        id
+        databaseId
+        title
+        slug
+        featuredImage {
+          node {
+            altText
+            sourceUrl
+          }
+        }
+        pobockyACF {
+          city
+          closeAccouncment
+          dateCloseFrom
+          dateCloseTo
+          funeralRequirements
+          internalImage {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          openDaysWeekend
+          openDaysWorking
+          openSwitcher
+          parking
+          phoneNumber
+          visitUs
+          wheelchairAccess
+          gPS
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { slug },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors for getBranchBySlug:', JSON.stringify(result.errors, null, 2));
+      console.error('Query was:', query);
+      throw new Error(`GraphQL query failed: ${JSON.stringify(result.errors[0]?.message || result.errors)}`);
+    }
+
+    return result.data?.pobockaPost || null;
+  } catch (error) {
+    console.error(`Error fetching branch with slug ${slug}:`, error);
+    return null;
   }
 }

@@ -8,6 +8,7 @@ import ContentSection from '@/components/_shared/ContentSection';
 import DetailHeroSection from '@/components/_shared/DetailHeroSection';
 import DynamicContentSection from '@/components/_shared/DynamicContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
+import BranchDetailSection from '@/components/branches/BranchDetailSection';
 import { decodeHtmlEntitiesServer, stripHtmlTags } from '@/utils/helper';
 import { getSeoDataBySlug } from '@/utils/seo';
 
@@ -28,6 +29,10 @@ export async function generateMetadata({ params }: SlugPageProps): Promise<Metad
 
   if (slugType === 'referencePost') {
     return getSeoDataBySlug('referencePost', slug);
+  }
+
+  if (slugType === 'pobockaPost') {
+    return getSeoDataBySlug('pobockaPost', slug);
   }
 
   return getSeoDataBySlug('sluzbyPost', slug);
@@ -170,6 +175,14 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         />
 
         <FooterClaim />
+      </main>
+    );
+  }
+
+  if (slugType === 'pobockaPost') {
+    return (
+      <main className='max-w-container mx-auto'>
+        <BranchDetailSection slug={slug} />
       </main>
     );
   }

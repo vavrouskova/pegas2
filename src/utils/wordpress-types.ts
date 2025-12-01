@@ -91,6 +91,16 @@ export interface PobockyACF {
   phoneNumber?: string;
   parking?: string;
   gPS?: string;
+  closeAccouncment?: string;
+  funeralRequirements?: string;
+  visitUs?: string;
+  wheelchairAccess?: boolean;
+  internalImage?: {
+    node: {
+      altText: string;
+      sourceUrl: string;
+    };
+  };
 }
 
 // Pobocky (Branches) Types
