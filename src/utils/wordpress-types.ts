@@ -95,11 +95,15 @@ export interface PobockyACF {
   funeralRequirements?: string;
   visitUs?: string;
   wheelchairAccess?: boolean;
+  email?: string;
   internalImage?: {
     node: {
       altText: string;
       sourceUrl: string;
     };
+  };
+  consultant?: {
+    nodes: ZamestnanciPost[];
   };
 }
 

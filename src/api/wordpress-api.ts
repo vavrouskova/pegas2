@@ -1,6 +1,13 @@
-import { MAX_POSTS_FETCH, POSTS_PER_PAGE, UNCATEGORIZED_CATEGORY_ID } from '@/constants/blog';
+import { MAX_POSTS_FETCH, POSTS_PER_PAGE } from '@/constants/blog';
 import { MAX_REFERENCES_FETCH } from '@/constants/references';
-import type { BlogPost, BlogPostDetail, PobockaPost, ReferenceCategory, ReferencePost, ZamestnanciPost } from '@/utils/wordpress-types';
+import type {
+  BlogPost,
+  BlogPostDetail,
+  PobockaPost,
+  ReferenceCategory,
+  ReferencePost,
+  ZamestnanciPost,
+} from '@/utils/wordpress-types';
 
 /**
  * Získá počet poboček (pobockaPosts)
@@ -1364,7 +1371,7 @@ export async function getBlogPosts(postsPerPage = POSTS_PER_PAGE, page = 1, cate
 
   const whereClause: Record<string, unknown> = {};
   if (categoryId) {
-    whereClause.categoryId = parseInt(categoryId, 10);
+    whereClause.categoryId = Number.parseInt(categoryId, 10);
   }
 
   const hasFilters = Object.keys(whereClause).length > 0;
@@ -1581,9 +1588,11 @@ export async function getBranches(): Promise<PobockaPost[]> {
             openDaysWorking
             openSwitcher
             phoneNumber
+            email
             showRoom
             parking
             gPS
+            visitUs
           }
         }
       }
@@ -1646,6 +1655,7 @@ export async function getBranchBySlug(slug: string): Promise<PobockaPost | null>
           closeAccouncment
           dateCloseFrom
           dateCloseTo
+          email
           funeralRequirements
           internalImage {
             node {
@@ -1661,6 +1671,23 @@ export async function getBranchBySlug(slug: string): Promise<PobockaPost | null>
           visitUs
           wheelchairAccess
           gPS
+          consultant {
+            nodes {
+              ... on ZamestnanecPost {
+                title
+                zamestnanciACF {
+                  employeeEmail
+                  positionDescription
+                  profileImage {
+                    node {
+                      altText
+                      sourceUrl
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }

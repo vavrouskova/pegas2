@@ -3,7 +3,12 @@ import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import unicorn from 'eslint-plugin-unicorn';
-import tsParser from '@typescript-eslint/parser';
+import sonarjsPlugin from 'eslint-plugin-sonarjs';
+import securityPlugin from 'eslint-plugin-security';
+import prettierPlugin from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
+import nextConfig from 'eslint-config-next';
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,20 +20,44 @@ const compat = new FlatCompat({
 });
 
 export default [
-  // Extends translated from the legacy .eslintrc.js
-  ...compat.extends(
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:jsx-a11y/recommended',
-    'plugin:prettier/recommended',
-    'plugin:sonarjs/recommended-legacy',
-    'plugin:security/recommended-legacy',
-    'plugin:react-hooks/recommended',
-    'next',
-    'next/core-web-vitals',
-    'prettier'
-  ),
+  // Base ESLint recommended
+  js.configs.recommended,
+
+  // Next.js configs (includes React, JSX A11y, React Hooks, TypeScript, and more)
+  ...nextConfig,
+  ...nextCoreWebVitals,
+
+  // SonarJS
+  {
+    plugins: {
+      sonarjs: sonarjsPlugin,
+    },
+    rules: {
+      ...sonarjsPlugin.configs.recommended.rules,
+    },
+  },
+
+  // Security
+  {
+    plugins: {
+      security: securityPlugin,
+    },
+    rules: {
+      ...securityPlugin.configs.recommended.rules,
+    },
+  },
+
+  // Prettier
+  {
+    plugins: {
+      prettier: prettierPlugin,
+    },
+    rules: {
+      ...prettierPlugin.configs.recommended.rules,
+      ...prettierConfig.rules,
+    },
+  },
+
   // Use unicorn's non-deprecated flat recommended config
   unicorn.configs.recommended,
   // Core config translated via compat.config (without global TS parser)
@@ -125,19 +154,6 @@ export default [
     },
     overrides: [],
   }),
-  // Apply TS parser only to TS/TSX files to avoid parsing config .mjs files
-  {
-    files: ['**/*.ts', '**/*.tsx'],
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        ecmaFeatures: { jsx: true, modules: true },
-        ecmaVersion: 2023,
-        sourceType: 'module',
-        project: './tsconfig.json',
-      },
-    },
-  },
   // Global ignores, including your requested patterns
   {
     ignores: [

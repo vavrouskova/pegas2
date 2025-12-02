@@ -2,7 +2,13 @@ import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
-import { checkSlugType, getBlogPostBySlug, getReferenceBySlug, getServiceBySlug } from '@/api/wordpress-api';
+import {
+  checkSlugType,
+  getBlogPostBySlug,
+  getReferenceBySlug,
+  getServiceBySlug,
+  getServicesByTaxonomy,
+} from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import DetailHeroSection from '@/components/_shared/DetailHeroSection';
@@ -10,6 +16,7 @@ import DynamicContentSection from '@/components/_shared/DynamicContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import BranchDetailSection from '@/components/branches/BranchDetailSection';
 import ContactForm from '@/components/forms/contact/ContactForm';
+import ServicesGridSection from '@/components/services/ServicesGridSection';
 import { decodeHtmlEntitiesServer, stripHtmlTags } from '@/utils/helper';
 import { getSeoDataBySlug } from '@/utils/seo';
 
@@ -39,6 +46,7 @@ export async function generateMetadata({ params }: SlugPageProps): Promise<Metad
   return getSeoDataBySlug('sluzbyPost', slug);
 }
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const SlugPage = async ({ params }: SlugPageProps) => {
   const { slug } = await params;
   const t = await getTranslations();
@@ -181,11 +189,20 @@ const SlugPage = async ({ params }: SlugPageProps) => {
   }
 
   if (slugType === 'pobockaPost') {
+    const funeralEssentials = await getServicesByTaxonomy('nalezitosti-pohrbu');
+
     return (
       <main className='max-w-container mx-auto'>
         <BranchDetailSection slug={slug} />
 
         <ContactForm />
+
+        <ServicesGridSection
+          id='nalezitosti-pohrbu'
+          title={funeralEssentials.taxonomy?.name || 'Náležitosti pohřbu'}
+          description={funeralEssentials.taxonomy?.description || ''}
+          services={funeralEssentials.posts}
+        />
 
         <FooterClaim />
       </main>
