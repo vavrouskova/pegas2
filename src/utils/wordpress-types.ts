@@ -247,3 +247,11 @@ export interface BlogPostDetail extends BlogPost {
   date?: string;
   components?: BlogComponents;
 }
+
+// Postup Posts Types
+export interface PostupPost {
+  id: string;
+  databaseId: number;
+  title: string;
+  slug: string;
+}

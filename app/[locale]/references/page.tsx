@@ -32,10 +32,10 @@ interface ReferencesPageProps {
 }
 
 const ReferencesPage = async ({ searchParams }: ReferencesPageProps) => {
-  const params = await searchParams;
-  const categoryId = params.category;
-  const page = parsePageNumber(params.page);
-  const search = params.search;
+  const parameters = await searchParams;
+  const categoryId = parameters.category;
+  const page = parsePageNumber(parameters.page);
+  const search = parameters.search;
 
   const [t, referencesData, categories] = await Promise.all([
     getTranslations(),

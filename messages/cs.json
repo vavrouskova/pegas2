@@ -323,5 +323,10 @@
         "email": "repatriations@pegascz.cz"
       }
     }
+  },
+
+  "faq": {
+    "page-title": "Jak postupovat",
+    "description": "Provedeme vás. Jsme tu tiše, ale pevně."
   }
 }

@@ -4,6 +4,7 @@ import type {
   BlogPost,
   BlogPostDetail,
   PobockaPost,
+  PostupPost,
   ReferenceCategory,
   ReferencePost,
   ZamestnanciPost,
@@ -1625,6 +1626,58 @@ export async function getBranches(): Promise<PobockaPost[]> {
     return result.data?.pobockaPosts?.nodes || [];
   } catch (error) {
     console.error('Error fetching branches:', error);
+    return [];
+  }
+}
+
+/**
+ * Získá seznam FAQ postupů (postupPosts)
+ * @param first - Počet postupů k načtení (výchozí 100)
+ * @returns Promise se seznamem FAQ postupů
+ */
+export async function getPostupPosts(first = 100): Promise<PostupPost[]> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetPostupPosts($first: Int!) {
+      postupPosts(first: $first) {
+        nodes {
+          id
+          databaseId
+          title
+          slug
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { first },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.postupPosts?.nodes || [];
+  } catch (error) {
+    console.error('Error fetching postup posts:', error);
     return [];
   }
 }
