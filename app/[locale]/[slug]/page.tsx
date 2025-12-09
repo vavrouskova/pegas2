@@ -19,6 +19,7 @@ import DetailHeroSection from '@/components/_shared/DetailHeroSection';
 import DynamicContentSection from '@/components/_shared/DynamicContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import { FormattedText } from '@/components/_shared/FormattedText';
+import LeavesImage from '@/components/_shared/LeavesImage';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 import BranchDetailSection from '@/components/branches/BranchDetailSection';
 import ContactForm from '@/components/forms/contact/ContactForm';
@@ -241,7 +242,9 @@ const SlugPage = async ({ params }: SlugPageProps) => {
     const hasComponents = components?.components && components.components.length > 0;
 
     return (
-      <main className='max-w-container mx-auto'>
+      <main className='max-w-container relative mx-auto'>
+        <LeavesImage />
+
         <MainHeroSection
           breadcrumbItems={breadcrumbItems}
           title={[title, topSubtitle]}
