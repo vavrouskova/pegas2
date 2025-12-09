@@ -1834,6 +1834,13 @@ export async function getBranchBySlug(slug: string): Promise<PobockaPost | null>
               sourceUrl
             }
           }
+          mapImage {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          navigateLink
           openDaysWeekend
           openDaysWorking
           openSwitcher

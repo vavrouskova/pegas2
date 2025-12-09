@@ -102,8 +102,15 @@ export interface PobockyACF {
   visitUs?: string;
   wheelchairAccess?: boolean;
   email?: string;
+  navigateLink?: string;
   announcementButton?: AnnouncementButton;
   internalImage?: {
+    node: {
+      altText: string;
+      sourceUrl: string;
+    };
+  };
+  mapImage?: {
     node: {
       altText: string;
       sourceUrl: string;

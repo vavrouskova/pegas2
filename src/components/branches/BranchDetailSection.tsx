@@ -33,7 +33,7 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
   // Prepare image data
   const internalImageNode = pobockyACF?.internalImage?.node;
   const externalImageNode = featuredImage?.node;
-
+  const mapImageNode = pobockyACF?.mapImage?.node;
   const internalImage = internalImageNode
     ? { url: internalImageNode.sourceUrl, alt: internalImageNode.altText }
     : undefined;
@@ -41,6 +41,8 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
   const externalImage = externalImageNode
     ? { url: externalImageNode.sourceUrl, alt: externalImageNode.altText }
     : undefined;
+
+  const mapImage = mapImageNode ? { url: mapImageNode.sourceUrl, alt: mapImageNode.altText } : undefined;
 
   return (
     <>
@@ -80,6 +82,8 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
         <BranchImages
           internalImage={internalImage}
           externalImage={externalImage}
+          mapImage={mapImage}
+          navigateLink={pobockyACF?.navigateLink}
         />
 
         {/* Consultant - Order 3 on mobile */}

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface ImageData {
   url: string;
@@ -8,13 +9,15 @@ interface ImageData {
 interface BranchImagesProps {
   internalImage?: ImageData;
   externalImage?: ImageData;
+  mapImage?: ImageData;
+  navigateLink?: string;
 }
 
 const IMAGE_SIZE = 100;
 const IMAGE_CLASS = 'h-full w-full object-cover';
 const CONTAINER_CLASS = 'aspect-square overflow-hidden';
 
-export const BranchImages = ({ internalImage, externalImage }: BranchImagesProps) => {
+export const BranchImages = ({ internalImage, externalImage, mapImage, navigateLink }: BranchImagesProps) => {
   if (!internalImage && !externalImage) return null;
 
   return (
@@ -42,8 +45,21 @@ export const BranchImages = ({ internalImage, externalImage }: BranchImagesProps
             />
           </div>
         )}
-        {/* Map placeholder - můžeš přidat mapu zde */}
-        <div className='aspect-square overflow-hidden bg-gray-200'></div>
+        {mapImage && (
+          <Link
+            href={navigateLink || '#'}
+            target='_blank'
+            className={CONTAINER_CLASS}
+          >
+            <Image
+              src={mapImage.url}
+              alt={mapImage.alt}
+              width={IMAGE_SIZE}
+              height={IMAGE_SIZE}
+              className={IMAGE_CLASS}
+            />
+          </Link>
+        )}
       </div>
     </div>
   );
