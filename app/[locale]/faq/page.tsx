@@ -32,7 +32,7 @@ const FaqPage = async () => {
         classNameContent='max-w-dynamic-content mx-auto'
       />
 
-      <section className='px-4 md:px-14'>
+      <section className='px-4 pb-12.5 md:px-14 lg:pb-35'>
         <div className='max-w-dynamic-content mx-auto'>
           {postupPosts.length > 0 && (
             <div className='flex flex-col gap-4'>
