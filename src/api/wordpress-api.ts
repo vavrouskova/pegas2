@@ -783,13 +783,13 @@ export async function getBlogCategories(first = 100) {
 }
 
 /**
- * Rychlá kontrola, zda slug existuje jako blog post, služba, reference nebo pobočka
+ * Rychlá kontrola, zda slug existuje jako blog post, služba, reference, pobočka nebo postup
  * @param slug - Slug k ověření
- * @returns 'post' | 'sluzbyPost' | 'referencePost' | 'pobockaPost' | null
+ * @returns 'post' | 'sluzbyPost' | 'referencePost' | 'pobockaPost' | 'postupPost' | null
  */
 export async function checkSlugType(
   slug: string
-): Promise<'post' | 'sluzbyPost' | 'referencePost' | 'pobockaPost' | null> {
+): Promise<'post' | 'sluzbyPost' | 'referencePost' | 'pobockaPost' | 'postupPost' | null> {
   const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
 
   // Jeden GraphQL dotaz, který zkontroluje všechny typy najednou
@@ -805,6 +805,9 @@ export async function checkSlugType(
         id
       }
       pobockaPost(id: $slug, idType: SLUG) {
+        id
+      }
+      postupPost(id: $slug, idType: SLUG) {
         id
       }
     }
@@ -848,6 +851,10 @@ export async function checkSlugType(
 
     if (result.data?.pobockaPost) {
       return 'pobockaPost';
+    }
+
+    if (result.data?.postupPost) {
+      return 'postupPost';
     }
 
     return null;
@@ -1679,6 +1686,112 @@ export async function getPostupPosts(first = 100): Promise<PostupPost[]> {
   } catch (error) {
     console.error('Error fetching postup posts:', error);
     return [];
+  }
+}
+
+/**
+ * Získá detail FAQ postupu podle slugu
+ * @param slug - Slug postupu
+ * @returns Promise s detailem postupu
+ */
+export async function getPostupBySlug(slug: string): Promise<PostupPost | null> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetPostupBySlug($slug: ID!) {
+      postupPost(id: $slug, idType: SLUG) {
+        id
+        databaseId
+        title
+        slug
+        jakPostupovatAcf {
+          bottomSubtitle
+          fieldGroupName
+          shortDescription
+          topSubtitle
+        }
+        components {
+          components {
+            ... on ComponentsComponentsWysiwygLayout {
+              fieldGroupName
+              editor
+            }
+            ... on ComponentsComponentsMediaLayout {
+              fieldGroupName
+              mediaType
+              youtubeEmbedLink
+              image {
+                node {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+            ... on ComponentsComponentsGalleryLayout {
+              fieldGroupName
+              gallery {
+                nodes {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+            ... on ComponentsComponentsImageBoxesLayout {
+              fieldGroupName
+              imageBoxes {
+                boxHeadline
+                boxDescription
+                imageBox {
+                  node {
+                    altText
+                    sourceUrl
+                  }
+                }
+              }
+            }
+            ... on ComponentsComponentsImageSliderLayout {
+              fieldGroupName
+              imageSlider {
+                nodes {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { slug },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.postupPost || null;
+  } catch (error) {
+    console.error(`Error fetching postup with slug ${slug}:`, error);
+    return null;
   }
 }
 

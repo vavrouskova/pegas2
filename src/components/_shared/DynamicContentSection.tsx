@@ -1,3 +1,6 @@
+/* eslint-disable sonarjs/no-nested-conditional */
+/* eslint-disable unicorn/no-nested-ternary */
+/* eslint-disable sonarjs/cognitive-complexity */
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import React from 'react';
@@ -67,6 +70,7 @@ interface DynamicContentSectionProps {
     components?: ComponentType[];
   };
   categorySlug?: string;
+  showBackLink?: boolean;
   backLink?: string;
   backLinkText?: string;
   className?: string;
@@ -75,6 +79,7 @@ interface DynamicContentSectionProps {
 const DynamicContentSection = async ({
   components,
   categorySlug,
+  showBackLink = true,
   backLink: customBackLink,
   backLinkText: customBackLinkText,
   className,
@@ -116,7 +121,6 @@ const DynamicContentSection = async ({
       );
     };
 
-    // eslint-disable-next-line unicorn/consistent-function-scoping
     const parseListItems = (listContent: string): string[] => {
       const items: string[] = [];
       const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi;
@@ -168,10 +172,10 @@ const DynamicContentSection = async ({
 
     matches.sort((a, b) => a.index - b.index);
 
-    for (let i = 0; i < matches.length; i++) {
-      const item = matches[i];
-      const isLastElement = i === matches.length - 1;
-      const nextItem = matches[i + 1];
+    for (let index = 0; index < matches.length; index++) {
+      const item = matches[index];
+      const isLastElement = index === matches.length - 1;
+      const nextItem = matches[index + 1];
 
       if (item.isList && item.listType) {
         const listItems = parseListItems(item.content);
@@ -450,17 +454,19 @@ const DynamicContentSection = async ({
     <section className={cn('section-container relative', className)}>
       <div className='max-w-dynamic-content mx-auto flex flex-col items-start'>
         {components.components.map((component, index) => renderComponent(component, index, totalComponents))}
-        <Link
-          href={backLink}
-          className='text-primary'
-        >
-          <Button
-            buttonText={backLinkText}
-            variant='white'
-            arrowPosition='left'
-            reverseArrow
-          />
-        </Link>
+        {showBackLink && (
+          <Link
+            href={backLink}
+            className='text-primary'
+          >
+            <Button
+              buttonText={backLinkText}
+              variant='white'
+              arrowPosition='left'
+              reverseArrow
+            />
+          </Link>
+        )}
       </div>
     </section>
   );

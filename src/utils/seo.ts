@@ -41,7 +41,7 @@ interface WordPressSeoData {
 /**
  * Content type for fetching SEO data
  */
-type ContentType = 'page' | 'post' | 'referencePost' | 'sluzbyPost' | 'pobockaPost';
+type ContentType = 'page' | 'post' | 'referencePost' | 'sluzbyPost' | 'pobockaPost' | 'postupPost';
 
 /**
  * ID type for querying WordPress content
@@ -70,6 +70,7 @@ function getIdTypeForQuery(name: string): string {
   if (name === 'referencePost') return 'ReferencePostIdType';
   if (name === 'sluzbyPost') return 'SluzbyPostIdType';
   if (name === 'pobockaPost') return 'PobockaPostIdType';
+  if (name === 'postupPost') return 'PostupPostIdType';
   return 'ID';
 }
 
@@ -92,6 +93,7 @@ async function fetchSeoData(options: GetSeoDataOptions): Promise<WordPressSeoDat
     referencePost: 'referencePost',
     sluzbyPost: 'sluzbyPost',
     pobockaPost: 'pobockaPost',
+    postupPost: 'postupPost',
   };
 
   const queryName = contentTypeMap[contentType];

@@ -327,6 +327,8 @@
 
   "faq": {
     "page-title": "Jak postupovat",
-    "description": "Provedeme vás. Jsme tu tiše, ale pevně."
+    "description": "Provedeme vás. Jsme tu tiše, ale pevně.",
+    "branches-desc": "Vyberte si ze 13 poboček v Praze a okolí:",
+    "branches-button": "Seznam poboček"
   }
 }

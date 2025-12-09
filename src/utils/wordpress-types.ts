@@ -248,10 +248,20 @@ export interface BlogPostDetail extends BlogPost {
   components?: BlogComponents;
 }
 
+// Postup Posts ACF Types
+export interface JakPostupovatACF {
+  topSubtitle?: string;
+  shortDescription?: string;
+  bottomSubtitle?: string;
+  fieldGroupName?: string;
+}
+
 // Postup Posts Types
 export interface PostupPost {
   id: string;
   databaseId: number;
   title: string;
   slug: string;
+  jakPostupovatAcf?: JakPostupovatACF;
+  components?: BlogComponents;
 }

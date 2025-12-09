@@ -1,19 +1,23 @@
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import {
   checkSlugType,
   getBlogPostBySlug,
+  getPostupBySlug,
   getReferenceBySlug,
   getServiceBySlug,
   getServicesByTaxonomy,
 } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
+import Button from '@/components/_shared/Button';
 import ContentSection from '@/components/_shared/ContentSection';
 import DetailHeroSection from '@/components/_shared/DetailHeroSection';
 import DynamicContentSection from '@/components/_shared/DynamicContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
+import { FormattedText } from '@/components/_shared/FormattedText';
 import BranchDetailSection from '@/components/branches/BranchDetailSection';
 import ContactForm from '@/components/forms/contact/ContactForm';
 import ServicesGridSection from '@/components/services/ServicesGridSection';
@@ -41,6 +45,10 @@ export async function generateMetadata({ params }: SlugPageProps): Promise<Metad
 
   if (slugType === 'pobockaPost') {
     return getSeoDataBySlug('pobockaPost', slug);
+  }
+
+  if (slugType === 'postupPost') {
+    return getSeoDataBySlug('postupPost', slug);
   }
 
   return getSeoDataBySlug('sluzbyPost', slug);
@@ -202,6 +210,92 @@ const SlugPage = async ({ params }: SlugPageProps) => {
           title={funeralEssentials.taxonomy?.name || 'Náležitosti pohřbu'}
           description={funeralEssentials.taxonomy?.description || ''}
           services={funeralEssentials.posts}
+        />
+
+        <FooterClaim />
+      </main>
+    );
+  }
+
+  if (slugType === 'postupPost') {
+    const postupData = await getPostupBySlug(slug);
+
+    if (!postupData) {
+      notFound();
+    }
+
+    const { title, jakPostupovatAcf, components } = postupData;
+    const topSubtitle = jakPostupovatAcf?.topSubtitle || '';
+    const shortDescription = jakPostupovatAcf?.shortDescription || '';
+    const bottomSubtitle = jakPostupovatAcf?.bottomSubtitle || '';
+
+    const breadcrumbItems = [
+      {
+        label: t('faq.page-title'),
+        href: `/${t('routes.faq')}`,
+      },
+    ];
+
+    const hasComponents = components?.components && components.components.length > 0;
+
+    return (
+      <main className='max-w-container mx-auto'>
+        <BasicHeroSection
+          title={title}
+          description=''
+          pageTitle={title}
+          breadcrumbItems={breadcrumbItems}
+          contentClassName='max-w-dynamic-content'
+        />
+
+        <section className='section-container'>
+          <div className='max-w-dynamic-content mx-auto'>
+            {topSubtitle && (
+              <BasicHeroSection
+                title={topSubtitle}
+                description={shortDescription}
+                contentClassName='max-w-dynamic-content'
+              />
+            )}
+          </div>
+        </section>
+
+        {hasComponents && (
+          <DynamicContentSection
+            components={components}
+            showBackLink={false}
+            className='lg:!pt-12.5'
+          />
+        )}
+
+        <section className='section-container'>
+          <div className='max-w-dynamic-content mx-auto'>
+            <FormattedText
+              text={bottomSubtitle}
+              as='h2'
+              className='mb-2.5'
+            />
+            <FormattedText
+              text={t('faq.branches-desc')}
+              as='p'
+              className='mb-12.5'
+            />
+            <Link
+              href={`/${t('routes.contacts')}`}
+              className='link'
+            >
+              <Button buttonText={t('faq.branches-button')} />
+            </Link>
+          </div>
+        </section>
+
+        <ContentSection
+          title={t('home.organized-by-us.title')}
+          description={t('home.organized-by-us.description')}
+          buttonText={t('home.organized-by-us.button-text')}
+          link={t('home.organized-by-us.link')}
+          image={{ src: '/images/detail-service.webp', alt: t('home.about-us.alt') }}
+          imagePosition='left'
         />
 
         <FooterClaim />

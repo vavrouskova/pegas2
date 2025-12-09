@@ -14,7 +14,7 @@ interface BasicHeroSectionProps {
   description: string;
   image?: string;
   imageAlt?: string;
-  pageTitle: string;
+  pageTitle?: string;
   breadcrumbItems?: BreadcrumbItem[];
   contentClassName?: string;
   decorativeImage?: 'leaves' | 'flowers';
@@ -25,17 +25,19 @@ const BasicHeroSection = ({
   description,
   image,
   imageAlt = '',
-  pageTitle = '',
+  pageTitle,
   breadcrumbItems,
   contentClassName,
   decorativeImage = 'leaves',
 }: Readonly<BasicHeroSectionProps>) => {
   return (
     <section className='relative px-4 lg:px-14'>
-      <Breadcrumbs
-        pageTitle={pageTitle}
-        items={breadcrumbItems}
-      />
+      {pageTitle && (
+        <Breadcrumbs
+          pageTitle={pageTitle}
+          items={breadcrumbItems}
+        />
+      )}
       <div className={cn('max-w-section mx-auto pt-18 lg:pt-[11.65rem]', contentClassName)}>
         <div className='max-w-lg-content relative z-10 mb-5 flex flex-col gap-2 lg:mb-12.5'>
           <FormattedText
