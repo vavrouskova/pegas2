@@ -100,24 +100,26 @@
 
   /* Headings */
 
-  h1 {
+  h1, .dynamic-content h1 {
     @apply text-3xl;
   }
 
-  h2 {
+  h2, .dynamic-content h2 {
     @apply text-[1.625rem];
   }
 
-  h3 {
+  h3, .dynamic-content h3 {
     @apply text-xl;
   }
 
-  h4 {
+  h4, .dynamic-content h4 {
     @apply text-lg;
   }
 
   h5,
-  h6 {
+  h6,
+  .dynamic-content h5,
+  .dynamic-content h6 {
     @apply text-base;
   }
 
@@ -208,6 +210,14 @@
 
   .inner-text-white p, .inner-text-white h2, .inner-text-white h3, .inner-text-white h4, .inner-text-white h5, .inner-text-white h6 {
     @apply text-white;
+  }
+
+  .dynamic-content p {
+    @apply text-base;
+  }
+
+  .dynamic-content strong {
+    font-variation-settings: var(--font-heading);
   }
 }
 

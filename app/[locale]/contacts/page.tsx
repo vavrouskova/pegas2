@@ -1,15 +1,15 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
+import { getBranches, getContactPeople } from '@/api/wordpress-api';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PartnersSection from '@/components/_shared/PartnersSection';
-import ContactForm from '@/components/forms/contact/ContactForm';
+import BranchesMapSection from '@/components/branches/BranchesMapSection';
+import BranchesSection from '@/components/branches/BranchesSection';
 import ContactInfoSection from '@/components/contacts/ContactInfoSection';
 import ContactPeopleSection from '@/components/contacts/ContactPeopleSection';
-import BranchesSection from '@/components/branches/BranchesSection';
-import BranchesMapSection from '@/components/branches/BranchesMapSection';
-import { getBranches, getContactPeople } from '@/api/wordpress-api';
+import ContactForm from '@/components/forms/contact/ContactForm';
 import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -19,10 +19,10 @@ export const BranchClosureAnnouncement = ({
   if (!closeAnnouncement && !dateCloseFrom && !dateCloseTo) return null;
 
   return (
-    <div className='bg-primary space-y-5 p-8'>
+    <div className='bg-primary space-y-5 p-4 md:p-8'>
       {closeAnnouncement && (
         <div
-          className='inner-text-white space-y-5'
+          className='inner-text-white dynamic-content space-y-2.5 md:space-y-5'
           dangerouslySetInnerHTML={{ __html: closeAnnouncement }}
         />
       )}

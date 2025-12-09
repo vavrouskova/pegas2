@@ -2,8 +2,8 @@
 
 import dynamic from 'next/dynamic';
 
-import type { PobockaPost } from '@/utils/wordpress-types';
 import { FormattedText } from '@/components/_shared/FormattedText';
+import type { PobockaPost } from '@/utils/wordpress-types';
 
 const BranchesMap = dynamic(() => import('@/components/branches/BranchesMap'), {
   ssr: false,
