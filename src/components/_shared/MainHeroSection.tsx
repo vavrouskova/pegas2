@@ -7,8 +7,13 @@ import { FormattedText } from '@/components/_shared/FormattedText';
 import { PhoneNumber } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
 interface MainHeroSectionProps {
-  title: string;
+  title: string | string[];
   description: string;
   branchesCount?: number;
   sectionClassName?: string;
@@ -16,6 +21,7 @@ interface MainHeroSectionProps {
   imageClassName?: string;
   pageTitle?: string;
   noImage?: boolean;
+  breadcrumbItems?: BreadcrumbItem[];
 }
 
 const MainHeroSection = async ({
@@ -27,19 +33,38 @@ const MainHeroSection = async ({
   imageClassName,
   pageTitle,
   noImage = false,
+  breadcrumbItems,
 }: MainHeroSectionProps) => {
   const t = await getTranslations('home.hero');
 
   return (
     <section className={cn('px-4 pb-12.5 sm:px-14 lg:pb-35', sectionClassName)}>
-      {pageTitle && <Breadcrumbs pageTitle={pageTitle} />}
-      <div className={cn('mx-auto mt-[28.5rem] max-w-[66.875rem]', contentClassName)}>
+      {pageTitle && (
+        <Breadcrumbs
+          pageTitle={pageTitle}
+          items={breadcrumbItems}
+        />
+      )}
+      <div className={cn('mx-auto mt-114 max-w-267.5', contentClassName)}>
         <div className={cn('max-w-lg-content flex flex-col justify-center gap-12 lg:gap-25')}>
           <div className='space-y-2.5'>
-            <FormattedText
-              text={title}
-              as='h1'
-            />
+            {Array.isArray(title) ? (
+              <h1 className='text-primary flex flex-col gap-8'>
+                {title.map((line, index) => (
+                  <FormattedText
+                    key={index}
+                    text={line}
+                    as='span'
+                    className='font-heading text-3xl leading-[150%]'
+                  />
+                ))}
+              </h1>
+            ) : (
+              <FormattedText
+                text={title}
+                as='h1'
+              />
+            )}
             <FormattedText
               text={description}
               as='p'
@@ -83,10 +108,7 @@ const MainHeroSection = async ({
           alt='Background Image'
           width={2000}
           height={2000}
-          className={cn(
-            'absolute top-20 right-0 z-[-1] w-[45rem] min-w-[35rem] lg:w-[50rem] xl:top-40 xl:w-[58rem]',
-            imageClassName
-          )}
+          className={cn('absolute top-20 right-0 z-[-1] w-180 min-w-140 lg:w-200 xl:top-40 xl:w-232', imageClassName)}
         />
       )}
     </section>

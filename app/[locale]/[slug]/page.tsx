@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import {
   checkSlugType,
   getBlogPostBySlug,
+  getBranchesCount,
   getPostupBySlug,
   getReferenceBySlug,
   getServiceBySlug,
@@ -18,6 +19,7 @@ import DetailHeroSection from '@/components/_shared/DetailHeroSection';
 import DynamicContentSection from '@/components/_shared/DynamicContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import { FormattedText } from '@/components/_shared/FormattedText';
+import MainHeroSection from '@/components/_shared/MainHeroSection';
 import BranchDetailSection from '@/components/branches/BranchDetailSection';
 import ContactForm from '@/components/forms/contact/ContactForm';
 import ServicesGridSection from '@/components/services/ServicesGridSection';
@@ -218,7 +220,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
   }
 
   if (slugType === 'postupPost') {
-    const postupData = await getPostupBySlug(slug);
+    const [postupData, branchesCount] = await Promise.all([getPostupBySlug(slug), getBranchesCount()]);
 
     if (!postupData) {
       notFound();
@@ -240,25 +242,15 @@ const SlugPage = async ({ params }: SlugPageProps) => {
 
     return (
       <main className='max-w-container mx-auto'>
-        <BasicHeroSection
-          title={title}
-          description=''
-          pageTitle={title}
+        <MainHeroSection
           breadcrumbItems={breadcrumbItems}
-          contentClassName='max-w-dynamic-content'
+          title={[title, topSubtitle]}
+          description={shortDescription}
+          branchesCount={branchesCount}
+          pageTitle={title}
+          noImage
+          contentClassName='mt-18 lg:mt-[15.25rem] lg:ml-30 pb-25 lg:pb-40'
         />
-
-        <section className='section-container'>
-          <div className='max-w-dynamic-content mx-auto'>
-            {topSubtitle && (
-              <BasicHeroSection
-                title={topSubtitle}
-                description={shortDescription}
-                contentClassName='max-w-dynamic-content'
-              />
-            )}
-          </div>
-        </section>
 
         {hasComponents && (
           <DynamicContentSection
