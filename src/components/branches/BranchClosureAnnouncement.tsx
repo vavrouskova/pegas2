@@ -5,18 +5,14 @@ import type { AnnouncementButton } from '@/utils/wordpress-types';
 
 interface BranchClosureAnnouncementProps {
   closeAnnouncement?: string;
-  dateCloseFrom?: string;
-  dateCloseTo?: string;
   announcementButton?: AnnouncementButton;
 }
 
 export const BranchClosureAnnouncement = ({
   closeAnnouncement,
-  dateCloseFrom,
-  dateCloseTo,
   announcementButton,
 }: BranchClosureAnnouncementProps) => {
-  if (!closeAnnouncement && !dateCloseFrom && !dateCloseTo) return null;
+  if (!closeAnnouncement) return null;
 
   return (
     <div className='bg-primary space-y-5 p-4 md:p-8'>

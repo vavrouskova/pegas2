@@ -64,8 +64,6 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
           />
           <BranchClosureAnnouncement
             closeAnnouncement={pobockyACF?.closeAccouncment}
-            dateCloseFrom={pobockyACF?.dateCloseFrom}
-            dateCloseTo={pobockyACF?.dateCloseTo}
             announcementButton={pobockyACF?.announcementButton}
           />
           <BranchOpeningHours
