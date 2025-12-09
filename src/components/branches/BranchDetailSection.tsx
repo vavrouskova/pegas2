@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 
 import { getBranchBySlug } from '@/api/wordpress-api';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
+import { BranchClosureAnnouncement } from '@/components/branches/BranchClosureAnnouncement';
 import { BranchConsultant } from '@/components/branches/BranchConsultant';
 import { BranchContactInfo } from '@/components/branches/BranchContactInfo';
 import { BranchHeader } from '@/components/branches/BranchHeader';
@@ -60,6 +61,12 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
           <BranchHeader
             city={city}
             branchTitle={branchTitle}
+          />
+          <BranchClosureAnnouncement
+            closeAnnouncement={pobockyACF?.closeAccouncment}
+            dateCloseFrom={pobockyACF?.dateCloseFrom}
+            dateCloseTo={pobockyACF?.dateCloseTo}
+            announcementButton={pobockyACF?.announcementButton}
           />
           <BranchOpeningHours
             workingDays={pobockyACF?.openDaysWorking}

@@ -1,18 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 import { LatLngBounds } from 'leaflet';
+import { useEffect, useSyncExternalStore } from 'react';
+import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 
 import BranchCardClient from '@/components/branches/BranchCardClient';
-import type { PobockaPost } from '@/utils/wordpress-types';
-import type { GPSCoordinates } from '@/utils/gps';
+import { getMapStyles } from '@/components/branches/map-styles';
+import { createBranchMarkerIcon } from '@/components/branches/map-utils';
+import MapLoadingState from '@/components/branches/MapLoadingState';
+import { useBranchesWithCoords } from '@/components/branches/useBranchesWithCoords';
 import { calculateCenter, DEFAULT_CENTER, SINGLE_MARKER_ZOOM } from '@/utils/gps';
-
-import MapLoadingState from './MapLoadingState';
-import { createBranchMarkerIcon } from './map-utils';
-import { getMapStyles } from './map-styles';
-import { useBranchesWithCoords } from './useBranchesWithCoords';
+import type { GPSCoordinates } from '@/utils/gps';
+import type { PobockaPost } from '@/utils/wordpress-types';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -47,13 +46,18 @@ interface BranchesMapProps {
   className?: string;
 }
 
-const BranchesMap = ({ branches, className }: BranchesMapProps) => {
-  const [isClient, setIsClient] = useState(false);
-  const branchesWithCoords = useBranchesWithCoords(branches);
+const useIsClient = () => {
+  return useSyncExternalStore(
+    // eslint-disable-next-line unicorn/consistent-function-scoping
+    () => () => {},
+    () => true,
+    () => false
+  );
+};
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+const BranchesMap = ({ branches, className }: BranchesMapProps) => {
+  const isClient = useIsClient();
+  const branchesWithCoords = useBranchesWithCoords(branches);
 
   if (!isClient) {
     return (
@@ -83,21 +87,23 @@ const BranchesMap = ({ branches, className }: BranchesMapProps) => {
         zoom={10}
         scrollWheelZoom={false}
         attributionControl={false}
-        style={{ height: '100%', width: '100%'}}
+        style={{ height: '100%', width: '100%' }}
       >
-        <TileLayer
-          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        />
+        <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
         <FitBounds coords={validCoords} />
         {branchesWithCoords.map((branch) => (
-          <Marker key={branch.id} position={[branch.coords.lat, branch.coords.lng]} icon={markerIcon}>
+          <Marker
+            key={branch.id}
+            position={[branch.coords.lat, branch.coords.lng]}
+            icon={markerIcon}
+          >
             <Popup>
               <BranchCardClient
                 branch={branch}
                 layout='horizontal'
                 showClosedInfo={false}
                 showParking={false}
-                className='w-80 lg:w-150 gap-7.5 px-5.5 py-6.5'
+                className='w-80 gap-7.5 px-5.5 py-6.5 lg:w-150'
               />
             </Popup>
           </Marker>

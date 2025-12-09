@@ -80,6 +80,12 @@ export interface SluzbyPost {
 }
 
 // Pobocky (Branches) ACF Types
+export interface AnnouncementButton {
+  target?: string;
+  title?: string;
+  url?: string;
+}
+
 export interface PobockyACF {
   city?: string;
   openSwitcher?: boolean;
@@ -96,6 +102,7 @@ export interface PobockyACF {
   visitUs?: string;
   wheelchairAccess?: boolean;
   email?: string;
+  announcementButton?: AnnouncementButton;
   internalImage?: {
     node: {
       altText: string;

@@ -204,6 +204,11 @@
   .max-w-content {
     @apply max-w-[var(--content-w)];
   }
+
+
+  .inner-text-white p, .inner-text-white h2, .inner-text-white h3, .inner-text-white h4, .inner-text-white h5, .inner-text-white h6 {
+    @apply text-white;
+  }
 }
 
 /* Lenis Smooth Scrolling */

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
 
@@ -7,11 +8,13 @@ interface BranchCardImageProps {
   imageAlt: string;
   noImageText: string;
   layout: 'vertical' | 'horizontal';
+  slug?: string;
+  linkToDetail?: boolean;
 }
 
-const BranchCardImage = ({ imageUrl, imageAlt, noImageText, layout }: BranchCardImageProps) => {
+const BranchCardImage = ({ imageUrl, imageAlt, noImageText, layout, slug, linkToDetail = false }: BranchCardImageProps) => {
   const containerClasses = cn(
-    'relative overflow-hidden',
+    'relative overflow-hidden block',
     layout === 'vertical' && 'aspect-square w-full',
     layout === 'horizontal' && 'max-lg:hidden size-[13.25rem]'
   );
@@ -20,8 +23,8 @@ const BranchCardImage = ({ imageUrl, imageAlt, noImageText, layout }: BranchCard
     ? '(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
     : '120px';
 
-  return (
-    <div className={containerClasses}>
+  const content = (
+    <>
       {imageUrl ? (
         <Image
           src={imageUrl}
@@ -37,6 +40,20 @@ const BranchCardImage = ({ imageUrl, imageAlt, noImageText, layout }: BranchCard
           </span>
         </div>
       )}
+    </>
+  );
+
+  if (linkToDetail && slug) {
+    return (
+      <Link href={`/${slug}`} className={containerClasses}>
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <div className={containerClasses}>
+      {content}
     </div>
   );
 };

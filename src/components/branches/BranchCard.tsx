@@ -54,6 +54,8 @@ const BranchCard = ({
           imageAlt={imageAlt}
           noImageText={t.noImage}
           layout='horizontal'
+          slug={branch.slug}
+          linkToDetail={true}
         />
         <BranchCardContent
           city={city}
@@ -77,6 +79,8 @@ const BranchCard = ({
           imageAlt={imageAlt}
           noImageText={t.noImage}
           layout='vertical'
+          slug={branch.slug}
+          linkToDetail={true}
         />
         {isClosed && (
           <div className='bg-primary min-h-[70px] z-10 absolute bottom-0 left-0 w-full p-3 pr-[70px]'>

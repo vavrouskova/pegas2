@@ -1655,6 +1655,11 @@ export async function getBranchBySlug(slug: string): Promise<PobockaPost | null>
           closeAccouncment
           dateCloseFrom
           dateCloseTo
+          announcementButton {
+                target
+                title
+                url
+            }
           email
           funeralRequirements
           internalImage {
