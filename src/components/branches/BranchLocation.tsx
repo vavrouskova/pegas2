@@ -25,7 +25,7 @@ export const BranchLocation = ({
   if (!visitUs && !hasFeatures) return null;
 
   return (
-    <div className='order-4 lg:col-span-12 lg:pt-12 lg:pr-25'>
+    <div className='order-4 md:col-span-12 md:pt-12 md:pr-25'>
       {visitUs && (
         <div className='mb-8'>
           <FormattedText

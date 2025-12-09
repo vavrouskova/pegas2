@@ -23,8 +23,6 @@ interface BranchConsultantProps {
   consultant?: Consultant;
 }
 
-const CONSULTANT_IMAGE_SIZE = 120;
-
 export const BranchConsultant = ({ consultant }: BranchConsultantProps) => {
   if (!consultant) return null;
 
@@ -33,16 +31,17 @@ export const BranchConsultant = ({ consultant }: BranchConsultantProps) => {
   const name = consultant.title;
 
   return (
-    <div className='order-3 flex flex-col gap-7.5 lg:col-span-12 lg:flex-row lg:items-center lg:gap-7.5 lg:pt-12 lg:pr-25'>
+    <div className='order-3 flex flex-col gap-7.5 md:col-span-12 md:flex-row md:items-center md:gap-7.5 md:pt-12 md:pr-25'>
       {profileImage && (
-        <div className='shrink-0'>
-          <Image
-            src={profileImage.sourceUrl}
-            alt={profileImage.altText}
-            width={CONSULTANT_IMAGE_SIZE}
-            height={CONSULTANT_IMAGE_SIZE}
-            className='aspect-square object-cover'
-          />
+        <div className='grid grid-cols-2 gap-4 md:grid-cols-1'>
+          <div className='relative aspect-square h-auto w-full md:h-[120px] md:shrink-0'>
+            <Image
+              src={profileImage.sourceUrl}
+              alt={profileImage.altText}
+              fill
+              className='aspect-square object-cover'
+            />
+          </div>
         </div>
       )}
       <div className='flex flex-col'>

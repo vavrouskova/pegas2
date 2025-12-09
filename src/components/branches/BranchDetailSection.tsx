@@ -44,7 +44,7 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
   return (
     <>
       <Breadcrumbs
-        className='px-4 pb-23 lg:px-14'
+        className='px-4 pb-23 md:px-14'
         items={[
           {
             label: t('contacts.page-title'),
@@ -54,9 +54,9 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
         pageTitle={`${city}, ${branchTitle}`}
       />
 
-      <section className='flex flex-col gap-12 px-4 py-12 lg:grid lg:grid-cols-20 lg:gap-0 lg:px-14 lg:py-20'>
+      <section className='flex flex-col gap-12 px-4 py-12 md:grid md:grid-cols-20 md:gap-0 md:px-14 md:py-20'>
         {/* Contact info - Order 1 on mobile */}
-        <div className='order-1 flex flex-col gap-2.5 lg:col-span-12 lg:pr-25'>
+        <div className='order-1 flex flex-col gap-2.5 md:col-span-12 md:pr-25'>
           <BranchHeader
             city={city}
             branchTitle={branchTitle}

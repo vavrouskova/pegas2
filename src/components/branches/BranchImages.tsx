@@ -18,7 +18,7 @@ export const BranchImages = ({ internalImage, externalImage }: BranchImagesProps
   if (!internalImage && !externalImage) return null;
 
   return (
-    <div className='order-2 flex flex-col gap-8 lg:col-span-8 lg:col-start-13 lg:row-span-3 lg:row-start-1'>
+    <div className='order-2 flex flex-col gap-4 md:col-span-8 md:col-start-13 md:row-span-3 md:row-start-1 md:gap-8'>
       {internalImage && (
         <div className={CONTAINER_CLASS}>
           <Image
@@ -30,7 +30,7 @@ export const BranchImages = ({ internalImage, externalImage }: BranchImagesProps
           />
         </div>
       )}
-      <div className='grid grid-cols-2 gap-8'>
+      <div className='grid grid-cols-2 gap-4 md:gap-8'>
         {externalImage && (
           <div className={CONTAINER_CLASS}>
             <Image
