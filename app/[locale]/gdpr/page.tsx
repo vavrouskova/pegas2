@@ -43,7 +43,6 @@ const GdprPage = async () => {
         <DynamicContentSection
           components={components}
           showBackLink={false}
-          className='lg:!pt-12.5'
           wider
         />
       )}

@@ -20,7 +20,7 @@ const Footer = async () => {
   return (
     <footer
       id='main-footer'
-      className='bg-primary mx-auto px-9 py-10 md:px-14 md:pt-[7.75rem] md:pb-[3.75rem]'
+      className='bg-primary mx-auto px-9 py-10 md:px-14 md:pt-31 md:pb-15'
     >
       <div className='max-w-container grid gap-10 lg:grid-cols-3 lg:gap-4'>
         <div className='flex flex-col-reverse justify-between gap-11 md:flex-col md:gap-0'>
