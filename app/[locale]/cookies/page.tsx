@@ -7,6 +7,7 @@ import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import DynamicContentSection from '@/components/_shared/DynamicContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PageHeroSection from '@/components/_shared/PageHeroSection';
+import PartnersSection from '@/components/_shared/PartnersSection';
 import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -43,8 +44,11 @@ const CookiesPage = async () => {
           components={components}
           showBackLink={false}
           className='lg:!pt-12.5'
+          wider
         />
       )}
+
+      <PartnersSection />
 
       <FooterClaim />
     </main>

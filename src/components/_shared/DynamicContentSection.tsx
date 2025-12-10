@@ -74,6 +74,7 @@ interface DynamicContentSectionProps {
   backLink?: string;
   backLinkText?: string;
   className?: string;
+  wider?: boolean;
 }
 
 const DynamicContentSection = async ({
@@ -83,6 +84,7 @@ const DynamicContentSection = async ({
   backLink: customBackLink,
   backLinkText: customBackLinkText,
   className,
+  wider = false,
 }: DynamicContentSectionProps) => {
   if (!components?.components || components.components.length === 0) {
     return null;
@@ -452,7 +454,7 @@ const DynamicContentSection = async ({
 
   return (
     <section className={cn('section-container relative', className)}>
-      <div className='max-w-dynamic-content mx-auto flex flex-col items-start'>
+      <div className={cn('mx-auto flex flex-col items-start', wider ? 'max-w-section' : 'max-w-dynamic-content')}>
         {components.components.map((component, index) => renderComponent(component, index, totalComponents))}
         {showBackLink && (
           <Link
