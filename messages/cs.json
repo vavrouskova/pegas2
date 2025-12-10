@@ -32,11 +32,10 @@
 
   "routes": {
     "home": "uvod",
-    "blog": "blog",
     "faq": "jak-postupovat",
     "services": "sluzby",
     "references": "reference",
-    "media": "media-a-verejnost",
+    "blog": "blog",
     "about-us": "o-nas",
     "contacts": "kontakty",
     "gdpr": "zasady-ochrany-osobnich-udaju",
@@ -49,7 +48,7 @@
     "faq": "Jak postupovat",
     "services": "Služby",
     "references": "Organizovali jsme",
-    "media": "Média a veřejnost",
+    "blog": "Blog",
     "about-us": "O nás",
     "contacts": "Kontakty"
   },
