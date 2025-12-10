@@ -1902,3 +1902,102 @@ export async function getBranchBySlug(slug: string): Promise<PobockaPost | null>
     return null;
   }
 }
+
+/**
+ * Fetches a WordPress page by URI with components for DynamicContentSection
+ * @param uri - The page URI (e.g., "zasady-ochrany-osobnich-udaju")
+ * @returns Promise with page data including title and components
+ */
+export async function getPageByUri(uri: string) {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetPageByUri($id: ID!) {
+      page(id: $id, idType: URI) {
+        id
+        databaseId
+        title
+        components {
+          components {
+            ... on ComponentsComponentsWysiwygLayout {
+              fieldGroupName
+              editor
+            }
+            ... on ComponentsComponentsMediaLayout {
+              fieldGroupName
+              mediaType
+              youtubeEmbedLink
+              image {
+                node {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+            ... on ComponentsComponentsGalleryLayout {
+              fieldGroupName
+              gallery {
+                nodes {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+            ... on ComponentsComponentsImageBoxesLayout {
+              fieldGroupName
+              imageBoxes {
+                boxHeadline
+                boxDescription
+                imageBox {
+                  node {
+                    altText
+                    sourceUrl
+                  }
+                }
+              }
+            }
+            ... on ComponentsComponentsImageSliderLayout {
+              fieldGroupName
+              imageSlider {
+                nodes {
+                  altText
+                  sourceUrl
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { id: uri },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.page || null;
+  } catch (error) {
+    console.error(`Error fetching page with URI ${uri}:`, error);
+    return null;
+  }
+}

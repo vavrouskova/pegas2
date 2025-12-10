@@ -26,6 +26,8 @@ export const pathnames = {
 
   '/contacts': { cs: '/kontakty' },
 
+  '/gdpr': { cs: '/zasady-ochrany-osobnich-udaju' },
+
   '/[slug]': { cs: '/[slug]' },
 } satisfies Pathnames<typeof locales>;
 
