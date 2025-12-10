@@ -28,6 +28,10 @@ export const pathnames = {
 
   '/gdpr': { cs: '/zasady-ochrany-osobnich-udaju' },
 
+  '/cookies': { cs: '/informace-o-vyuziti-cookies' },
+
+  '/consumer-information': { cs: '/informace-pro-spotrebitele' },
+
   '/[slug]': { cs: '/[slug]' },
 } satisfies Pathnames<typeof locales>;
 

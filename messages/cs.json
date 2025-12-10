@@ -336,5 +336,19 @@
     "hero": {
       "description": "Informace o zpracování a ochraně vašich osobních údajů."
     }
+  },
+
+  "cookies-page": {
+    "page-title": "Informace o využití cookies",
+    "hero": {
+      "description": "Informace o tom, jak využíváme cookies na našich stránkách."
+    }
+  },
+
+  "consumer-information-page": {
+    "page-title": "Informace pro spotřebitele",
+    "hero": {
+      "description": "Důležité informace pro spotřebitele o našich službách."
+    }
   }
 }
