@@ -15,7 +15,6 @@ const Footer = async () => {
     { href: t('routes.gdpr'), label: t('footer.gdpr') },
     { href: t('routes.consumer-information'), label: t('footer.consumer-information') },
     { href: t('routes.cookies'), label: t('footer.cookies') },
-    { href: t('routes.terms-of-use'), label: t('footer.terms-of-use') },
   ];
 
   return (
