@@ -36,10 +36,10 @@
   /* Toggles */
 
   --cc-toggle-on-knob-bg: oklch(var(--white-smoke));
-  --cc-toggle-off-bg: oklch(var(--primary));
+  --cc-toggle-off-bg: oklch(var(--grey-warm));
   --cc-toggle-readonly-knob-bg: oklch(var(--white-smoke));
-  --cc-toggle-on-bg: oklch(var(--secondary));
-  --cc-toggle-off-knob-bg: oklch(var(--white-smoke));
+  --cc-toggle-on-bg: oklch(var(--primary));
+  --cc-toggle-off-knob-bg: oklch(var(--secondary));
 }
 
 #cc-main .pm__section--expandable .pm__section-arrow svg {
