@@ -62,6 +62,10 @@
   line-height: 150%;
 }
 
+#cc-main .pm__section-title, #cc-main .pm__title {
+  font-variation-settings: var(--font-heading);
+}
+
 #cc-main .cm__btn,
 #cc-main .pm__btn {
   padding: 12px 32px;
