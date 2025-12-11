@@ -3,11 +3,10 @@
 import HolyLoader from 'holy-loader';
 import React, { useState } from 'react';
 
+import { ImageLightbox } from '@/components/_shared/ImageLightbox';
+import { ImageGalleryProvider } from '@/providers/ImageGalleryProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
-import { ImageGalleryProvider } from '@/providers/ImageGalleryProvider';
-import { ImageLightbox } from '@/components/_shared/ImageLightbox';
 
 interface ProviderProps {
   children: React.ReactNode;

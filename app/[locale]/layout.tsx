@@ -6,6 +6,7 @@ import React from 'react';
 import { Toaster } from 'sonner';
 
 import StickyContact from '@/components/_shared/StickyContact';
+import CookieConsent from '@/components/cookie/CookieConsent';
 import Footer from '@/components/footer/Footer';
 import GoogleTagManagerComponent from '@/components/gtm/GoogleTagManagerComponent';
 import Header from '@/components/header/Header';
@@ -67,6 +68,7 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
         <BaseProvider>
           <NextIntlClientProvider messages={messages}>
             <SmoothScrollProvider>
+              <CookieConsent />
               <Header />
               {children}
               <Footer />

@@ -8,6 +8,7 @@ import DynamicContentSection from '@/components/_shared/DynamicContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PageHeroSection from '@/components/_shared/PageHeroSection';
 import PartnersSection from '@/components/_shared/PartnersSection';
+import CookieSettingButton from '@/components/cookie/CookieSettingButton';
 import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -46,6 +47,10 @@ const CookiesPage = async () => {
           wider
         />
       )}
+
+      <section className='flex justify-center px-4 sm:px-14'>
+        <CookieSettingButton />
+      </section>
 
       <PartnersSection />
 

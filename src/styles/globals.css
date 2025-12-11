@@ -2,6 +2,7 @@
 
 @import 'tailwindcss';
 @import './animations.css';
+@import './cookies.css';
 
 @theme inline {
   --color-primary: oklch(var(--primary));
