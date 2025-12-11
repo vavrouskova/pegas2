@@ -73,7 +73,7 @@ const CookieConsent = () => {
                 acceptNecessaryBtn: 'Odmítám',
                 showPreferencesBtn: 'Upravit preference',
                 footer:
-                  '<a href="/zasady-cookies">Zásady cookies</a>\n<a href="/ochrana-osobnich-udaju">Zpracování osobních údajů</a>',
+                  '<a href="/informace-o-vyuziti-cookies">Informace o využití cookies</a>\n<a href="/zasady-ochrany-osobnich-udaju">Zpracování osobních údajů</a>',
               },
               preferencesModal: {
                 title: 'Nastavení preferencí cookies\t',
