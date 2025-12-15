@@ -28,9 +28,10 @@ export async function GET() {
     xml = replaceWordpressUrl(xml, frontendUrl);
 
     // Transform sitemap URLs from /post-sitemap.xml to /sitemap/post-sitemap.xml
+    // Only transform if /sitemap/ is not already in the path (idempotent)
     xml = xml.replace(
-      /(<loc>[^<]*?)(\/([\w-]+-sitemap\.xml)<\/loc>)/g,
-      '$1/sitemap/$3</loc>'
+      /(<loc>[^<]*?)\/(?!sitemap\/)([\w-]+-sitemap\.xml<\/loc>)/g,
+      '$1/sitemap/$2'
     );
 
     return new NextResponse(xml, {
