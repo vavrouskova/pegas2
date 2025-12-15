@@ -161,7 +161,7 @@ const TimelineSection = ({ timeline }: Readonly<TimelineSectionProps>) => {
       const items = itemsContainerRef.current?.children;
       if (!items || items.length === 0) return;
 
-      const lastItem = items.at(-1) as HTMLElement;
+      const lastItem = items[items.length - 1] as HTMLElement;
       const firstItem = items[0] as HTMLElement;
 
       if (firstItem && lastItem && lineRef.current && itemsContainerRef.current) {

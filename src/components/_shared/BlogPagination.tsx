@@ -7,7 +7,7 @@ import { useCallback } from 'react';
 import ArrowRight from '@/components/icons/ArrowRight';
 import { BLOG_QUERY_PARAMS } from '@/constants/blog';
 import { cn } from '@/lib/utils';
-import { updateSearchParams } from '@/utils/blog-helpers';
+import { updateSearchParameters } from '@/utils/blog-helpers';
 
 interface BlogPaginationProps {
   totalPages: number;
@@ -25,7 +25,7 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
         return;
       }
 
-      const updatedParameters = updateSearchParams(searchParameters, {
+      const updatedParameters = updateSearchParameters(searchParameters, {
         [BLOG_QUERY_PARAMS.PAGE]: page === 1 ? null : page.toString(),
       });
 

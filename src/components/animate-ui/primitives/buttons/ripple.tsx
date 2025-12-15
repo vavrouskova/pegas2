@@ -41,7 +41,7 @@ const RippleButton = ({
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   React.useImperativeHandle(ref, () => buttonRef.current as HTMLButtonElement);
 
-  const createRipple = React.useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+  const createRipple = React.useCallback((event: React.MouseEvent<HTMLElement>) => {
     const button = buttonRef.current;
     if (!button) return;
 
@@ -73,23 +73,35 @@ const RippleButton = ({
     [createRipple, onClick]
   );
 
-  const Component = asChild ? Slot : motion.button;
+  const commonStyle = {
+    position: 'relative' as const,
+    overflow: 'hidden' as const,
+    ...style,
+  };
 
   return (
     <RippleButtonProvider value={{ rippleList: ripples, setRipples }}>
-      <Component
-        ref={buttonRef}
-        data-slot='ripple-button'
-        onClick={handleClick}
-        whileTap={{ scale: tapScale }}
-        whileHover={{ scale: hoverScale }}
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          ...style,
-        }}
-        {...props}
-      />
+      {asChild ? (
+        <Slot
+          ref={buttonRef as React.Ref<HTMLElement>}
+          data-slot='ripple-button'
+          onClick={handleClick as React.MouseEventHandler<HTMLElement>}
+          whileTap={{ scale: tapScale }}
+          whileHover={{ scale: hoverScale }}
+          style={commonStyle}
+          {...(props as Record<string, unknown>)}
+        />
+      ) : (
+        <motion.button
+          ref={buttonRef}
+          data-slot='ripple-button'
+          onClick={handleClick}
+          whileTap={{ scale: tapScale }}
+          whileHover={{ scale: hoverScale }}
+          style={commonStyle}
+          {...props}
+        />
+      )}
     </RippleButtonProvider>
   );
 };
@@ -113,28 +125,45 @@ function RippleButtonRipples({
 }: RippleButtonRipplesProps) {
   const { rippleList } = useRippleButton();
 
-  const Component = asChild ? Slot : motion.span;
+  const initialAnimation = disabled ? { scale: 0, opacity: 0 } : { scale: 0, opacity: 0.5 };
+  const animateAnimation = { scale, opacity: 0 };
+  const baseStyle = {
+    position: 'absolute' as const,
+    borderRadius: '50%',
+    pointerEvents: 'none' as const,
+    width: '20px',
+    height: '20px',
+    backgroundColor: color,
+    ...style,
+  };
 
-  return rippleList.map((ripple) => (
-    <Component
-      key={ripple.id}
-      initial={disabled ? { scale: 0, opacity: 0 } : { scale: 0, opacity: 0.5 }}
-      animate={{ scale, opacity: 0 }}
-      transition={transition}
-      style={{
-        position: 'absolute',
-        borderRadius: '50%',
-        pointerEvents: 'none',
-        width: '20px',
-        height: '20px',
-        backgroundColor: color,
-        top: ripple.y - 10,
-        left: ripple.x - 10,
-        ...style,
-      }}
-      {...props}
-    />
-  ));
+  return rippleList.map((ripple) => {
+    const rippleStyle = {
+      ...baseStyle,
+      top: ripple.y - 10,
+      left: ripple.x - 10,
+    };
+
+    return asChild ? (
+      <Slot
+        key={ripple.id}
+        initial={initialAnimation}
+        animate={animateAnimation}
+        transition={transition}
+        style={rippleStyle}
+        {...(props as Record<string, unknown>)}
+      />
+    ) : (
+      <motion.span
+        key={ripple.id}
+        initial={initialAnimation}
+        animate={animateAnimation}
+        transition={transition}
+        style={rippleStyle}
+        {...props}
+      />
+    );
+  });
 }
 
 export { RippleButton, RippleButtonRipples, type RippleButtonProps, type RippleButtonRipplesProps };

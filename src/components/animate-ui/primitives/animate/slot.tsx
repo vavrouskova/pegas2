@@ -50,7 +50,8 @@ function mergeProps<T extends HTMLElement>(childProps: AnyProps, slotProps: DOMM
 }
 
 // Cache for motion components to avoid recreation on each render
-const motionComponentCache = new WeakMap<React.ElementType, React.ComponentType<AnyProps>>();
+// Using Map instead of WeakMap because ElementType can be a string (e.g., "div")
+const motionComponentCache = new Map<React.ElementType, React.ComponentType<AnyProps>>();
 
 function getMotionComponent(childType: React.ElementType, isAlreadyMotion: boolean): React.ComponentType<AnyProps> {
   if (isAlreadyMotion) {

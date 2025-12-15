@@ -7,7 +7,7 @@ import { useCallback } from 'react';
 import ArrowRight from '@/components/icons/ArrowRight';
 import { REFERENCES_QUERY_PARAMS } from '@/constants/references';
 import { cn } from '@/lib/utils';
-import { updateSearchParams } from '@/utils/references-helpers';
+import { updateSearchParameters } from '@/utils/references-helpers';
 
 interface ReferencesPaginationProps {
   totalPages: number;
@@ -25,7 +25,7 @@ const ReferencesPagination = ({ totalPages, currentPage }: ReferencesPaginationP
         return;
       }
 
-      const updatedParameters = updateSearchParams(searchParameters, {
+      const updatedParameters = updateSearchParameters(searchParameters, {
         [REFERENCES_QUERY_PARAMS.PAGE]: page === 1 ? null : page.toString(),
       });
 
