@@ -26,6 +26,7 @@ export const config = {
   matcher: [
     // Match all pathnames except for
     // - … if they start with `/api`, `/_next`, `/_vercel`, or are `favicon.ico`
-    '/((?!api|_next|_vercel|favicon|images|videos).*)',
+    // - sitemap.xml and /sitemap/* paths (handled by rewrites)
+    '/((?!api|_next|_vercel|favicon|images|videos|sitemap).*)',
   ],
 };
