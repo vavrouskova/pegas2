@@ -1,6 +1,7 @@
 'use client';
 
 import ReactLenis from 'lenis/react';
+import React from 'react';
 
 import Scroll from '@/components/_shared/Scroll';
 
@@ -17,7 +18,7 @@ const SmoothScrollProvider = ({ children }: ProviderProps) => {
         duration: 1,
         smoothWheel: true,
         prevent(node) {
-          return node.classList.contains('pm--box');
+          return node.classList.contains('pm--box') || node.closest('[data-lenis-prevent]') !== null;
         },
       }}
     >

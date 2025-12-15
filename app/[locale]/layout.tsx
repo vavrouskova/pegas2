@@ -10,7 +10,9 @@ import CookieConsent from '@/components/cookie/CookieConsent';
 import Footer from '@/components/footer/Footer';
 import GoogleTagManagerComponent from '@/components/gtm/GoogleTagManagerComponent';
 import Header from '@/components/header/Header';
+import { SearchOverlay } from '@/components/search';
 import BaseProvider from '@/providers/BaseProvider';
+import { SearchProvider } from '@/providers/SearchProvider';
 import SmoothScrollProvider from '@/providers/SmoothScrollProvider';
 
 // eslint-disable-next-line no-restricted-imports
@@ -45,7 +47,7 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
   return (
     <html
       lang={locale}
-      className='light scroll-pt-[1px]'
+      className='light scroll-pt-px'
     >
       <head>
         <link
@@ -67,14 +69,17 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
       <body>
         <BaseProvider>
           <NextIntlClientProvider messages={messages}>
-            <SmoothScrollProvider>
-              <CookieConsent />
-              <Header />
-              {children}
-              <Footer />
-              <StickyContact />
-              <Toaster />
-            </SmoothScrollProvider>
+            <SearchProvider>
+              <SmoothScrollProvider>
+                <CookieConsent />
+                <Header />
+                {children}
+                <Footer />
+                <StickyContact />
+                <Toaster />
+                <SearchOverlay />
+              </SmoothScrollProvider>
+            </SearchProvider>
           </NextIntlClientProvider>
         </BaseProvider>
       </body>

@@ -30,6 +30,15 @@
     "search": "Hledat"
   },
 
+  "search": {
+    "label": "Vyhledávání",
+    "hint": "Zadejte alespoň 2 znaky pro vyhledávání",
+    "loading": "Načítám...",
+    "no-results": "Nebyly nalezeny žádné výsledky",
+    "close": "Zavřít vyhledávání",
+    "clear": "Vymazat"
+  },
+
   "routes": {
     "home": "uvod",
     "faq": "jak-postupovat",

@@ -1,5 +1,6 @@
 import { MAX_POSTS_FETCH, POSTS_PER_PAGE } from '@/constants/blog';
 import { MAX_REFERENCES_FETCH } from '@/constants/references';
+import { formatFarewellDateTime, stripHtmlTags } from '@/utils/helper';
 import type {
   BlogPost,
   BlogPostDetail,
@@ -1999,5 +2000,323 @@ export async function getPageByUri(uri: string) {
   } catch (error) {
     console.error(`Error fetching page with URI ${uri}:`, error);
     return null;
+  }
+}
+
+export interface SearchIndexItem {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  postType: string;
+}
+
+/**
+ * Získá search index pro fulltext vyhledávání
+ * @returns Promise se seznamem položek pro vyhledávání
+ */
+export async function fetchSearchIndex(): Promise<SearchIndexItem[]> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const componentsFragment = `
+    components {
+      components {
+        ... on ComponentsComponentsWysiwygLayout {
+          editor
+        }
+      }
+    }
+  `;
+
+  const query = `
+    query GetSearchIndex {
+      pages(first: 50) {
+        nodes {
+          id
+          title
+          slug
+          uri
+          ${componentsFragment}
+        }
+      }
+      posts(first: 100) {
+        nodes {
+          id
+          title
+          slug
+          excerpt
+          ${componentsFragment}
+        }
+      }
+      sluzbyPosts(first: 100) {
+        nodes {
+          id
+          title
+          slug
+          sluzbyAcf {
+            introText
+          }
+          ${componentsFragment}
+        }
+      }
+      referencePosts(first: 100) {
+        nodes {
+          id
+          title
+          slug
+          referenceACF {
+            farewellDate
+            farewellPlace
+          }
+          ${componentsFragment}
+        }
+      }
+      pobockaPosts(first: 100) {
+        nodes {
+          id
+          title
+          slug
+          pobockyACF {
+            city
+            openDaysWeekend
+            openDaysWorking
+            phoneNumber
+            email
+            parking
+            visitUs
+            funeralRequirements
+            consultant {
+              nodes {
+                ... on ZamestnanecPost {
+                  title
+                  zamestnanciACF {
+                    employeeEmail
+                    positionDescription
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      postupPosts(first: 100) {
+        nodes {
+          id
+          title
+          slug
+          jakPostupovatAcf {
+            topSubtitle
+            shortDescription
+            bottomSubtitle
+          }
+          ${componentsFragment}
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const json = await response.json();
+
+    if (json.errors) {
+      console.error('GraphQL errors:', JSON.stringify(json.errors, null, 2));
+      throw new Error(`GraphQL query failed: ${JSON.stringify(json.errors[0]?.message || json.errors)}`);
+    }
+
+    const data = json.data;
+    const items: SearchIndexItem[] = [];
+
+    interface ComponentItem {
+      editor?: string;
+    }
+    interface Components {
+      components?: ComponentItem[];
+    }
+    const extractComponentsText = (components?: Components): string => {
+      if (!components?.components) return '';
+      const texts: string[] = [];
+      for (const comp of components.components) {
+        if (comp.editor) {
+          texts.push(stripHtmlTags(comp.editor));
+        }
+      }
+      return texts.join(' ');
+    };
+
+    interface PageNode {
+      id: string;
+      title: string;
+      slug: string;
+      uri?: string;
+      components?: Components;
+    }
+    data.pages?.nodes?.forEach((page: PageNode) => {
+      items.push({
+        id: page.id,
+        title: page.title || '',
+        slug: page.slug,
+        content: extractComponentsText(page.components),
+        postType: 'page',
+      });
+    });
+
+    interface PostNode {
+      id: string;
+      title: string;
+      slug: string;
+      excerpt?: string;
+      components?: Components;
+    }
+    data.posts?.nodes?.forEach((post: PostNode) => {
+      const contentParts = [stripHtmlTags(post.excerpt || ''), extractComponentsText(post.components)];
+      items.push({
+        id: post.id,
+        title: post.title || '',
+        slug: post.slug,
+        content: contentParts.filter(Boolean).join(' '),
+        postType: 'post',
+      });
+    });
+
+    interface SluzbyNode {
+      id: string;
+      title: string;
+      slug: string;
+      sluzbyAcf?: { introText?: string };
+      components?: Components;
+    }
+    data.sluzbyPosts?.nodes?.forEach((post: SluzbyNode) => {
+      const contentParts = [stripHtmlTags(post.sluzbyAcf?.introText || ''), extractComponentsText(post.components)];
+      items.push({
+        id: post.id,
+        title: post.title || '',
+        slug: post.slug,
+        content: contentParts.filter(Boolean).join(' '),
+        postType: 'sluzbyPost',
+      });
+    });
+
+    interface ReferenceNode {
+      id: string;
+      title: string;
+      slug: string;
+      referenceACF?: { farewellDate?: string; farewellPlace?: string };
+      components?: Components;
+    }
+    data.referencePosts?.nodes?.forEach((post: ReferenceNode) => {
+      const contentParts = [
+        formatFarewellDateTime(post.referenceACF?.farewellDate),
+        post.referenceACF?.farewellPlace,
+        extractComponentsText(post.components),
+      ];
+      items.push({
+        id: post.id,
+        title: post.title || '',
+        slug: post.slug,
+        content: contentParts.filter(Boolean).join(' '),
+        postType: 'referencePost',
+      });
+    });
+
+    interface ConsultantNode {
+      title?: string;
+      zamestnanciACF?: {
+        employeeEmail?: string;
+        positionDescription?: string;
+      };
+    }
+    interface PobockaNode {
+      id: string;
+      title: string;
+      slug: string;
+      pobockyACF?: {
+        city?: string;
+        openDaysWeekend?: string;
+        openDaysWorking?: string;
+        phoneNumber?: string;
+        email?: string;
+        parking?: string;
+        visitUs?: string;
+        funeralRequirements?: string;
+        consultant?: {
+          nodes?: ConsultantNode[];
+        };
+      };
+    }
+    data.pobockaPosts?.nodes?.forEach((post: PobockaNode) => {
+      const acf = post.pobockyACF;
+      const consultantParts: string[] = [];
+      acf?.consultant?.nodes?.forEach((consultant: ConsultantNode) => {
+        if (consultant.title) consultantParts.push(consultant.title);
+        if (consultant.zamestnanciACF?.positionDescription) {
+          consultantParts.push(consultant.zamestnanciACF.positionDescription);
+        }
+        if (consultant.zamestnanciACF?.employeeEmail) {
+          consultantParts.push(consultant.zamestnanciACF.employeeEmail);
+        }
+      });
+      const contentParts = [
+        acf?.city,
+        acf?.openDaysWeekend,
+        acf?.openDaysWorking,
+        acf?.phoneNumber,
+        acf?.email,
+        acf?.parking,
+        acf?.visitUs,
+        stripHtmlTags(acf?.funeralRequirements || ''),
+        ...consultantParts,
+      ];
+      items.push({
+        id: post.id,
+        title: post.title || '',
+        slug: post.slug,
+        content: contentParts.filter(Boolean).join(' '),
+        postType: 'pobockaPost',
+      });
+    });
+
+    interface PostupNode {
+      id: string;
+      title: string;
+      slug: string;
+      jakPostupovatAcf?: {
+        topSubtitle?: string;
+        shortDescription?: string;
+        bottomSubtitle?: string;
+      };
+      components?: Components;
+    }
+    data.postupPosts?.nodes?.forEach((post: PostupNode) => {
+      const acf = post.jakPostupovatAcf;
+      const contentParts = [
+        acf?.topSubtitle,
+        acf?.shortDescription,
+        acf?.bottomSubtitle,
+        extractComponentsText(post.components),
+      ];
+      items.push({
+        id: post.id,
+        title: post.title || '',
+        slug: post.slug,
+        content: contentParts.filter(Boolean).join(' '),
+        postType: 'postupPost',
+      });
+    });
+
+    return items;
+  } catch (error) {
+    console.error('Error fetching search index:', error);
+    return [];
   }
 }

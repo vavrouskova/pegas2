@@ -3,6 +3,7 @@ import React from 'react';
 
 import Logo from '@/components/header/Logo';
 import MobileMenu from '@/components/header/MobileMenu';
+import { SearchTriggerButton } from '@/components/header/SearchTriggerButton';
 import Search from '@/components/icons/Search';
 import { getHeaderLinks } from '@/utils/data';
 import { getUniqueId } from '@/utils/helper';
@@ -11,7 +12,7 @@ const Header = async () => {
   const headerLinks = await getHeaderLinks();
 
   return (
-    <header className='relative z-20 mx-auto max-w-[94.5rem] px-4 py-2 lg:mt-6 lg:px-12 lg:py-4'>
+    <header className='relative z-20 mx-auto max-w-378 px-4 py-2 lg:mt-6 lg:px-12 lg:py-4'>
       <div className='flex w-full items-end justify-between px-2'>
         <Logo className='lg:mb-[0.19rem]' />
         <div className='2lg:gap-8 hidden gap-6 lg:flex'>
@@ -26,7 +27,9 @@ const Header = async () => {
           ))}
         </div>
         <div className='flex items-center gap-4'>
-          <Search className='h-6 w-6' />
+          <SearchTriggerButton>
+            <Search className='h-6 w-6' />
+          </SearchTriggerButton>
           <MobileMenu headerLinks={headerLinks} />
         </div>
       </div>

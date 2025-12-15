@@ -73,7 +73,7 @@ export function replaceHttpWithHttps(xmlString: string) {
 }
 
 export function filterUndefinedParameters(parameters: Record<string, any>) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   return Object.fromEntries(Object.entries(parameters).filter(([_, v]) => v !== undefined && v !== ''));
 }
 
@@ -105,12 +105,13 @@ export const truncateByMillions = (number: number) => {
  */
 export const stripHtmlTags = (html: string): string => {
   if (!html) return '';
+  // eslint-disable-next-line sonarjs/slow-regex
   return html.replace(/<[^>]*>/g, '').trim();
 };
 
 export const truncateText = (text: string, maxLength: number = 100) => {
   if (!text) return '';
-  // eslint-disable-next-line sonarjs/slow-regex
+
   const strippedText = stripHtmlTags(text);
   if (strippedText.length <= maxLength) return strippedText;
   return `${strippedText.slice(0, maxLength)}...`;
@@ -179,7 +180,7 @@ export function formatDate(
   };
 
   const formatOptions = options ?? fallbackOptions;
-  
+
   // If time options are provided, use toLocaleString instead of toLocaleDateString
   if (formatOptions.hour !== undefined || formatOptions.minute !== undefined) {
     return date.toLocaleString(locale, formatOptions);
@@ -196,14 +197,14 @@ export function formatDate(
 export function formatBlogDate(dateInput: string | number | Date | undefined): string {
   if (!dateInput) return '';
 
-  const dateObj = new Date(dateInput);
-  if (Number.isNaN(dateObj.getTime())) return '';
+  const dateObject = new Date(dateInput);
+  if (Number.isNaN(dateObject.getTime())) return '';
 
-  const day = dateObj.getDate();
-  const month = dateObj.getMonth() + 1;
-  const year = dateObj.getFullYear();
-  const hours = dateObj.getHours().toString().padStart(2, '0');
-  const minutes = dateObj.getMinutes().toString().padStart(2, '0');
+  const day = dateObject.getDate();
+  const month = dateObject.getMonth() + 1;
+  const year = dateObject.getFullYear();
+  const hours = dateObject.getHours().toString().padStart(2, '0');
+  const minutes = dateObject.getMinutes().toString().padStart(2, '0');
 
   return `${day}. ${month}. ${year} – ${hours}:${minutes}`;
 }
@@ -318,6 +319,7 @@ export function formatFarewellDate(dateString?: string): string {
  * @param dateString - datum jako string z WordPressu (např. "2025-12-01T00:00:00+00:00")
  * @returns formátované datum v češtině (např. "1. 12. 2025")
  */
+// eslint-disable-next-line sonarjs/no-identical-functions
 export function formatSimpleDate(dateString?: string): string {
   if (!dateString) return '';
   try {

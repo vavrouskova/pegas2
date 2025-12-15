@@ -5,15 +5,8 @@ export const useContactSchema = () => {
   const t = useTranslations('forms');
 
   return yup.object().shape({
-    name: yup
-      .string()
-      .required(t('errors.name_required'))
-      .label(t('fields.name')),
-    email: yup
-      .string()
-      .email(t('errors.invalid_email'))
-      .required(t('errors.email_required'))
-      .label(t('fields.email')),
+    name: yup.string().required(t('errors.name_required')).label(t('fields.name')),
+    email: yup.string().email(t('errors.invalid_email')).required(t('errors.email_required')).label(t('fields.email')),
     phone: yup
       .string()
       .matches(
@@ -22,20 +15,10 @@ export const useContactSchema = () => {
         t('errors.invalid_phone')
       )
       .label(t('fields.phone')),
-    message: yup
-      .string()
-      .label(t('fields.message')),
-    deceasedName: yup
-      .string()
-      .label(t('fields.deceased-name')),
-    deceasedDate: yup
-      .string()
-      .label(t('fields.deceased-date')),
-    deceasedPlace: yup
-      .string()
-      .label(t('fields.deceased-place')),
-    note: yup
-      .string()
-      .label(t('fields.note')),
+    message: yup.string().label(t('fields.message')),
+    deceasedName: yup.string().label(t('fields.deceased-name')),
+    deceasedDate: yup.string().label(t('fields.deceased-date')),
+    deceasedPlace: yup.string().label(t('fields.deceased-place')),
+    note: yup.string().label(t('fields.note')),
   });
 };
