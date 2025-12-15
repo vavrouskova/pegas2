@@ -30,7 +30,7 @@ const BlogCarouselSection = ({ posts = [] }: BlogCarouselSectionProps) => {
       title: post.title,
       description: post.excerpt ? stripHtmlTags(post.excerpt) : '',
       image: post.featuredImage?.node?.sourceUrl || '/images/placeholder.webp',
-      link: `/blog/${post.slug}`,
+      link: `/${post.slug}`,
     }));
   }, [posts]);
 
