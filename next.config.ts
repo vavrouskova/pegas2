@@ -17,6 +17,10 @@ const nextConfig = {
         source: '/sitemap.xml',
         destination: '/api/sitemap',
       },
+      {
+        source: '/sitemap/:name',
+        destination: '/api/sitemap/:name',
+      },
     ];
   },
   logging: {
