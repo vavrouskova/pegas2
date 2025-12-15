@@ -7,7 +7,6 @@ import React from 'react';
 import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
-import { czechTypography } from '@/lib/utils';
 import { formatFarewellDateTime } from '@/utils/helper';
 import { ReferencePost } from '@/utils/wordpress-types';
 

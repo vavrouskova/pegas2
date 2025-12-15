@@ -20,8 +20,10 @@ interface GenericCarouselSectionProps<T extends CarouselItemData> {
   data: T[];
   carouselMaxWidth?: string;
   articleClassName?: string;
-  renderContent: (item: T, t: (key: string) => string) => ReactNode;
-  renderImage?: (item: T) => ReactNode;
+  /* eslint-disable no-unused-vars */
+  renderContent: (dataItem: T, translateFunction: (translateKey: string) => string) => ReactNode;
+  renderImage?: (dataItem: T) => ReactNode;
+  /* eslint-enable no-unused-vars */
   sectionClassName?: string;
   imageFirst?: boolean;
 }

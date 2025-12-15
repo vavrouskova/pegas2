@@ -23,6 +23,7 @@ function parseText(text: string): ParsedSegment[] {
   const segments: ParsedSegment[] = [];
 
   // Regexp pro nalezení {{br}} nebo {{br:className}}
+  // eslint-disable-next-line security/detect-unsafe-regex -- bounded character class [^}]+ cannot cause catastrophic backtracking
   const pattern = /\{\{br(?::([^}]+))?\}\}/g;
 
   let lastIndex = 0;

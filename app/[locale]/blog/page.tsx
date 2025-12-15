@@ -8,11 +8,11 @@ import BlogGridSection from '@/components/_shared/BlogGridSection';
 import BlogPagination from '@/components/_shared/BlogPagination';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import ContentSection from '@/components/_shared/ContentSection';
+import FooterClaim from '@/components/_shared/FooterClaim';
 import PageHeroSection from '@/components/_shared/PageHeroSection';
 import { POSTS_PER_PAGE } from '@/constants/blog';
 import { parsePageNumber } from '@/utils/blog-helpers';
 import { getSeoDataByUri } from '@/utils/seo';
-import FooterClaim from '@/components/_shared/FooterClaim';
 
 // Blog page needs to be dynamic because it uses searchParams for filtering
 export const dynamic = 'force-dynamic';
@@ -32,10 +32,10 @@ interface BlogPageProps {
 }
 
 const BlogPage = async ({ searchParams }: BlogPageProps) => {
-  const params = await searchParams;
-  const categoryId = params.category;
-  const search = params.search;
-  const page = parsePageNumber(params.page);
+  const parameters = await searchParams;
+  const categoryId = parameters.category;
+  const search = parameters.search;
+  const page = parsePageNumber(parameters.page);
 
   const [t, blogData, categories] = await Promise.all([
     getTranslations(),

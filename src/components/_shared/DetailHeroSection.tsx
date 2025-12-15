@@ -83,9 +83,7 @@ const DetailHeroSection = ({
                   </time>
                 </div>
               )}
-              {farewellPlace && (
-                <p className='text-primary text-lg font-light'>{farewellPlace}</p>
-              )}
+              {farewellPlace && <p className='text-primary text-lg font-light'>{farewellPlace}</p>}
             </div>
           )}
 
@@ -120,4 +118,3 @@ const DetailHeroSection = ({
 };
 
 export default DetailHeroSection;
-

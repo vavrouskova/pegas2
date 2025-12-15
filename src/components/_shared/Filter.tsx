@@ -1,8 +1,8 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useCallback, useMemo, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import Search from '@/components/icons/Search';
 import { cn } from '@/lib/utils';
@@ -27,37 +27,37 @@ interface FilterProps {
 
 const Filter = ({ categories, config }: FilterProps) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParameters = useSearchParams();
   const t = useTranslations('common');
-  const [searchQuery, setSearchQuery] = useState(searchParams.get(config.searchParam) || '');
+  const [searchQuery, setSearchQuery] = useState(searchParameters.get(config.searchParam) || '');
 
-  const selectedCategory = searchParams.get(config.categoryParam);
-  const hasActiveSearch = Boolean(searchParams.get(config.searchParam));
+  const selectedCategory = searchParameters.get(config.categoryParam);
+  const hasActiveSearch = Boolean(searchParameters.get(config.searchParam));
 
   // Helper funkce pro reset paginace
   const resetPagination = useCallback(
-    (params: URLSearchParams): URLSearchParams => {
-      const newParams = new URLSearchParams(params.toString());
-      newParams.delete(config.pageParam);
-      return newParams;
+    (parameters: URLSearchParams): URLSearchParams => {
+      const newParameters = new URLSearchParams(parameters.toString());
+      newParameters.delete(config.pageParam);
+      return newParameters;
     },
     [config.pageParam]
   );
 
   // Helper funkce pro aktualizaci search params
-  const updateSearchParams = useCallback(
-    (currentParams: URLSearchParams, updates: Record<string, string | null>): URLSearchParams => {
-      const params = new URLSearchParams(currentParams.toString());
+  const updateSearchParameters = useCallback(
+    (currentParameters: URLSearchParams, updates: Record<string, string | null>): URLSearchParams => {
+      const parameters = new URLSearchParams(currentParameters.toString());
 
       Object.entries(updates).forEach(([key, value]) => {
         if (value === null || value === '') {
-          params.delete(key);
+          parameters.delete(key);
         } else {
-          params.set(key, value);
+          parameters.set(key, value);
         }
       });
 
-      return params;
+      return parameters;
     },
     []
   );
@@ -74,31 +74,39 @@ const Filter = ({ categories, config }: FilterProps) => {
 
   const handleCategoryClick = useCallback(
     (categoryId: string | null) => {
-      const params = resetPagination(searchParams);
-      const updatedParams = updateSearchParams(params, {
+      const parameters = resetPagination(searchParameters);
+      const updatedParameters = updateSearchParameters(parameters, {
         [config.categoryParam]: categoryId,
         [config.searchParam]: null,
       });
 
       setSearchQuery('');
-      router.push(`?${updatedParams.toString()}`);
+      router.push(`?${updatedParameters.toString()}`);
     },
-    [router, searchParams, config.categoryParam, config.searchParam, resetPagination, updateSearchParams]
+    [router, searchParameters, config.categoryParam, config.searchParam, resetPagination, updateSearchParameters]
   );
 
   const handleSearchSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const params = resetPagination(searchParams);
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const parameters = resetPagination(searchParameters);
       const trimmedQuery = searchQuery.trim();
-      const updatedParams = updateSearchParams(params, {
+      const updatedParameters = updateSearchParameters(parameters, {
         [config.searchParam]: trimmedQuery || null,
         [config.categoryParam]: null,
       });
 
-      router.push(`?${updatedParams.toString()}`);
+      router.push(`?${updatedParameters.toString()}`);
     },
-    [router, searchParams, searchQuery, config.searchParam, config.categoryParam, resetPagination, updateSearchParams]
+    [
+      router,
+      searchParameters,
+      searchQuery,
+      config.searchParam,
+      config.categoryParam,
+      resetPagination,
+      updateSearchParameters,
+    ]
   );
 
   return (
@@ -144,7 +152,7 @@ const Filter = ({ categories, config }: FilterProps) => {
         <input
           type='text'
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(event) => setSearchQuery(event.target.value)}
           placeholder={t('search')}
           className='text-primary min-w-0 flex-1 border-none bg-transparent text-sm outline-none'
         />

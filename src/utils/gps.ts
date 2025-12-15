@@ -25,11 +25,11 @@ export const parseGPS = (gpsString?: string): GPSCoordinates | null => {
 
   if (parts.length !== 2) return null;
 
-  const lat = parseFloat(parts[0]);
-  const lng = parseFloat(parts[1]);
+  const lat = Number.parseFloat(parts[0]);
+  const lng = Number.parseFloat(parts[1]);
 
   // Validate coordinates
-  if (isNaN(lat) || isNaN(lng)) return null;
+  if (Number.isNaN(lat) || Number.isNaN(lng)) return null;
   if (lat < -90 || lat > 90) return null;
   if (lng < -180 || lng > 180) return null;
 
@@ -47,8 +47,8 @@ export const isValidGPS = (coords: GPSCoordinates | null): coords is GPSCoordina
   return (
     typeof lat === 'number' &&
     typeof lng === 'number' &&
-    !isNaN(lat) &&
-    !isNaN(lng) &&
+    !Number.isNaN(lat) &&
+    !Number.isNaN(lng) &&
     lat >= -90 &&
     lat <= 90 &&
     lng >= -180 &&
@@ -62,19 +62,19 @@ export const isValidGPS = (coords: GPSCoordinates | null): coords is GPSCoordina
  * @returns Center GPS coordinates or null if empty
  */
 export const calculateCenter = (coordinates: GPSCoordinates[]): GPSCoordinates | null => {
-  if (!coordinates.length) return null;
+  if (coordinates.length === 0) return null;
 
-  const sum = coordinates.reduce(
-    (acc, coord) => ({
-      lat: acc.lat + coord.lat,
-      lng: acc.lng + coord.lng,
-    }),
-    { lat: 0, lng: 0 }
-  );
+  let latSum = 0;
+  let lngSum = 0;
+
+  for (const coord of coordinates) {
+    latSum += coord.lat;
+    lngSum += coord.lng;
+  }
 
   return {
-    lat: sum.lat / coordinates.length,
-    lng: sum.lng / coordinates.length,
+    lat: latSum / coordinates.length,
+    lng: lngSum / coordinates.length,
   };
 };
 

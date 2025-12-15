@@ -1,7 +1,8 @@
-import { cn } from '@/lib/utils';
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import React from 'react';
+
+import { cn } from '@/lib/utils';
 
 interface BreadcrumbItem {
   label: string;

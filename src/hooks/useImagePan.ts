@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export const useImagePan = (scale: number) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });

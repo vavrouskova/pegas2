@@ -6,13 +6,13 @@ import BasicHeroSection from '@/components/_shared/BasicHeroSection';
 import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
+import { FormattedText } from '@/components/_shared/FormattedText';
 import PartnersSection from '@/components/_shared/PartnersSection';
 import CitationSection from '@/components/about-us/CitationSection';
 import EmployeesSection from '@/components/about-us/EmployeesSection';
 import TimelineSection from '@/components/about-us/TimelineSection';
-import { FormattedText } from '@/components/_shared/FormattedText';
-import { getSeoDataByUri } from '@/utils/seo';
 import ContactForm from '@/components/forms/contact/ContactForm';
+import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('routes');

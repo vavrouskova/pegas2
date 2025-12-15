@@ -6,13 +6,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 
 export interface FormTextareaProps extends BaseFormFieldProps {
-  onBlur?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  // eslint-disable-next-line no-unused-vars
+  onBlur?: (blurEvent: React.ChangeEvent<HTMLTextAreaElement>) => void;
   rows?: number;
   required?: boolean;
 }
 
 const FormTextarea = (props: FormTextareaProps) => {
-  const { name, placeholder, label, disabled = false, className, rows = 5, required = false } = props;
+  const { name, placeholder, label, disabled = false, className, rows = 5 } = props;
 
   return (
     <FormField

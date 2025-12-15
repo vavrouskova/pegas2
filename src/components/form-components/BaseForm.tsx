@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
@@ -19,7 +17,8 @@ export interface BaseFormFieldProps {
 }
 
 interface BaseFormProps {
-  onSubmit: (values: any) => Promise<any>;
+  // eslint-disable-next-line no-unused-vars
+  onSubmit: (formValues: any) => Promise<any>;
   children?: React.ReactNode;
   form: UseFormReturn<any>;
   formName: string;

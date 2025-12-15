@@ -1,10 +1,10 @@
 import { getTranslations } from 'next-intl/server';
 
 import Button from '@/components/_shared/Button';
+import { FormattedText } from '@/components/_shared/FormattedText';
 import GridCard from '@/components/_shared/GridCard';
 import { stripHtmlTags } from '@/utils/helper';
 import { BlogPost } from '@/utils/wordpress-types';
-import { FormattedText } from './FormattedText';
 
 interface BlogGridSectionProps {
   posts: BlogPost[];

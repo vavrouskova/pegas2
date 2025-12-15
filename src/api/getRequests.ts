@@ -3,6 +3,7 @@ import { Category, ParametersType } from '@/utils/types';
 
 export const getGeneralRequest = async (
   endpoint: string,
+  // eslint-disable-next-line no-undef
   options?: RequestInit,
   parameters?: ParametersType
 ): Promise<ApiResponse> => {
@@ -12,6 +13,7 @@ export const getGeneralRequest = async (
   const hasExplicitRevalidate = (originalNext as any).revalidate !== undefined;
 
   // Avoid specifying both cache: 'no-store' and next.revalidate simultaneously
+  // eslint-disable-next-line no-undef
   const mergedOptions: RequestInit =
     hasNoStore || hasExplicitRevalidate
       ? { ...baseOptions, next: { ...originalNext } }

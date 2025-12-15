@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { IMAGE_GALLERY_CONFIG } from '@/config/imageGallery.config';
 import { createImageGalleryNavigation } from '@/utils/imageGalleryNavigation';
@@ -9,7 +9,8 @@ interface UseImageTouchGesturesProps {
   scale: number;
   currentIndex: number;
   totalImages: number;
-  onZoomChange: (scale: number) => void;
+  // eslint-disable-next-line no-unused-vars
+  onZoomChange: (newScale: number) => void;
   onNavigateNext: () => void;
   onNavigatePrev: () => void;
 }

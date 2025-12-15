@@ -7,9 +7,11 @@ export interface ApiResponse<T = any> {
 
 export async function makeApiCall<T>(
   url: string,
+  // eslint-disable-next-line no-undef
   options: RequestInit = {},
   searchParameters: Record<string, any> = {}
 ): Promise<ApiResponse<T>> {
+  // eslint-disable-next-line no-undef
   const headers: HeadersInit = {
     ...options.headers,
     'Content-Type': 'application/json',

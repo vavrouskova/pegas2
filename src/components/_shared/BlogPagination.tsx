@@ -1,7 +1,7 @@
 'use client';
 
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
 
 import ArrowRight from '@/components/icons/ArrowRight';
@@ -16,7 +16,7 @@ interface BlogPaginationProps {
 
 const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParameters = useSearchParams();
   const t = useTranslations('common');
 
   const handlePageChange = useCallback(
@@ -25,13 +25,13 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
         return;
       }
 
-      const updatedParams = updateSearchParams(searchParams, {
+      const updatedParameters = updateSearchParams(searchParameters, {
         [BLOG_QUERY_PARAMS.PAGE]: page === 1 ? null : page.toString(),
       });
 
-      router.push(`?${updatedParams.toString()}`);
+      router.push(`?${updatedParameters.toString()}`);
     },
-    [router, searchParams, totalPages, currentPage]
+    [router, searchParameters, totalPages, currentPage]
   );
 
   const handlePrevious = useCallback(() => {
@@ -50,14 +50,14 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
     return null;
   }
 
-  const canScrollPrev = currentPage > 1;
+  const canScrollPrevious = currentPage > 1;
   const canScrollNext = currentPage < totalPages;
 
   // Helper funkce pro určení, které stránky zobrazit
   const getVisiblePages = (): number[] => {
     const maxVisible = 7; // Maximální počet viditelných stránek na desktopu
     if (totalPages <= maxVisible) {
-      return Array.from({ length: totalPages }, (_, i) => i + 1);
+      return Array.from({ length: totalPages }, (_, index) => index + 1);
     }
 
     const pages: number[] = [];
@@ -84,8 +84,8 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
     }
 
     // Přidáme stránky v rozsahu
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
+    for (let index = start; index <= end; index++) {
+      pages.push(index);
     }
 
     // Přidáme poslední stránku
@@ -107,7 +107,7 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
         {/* Previous button */}
         <button
           onClick={handlePrevious}
-          disabled={!canScrollPrev}
+          disabled={!canScrollPrevious}
           className={cn(
             'flex h-8 w-8 items-center justify-center',
             'disabled:cursor-not-allowed disabled:opacity-50',

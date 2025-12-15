@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 
 type AnyProps = Record<string, unknown>;
 
-type DOMMotionProps<T extends HTMLElement = HTMLElement> = Omit<HTMLMotionProps<keyof HTMLElementTagNameMap>, 'ref'> & {
+type DOMMotionProps<T extends HTMLElement = HTMLElement> = Omit<HTMLMotionProps<'div'>, 'ref'> & {
   ref?: React.Ref<T>;
 };
 
@@ -49,23 +49,37 @@ function mergeProps<T extends HTMLElement>(childProps: AnyProps, slotProps: DOMM
   return merged;
 }
 
+// Cache for motion components to avoid recreation on each render
+const motionComponentCache = new WeakMap<React.ElementType, React.ComponentType<AnyProps>>();
+
+function getMotionComponent(childType: React.ElementType, isAlreadyMotion: boolean): React.ComponentType<AnyProps> {
+  if (isAlreadyMotion) {
+    return childType as React.ComponentType<AnyProps>;
+  }
+
+  let cached = motionComponentCache.get(childType);
+  if (!cached) {
+    cached = motion.create(childType) as React.ComponentType<AnyProps>;
+    motionComponentCache.set(childType, cached);
+  }
+  return cached;
+}
+
 const Slot = <T extends HTMLElement = HTMLElement>({ children, ref, ...props }: SlotProps<T>) => {
+  if (!React.isValidElement(children)) return null;
+
   const isAlreadyMotion =
     typeof children.type === 'object' && children.type !== null && isMotionComponent(children.type);
 
-  const Base = React.useMemo(
-    () => (isAlreadyMotion ? (children.type as React.ElementType) : motion.create(children.type as React.ElementType)),
-    [isAlreadyMotion, children.type]
-  );
-
-  if (!React.isValidElement(children)) return null;
+  const MotionWrapper = getMotionComponent(children.type as React.ElementType, isAlreadyMotion);
 
   const { ref: childRef, ...childProps } = children.props as AnyProps;
 
   const mergedProps = mergeProps(childProps, props);
 
   return (
-    <Base
+    // eslint-disable-next-line react-hooks/static-components
+    <MotionWrapper
       {...mergedProps}
       ref={mergeReferences(childRef as React.Ref<T>, ref)}
     />

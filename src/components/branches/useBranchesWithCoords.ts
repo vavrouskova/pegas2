@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
-import type { PobockaPost } from '@/utils/wordpress-types';
 import { parseGPS, type GPSCoordinates } from '@/utils/gps';
+import type { PobockaPost } from '@/utils/wordpress-types';
 
 export interface BranchWithCoords extends PobockaPost {
   coords: GPSCoordinates;

@@ -4,8 +4,8 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React, { useRef, useState, useEffect } from 'react';
 
-import ChevronDown from '@/components/icons/ChevronDown';
 import { FormattedText } from '@/components/_shared/FormattedText';
+import ChevronDown from '@/components/icons/ChevronDown';
 import { cn } from '@/lib/utils';
 import type { TimelineItem } from '@/utils/wordpress-types';
 
@@ -151,10 +151,6 @@ const TimelineSection = ({ timeline }: Readonly<TimelineSectionProps>) => {
   const itemsContainerRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
-  if (!timeline?.length) {
-    return null;
-  }
-
   const hasMoreItems = timeline.length > MAX_VISIBLE_ITEMS;
   const visibleItems = showAll ? timeline : timeline.slice(0, MAX_VISIBLE_ITEMS);
 
@@ -165,7 +161,7 @@ const TimelineSection = ({ timeline }: Readonly<TimelineSectionProps>) => {
       const items = itemsContainerRef.current?.children;
       if (!items || items.length === 0) return;
 
-      const lastItem = items[items.length - 1] as HTMLElement;
+      const lastItem = items.at(-1) as HTMLElement;
       const firstItem = items[0] as HTMLElement;
 
       if (firstItem && lastItem && lineRef.current && itemsContainerRef.current) {
@@ -194,6 +190,10 @@ const TimelineSection = ({ timeline }: Readonly<TimelineSectionProps>) => {
       window.removeEventListener('resize', updateLineHeight);
     };
   }, [visibleItems, showAll]);
+
+  if (!timeline?.length) {
+    return null;
+  }
 
   return (
     <section

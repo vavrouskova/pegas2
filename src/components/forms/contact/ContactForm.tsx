@@ -1,16 +1,16 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
 import { AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
+import React, { useRef, useState } from 'react';
 
-import ChevronDown from '@/components/icons/ChevronDown';
-import Calendar from '@/components/icons/Calendar';
+import { MotionDiv } from '@/components/animate-ui/MotionWrappers';
 import BaseForm from '@/components/form-components/BaseForm';
 import FormInput from '@/components/form-components/FormInput';
 import FormTextarea from '@/components/form-components/FormTextarea';
 import { useContactForm } from '@/components/forms/contact/useForm';
-import { MotionDiv } from '@/components/animate-ui/MotionWrappers';
+import Calendar from '@/components/icons/Calendar';
+import ChevronDown from '@/components/icons/ChevronDown';
 import { cn } from '@/lib/utils';
 
 interface ContactFormProps {

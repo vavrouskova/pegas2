@@ -10,12 +10,12 @@ import { REFERENCES_QUERY_PARAMS } from '@/constants/references';
  * @param defaultValue - Výchozí hodnota pokud parsing selže
  * @returns Validní číslo stránky
  */
-export function parsePageNumber(pageParam: string | undefined, defaultValue = 1): number {
-  if (!pageParam) {
+export function parsePageNumber(pageParameter: string | undefined, defaultValue = 1): number {
+  if (!pageParameter) {
     return defaultValue;
   }
 
-  const parsed = Number.parseInt(pageParam, 10);
+  const parsed = Number.parseInt(pageParameter, 10);
   return Number.isNaN(parsed) || parsed < 1 ? defaultValue : parsed;
 }
 
@@ -25,21 +25,21 @@ export function parsePageNumber(pageParam: string | undefined, defaultValue = 1)
  * @param updates - Objekt s hodnotami k aktualizaci (null = smazat parametr)
  * @returns Nový URLSearchParams
  */
-export function updateSearchParams(
-  currentParams: URLSearchParams,
+export function updateSearchParameters(
+  currentParameters: URLSearchParams,
   updates: Record<string, string | null>
 ): URLSearchParams {
-  const params = new URLSearchParams(currentParams.toString());
+  const parameters = new URLSearchParams(currentParameters.toString());
 
   Object.entries(updates).forEach(([key, value]) => {
     if (value === null || value === '') {
-      params.delete(key);
+      parameters.delete(key);
     } else {
-      params.set(key, value);
+      parameters.set(key, value);
     }
   });
 
-  return params;
+  return parameters;
 }
 
 /**
@@ -47,8 +47,8 @@ export function updateSearchParams(
  * @param params - Aktuální URLSearchParams
  * @returns Nový URLSearchParams bez page parametru
  */
-export function resetPagination(params: URLSearchParams): URLSearchParams {
-  const newParams = new URLSearchParams(params.toString());
-  newParams.delete(REFERENCES_QUERY_PARAMS.PAGE);
-  return newParams;
+export function resetPagination(parameters: URLSearchParams): URLSearchParams {
+  const newParameters = new URLSearchParams(parameters.toString());
+  newParameters.delete(REFERENCES_QUERY_PARAMS.PAGE);
+  return newParameters;
 }

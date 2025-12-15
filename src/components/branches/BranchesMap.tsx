@@ -6,7 +6,7 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
 
 import BranchCardClient from '@/components/branches/BranchCardClient';
 import { getMapStyles } from '@/components/branches/map-styles';
-import { createBranchMarkerIcon } from '@/components/branches/map-utils';
+import { createBranchMarkerIcon } from '@/components/branches/map-utilities';
 import MapLoadingState from '@/components/branches/MapLoadingState';
 import { useBranchesWithCoords } from '@/components/branches/useBranchesWithCoords';
 import { calculateCenter, DEFAULT_CENTER, SINGLE_MARKER_ZOOM } from '@/utils/gps';

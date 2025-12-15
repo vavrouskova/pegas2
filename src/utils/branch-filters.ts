@@ -3,39 +3,40 @@ import type { PobockaPost } from '@/utils/wordpress-types';
 /**
  * Type definition for branch filter function
  */
-export type BranchFilterFn = (branch: PobockaPost) => boolean;
+// eslint-disable-next-line no-unused-vars
+export type BranchFilterFunction = (branch: PobockaPost) => boolean;
 
 /**
  * Filter branches that have showroom
  */
-export const filterShowroomBranches: BranchFilterFn = (branch) => {
+export const filterShowroomBranches: BranchFilterFunction = (branch) => {
   return branch.pobockyACF?.showRoom === true;
 };
 
 /**
  * Filter branches that are open on weekends and holidays
  */
-export const filterWeekendBranches: BranchFilterFn = (branch) => {
+export const filterWeekendBranches: BranchFilterFunction = (branch) => {
   return branch.pobockyACF?.openSwitcher === true;
 };
 
 /**
  * Filter that returns all branches (no filtering)
  */
-export const filterAllBranches: BranchFilterFn = () => {
+export const filterAllBranches: BranchFilterFunction = () => {
   return true;
 };
 
 /**
  * Compose multiple filters with AND logic
  */
-export const composeFilters = (...filters: BranchFilterFn[]): BranchFilterFn => {
+export const composeFilters = (...filters: BranchFilterFunction[]): BranchFilterFunction => {
   return (branch: PobockaPost) => filters.every((filter) => filter(branch));
 };
 
 /**
  * Compose multiple filters with OR logic
  */
-export const composeFiltersOr = (...filters: BranchFilterFn[]): BranchFilterFn => {
+export const composeFiltersOr = (...filters: BranchFilterFunction[]): BranchFilterFunction => {
   return (branch: PobockaPost) => filters.some((filter) => filter(branch));
 };

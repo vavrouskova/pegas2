@@ -1,6 +1,6 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 
 import { cn } from '@/lib/utils';
 import { useImageGallery } from '@/providers/ImageGalleryProvider';
@@ -64,7 +64,7 @@ export const ArticleGalleryWrapper = ({
       role='button'
       tabIndex={0}
       className={cn(
-        'cursor-pointer transition-opacity hover:opacity-90 focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none',
+        'focus:ring-primary cursor-pointer transition-opacity hover:opacity-90 focus:ring-2 focus:ring-offset-2 focus:outline-none',
         wrapperClassName
       )}
       aria-label={`View image: ${alt || 'Gallery image'}`}

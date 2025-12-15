@@ -1,8 +1,7 @@
 import { FormattedText } from '@/components/_shared/FormattedText';
+import BranchCardClient from '@/components/branches/BranchCardClient';
 import { filterAllBranches, filterShowroomBranches, filterWeekendBranches } from '@/utils/branch-filters';
 import type { PobockaPost } from '@/utils/wordpress-types';
-
-import BranchCardClient from '@/components/branches/BranchCardClient';
 
 type FilterType = 'all' | 'showroom' | 'weekend';
 
@@ -19,8 +18,8 @@ const FILTER_MAP = {
 } as const;
 
 const BranchesSection = ({ branches, title, filterType = 'all' }: Readonly<BranchesSectionProps>) => {
-  const filterFn = FILTER_MAP[filterType];
-  const filteredBranches = branches.filter(filterFn);
+  const filterFunction = FILTER_MAP[filterType];
+  const filteredBranches = branches.filter((branch) => filterFunction(branch));
 
   if (filteredBranches.length === 0) return null;
 

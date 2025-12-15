@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useSyncExternalStore, useState } from 'react';
 
 import Logo from '@/components/header/Logo';
 import Hamburger from '@/components/icons/Hamburger';
@@ -10,20 +10,29 @@ import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTr
 import { getUniqueId } from '@/utils/helper';
 import { Separator } from '@radix-ui/react-separator';
 
+const noopUnsubscribe = () => {};
+const emptySubscribe = () => noopUnsubscribe;
+const getSnapshotTrue = () => true;
+const getSnapshotFalse = () => false;
+
 const MobileMenu = (props: any) => {
   const { headerLinks } = props;
   const pathname = usePathname();
+  const previousPathnameReference = useRef(pathname);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [isOpen, setIsOpen] = useState(() => false);
+  const mounted = useSyncExternalStore(emptySubscribe, getSnapshotTrue, getSnapshotFalse);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
+  // Close menu when pathname changes (navigation occurred)
+  // Using a pattern that checks during render and schedules update via microtask
+  // eslint-disable-next-line react-hooks/refs
+  if (mounted && previousPathnameReference.current !== pathname) {
+    // eslint-disable-next-line react-hooks/refs
+    previousPathnameReference.current = pathname;
+    if (isOpen) {
+      queueMicrotask(() => setIsOpen(false));
+    }
+  }
 
   // Prevent hydration mismatch by only rendering Drawer on client
   if (!mounted) {

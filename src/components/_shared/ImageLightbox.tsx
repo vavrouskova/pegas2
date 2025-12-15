@@ -1,8 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
-import * as Dialog from '@radix-ui/react-dialog';
+import React, { useEffect, useRef } from 'react';
 
 import { IMAGE_GALLERY_CONFIG } from '@/config/imageGallery.config';
 import { useImageKeyboardNavigation } from '@/hooks/useImageKeyboardNavigation';
@@ -13,6 +12,7 @@ import { useViewportHeight } from '@/hooks/useViewportHeight';
 import type { GalleryImage } from '@/providers/ImageGalleryProvider';
 import { useImageGallery } from '@/providers/ImageGalleryProvider';
 import { createImageGalleryNavigation } from '@/utils/imageGalleryNavigation';
+import * as Dialog from '@radix-ui/react-dialog';
 
 const LightboxOverlay = () => (
   <Dialog.Overlay
@@ -144,9 +144,11 @@ interface LightboxImageProps {
   isDragging: boolean;
   cursor: string;
   containerRef: React.RefObject<HTMLDivElement>;
-  onWheel: (event: React.WheelEvent) => void;
-  onMouseDown: (event: React.MouseEvent) => void;
-  onMouseMove: (event: React.MouseEvent) => void;
+  /* eslint-disable no-unused-vars */
+  onWheel: (wheelEvent: React.WheelEvent) => void;
+  onMouseDown: (mouseEvent: React.MouseEvent) => void;
+  onMouseMove: (mouseEvent: React.MouseEvent) => void;
+  /* eslint-enable no-unused-vars */
   onMouseUp: () => void;
   onDoubleClick: () => void;
 }

@@ -1,7 +1,6 @@
+import Filter from '@/components/_shared/Filter';
 import { REFERENCES_QUERY_PARAMS } from '@/constants/references';
 import { ReferenceCategory } from '@/utils/wordpress-types';
-
-import Filter from './Filter';
 
 interface ReferencesFilterProps {
   categories: ReferenceCategory[];

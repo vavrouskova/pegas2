@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
 import { cn } from '@/lib/utils';

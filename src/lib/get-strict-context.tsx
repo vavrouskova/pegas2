@@ -2,20 +2,20 @@ import * as React from 'react';
 
 function getStrictContext<T>(
   name?: string
+  // eslint-disable-next-line no-unused-vars
 ): readonly [({ value, children }: { value: T; children?: React.ReactNode }) => React.JSX.Element, () => T] {
   const Context = React.createContext<T | undefined>(undefined);
 
-  const Provider = ({ value, children }: { value: T; children?: React.ReactNode }) => (
-    <Context.Provider value={value}>{children}</Context.Provider>
+  const Provider = ({ value: contextValue, children: contextChildren }: { value: T; children?: React.ReactNode }) => (
+    <Context.Provider value={contextValue}>{contextChildren}</Context.Provider>
   );
 
-  // eslint-disable-next-line sonarjs/function-return-type
   const useSafeContext = () => {
-    const context = React.useContext(Context);
-    if (context === undefined) {
+    const currentContextValue = React.useContext(Context);
+    if (currentContextValue === undefined) {
       throw new Error(`useContext must be used within ${name ?? 'a Provider'}`);
     }
-    return context;
+    return currentContextValue;
   };
 
   return [Provider, useSafeContext] as const;

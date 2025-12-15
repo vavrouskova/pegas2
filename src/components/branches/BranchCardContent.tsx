@@ -23,12 +23,9 @@ const BranchCardContent = ({
   phoneNumber,
   slug,
   detailButtonText,
-  layout
+  layout,
 }: BranchCardContentProps) => {
-  const containerClasses = cn(
-    'flex flex-1 flex-col',
-    layout === 'vertical' ? 'py-5' : 'py-1'
-  );
+  const containerClasses = cn('flex flex-1 flex-col', layout === 'vertical' ? 'py-5' : 'py-1');
 
   return (
     <div className={containerClasses}>
@@ -72,8 +69,15 @@ const BranchCardContent = ({
         </Link>
       )}
 
-      <Link href={`/${slug}`} className='-ml-4 lg:-ml-8 mt-2'>
-        <Button buttonText={detailButtonText} size='small' variant='destructive' />
+      <Link
+        href={`/${slug}`}
+        className='mt-2 -ml-4 lg:-ml-8'
+      >
+        <Button
+          buttonText={detailButtonText}
+          size='small'
+          variant='destructive'
+        />
       </Link>
     </div>
   );

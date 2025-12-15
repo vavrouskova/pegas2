@@ -1,10 +1,9 @@
-import React from 'react';
-
 import { CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 interface CarouselNavigationProps {
   itemsCount: number;
   currentIndex: number;
+  // eslint-disable-next-line no-unused-vars
   onDotClick: (index: number) => void;
 }
 
@@ -28,11 +27,11 @@ export const CarouselNavigation = ({ itemsCount, currentIndex, onDotClick }: Car
           />
 
           <div className='flex space-x-2.5'>
-            {Array.from({ length: itemsCount }).map((_, index) => (
+            {Array.from({ length: itemsCount }).map((_, slideIndex) => (
               <span
-                key={`slide n.${index + 1}`}
-                onClick={() => onDotClick(index)}
-                className={`size-3 cursor-pointer rounded-full transition-all duration-500 ${currentIndex === index ? 'bg-primary' : 'bg-grey-cold'}`}
+                key={`slide n.${slideIndex + 1}`}
+                onClick={() => onDotClick(slideIndex)}
+                className={`size-3 cursor-pointer rounded-full transition-all duration-500 ${currentIndex === slideIndex ? 'bg-primary' : 'bg-grey-cold'}`}
               />
             ))}
           </div>

@@ -76,7 +76,7 @@ export const MAP_STYLES = {
     .leaflet-popup-close-button:hover::before {
       opacity: 0.7;
     }
-  `
+  `,
 } as const;
 
 /**

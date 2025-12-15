@@ -13,8 +13,9 @@ type Ripple = {
 };
 
 type RippleButtonContextType = {
-  ripples: Ripple[];
-  setRipples: (ripples: Ripple[]) => void;
+  rippleList: Ripple[];
+  // eslint-disable-next-line no-unused-vars
+  setRipples: (newRipples: Ripple[]) => void;
 };
 
 const [RippleButtonProvider, useRippleButton] = getStrictContext<RippleButtonContextType>('RippleButtonContext');
@@ -30,7 +31,6 @@ type RippleButtonProps = WithAsChild<
 const RippleButton = ({
   ref,
   onClick,
-  disabled = false,
   hoverScale = 1,
   tapScale = 1,
   asChild = false,
@@ -76,7 +76,7 @@ const RippleButton = ({
   const Component = asChild ? Slot : motion.button;
 
   return (
-    <RippleButtonProvider value={{ ripples, setRipples }}>
+    <RippleButtonProvider value={{ rippleList: ripples, setRipples }}>
       <Component
         ref={buttonRef}
         data-slot='ripple-button'
@@ -111,11 +111,11 @@ function RippleButtonRipples({
   disabled = false,
   ...props
 }: RippleButtonRipplesProps) {
-  const { ripples } = useRippleButton();
+  const { rippleList } = useRippleButton();
 
   const Component = asChild ? Slot : motion.span;
 
-  return ripples.map((ripple) => (
+  return rippleList.map((ripple) => (
     <Component
       key={ripple.id}
       initial={disabled ? { scale: 0, opacity: 0 } : { scale: 0, opacity: 0.5 }}

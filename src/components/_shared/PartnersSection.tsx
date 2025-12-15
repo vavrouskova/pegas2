@@ -1,8 +1,8 @@
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 
+import { FormattedText } from '@/components/_shared/FormattedText';
 import { PARTNERS } from '@/lib/constants';
-import { FormattedText } from './FormattedText';
 
 const PartnersSection = async () => {
   const t = await getTranslations('about-us');

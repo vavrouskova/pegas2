@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
+
+const getServerSnapshot = () => false;
 
 function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState<boolean>(false);
+  const subscribe = (callback: () => void) => {
+    if (typeof window === 'undefined') return () => {};
+    const mediaQuery = window.matchMedia(query);
+    mediaQuery.addEventListener('change', callback);
+    return () => mediaQuery.removeEventListener('change', callback);
+  };
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const mediaQuery = window.matchMedia(query);
-      setMatches(mediaQuery.matches);
+  const getSnapshot = () => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia(query).matches;
+  };
 
-      const handler = (event: MediaQueryListEvent) => setMatches(event.matches);
-      mediaQuery.addEventListener('change', handler);
-
-      return () => mediaQuery.removeEventListener('change', handler);
-    }
-  }, [query]);
-
-  return matches;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
 
 export default useMediaQuery;

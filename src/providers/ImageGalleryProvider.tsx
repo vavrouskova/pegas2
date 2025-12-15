@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { IMAGE_GALLERY_CONFIG } from '@/config/imageGallery.config';
 
@@ -16,11 +16,13 @@ interface ImageGalleryContextType {
   images: GalleryImage[];
   currentIndex: number;
   isOpen: boolean;
-  openLightbox: (index: number) => void;
+  /* eslint-disable no-unused-vars */
+  openLightbox: (imageIndex: number) => void;
   closeLightbox: () => void;
   nextImage: () => void;
   prevImage: () => void;
-  registerImage: (image: GalleryImage) => number;
+  registerImage: (galleryImage: GalleryImage) => number;
+  /* eslint-enable no-unused-vars */
   clearImages: () => void;
 }
 
@@ -93,7 +95,7 @@ export const ImageGalleryProvider = ({ children }: ImageGalleryProviderProps) =>
     if (isOpen) {
       // Uložit aktuální pozici scrollu
       const scrollY = window.scrollY;
-      
+
       // Zakázat scroll na body pomocí position: fixed
       const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.overflow = 'hidden';
@@ -103,21 +105,21 @@ export const ImageGalleryProvider = ({ children }: ImageGalleryProviderProps) =>
       document.body.style.top = `-${scrollY}px`;
 
       // Zakázat touch scrolling na celé stránce
-      const preventTouchScroll = (e: TouchEvent) => {
+      const preventTouchScroll = (touchEvent: TouchEvent) => {
         // Povolit scroll pouze v lightbox kontejneru
-        const target = e.target as HTMLElement;
+        const target = touchEvent.target as HTMLElement;
         if (!target.closest('[data-lightbox-container]')) {
-          e.preventDefault();
+          touchEvent.preventDefault();
         }
       };
 
       // Zakázat wheel scroll na celé stránce (včetně touchpadu)
-      const preventWheel = (e: WheelEvent) => {
+      const preventWheel = (wheelEvent: WheelEvent) => {
         // Povolit wheel pouze v lightbox kontejneru
-        const target = e.target as HTMLElement;
+        const target = wheelEvent.target as HTMLElement;
         if (!target.closest('[data-lightbox-container]')) {
-          e.preventDefault();
-          e.stopPropagation();
+          wheelEvent.preventDefault();
+          wheelEvent.stopPropagation();
           // Okamžitě resetovat scroll pozici pro touchpad gesta
           window.scrollTo(0, scrollY);
         }
@@ -141,12 +143,12 @@ export const ImageGalleryProvider = ({ children }: ImageGalleryProviderProps) =>
       };
 
       // Zakázat keyboard scroll
-      const preventKeyboardScroll = (e: KeyboardEvent) => {
+      const preventKeyboardScroll = (keyboardEvent: KeyboardEvent) => {
         const scrollKeys = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End'];
-        if (scrollKeys.includes(e.key)) {
-          const target = e.target as HTMLElement;
+        if (scrollKeys.includes(keyboardEvent.key)) {
+          const target = keyboardEvent.target as HTMLElement;
           if (!target.closest('[data-lightbox-container]')) {
-            e.preventDefault();
+            keyboardEvent.preventDefault();
           }
         }
       };

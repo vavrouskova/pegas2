@@ -7,7 +7,8 @@ import { cn } from '@/lib/utils';
 
 export interface FormInputProps extends BaseFormFieldProps {
   type?: string;
-  onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  // eslint-disable-next-line no-unused-vars
+  onBlur?: (blurEvent: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   inputClassName?: string;
   inputRef?: React.Ref<HTMLInputElement>;
@@ -24,7 +25,6 @@ const FormInput = (props: FormInputProps) => {
     inputClassName,
     onBlur,
     tabIndex,
-    required = false,
     inputRef,
   } = props;
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import type { CarouselApi } from '@/components/ui/carousel';
 
@@ -10,11 +10,13 @@ interface UseCarouselAutoplayOptions {
 interface UseCarouselAutoplayReturn {
   currentIndex: number;
   api: CarouselApi | null;
+  /* eslint-disable no-unused-vars */
   setApi: (api: CarouselApi | null) => void;
   carouselRef: React.RefObject<HTMLDivElement | null>;
   isHovering: boolean;
   setIsHovering: (hovering: boolean) => void;
   goToSlide: (index: number) => void;
+  /* eslint-enable no-unused-vars */
 }
 
 export function useCarouselAutoplay({

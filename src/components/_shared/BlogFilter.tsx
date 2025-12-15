@@ -1,7 +1,6 @@
+import Filter from '@/components/_shared/Filter';
 import { BLOG_QUERY_PARAMS, UNCATEGORIZED_CATEGORY_ID } from '@/constants/blog';
 import { BlogCategory } from '@/utils/wordpress-types';
-
-import Filter from './Filter';
 
 interface BlogFilterProps {
   categories: BlogCategory[];

@@ -1,10 +1,9 @@
+import BranchCardContent from '@/components/branches/BranchCardContent';
+import BranchCardImage from '@/components/branches/BranchCardImage';
 import Parking from '@/components/icons/Parking';
 import { cn } from '@/lib/utils';
 import { formatDateRange } from '@/utils/helper';
 import type { PobockaPost } from '@/utils/wordpress-types';
-
-import BranchCardContent from './BranchCardContent';
-import BranchCardImage from './BranchCardImage';
 
 interface BranchCardProps {
   branch: PobockaPost;
@@ -25,7 +24,7 @@ const BranchCard = ({
   layout = 'vertical',
   showClosedInfo = true,
   showParking = true,
-  translations
+  translations,
 }: Readonly<BranchCardProps>) => {
   const t = translations;
   const { pobockyACF, featuredImage } = branch;
@@ -48,7 +47,7 @@ const BranchCard = ({
 
   if (layout === 'horizontal') {
     return (
-      <article className={cn('flex gap-4 min-h-[120px]', className)}>
+      <article className={cn('flex min-h-[120px] gap-4', className)}>
         <BranchCardImage
           imageUrl={imageUrl}
           imageAlt={imageAlt}
@@ -83,17 +82,13 @@ const BranchCard = ({
           linkToDetail={true}
         />
         {isClosed && (
-          <div className='bg-primary min-h-[70px] z-10 absolute bottom-0 left-0 w-full p-3 pr-[70px]'>
-            <p className='text-white-smoke leading-[150%] font-heading text-sm'>
-              {t.closed}
-            </p>
-            <p className='text-white-smoke leading-[150%] font-heading text-sm'>
-              {formattedDateRange}
-            </p>
+          <div className='bg-primary absolute bottom-0 left-0 z-10 min-h-[70px] w-full p-3 pr-[70px]'>
+            <p className='text-white-smoke font-heading text-sm leading-[150%]'>{t.closed}</p>
+            <p className='text-white-smoke font-heading text-sm leading-[150%]'>{formattedDateRange}</p>
           </div>
         )}
         {hasParking && (
-          <div className='z-10 absolute bottom-0 right-0'>
+          <div className='absolute right-0 bottom-0 z-10'>
             <Parking />
           </div>
         )}
