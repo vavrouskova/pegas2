@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { removeSitemapStylesheet, replaceWordpressUrl } from '@/utils/helper';
 
-type RouteParams = {
+type RouteParameters = {
   params: Promise<{ name: string }>;
 };
 
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(request: NextRequest, { params }: RouteParameters) {
   const { name } = await params;
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const frontendUrl = process.env.FRONTEND_URL;

@@ -29,10 +29,7 @@ export async function GET() {
 
     // Transform sitemap URLs from /post-sitemap.xml to /sitemap/post-sitemap.xml
     // Only transform if /sitemap/ is not already in the path (idempotent)
-    xml = xml.replace(
-      /(<loc>[^<]*?)\/(?!sitemap\/)([\w-]+-sitemap\.xml<\/loc>)/g,
-      '$1/sitemap/$2'
-    );
+    xml = xml.replace(/(<loc>[^<]*?)\/(?!sitemap\/)([\w-]+-sitemap\.xml<\/loc>)/g, '$1/sitemap/$2');
 
     return new NextResponse(xml, {
       headers: {
