@@ -82,28 +82,24 @@ export const SearchResults = () => {
       data-lenis-prevent
     >
       <ResultGroup
-        title={POST_TYPE_LABELS.page}
-        results={results.pages}
-      />
-      <ResultGroup
-        title={POST_TYPE_LABELS.post}
-        results={results.posts}
-      />
-      <ResultGroup
         title={POST_TYPE_LABELS.sluzbyPost}
         results={results.services}
       />
       <ResultGroup
-        title={POST_TYPE_LABELS.referencePost}
-        results={results.references}
+        title={POST_TYPE_LABELS.postupPost}
+        results={results.procedures}
       />
       <ResultGroup
         title={POST_TYPE_LABELS.pobockaPost}
         results={results.branches}
       />
       <ResultGroup
-        title={POST_TYPE_LABELS.postupPost}
-        results={results.procedures}
+        title={POST_TYPE_LABELS.referencePost}
+        results={results.references}
+      />
+      <ResultGroup
+        title={POST_TYPE_LABELS.post}
+        results={results.posts}
       />
     </motion.div>
   );
