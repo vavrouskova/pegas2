@@ -27,6 +27,12 @@ export async function GET() {
     // Replace backend URLs with frontend URLs
     xml = replaceWordpressUrl(xml, frontendUrl);
 
+    // Transform sitemap URLs from /post-sitemap.xml to /sitemap/post-sitemap.xml
+    xml = xml.replace(
+      /(<loc>[^<]*?)(\/([\w-]+-sitemap\.xml)<\/loc>)/g,
+      '$1/sitemap/$3</loc>'
+    );
+
     return new NextResponse(xml, {
       headers: {
         'Content-Type': 'application/xml',
