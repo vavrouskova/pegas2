@@ -12,7 +12,7 @@ export async function GET() {
 
   try {
     const response = await fetch(`${backendUrl}/sitemap_index.xml`, {
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {

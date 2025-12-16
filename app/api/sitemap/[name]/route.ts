@@ -23,7 +23,7 @@ export async function GET(request: NextRequest, { params }: RouteParameters) {
 
   try {
     const response = await fetch(`${backendUrl}/${name}`, {
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
