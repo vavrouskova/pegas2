@@ -152,7 +152,7 @@ async function fetchSeoData(options: GetSeoDataOptions): Promise<WordPressSeoDat
           idType,
         },
       }),
-      next: { revalidate },
+      next: { tags: ['wordpress'], revalidate },
     });
 
     if (!response.ok) {
