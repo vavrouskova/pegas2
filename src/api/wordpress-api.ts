@@ -37,7 +37,7 @@ export async function getBranchesCount(): Promise<number> {
       body: JSON.stringify({
         query,
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -93,7 +93,7 @@ export async function getPobockyPosts(first = 100) {
         query,
         variables: { first },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -194,7 +194,7 @@ export async function getHomepageData() {
         query,
       }),
       // Next.js specific: revalidate every hour
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -257,7 +257,7 @@ export async function getAboutUsTimeline() {
       body: JSON.stringify({
         query,
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -320,7 +320,7 @@ export async function getZamestnanciPosts(first = 100): Promise<ZamestnanciPost[
         query,
         variables: { first },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -421,7 +421,7 @@ export async function getAllServicesData(first = 100) {
         query,
         variables: { first },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -510,7 +510,7 @@ export async function getUncategorizedServices(first = 100) {
         query,
         variables: { first },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -631,7 +631,7 @@ export async function getServiceBySlug(slug: string) {
         query,
         variables: { slug },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -697,7 +697,7 @@ export async function getServicesByTaxonomy(taxonomySlug: string, first = 100) {
         query,
         variables: { slug: taxonomySlug, first },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -762,7 +762,7 @@ export async function getBlogCategories(first = 100) {
         query,
         variables: { first },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -824,7 +824,7 @@ export async function checkSlugType(
         query,
         variables: { slug },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -964,7 +964,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
         query,
         variables: { slug },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1017,7 +1017,7 @@ export async function getReferenceTaxonomies(first = 100): Promise<ReferenceCate
         query,
         variables: { first },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1102,7 +1102,7 @@ export async function getReferencePosts(referencesPerPage = 9, page = 1, categor
         query,
         variables: { first: MAX_REFERENCES_FETCH },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1283,7 +1283,7 @@ export async function getReferenceBySlug(slug: string) {
         query,
         variables: { slug },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1346,7 +1346,7 @@ export async function getBlogPostsForCarousel(first = 6): Promise<BlogPost[]> {
         query,
         variables: { first },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1438,7 +1438,7 @@ export async function getBlogPosts(postsPerPage = POSTS_PER_PAGE, page = 1, cate
           where: finalWhereClause,
         },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1547,7 +1547,7 @@ export async function getContactPeople(): Promise<ZamestnanciPost[]> {
       body: JSON.stringify({
         query,
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1617,7 +1617,7 @@ export async function getBranches(): Promise<PobockaPost[]> {
       body: JSON.stringify({
         query,
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1669,7 +1669,7 @@ export async function getPostupPosts(first = 100): Promise<PostupPost[]> {
         query,
         variables: { first },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1775,7 +1775,7 @@ export async function getPostupBySlug(slug: string): Promise<PostupPost | null> 
         query,
         variables: { slug },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1882,7 +1882,7 @@ export async function getBranchBySlug(slug: string): Promise<PobockaPost | null>
         query,
         variables: { slug },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1982,7 +1982,7 @@ export async function getPageByUri(uri: string) {
         query,
         variables: { id: uri },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -2120,7 +2120,7 @@ export async function fetchSearchIndex(): Promise<SearchIndexItem[]> {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
