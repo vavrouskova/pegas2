@@ -180,8 +180,8 @@ function getDefaultMetadata(): Metadata {
   return {
     applicationName: process.env.NEXT_PUBLIC_APP_NAME || 'Pegas',
     icons: '/favicon.ico',
-    title: 'Pegas',
-    description: 'Default description',
+    title: 'Stránka nenalezena | Pegas',
+    description: 'Stránka, kterou hledáte, neexistuje.',
     robots: {
       index: false,
       follow: false,
