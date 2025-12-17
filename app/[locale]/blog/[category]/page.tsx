@@ -13,7 +13,7 @@ import FooterClaim from '@/components/_shared/FooterClaim';
 import PageHeroSection from '@/components/_shared/PageHeroSection';
 import { POSTS_PER_PAGE } from '@/constants/blog';
 import { parsePageNumber } from '@/utils/blog-helpers';
-import { getSeoDataByUri } from '@/utils/seo';
+import { getBlogCategorySeoBySlug } from '@/utils/seo';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,17 +29,8 @@ interface BlogCategoryPageProps {
 
 export async function generateMetadata({ params }: BlogCategoryPageProps): Promise<Metadata> {
   const { category: categorySlug } = await params;
-  const t = await getTranslations('routes');
-  const categoryData = await getBlogCategoryBySlug(categorySlug);
 
-  if (!categoryData) {
-    return getSeoDataByUri('page', t('blog'));
-  }
-
-  return {
-    title: `${categoryData.name} | Blog`,
-    description: `Články v kategorii ${categoryData.name}`,
-  };
+  return getBlogCategorySeoBySlug(categorySlug);
 }
 
 const BlogCategoryPage = async ({ params, searchParams }: BlogCategoryPageProps) => {

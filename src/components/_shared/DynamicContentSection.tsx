@@ -99,10 +99,10 @@ const DynamicContentSection = async ({
     backLink = `/${t('routes.services')}#dalsi-sluzby`;
     backLinkText = t('services.back-to-services.other-services');
 
-    if (categorySlug === 'smutecni-obrady') {
+    if (categorySlug === t('routes.ceremony-variants')) {
       backLink = `/${t('routes.services')}#smutecni-obrady`;
       backLinkText = t('services.back-to-services.ceremony-variants');
-    } else if (categorySlug === 'nalezitosti-pohrbu') {
+    } else if (categorySlug === t('routes.funeral-essentials')) {
       backLink = `/${t('routes.services')}#nalezitosti-pohrbu`;
       backLinkText = t('services.back-to-services.funeral-essentials');
     }
@@ -340,7 +340,7 @@ const DynamicContentSection = async ({
                     key={imgIndex}
                     src={image.sourceUrl || ''}
                     alt={image.altText || ''}
-                    className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-[16/9]'} lg:aspect-auto ${
+                    className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-video'} lg:aspect-auto ${
                       imgIndex === 0 ? 'lg:h-[239px] lg:w-[239px] lg:flex-none lg:shrink-0' : 'lg:h-[239px] lg:flex-1'
                     }`}
                   />
@@ -364,7 +364,7 @@ const DynamicContentSection = async ({
                     key={imgIndex}
                     src={image.sourceUrl || ''}
                     alt={image.altText || ''}
-                    className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-[16/9]'} lg:hidden`}
+                    className={`relative w-full ${isSquare ? 'aspect-square' : 'aspect-video'} lg:hidden`}
                   />
                 );
               })}
@@ -411,7 +411,7 @@ const DynamicContentSection = async ({
                   src={image.sourceUrl || ''}
                   alt={image.altText || ''}
                   className={`relative w-full ${
-                    isSquare ? 'aspect-square' : 'aspect-[16/9]'
+                    isSquare ? 'aspect-square' : 'aspect-video'
                   } lg:aspect-auto lg:h-[239px]`}
                 />
               );
@@ -463,7 +463,10 @@ const DynamicContentSection = async ({
       <div className={cn('mx-auto flex flex-col items-start', wider ? 'max-w-section' : 'max-w-dynamic-content')}>
         {components.components.map((component, index) => renderComponent(component, index, totalComponents))}
         {showBackLink && (
-          <Link href={backLink}>
+          <Link
+            className='mt-12.5'
+            href={backLink}
+          >
             <Button
               buttonText={backLinkText}
               variant='white'

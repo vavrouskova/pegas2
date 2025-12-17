@@ -92,7 +92,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
       const category = validCategories[0];
       breadcrumbItems.push({
         label: category.name,
-        href: `/${t('routes.blog')}?category=${category.databaseId}`,
+        href: `/${t('routes.blog')}/${category.slug}`,
       });
     }
 
@@ -158,7 +158,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
       const category = typReference.nodes[0];
       breadcrumbItems.push({
         label: category.name,
-        href: `/${t('routes.references')}?category=${category.databaseId}`,
+        href: `/${t('routes.references')}/${category.slug}`,
       });
     }
 

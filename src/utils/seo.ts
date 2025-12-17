@@ -44,6 +44,11 @@ interface WordPressSeoData {
 type ContentType = 'page' | 'post' | 'referencePost' | 'sluzbyPost' | 'pobockaPost' | 'postupPost';
 
 /**
+ * Taxonomy type for fetching SEO data from categories
+ */
+type TaxonomyType = 'category' | 'typReference';
+
+/**
  * ID type for querying WordPress content
  */
 type IdType = 'DATABASE_ID' | 'SLUG' | 'URI';
@@ -174,6 +179,96 @@ async function fetchSeoData(options: GetSeoDataOptions): Promise<WordPressSeoDat
 }
 
 /**
+ * Determine the ID type for GraphQL query based on taxonomy type
+ */
+function getTaxonomyIdTypeForQuery(name: string): string {
+  if (name === 'category') return 'CategoryIdType';
+  if (name === 'typReference') return 'TypReferenceIdType';
+  return 'ID';
+}
+
+/**
+ * Fetches SEO data from WordPress GraphQL API for taxonomy terms (categories)
+ */
+async function fetchTaxonomySeoData(
+  taxonomyType: TaxonomyType,
+  slug: string,
+  revalidate = 0
+): Promise<WordPressSeoData | null> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL;
+
+  if (!graphqlUrl) {
+    console.error('NEXT_PUBLIC_GRAPHQL_URL is not defined');
+    return null;
+  }
+
+  const query = `
+    query GetTaxonomySeoData($slug: ID!, $idType: ${getTaxonomyIdTypeForQuery(taxonomyType)}!) {
+      ${taxonomyType}(id: $slug, idType: $idType) {
+        seo {
+          canonical
+          metaDesc
+          metaRobotsNofollow
+          metaRobotsNoindex
+          opengraphDescription
+          opengraphSiteName
+          opengraphTitle
+          opengraphType
+          opengraphUrl
+          title
+          twitterDescription
+          twitterTitle
+          opengraphImage {
+            sourceUrl
+            mediaDetails {
+              width
+              height
+            }
+            altText
+          }
+          twitterImage {
+            sourceUrl
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: {
+          slug,
+          idType: 'SLUG',
+        },
+      }),
+      next: { tags: ['wordpress'], revalidate },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors:', result.errors);
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.[taxonomyType]?.seo || null;
+  } catch (error) {
+    console.error('Error fetching taxonomy SEO data:', error);
+    return null;
+  }
+}
+
+/**
  * Default metadata fallback
  */
 function getDefaultMetadata(): Metadata {
@@ -296,4 +391,75 @@ export async function getSeoDataBySlug(contentType: ContentType, slug: string, r
     idType: 'SLUG',
     revalidate,
   });
+}
+
+/**
+ * Converts WordPress taxonomy SEO data to Next.js Metadata format
+ */
+async function convertTaxonomySeoToMetadata(seoData: WordPressSeoData | null): Promise<Metadata> {
+  if (!seoData) {
+    return getDefaultMetadata();
+  }
+
+  const isNoIndex = seoData.metaRobotsNoindex === 'noindex';
+  const isNoFollow = seoData.metaRobotsNofollow === 'nofollow';
+
+  return {
+    applicationName: process.env.NEXT_PUBLIC_APP_NAME || 'Pegas',
+    icons: '/favicon.ico',
+    title: seoData.title || seoData.opengraphTitle,
+    description: seoData.metaDesc,
+    robots: {
+      index: !isNoIndex,
+      follow: !isNoFollow,
+    },
+    authors: [
+      {
+        name: '(ant)',
+        url: 'https://antstudio.cz',
+      },
+    ],
+    alternates: {
+      canonical: seoData.canonical,
+    },
+    openGraph: {
+      type: (seoData.opengraphType as any) || 'website',
+      title: seoData.opengraphTitle,
+      description: seoData.opengraphDescription,
+      url: seoData.opengraphUrl,
+      siteName: seoData.opengraphSiteName,
+      images: seoData.opengraphImage?.sourceUrl
+        ? [
+            {
+              url: seoData.opengraphImage.sourceUrl,
+              width: seoData.opengraphImage.mediaDetails?.width,
+              height: seoData.opengraphImage.mediaDetails?.height,
+              alt: seoData.opengraphImage.altText,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seoData.twitterTitle,
+      description: seoData.twitterDescription,
+      images: seoData.twitterImage?.sourceUrl
+        ? [
+            {
+              url: seoData.twitterImage.sourceUrl,
+            },
+          ]
+        : undefined,
+    },
+  };
+}
+
+export async function getBlogCategorySeoBySlug(slug: string, revalidate?: number): Promise<Metadata> {
+  const seoData = await fetchTaxonomySeoData('category', slug, revalidate);
+  return convertTaxonomySeoToMetadata(seoData);
+}
+
+export async function getReferenceCategorySeoBySlug(slug: string, revalidate?: number): Promise<Metadata> {
+  const seoData = await fetchTaxonomySeoData('typReference', slug, revalidate);
+  return convertTaxonomySeoToMetadata(seoData);
 }

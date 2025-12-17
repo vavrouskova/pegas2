@@ -12,9 +12,9 @@ const Footer = async () => {
   const pobockyData = await getPobockyPosts();
 
   const navLinks = [
-    { href: t('routes.gdpr'), label: t('footer.gdpr') },
-    { href: t('routes.consumer-information'), label: t('footer.consumer-information') },
-    { href: t('routes.cookies'), label: t('footer.cookies') },
+    { href: `/${t('routes.gdpr')}`, label: t('footer.gdpr') },
+    { href: `/${t('routes.consumer-information')}`, label: t('footer.consumer-information') },
+    { href: `/${t('routes.cookies')}`, label: t('footer.cookies') },
   ];
 
   return (

@@ -17,7 +17,7 @@ import ReferencesGridSection from '@/components/_shared/ReferencesGridSection';
 import ReferencesPagination from '@/components/_shared/ReferencesPagination';
 import { REFERENCES_PER_PAGE } from '@/constants/references';
 import { parsePageNumber } from '@/utils/references-helpers';
-import { getSeoDataByUri } from '@/utils/seo';
+import { getReferenceCategorySeoBySlug } from '@/utils/seo';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,17 +33,8 @@ interface ReferencesCategoryPageProps {
 
 export async function generateMetadata({ params }: ReferencesCategoryPageProps): Promise<Metadata> {
   const { category: categorySlug } = await params;
-  const t = await getTranslations('routes');
-  const categoryData = await getReferenceCategoryBySlug(categorySlug);
 
-  if (!categoryData) {
-    return getSeoDataByUri('page', t('references'));
-  }
-
-  return {
-    title: `${categoryData.name} | Reference`,
-    description: categoryData.description || `Reference v kategorii ${categoryData.name}`,
-  };
+  return getReferenceCategorySeoBySlug(categorySlug);
 }
 
 const ReferencesCategoryPage = async ({ params, searchParams }: ReferencesCategoryPageProps) => {

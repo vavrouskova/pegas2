@@ -36,7 +36,7 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
           />
         ))}
         <Link
-          href={t('routes.services')}
+          href={`/${t('routes.services')}`}
           className='flex flex-col gap-2.5 transition-opacity duration-300 hover:opacity-70 lg:flex-1'
         >
           <div className='bg-primary flex aspect-square w-full items-center gap-2.5 self-stretch p-12' />

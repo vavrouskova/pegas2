@@ -24,6 +24,8 @@ export const pathnames = {
 
   '/references': { cs: '/reference' },
 
+  '/references/[category]': { cs: '/reference/[category]' },
+
   '/contacts': { cs: '/kontakty' },
 
   '/gdpr': { cs: '/zasady-ochrany-osobnich-udaju' },

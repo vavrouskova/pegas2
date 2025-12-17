@@ -9,27 +9,27 @@ export const getHeaderLinks = async () => {
   return [
     {
       label: tHeader('faq'),
-      href: tRoutes('faq'),
+      href: `/${tRoutes('faq')}`,
     },
     {
       label: tHeader('services'),
-      href: tRoutes('services'),
+      href: `/${tRoutes('services')}`,
     },
     {
       label: tHeader('references'),
-      href: tRoutes('references'),
+      href: `/${tRoutes('references')}`,
     },
     {
       label: tHeader('blog'),
-      href: tRoutes('blog'),
+      href: `/${tRoutes('blog')}`,
     },
     {
       label: tHeader('about-us'),
-      href: tRoutes('about-us'),
+      href: `/${tRoutes('about-us')}`,
     },
     {
       label: tHeader('contacts'),
-      href: tRoutes('contacts'),
+      href: `/${tRoutes('contacts')}`,
     },
   ];
 };
@@ -41,7 +41,7 @@ export const getFooterLinks = async () => {
   return [
     {
       label: tFooter('faq'),
-      href: tRoutes('faq'),
+      href: `/${tRoutes('faq')}`,
     },
   ];
 };
