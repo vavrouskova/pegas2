@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useCallback, useMemo, useState } from 'react';
 
@@ -11,6 +12,7 @@ interface Category {
   id: string;
   databaseId: number;
   name: string;
+  slug?: string;
 }
 
 interface FilterConfig {
@@ -18,6 +20,9 @@ interface FilterConfig {
   searchParam: string;
   pageParam: string;
   excludeCategoryIds?: number[];
+  useUrlRouting?: boolean;
+  basePath?: string;
+  activeCategorySlug?: string;
 }
 
 interface FilterProps {
@@ -31,10 +36,11 @@ const Filter = ({ categories, config }: FilterProps) => {
   const t = useTranslations('common');
   const [searchQuery, setSearchQuery] = useState(searchParameters.get(config.searchParam) || '');
 
-  const selectedCategory = searchParameters.get(config.categoryParam);
+  const selectedCategory = config.useUrlRouting
+    ? config.activeCategorySlug
+    : searchParameters.get(config.categoryParam);
   const hasActiveSearch = Boolean(searchParameters.get(config.searchParam));
 
-  // Helper funkce pro reset paginace
   const resetPagination = useCallback(
     (parameters: URLSearchParams): URLSearchParams => {
       const newParameters = new URLSearchParams(parameters.toString());
@@ -44,7 +50,6 @@ const Filter = ({ categories, config }: FilterProps) => {
     [config.pageParam]
   );
 
-  // Helper funkce pro aktualizaci search params
   const updateSearchParameters = useCallback(
     (currentParameters: URLSearchParams, updates: Record<string, string | null>): URLSearchParams => {
       const parameters = new URLSearchParams(currentParameters.toString());
@@ -62,7 +67,6 @@ const Filter = ({ categories, config }: FilterProps) => {
     []
   );
 
-  // Filtrovat kategorie podle excludeCategoryIds
   const filteredCategories = useMemo(() => {
     if (!config.excludeCategoryIds || config.excludeCategoryIds.length === 0) {
       return categories;
@@ -89,14 +93,24 @@ const Filter = ({ categories, config }: FilterProps) => {
   const handleSearchSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      const parameters = resetPagination(searchParameters);
       const trimmedQuery = searchQuery.trim();
-      const updatedParameters = updateSearchParameters(parameters, {
-        [config.searchParam]: trimmedQuery || null,
-        [config.categoryParam]: null,
-      });
 
-      router.push(`?${updatedParameters.toString()}`);
+      if (config.useUrlRouting && config.basePath) {
+        const parameters = new URLSearchParams();
+        if (trimmedQuery) {
+          parameters.set(config.searchParam, trimmedQuery);
+        }
+        const queryString = parameters.toString();
+        const url = queryString ? `${config.basePath}?${queryString}` : config.basePath;
+        router.push(url);
+      } else {
+        const parameters = resetPagination(searchParameters);
+        const updatedParameters = updateSearchParameters(parameters, {
+          [config.searchParam]: trimmedQuery || null,
+          [config.categoryParam]: null,
+        });
+        router.push(`?${updatedParameters.toString()}`);
+      }
     },
     [
       router,
@@ -104,29 +118,79 @@ const Filter = ({ categories, config }: FilterProps) => {
       searchQuery,
       config.searchParam,
       config.categoryParam,
+      config.useUrlRouting,
+      config.basePath,
       resetPagination,
       updateSearchParameters,
     ]
   );
 
+  const getCategoryUrl = (slug: string | undefined) => {
+    if (config.useUrlRouting && config.basePath && slug) {
+      return `${config.basePath}/${slug}`;
+    }
+    return '#';
+  };
+
+  const getAllUrl = () => {
+    if (config.useUrlRouting && config.basePath) {
+      return config.basePath;
+    }
+    return '#';
+  };
+
   return (
     <div className='flex flex-wrap items-center gap-1'>
       {/* Vše tlačítko */}
-      <button
-        onClick={() => handleCategoryClick(null)}
-        className={cn(
-          'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
-          isAllActive ? 'bg-primary' : 'bg-white'
-        )}
-      >
-        <span className={cn('text-sm whitespace-pre', isAllActive ? 'text-white-smoke' : 'text-primary')}>
-          {t('all')}
-        </span>
-      </button>
+      {config.useUrlRouting ? (
+        <Link
+          href={getAllUrl()}
+          className={cn(
+            'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
+            isAllActive ? 'bg-primary' : 'bg-white'
+          )}
+        >
+          <span className={cn('text-sm whitespace-pre', isAllActive ? 'text-white-smoke' : 'text-primary')}>
+            {t('all')}
+          </span>
+        </Link>
+      ) : (
+        <button
+          onClick={() => handleCategoryClick(null)}
+          className={cn(
+            'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
+            isAllActive ? 'bg-primary' : 'bg-white'
+          )}
+        >
+          <span className={cn('text-sm whitespace-pre', isAllActive ? 'text-white-smoke' : 'text-primary')}>
+            {t('all')}
+          </span>
+        </button>
+      )}
 
       {/* Kategorie */}
       {filteredCategories.map((category) => {
-        const isActive = selectedCategory === category.databaseId.toString();
+        const isActive = config.useUrlRouting
+          ? selectedCategory === category.slug
+          : selectedCategory === category.databaseId.toString();
+
+        if (config.useUrlRouting) {
+          return (
+            <Link
+              key={category.id}
+              href={getCategoryUrl(category.slug)}
+              className={cn(
+                'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
+                isActive ? 'bg-primary' : 'bg-white'
+              )}
+            >
+              <span className={cn('text-sm whitespace-pre', isActive ? 'text-white-smoke' : 'text-primary')}>
+                {category.name}
+              </span>
+            </Link>
+          );
+        }
+
         return (
           <button
             key={category.id}
