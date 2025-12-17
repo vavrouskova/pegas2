@@ -4,9 +4,10 @@ import { BlogCategory } from '@/utils/wordpress-types';
 
 interface BlogFilterProps {
   categories: BlogCategory[];
+  activeCategorySlug?: string;
 }
 
-const BlogFilter = ({ categories }: BlogFilterProps) => {
+const BlogFilter = ({ categories, activeCategorySlug }: BlogFilterProps) => {
   return (
     <Filter
       categories={categories}
@@ -15,6 +16,9 @@ const BlogFilter = ({ categories }: BlogFilterProps) => {
         searchParam: BLOG_QUERY_PARAMS.SEARCH,
         pageParam: BLOG_QUERY_PARAMS.PAGE,
         excludeCategoryIds: [UNCATEGORIZED_CATEGORY_ID],
+        useUrlRouting: true,
+        basePath: '/blog',
+        activeCategorySlug,
       }}
     />
   );
