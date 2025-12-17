@@ -32,7 +32,7 @@ const NotFound = async () => {
         <FormattedText
           text={t('404.title')}
           as='h1'
-          className='mb-12.5 text-5xl'
+          className='mb-12.5 text-5xl tracking-[0.37781rem]'
         />
 
         <div>
