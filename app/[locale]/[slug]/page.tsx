@@ -23,7 +23,6 @@ import LeavesImage from '@/components/_shared/LeavesImage';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 import BranchDetailSection from '@/components/branches/BranchDetailSection';
 import ContactForm from '@/components/forms/contact/ContactForm';
-import Logo from '@/components/icons/Logo';
 import ServicesGridSection from '@/components/services/ServicesGridSection';
 import { decodeHtmlEntitiesServer, stripHtmlTags } from '@/utils/helper';
 import { getSeoDataBySlug } from '@/utils/seo';
@@ -285,14 +284,23 @@ const SlugPage = async ({ params }: SlugPageProps) => {
           </div>
         </section>
 
-        <section className='max-w-dynamic-content mx-auto flex flex-col items-start'>
-          <Logo className='text-primary w-30' />
-          <FormattedText
-            text={t('faq.other-services-desc')}
-            as='p'
-            className='font-heading max-w-116 text-[1.375rem]'
+        {/* <section className='section-container relative'>
+          <div className='max-w-dynamic-content mx-auto flex flex-col gap-11'>
+            <Logo className='text-primary w-30' />
+            <FormattedText
+              text={t('faq.other-services-desc')}
+              as='p'
+              className='font-heading max-w-90 text-[1.375rem] text-balance'
+            />
+          </div>
+          <Image
+            src='/images/wing.webp'
+            alt='Background Image'
+            width={2000}
+            height={2000}
+            className='absolute top-1/2 right-0 z-[-1] w-180 min-w-140 translate-x-88 -translate-y-1/2 lg:w-200 xl:top-40 xl:w-232'
           />
-        </section>
+        </section> */}
 
         <ContentSection
           title={t('home.organized-by-us.title')}
