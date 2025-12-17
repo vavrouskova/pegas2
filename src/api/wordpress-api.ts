@@ -2,6 +2,7 @@ import { MAX_POSTS_FETCH, POSTS_PER_PAGE } from '@/constants/blog';
 import { MAX_REFERENCES_FETCH } from '@/constants/references';
 import { formatFarewellDateTime, stripHtmlTags } from '@/utils/helper';
 import type {
+  BlogCategory,
   BlogPost,
   BlogPostDetail,
   PobockaPost,
@@ -784,6 +785,50 @@ export async function getBlogCategories(first = 100) {
 }
 
 /**
+ * Získá kategorii podle slugu
+ * @param slug - Slug kategorie
+ * @returns Promise s detailem kategorie nebo null
+ */
+export async function getBlogCategoryBySlug(slug: string): Promise<BlogCategory | null> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetCategoryBySlug($slug: ID!) {
+      category(id: $slug, idType: SLUG) {
+        id
+        databaseId
+        name
+        slug
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { slug },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data?.data?.category || null;
+  } catch (error) {
+    console.error('Error fetching category by slug:', error);
+    return null;
+  }
+}
+
+/**
  * Rychlá kontrola, zda slug existuje jako blog post, služba, reference, pobočka nebo postup
  * @param slug - Slug k ověření
  * @returns 'post' | 'sluzbyPost' | 'referencePost' | 'pobockaPost' | 'postupPost' | null
@@ -1499,6 +1544,124 @@ export async function getBlogPosts(postsPerPage = POSTS_PER_PAGE, page = 1, cate
       totalCount: 0,
       totalPages: 0,
       currentPage: page,
+    };
+  }
+}
+
+/**
+ * Získá seznam blog postů (posts) filtrovaných podle category slug s podporou paginace a vyhledávání
+ * @param postsPerPage - Počet postů na stránku (výchozí 9)
+ * @param page - Číslo stránky (výchozí 1)
+ * @param categorySlug - Slug kategorie pro filtrování (volitelné)
+ * @param search - Vyhledávací dotaz (volitelné)
+ * @returns Promise s daty blog postů včetně paginace
+ */
+export async function getBlogPostsByCategorySlug(
+  postsPerPage = POSTS_PER_PAGE,
+  page = 1,
+  categorySlug?: string,
+  search?: string
+) {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const whereClause: Record<string, unknown> = {};
+  if (categorySlug) {
+    whereClause.categoryName = categorySlug;
+  }
+
+  const hasFilters = Object.keys(whereClause).length > 0;
+  const finalWhereClause = hasFilters ? whereClause : undefined;
+
+  const query = `
+    query GetBlogPostsByCategorySlug($first: Int!, $where: RootQueryToPostConnectionWhereArgs) {
+      posts(first: $first, where: $where) {
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        nodes {
+          id
+          databaseId
+          title
+          slug
+          excerpt
+          categories {
+            nodes {
+              id
+              name
+              slug
+            }
+          }
+          featuredImage {
+            node {
+              sourceUrl
+              altText
+              mediaDetails {
+                width
+                height
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: {
+          first: 1000,
+          where: finalWhereClause,
+        },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    let allPosts = data?.data?.posts?.nodes || [];
+
+    // Apply search filter client-side if needed
+    if (search && search.trim()) {
+      const searchLower = search.toLowerCase().trim();
+      allPosts = allPosts.filter(
+        (post: BlogPost) =>
+          post.title.toLowerCase().includes(searchLower) ||
+          (post.excerpt && post.excerpt.toLowerCase().includes(searchLower))
+      );
+    }
+
+    // Calculate pagination
+    const totalPosts = allPosts.length;
+    const totalPages = Math.ceil(totalPosts / postsPerPage);
+    const startIndex = (page - 1) * postsPerPage;
+    const endIndex = startIndex + postsPerPage;
+    const paginatedPosts = allPosts.slice(startIndex, endIndex);
+
+    return {
+      nodes: paginatedPosts,
+      totalPages,
+      currentPage: page,
+      totalPosts,
+    };
+  } catch (error) {
+    console.error('Error fetching blog posts by category slug:', error);
+    return {
+      nodes: [],
+      totalPages: 0,
+      currentPage: 1,
+      totalPosts: 0,
     };
   }
 }
