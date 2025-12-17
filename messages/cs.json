@@ -1,8 +1,10 @@
 {
   "error_page": {
     "404": {
-      "title": "Stránka nenalezena",
-      "description": "Stránka, kterou hledáte, neexistuje."
+      "title": "404",
+      "description": "Tato stránka neexistuje.",
+      "back_to_home_text": "Pokračovat na ",
+      "back_to_home_link": "hlavní stránku"
     },
     "500": {
       "title": "Vnitřní <span>chyba</span> serveru",

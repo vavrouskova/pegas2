@@ -161,6 +161,7 @@
 
   .font-text {
     font-variation-settings: var(--font-text);
+    text-decoration-thickness: 1px;
   }
 
   .font-heading {
