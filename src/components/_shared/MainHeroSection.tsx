@@ -49,7 +49,7 @@ const MainHeroSection = async ({
         <div className={cn('max-w-lg-content flex flex-col justify-center gap-12 lg:gap-25')}>
           <div className='space-y-2.5'>
             {Array.isArray(title) ? (
-              <h1 className='text-primary flex flex-col gap-8'>
+              <h1 className='flex flex-col gap-8'>
                 {title.map((line, index) => (
                   <FormattedText
                     key={index}

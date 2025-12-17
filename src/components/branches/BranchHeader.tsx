@@ -11,12 +11,12 @@ export const BranchHeader = ({ city, branchTitle }: BranchHeaderProps) => {
       <FormattedText
         text={city}
         as='span'
-        className='font-heading text-primary text-2xl leading-[150%]'
+        className='font-heading text-2xl leading-[150%]'
       />
       <FormattedText
         text={branchTitle}
         as='span'
-        className='font-heading text-primary text-2xl leading-[150%]'
+        className='font-heading text-2xl leading-[150%]'
       />
     </h1>
   );

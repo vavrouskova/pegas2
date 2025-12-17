@@ -119,6 +119,12 @@ const DynamicContentSection = async ({
           .replace(/<br\s*\/?>/gi, '\n')
           // eslint-disable-next-line sonarjs/slow-regex
           .replace(/<[^>]*>/g, '')
+          .replace(/&nbsp;/g, '\u00A0')
+          .replace(/&amp;/g, '&')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .replace(/&quot;/g, '"')
+          .replace(/&#39;/g, "'")
           .trim()
       );
     };
@@ -457,10 +463,7 @@ const DynamicContentSection = async ({
       <div className={cn('mx-auto flex flex-col items-start', wider ? 'max-w-section' : 'max-w-dynamic-content')}>
         {components.components.map((component, index) => renderComponent(component, index, totalComponents))}
         {showBackLink && (
-          <Link
-            href={backLink}
-            className='text-primary'
-          >
+          <Link href={backLink}>
             <Button
               buttonText={backLinkText}
               variant='white'

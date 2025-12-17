@@ -33,7 +33,7 @@ const BranchCardContent = ({
         <FormattedText
           text={city}
           as='p'
-          className='text-primary font-heading text-lg'
+          className='font-heading text-lg'
         />
       )}
       {title && (
@@ -48,7 +48,7 @@ const BranchCardContent = ({
         <FormattedText
           text={openDaysWorking}
           as='p'
-          className={cn('text-primary text-sm', !openDaysWeekend && 'mb-12')}
+          className={cn('text-sm', !openDaysWeekend && 'mb-12')}
         />
       )}
 
@@ -56,14 +56,14 @@ const BranchCardContent = ({
         <FormattedText
           text={openDaysWeekend}
           as='p'
-          className='text-primary mb-12 text-sm'
+          className='mb-12 text-sm'
         />
       )}
 
       {phoneNumber && (
         <Link
           href={`tel:${phoneNumber}`}
-          className='text-primary text-lg underline hover:no-underline'
+          className='text-lg underline hover:no-underline'
         >
           {phoneNumber}
         </Link>

@@ -49,14 +49,13 @@ export const BranchConsultant = ({ consultant }: BranchConsultantProps) => {
           <FormattedText
             text={name}
             as='p'
-            className='font-heading text-primary text-xl'
+            className='font-heading text-xl'
           />
         )}
         {position && (
           <FormattedText
             text={position}
             as='p'
-            className='text-primary'
           />
         )}
       </div>

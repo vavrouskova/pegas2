@@ -11,7 +11,7 @@ interface BranchLocationProps {
 }
 
 const FEATURE_ICON_CLASS = 'size-9';
-const FEATURE_TEXT_CLASS = 'text-primary text-lg';
+const FEATURE_TEXT_CLASS = 'text-lg';
 
 export const BranchLocation = ({
   visitUs,
@@ -31,7 +31,7 @@ export const BranchLocation = ({
           <FormattedText
             text={whereToFindLabel}
             as='p'
-            className='text-primary font-heading text-lg'
+            className='font-heading text-lg'
           />
           <FormattedText
             text={visitUs}

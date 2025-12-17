@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import React, { useRef, useState } from 'react';
 
+import { FormattedText } from '@/components/_shared/FormattedText';
 import { MotionDiv } from '@/components/animate-ui/MotionWrappers';
 import BaseForm from '@/components/form-components/BaseForm';
 import FormInput from '@/components/form-components/FormInput';
@@ -35,8 +36,14 @@ const ContactForm = (props: ContactFormProps) => {
       <div className='max-w-dynamic-content mx-auto'>
         {/* Title and Description */}
         <div className='mb-12 flex flex-col gap-2.5'>
-          <h2 className='text-primary'>{t('title')}</h2>
-          <p className='text-primary'>{t('description')}</p>
+          <FormattedText
+            text={t('title')}
+            as='h2'
+          />
+          <FormattedText
+            text={t('description')}
+            as='p'
+          />
         </div>
 
         <BaseForm
@@ -84,7 +91,11 @@ const ContactForm = (props: ContactFormProps) => {
                 onClick={() => setIsFarewellSectionOpen(!isFarewellSectionOpen)}
                 className='hover:bg-grey-warm/30 border-grey-warm flex w-full items-center justify-between border-b p-5 text-left transition-colors'
               >
-                <h3 className='font-bold-cta text-primary text-lg'>{t('farewell-title')}</h3>
+                <FormattedText
+                  text={t('farewell-title')}
+                  as='h3'
+                  className='font-bold-cta text-lg'
+                />
                 <MotionDiv
                   animate={{ rotate: isFarewellSectionOpen ? 180 : 0 }}
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
@@ -111,7 +122,11 @@ const ContactForm = (props: ContactFormProps) => {
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.1, duration: 0.3 }}
                       >
-                        <p className='text-primary mb-8'>{t('farewell-description')}</p>
+                        <FormattedText
+                          text={t('farewell-description')}
+                          as='p'
+                          className='mb-8'
+                        />
                       </MotionDiv>
 
                       <MotionDiv

@@ -20,7 +20,7 @@ const PageHeroSection = ({ title, description, classNameSection, classNameConten
         <FormattedText
           text={description}
           as='p'
-          className='max-w-content text-primary'
+          className='max-w-content'
         />
         <LeavesImage />
       </div>

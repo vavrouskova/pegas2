@@ -47,7 +47,6 @@ const BasicHeroSection = ({
           <FormattedText
             text={description}
             as='p'
-            className='text-primary'
           />
         </div>
         {image && (
@@ -67,7 +66,7 @@ const BasicHeroSection = ({
           alt='Decorative leaves'
           width={300}
           height={300}
-          className='absolute top-5 left-1/2 z-10 h-auto w-[31.8725rem] translate-x-[31rem] -scale-x-100 rotate-[260deg] max-lg:hidden'
+          className='absolute top-5 left-1/2 z-10 h-auto w-[31.8725rem] translate-x-124 -scale-x-100 rotate-260 max-lg:hidden'
         />
       )}
       {decorativeImage === 'flowers' && (
@@ -76,7 +75,7 @@ const BasicHeroSection = ({
           alt='Decorative flowers'
           width={300}
           height={300}
-          className='absolute top-20 left-1/2 z-10 h-auto w-[24rem] translate-x-[35rem] -scale-x-100 -rotate-45 max-lg:hidden'
+          className='absolute top-20 left-1/2 z-10 h-auto w-[24rem] translate-x-140 -scale-x-100 -rotate-45 max-lg:hidden'
         />
       )}
     </section>

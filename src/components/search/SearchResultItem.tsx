@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
+import { FormattedText } from '@/components/_shared/FormattedText';
 import { POST_TYPE_LABELS } from '@/config/search.config';
 import { useSearch } from '@/providers/SearchProvider';
 import { SearchResult } from '@/utils/search-types';
@@ -29,8 +30,18 @@ export const SearchResultItem = ({ result }: SearchResultItemProps) => {
       >
         <div className='flex items-start justify-between gap-4'>
           <div className='min-w-0 flex-1'>
-            <h3 className='text-primary truncate text-base font-medium'>{item.title}</h3>
-            {item.content && <p className='text-secondary mt-1 line-clamp-2 text-sm'>{item.content}</p>}
+            <FormattedText
+              text={item.title}
+              as='h3'
+              className='truncate text-base font-medium'
+            />
+            {item.content && (
+              <FormattedText
+                text={item.content}
+                as='p'
+                className='text-secondary mt-1 line-clamp-2 text-sm'
+              />
+            )}
           </div>
           <span className='bg-grey-warm text-secondary shrink-0 px-2 py-1 text-xs max-md:hidden'>
             {POST_TYPE_LABELS[item.postType]}

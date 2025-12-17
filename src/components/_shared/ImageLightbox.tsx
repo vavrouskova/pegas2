@@ -198,7 +198,7 @@ const LightboxImage = ({
 
     {image.caption && (
       <div className='absolute right-0 bottom-0 left-0 z-10 bg-gradient-to-t from-black/80 to-transparent p-6 text-center'>
-        <p className='text-primary text-sm'>{image.caption}</p>
+        <p className='text-sm'>{image.caption}</p>
       </div>
     )}
   </div>

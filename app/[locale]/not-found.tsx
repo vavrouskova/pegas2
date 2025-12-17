@@ -29,16 +29,16 @@ const NotFound = async () => {
           <FormattedText
             text={t('404.description')}
             as='p'
-            className='text-primary text-lg md:text-xl'
+            className='mb-12.5 text-lg md:text-xl'
           />
           <FormattedText
             text={t('404.back_to_home_text')}
             as='span'
-            className='text-primary text-lg md:text-xl'
+            className='mb-12.5 text-lg md:text-xl'
           />
           <Link
             href='/'
-            className='link text-primary font-text text-lg md:text-xl'
+            className='link font-text text-lg md:text-xl'
           >
             {t('404.back_to_home_link')}
           </Link>

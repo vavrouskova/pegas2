@@ -5,7 +5,7 @@ interface BranchContactInfoProps {
   email?: string;
 }
 
-const CONTACT_LINK_CLASS = 'text-primary text-lg underline hover:no-underline';
+const CONTACT_LINK_CLASS = 'text-lg underline hover:no-underline';
 
 export const BranchContactInfo = ({ phoneNumber, email }: BranchContactInfoProps) => {
   if (!phoneNumber && !email) return null;

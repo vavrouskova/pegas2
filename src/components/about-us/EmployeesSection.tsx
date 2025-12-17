@@ -58,7 +58,7 @@ const EmployeeCard = ({ employee, className }: Readonly<EmployeeCardProps>) => {
           <FormattedText
             text={zamestnanciACF.positionDescription}
             as='p'
-            className='text-primary text-lg'
+            className='text-lg'
           />
         )}
         {zamestnanciACF?.employeeQuote && (

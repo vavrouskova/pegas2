@@ -62,7 +62,7 @@ const BaseForm = (props: BaseFormProps) => {
         ref={successMessageRef}
         className={`mx-auto h-full w-full ${className ?? ''}`}
       >
-        <div className='text-primary flex flex-col items-center justify-center py-12 text-center'>
+        <div className='flex flex-col items-center justify-center py-12 text-center'>
           <h3 className='font-heading mb-4 text-2xl'>{successText || t('success.title')}</h3>
           <p className='font-text text-lg'>{t('success.description')}</p>
         </div>
@@ -83,7 +83,7 @@ const BaseForm = (props: BaseFormProps) => {
 
         <div className='mt-8 flex flex-row items-center justify-between gap-4 lg:gap-8'>
           {showGdprConsent && (
-            <p className='text-primary flex-1 text-right text-xs lg:text-base'>
+            <p className='flex-1 text-right text-xs lg:text-base'>
               {t('gdpr-prefix')}{' '}
               <Link
                 href='/zasady-ochrany-osobnich-udaju'

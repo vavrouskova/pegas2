@@ -26,7 +26,7 @@ const ReferencesGridSection = ({ referencePosts }: ReferencesGridSectionProps) =
             imageAlt={imageAlt}
             title={reference.title}
           >
-            {farewellDate && <p className='font-text text-primary text-sm'>{farewellDate}</p>}
+            {farewellDate && <p className='font-text text-sm'>{farewellDate}</p>}
           </GridCard>
         );
       })}

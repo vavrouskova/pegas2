@@ -52,13 +52,13 @@ const PersonCard = ({ person, className }: Readonly<PersonCardProps>) => {
           <FormattedText
             text={zamestnanciACF.positionDescription}
             as='p'
-            className='text-primary text-lg'
+            className='text-lg'
           />
         )}
         {email && (
           <Link
             href={`mailto:${email}`}
-            className='text-primary mt-5 text-lg underline hover:no-underline'
+            className='mt-5 text-lg underline hover:no-underline'
           >
             {email}
           </Link>

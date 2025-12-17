@@ -46,7 +46,7 @@ const Breadcrumbs = async ({ pageTitle, items = [], className }: BreadcrumbsProp
             )}
           </React.Fragment>
         ))}
-        - <span className='font-text text-primary text-sm'>{pageTitle}</span>
+        - <span className='font-text text-sm'>{pageTitle}</span>
       </div>
 
       <div className='flex flex-wrap items-center gap-2 lg:hidden'>
@@ -61,7 +61,7 @@ const Breadcrumbs = async ({ pageTitle, items = [], className }: BreadcrumbsProp
             </Link>
           </>
         )}
-        - <span className='font-text text-primary text-sm'>{pageTitle}</span>
+        - <span className='font-text text-sm'>{pageTitle}</span>
       </div>
     </div>
   );

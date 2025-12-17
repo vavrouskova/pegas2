@@ -120,7 +120,7 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
 
         {/* Mobile: Zobrazit pouze aktuální stránku */}
         <div className='flex items-center gap-2 md:hidden'>
-          <span className='text-primary text-base'>
+          <span className='text-base'>
             {currentPage} / {totalPages}
           </span>
         </div>
@@ -133,7 +133,7 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
               return (
                 <span
                   key={`ellipsis-${index}`}
-                  className='text-primary flex min-w-[24px] items-center justify-center px-2 py-1 text-base'
+                  className='flex min-w-[24px] items-center justify-center px-2 py-1 text-base'
                 >
                   ...
                 </span>
@@ -154,9 +154,7 @@ const BlogPagination = ({ totalPages, currentPage }: BlogPaginationProps) => {
                 aria-label={`${t('go-to-page')} ${pageNumber}`}
                 aria-current={isActive ? 'page' : undefined}
               >
-                <span className={cn('text-base leading-[1.5]', isActive ? 'text-white' : 'text-primary')}>
-                  {pageNumber}
-                </span>
+                <span className={cn('text-base leading-normal', isActive ? 'text-white' : '')}>{pageNumber}</span>
               </button>
             );
           })}

@@ -23,6 +23,7 @@ import LeavesImage from '@/components/_shared/LeavesImage';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 import BranchDetailSection from '@/components/branches/BranchDetailSection';
 import ContactForm from '@/components/forms/contact/ContactForm';
+import Logo from '@/components/icons/Logo';
 import ServicesGridSection from '@/components/services/ServicesGridSection';
 import { decodeHtmlEntitiesServer, stripHtmlTags } from '@/utils/helper';
 import { getSeoDataBySlug } from '@/utils/seo';
@@ -115,7 +116,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
             categorySlug={categories?.nodes?.[0]?.slug}
             backLink={`/${t('routes.blog')}`}
             backLinkText={t('blog.back-to-blog')}
-            className='lg:!pt-12.5'
+            className='lg:pt-12.5!'
           />
         )}
 
@@ -181,7 +182,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
             categorySlug={typReference?.nodes?.[0]?.slug}
             backLink={`/${t('routes.references')}`}
             backLinkText={t('references.back-to-references')}
-            className='lg:!pt-12.5'
+            className='lg:pt-12.5!'
           />
         )}
 
@@ -259,11 +260,11 @@ const SlugPage = async ({ params }: SlugPageProps) => {
           <DynamicContentSection
             components={components}
             showBackLink={false}
-            className='lg:!pt-12.5'
+            className='lg:pt-12.5!'
           />
         )}
 
-        <section className='section-container'>
+        <section className='section-container pt-0! lg:pt-0!'>
           <div className='max-w-dynamic-content mx-auto'>
             <FormattedText
               text={bottomSubtitle}
@@ -282,6 +283,15 @@ const SlugPage = async ({ params }: SlugPageProps) => {
               <Button buttonText={t('faq.branches-button')} />
             </Link>
           </div>
+        </section>
+
+        <section className='max-w-dynamic-content mx-auto flex flex-col items-start'>
+          <Logo className='text-primary w-30' />
+          <FormattedText
+            text={t('faq.other-services-desc')}
+            as='p'
+            className='font-heading max-w-116 text-[1.375rem]'
+          />
         </section>
 
         <ContentSection
@@ -340,7 +350,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
       <DynamicContentSection
         components={components}
         categorySlug={typSluzby?.nodes?.[0]?.slug}
-        className='lg:!pt-12.5'
+        className='lg:pt-12.5!'
       />
 
       <ContentSection
