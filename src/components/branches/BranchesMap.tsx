@@ -1,8 +1,9 @@
 'use client';
 
-import { LatLngBounds } from 'leaflet';
+import L, { LatLngBounds } from 'leaflet';
 import { useEffect, useSyncExternalStore } from 'react';
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
 
 import BranchCardClient from '@/components/branches/BranchCardClient';
 import { getMapStyles } from '@/components/branches/map-styles';
@@ -55,6 +56,27 @@ const useIsClient = () => {
   );
 };
 
+const createClusterIcon = (cluster: L.MarkerCluster) => {
+  const count = cluster.getChildCount();
+  let size = 'small';
+  let dimensions = 36;
+
+  if (count >= 10) {
+    size = 'medium';
+    dimensions = 44;
+  }
+  if (count >= 20) {
+    size = 'large';
+    dimensions = 52;
+  }
+
+  return L.divIcon({
+    html: `<div>${count}</div>`,
+    className: `marker-cluster marker-cluster-${size}`,
+    iconSize: L.point(dimensions, dimensions),
+  });
+};
+
 const BranchesMap = ({ branches, className }: BranchesMapProps) => {
   const isClient = useIsClient();
   const branchesWithCoords = useBranchesWithCoords(branches);
@@ -91,23 +113,31 @@ const BranchesMap = ({ branches, className }: BranchesMapProps) => {
       >
         <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
         <FitBounds coords={validCoords} />
-        {branchesWithCoords.map((branch) => (
-          <Marker
-            key={branch.id}
-            position={[branch.coords.lat, branch.coords.lng]}
-            icon={markerIcon}
-          >
-            <Popup>
-              <BranchCardClient
-                branch={branch}
-                layout='horizontal'
-                showClosedInfo={false}
-                showParking={false}
-                className='w-80 gap-7.5 px-5.5 py-6.5 lg:w-150'
-              />
-            </Popup>
-          </Marker>
-        ))}
+        <MarkerClusterGroup
+          chunkedLoading
+          spiderfyOnMaxZoom
+          showCoverageOnHover={false}
+          maxClusterRadius={40}
+          iconCreateFunction={createClusterIcon}
+        >
+          {branchesWithCoords.map((branch) => (
+            <Marker
+              key={branch.id}
+              position={[branch.coords.lat, branch.coords.lng]}
+              icon={markerIcon}
+            >
+              <Popup>
+                <BranchCardClient
+                  branch={branch}
+                  layout='horizontal'
+                  showClosedInfo={false}
+                  showParking={false}
+                  className='w-80 gap-7.5 px-5.5 py-6.5 lg:w-150'
+                />
+              </Popup>
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
       </MapContainer>
     </div>
   );

@@ -50,6 +50,51 @@ export const MAP_STYLES = {
     }
   `,
 
+  CLUSTER: `
+    .marker-cluster {
+      background: oklch(var(--tertiary)) !important;
+      border-radius: 50% !important;
+    }
+    .marker-cluster div {
+      background: oklch(var(--primary)) !important;
+      color: #fff !important;
+      border-radius: 50% !important;
+      font-weight: 600 !important;
+      font-size: 16px !important;
+      line-height: 1 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .marker-cluster-small {
+      width: 36px !important;
+      height: 36px !important;
+    }
+    .marker-cluster-small div {
+      width: 28px !important;
+      height: 28px !important;
+      margin: 4px !important;
+    }
+    .marker-cluster-medium {
+      width: 44px !important;
+      height: 44px !important;
+    }
+    .marker-cluster-medium div {
+      width: 34px !important;
+      height: 34px !important;
+      margin: 5px !important;
+    }
+    .marker-cluster-large {
+      width: 52px !important;
+      height: 52px !important;
+    }
+    .marker-cluster-large div {
+      width: 40px !important;
+      height: 40px !important;
+      margin: 6px !important;
+    }
+  `,
+
   CLOSE_BUTTON: `
     .leaflet-popup-close-button {
       width: 30px !important;
