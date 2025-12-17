@@ -1084,6 +1084,51 @@ export async function getReferenceTaxonomies(first = 100): Promise<ReferenceCate
 }
 
 /**
+ * Získá kategorii reference podle slugu
+ * @param slug - Slug kategorie
+ * @returns Promise s detailem kategorie nebo null
+ */
+export async function getReferenceCategoryBySlug(slug: string): Promise<ReferenceCategory | null> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetReferenceCategoryBySlug($slug: ID!) {
+      typReference(id: $slug, idType: SLUG) {
+        id
+        databaseId
+        name
+        slug
+        description
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { slug },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data?.data?.typReference || null;
+  } catch (error) {
+    console.error('Error fetching reference category by slug:', error);
+    return null;
+  }
+}
+
+/**
  * Získá seznam referenčních postů (referencePosts) s podporou paginace, filtrování podle kategorie a vyhledávání
  * @param referencesPerPage - Počet referencí na stránku (výchozí 9)
  * @param page - Číslo stránky (výchozí 1)
@@ -1216,6 +1261,121 @@ export async function getReferencePosts(referencesPerPage = 9, page = 1, categor
       totalCount: 0,
       totalPages: 0,
       currentPage: page,
+    };
+  }
+}
+
+/**
+ * Získá seznam referenčních postů filtrovaných podle category slug s podporou paginace a vyhledávání
+ * @param referencesPerPage - Počet referencí na stránku (výchozí 9)
+ * @param page - Číslo stránky (výchozí 1)
+ * @param categorySlug - Slug kategorie pro filtrování (volitelné)
+ * @param search - Vyhledávací dotaz (volitelné)
+ * @returns Promise s daty referencí včetně paginace
+ */
+export async function getReferencePostsByCategorySlug(
+  referencesPerPage = 9,
+  page = 1,
+  categorySlug?: string,
+  search?: string
+) {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetReferencePostsByCategorySlug($first: Int!) {
+      referencePosts(first: $first) {
+        nodes {
+          id
+          databaseId
+          title
+          slug
+          date
+          featuredImage {
+            node {
+              sourceUrl
+              altText
+              mediaDetails {
+                width
+                height
+              }
+            }
+          }
+          referenceACF {
+            farewellDate
+            farewellPlace
+            introImage {
+              node {
+                sourceUrl
+                altText
+              }
+            }
+          }
+          typReference {
+            nodes {
+              id
+              databaseId
+              name
+              slug
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query,
+        variables: { first: 1000 },
+      }),
+      next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    let allPosts = data?.data?.referencePosts?.nodes || [];
+
+    // Filter by category slug if provided
+    if (categorySlug) {
+      allPosts = allPosts.filter((post: ReferencePost) =>
+        post.typReference?.nodes?.some((cat: ReferenceCategory) => cat.slug === categorySlug)
+      );
+    }
+
+    // Apply search filter if provided
+    if (search && search.trim()) {
+      const searchLower = search.toLowerCase().trim();
+      allPosts = allPosts.filter((post: ReferencePost) => post.title.toLowerCase().includes(searchLower));
+    }
+
+    // Calculate pagination
+    const totalPosts = allPosts.length;
+    const totalPages = Math.ceil(totalPosts / referencesPerPage);
+    const startIndex = (page - 1) * referencesPerPage;
+    const endIndex = startIndex + referencesPerPage;
+    const paginatedPosts = allPosts.slice(startIndex, endIndex);
+
+    return {
+      nodes: paginatedPosts,
+      totalPages,
+      currentPage: page,
+      totalPosts,
+    };
+  } catch (error) {
+    console.error('Error fetching reference posts by category slug:', error);
+    return {
+      nodes: [],
+      totalPages: 0,
+      currentPage: 1,
+      totalPosts: 0,
     };
   }
 }
