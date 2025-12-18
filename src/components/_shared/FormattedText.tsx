@@ -4,7 +4,7 @@ import React from 'react';
 import { czechTypography } from '@/lib/utils';
 
 interface ParsedSegment {
-  type: 'text' | 'br' | 'link';
+  type: 'text' | 'br' | 'link' | 'bold' | 'italic';
   content?: string;
   className?: string;
   href?: string;
@@ -20,16 +20,18 @@ interface ParsedSegment {
  * - {{br:lg:hidden}} - odřádkování skryté na lg a větších obrazovkách
  * - {{link:url|text}} - odkaz s URL a textem
  * - {{link:url|text|target}} - odkaz s URL, textem a target atributem
+ * - {{bold:text}} - tučný text
+ * - {{italic:text}} - kurzíva
  *
  * @param text - Text k parsování
- * @returns Pole segmentů s textem, br elementy a odkazy
+ * @returns Pole segmentů s textem, br elementy, odkazy a formátováním
  */
 function parseText(text: string): ParsedSegment[] {
   const segments: ParsedSegment[] = [];
 
-  // Combined pattern for {{br}}, {{br:className}}, and {{link:url|text}} or {{link:url|text|target}}
-  // eslint-disable-next-line security/detect-unsafe-regex -- bounded character classes cannot cause catastrophic backtracking
-  const pattern = /\{\{(?:br(?::([^}]+))?|link:([^|]+)\|([^|}]+)(?:\|([^}]+))?)\}\}/g;
+  // Combined pattern for {{br}}, {{br:className}}, {{link:url|text|target}}, {{bold:text}}, {{italic:text}}
+  // eslint-disable-next-line security/detect-unsafe-regex, sonarjs/regex-complexity -- bounded character classes cannot cause catastrophic backtracking
+  const pattern = /\{\{(?:br(?::([^}]+))?|link:([^|]+)\|([^|}]+)(?:\|([^}]+))?|bold:([^}]+)|italic:([^}]+))\}\}/g;
 
   let lastIndex = 0;
   let match;
@@ -44,14 +46,26 @@ function parseText(text: string): ParsedSegment[] {
       });
     }
 
-    // Check if it's a link or br
-    if (match[2] !== undefined && match[3] !== undefined) {
+    // Check what type of tag it is
+    if (match[2] && match[3]) {
       // It's a link: {{link:url|text}} or {{link:url|text|target}}
       segments.push({
         type: 'link',
         href: match[2],
         content: match[3],
         target: match[4] || undefined,
+      });
+    } else if (match[5]) {
+      // It's bold: {{bold:text}}
+      segments.push({
+        type: 'bold',
+        content: match[5],
+      });
+    } else if (match[6]) {
+      // It's italic: {{italic:text}}
+      segments.push({
+        type: 'italic',
+        content: match[6],
       });
     } else {
       // It's a br: {{br}} or {{br:className}}
@@ -117,6 +131,7 @@ export const FormattedText = ({
 
   return (
     <Component className={className}>
+      {/* eslint-disable-next-line sonarjs/cognitive-complexity */}
       {segments.map((segment, index) => {
         if (segment.type === 'br') {
           return (
@@ -142,6 +157,31 @@ export const FormattedText = ({
             >
               {linkText}
             </Link>
+          );
+        }
+
+        if (segment.type === 'bold') {
+          const boldText = applyCzechTypography && segment.content ? czechTypography(segment.content) : segment.content;
+          return (
+            <span
+              key={index}
+              className='font-bold-text'
+            >
+              {boldText}
+            </span>
+          );
+        }
+
+        if (segment.type === 'italic') {
+          const italicText =
+            applyCzechTypography && segment.content ? czechTypography(segment.content) : segment.content;
+          return (
+            <span
+              key={index}
+              className='font-italic'
+            >
+              {italicText}
+            </span>
           );
         }
 

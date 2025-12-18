@@ -124,6 +124,10 @@ const DynamicContentSection = async ({
               return target ? `{{link:${href}|${text}|${target}}}` : `{{link:${href}|${text}}}`;
             }
           )
+          // Preserve bold/strong tags
+          .replace(/<(?:strong|b)>([\s\S]*?)<\/(?:strong|b)>/gi, '{{bold:$1}}')
+          // Preserve italic/em tags
+          .replace(/<(?:em|i)>([\s\S]*?)<\/(?:em|i)>/gi, '{{italic:$1}}')
           // eslint-disable-next-line sonarjs/slow-regex
           .replace(/<[^>]*>/g, '')
           .replace(/&nbsp;/g, '\u00A0')
