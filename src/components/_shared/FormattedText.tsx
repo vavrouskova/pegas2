@@ -1,30 +1,35 @@
+import Link from 'next/link';
 import React from 'react';
 
 import { czechTypography } from '@/lib/utils';
 
 interface ParsedSegment {
-  type: 'text' | 'br';
+  type: 'text' | 'br' | 'link';
   content?: string;
   className?: string;
+  href?: string;
+  target?: string;
 }
 
 /**
- * Parsuje text se speciálními značkami pro responzivní odřádkování
+ * Parsuje text se speciálními značkami pro responzivní odřádkování a odkazy
  *
  * Podporované formáty:
  * - {{br}} - běžné odřádkování (vždy viditelné)
  * - {{br:max-lg:hidden}} - odřádkování skryté na menších obrazovkách než lg
  * - {{br:lg:hidden}} - odřádkování skryté na lg a větších obrazovkách
+ * - {{link:url|text}} - odkaz s URL a textem
+ * - {{link:url|text|target}} - odkaz s URL, textem a target atributem
  *
  * @param text - Text k parsování
- * @returns Pole segmentů s textem a br elementy
+ * @returns Pole segmentů s textem, br elementy a odkazy
  */
 function parseText(text: string): ParsedSegment[] {
   const segments: ParsedSegment[] = [];
 
-  // Regexp pro nalezení {{br}} nebo {{br:className}}
-  // eslint-disable-next-line security/detect-unsafe-regex -- bounded character class [^}]+ cannot cause catastrophic backtracking
-  const pattern = /\{\{br(?::([^}]+))?\}\}/g;
+  // Combined pattern for {{br}}, {{br:className}}, and {{link:url|text}} or {{link:url|text|target}}
+  // eslint-disable-next-line security/detect-unsafe-regex -- bounded character classes cannot cause catastrophic backtracking
+  const pattern = /\{\{(?:br(?::([^}]+))?|link:([^|]+)\|([^|}]+)(?:\|([^}]+))?)\}\}/g;
 
   let lastIndex = 0;
   let match;
@@ -39,11 +44,22 @@ function parseText(text: string): ParsedSegment[] {
       });
     }
 
-    // Přidat br element
-    segments.push({
-      type: 'br',
-      className: match[1] || undefined,
-    });
+    // Check if it's a link or br
+    if (match[2] !== undefined && match[3] !== undefined) {
+      // It's a link: {{link:url|text}} or {{link:url|text|target}}
+      segments.push({
+        type: 'link',
+        href: match[2],
+        content: match[3],
+        target: match[4] || undefined,
+      });
+    } else {
+      // It's a br: {{br}} or {{br:className}}
+      segments.push({
+        type: 'br',
+        className: match[1] || undefined,
+      });
+    }
 
     lastIndex = pattern.lastIndex;
   }
@@ -108,6 +124,24 @@ export const FormattedText = ({
               key={index}
               className={segment.className}
             />
+          );
+        }
+
+        if (segment.type === 'link' && segment.href) {
+          const linkText = applyCzechTypography && segment.content ? czechTypography(segment.content) : segment.content;
+          const target = segment.target || '_self';
+          const isNewWindow = target === '_blank';
+
+          return (
+            <Link
+              key={index}
+              href={segment.href}
+              target={target}
+              rel={isNewWindow ? 'noopener noreferrer' : undefined}
+              className='text-primary underline hover:no-underline'
+            >
+              {linkText}
+            </Link>
           );
         }
 

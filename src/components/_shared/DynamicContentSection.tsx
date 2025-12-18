@@ -117,6 +117,13 @@ const DynamicContentSection = async ({
       return (
         html
           .replace(/<br\s*\/?>/gi, '\n')
+          .replace(
+            // eslint-disable-next-line security/detect-unsafe-regex, sonarjs/slow-regex
+            /<a\s+[^>]*href=["']([^"']*)["'][^>]*?(?:target=["']([^"']*)["'])?[^>]*>([\s\S]*?)<\/a>/gi,
+            (_, href, target, text) => {
+              return target ? `{{link:${href}|${text}|${target}}}` : `{{link:${href}|${text}}}`;
+            }
+          )
           // eslint-disable-next-line sonarjs/slow-regex
           .replace(/<[^>]*>/g, '')
           .replace(/&nbsp;/g, '\u00A0')
