@@ -616,6 +616,14 @@ export async function getServiceBySlug(slug: string) {
                 }
               }
             }
+            ... on ComponentsComponentsButtonLayout {
+              fieldGroupName
+              button {
+                target
+                title
+                url
+              }
+            }
           }
         }
       }
@@ -991,6 +999,14 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
                   altText
                   sourceUrl
                 }
+              }
+            }
+            ... on ComponentsComponentsButtonLayout {
+              fieldGroupName
+              button {
+                target
+                title
+                url
               }
             }
           }
@@ -1462,6 +1478,14 @@ export async function getReferenceBySlug(slug: string) {
                   altText
                   sourceUrl
                 }
+              }
+            }
+            ... on ComponentsComponentsButtonLayout {
+              fieldGroupName
+              button {
+                target
+                title
+                url
               }
             }
           }
@@ -2082,6 +2106,14 @@ export async function getPostupBySlug(slug: string): Promise<PostupPost | null> 
                 }
               }
             }
+            ... on ComponentsComponentsButtonLayout {
+              fieldGroupName
+              button {
+                target
+                title
+                url
+              }
+            }
           }
         }
       }
@@ -2287,6 +2319,14 @@ export async function getPageByUri(uri: string) {
                   altText
                   sourceUrl
                 }
+              }
+            }
+            ... on ComponentsComponentsButtonLayout {
+              fieldGroupName
+              button {
+                target
+                title
+                url
               }
             }
           }

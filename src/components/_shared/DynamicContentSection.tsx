@@ -63,7 +63,22 @@ interface ImageSliderComponent {
   };
 }
 
-type ComponentType = WysiwygComponent | MediaComponent | GalleryComponent | ImageBoxesComponent | ImageSliderComponent;
+interface ButtonComponent {
+  fieldGroupName: 'ComponentsComponentsButtonLayout';
+  button?: {
+    target?: string;
+    title?: string;
+    url?: string;
+  };
+}
+
+type ComponentType =
+  | WysiwygComponent
+  | MediaComponent
+  | GalleryComponent
+  | ImageBoxesComponent
+  | ImageSliderComponent
+  | ButtonComponent;
 
 interface DynamicContentSectionProps {
   components?: {
@@ -76,6 +91,57 @@ interface DynamicContentSectionProps {
   className?: string;
   wider?: boolean;
 }
+
+// Helper to transform bold/italic tags to markers
+const transformTextFormatting = (text: string) => {
+  return text
+    .replace(/<(?:strong|b)>([\s\S]*?)<\/(?:strong|b)>/gi, '{{bold:$1}}')
+    .replace(/<(?:em|i)>([\s\S]*?)<\/(?:em|i)>/gi, '{{italic:$1}}');
+};
+
+// Helper to strip HTML tags and convert to formatted text markers
+const stripHtml = (html: string) => {
+  return (
+    html
+      .replace(/<br\s*\/?>/gi, '{{br}}')
+      .replace(
+        // eslint-disable-next-line security/detect-unsafe-regex, sonarjs/slow-regex
+        /<a\s+[^>]*href=["']([^"']*)["'][^>]*?(?:target=["']([^"']*)["'])?[^>]*>([\s\S]*?)<\/a>/gi,
+        (_, href, target, text) => {
+          // Process bold/italic inside link text first
+          const processedText = transformTextFormatting(text);
+          return target ? `{{link:${href}|${processedText}|${target}}}` : `{{link:${href}|${processedText}}}`;
+        }
+      )
+      // Preserve bold/strong tags (for text outside links)
+      .replace(/<(?:strong|b)>([\s\S]*?)<\/(?:strong|b)>/gi, '{{bold:$1}}')
+      // Preserve italic/em tags (for text outside links)
+      .replace(/<(?:em|i)>([\s\S]*?)<\/(?:em|i)>/gi, '{{italic:$1}}')
+      // eslint-disable-next-line sonarjs/slow-regex
+      .replace(/<[^>]*>/g, '')
+      .replace(/&nbsp;/g, '\u00A0')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .trim()
+  );
+};
+
+// Helper to parse list items from HTML
+const parseListItems = (listContent: string): string[] => {
+  const items: string[] = [];
+  const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi;
+  let match;
+  while ((match = liRegex.exec(listContent)) !== null) {
+    const itemText = stripHtml(match[1]);
+    if (itemText) {
+      items.push(itemText);
+    }
+  }
+  return items;
+};
 
 const DynamicContentSection = async ({
   components,
@@ -111,47 +177,6 @@ const DynamicContentSection = async ({
   const renderWysiwygContent = (content: string, isLastComponent: boolean) => {
     const elements: React.ReactElement[] = [];
     let key = 0;
-
-    // eslint-disable-next-line unicorn/consistent-function-scoping
-    const stripHtml = (html: string) => {
-      return (
-        html
-          .replace(/<br\s*\/?>/gi, '\n')
-          .replace(
-            // eslint-disable-next-line security/detect-unsafe-regex, sonarjs/slow-regex
-            /<a\s+[^>]*href=["']([^"']*)["'][^>]*?(?:target=["']([^"']*)["'])?[^>]*>([\s\S]*?)<\/a>/gi,
-            (_, href, target, text) => {
-              return target ? `{{link:${href}|${text}|${target}}}` : `{{link:${href}|${text}}}`;
-            }
-          )
-          // Preserve bold/strong tags
-          .replace(/<(?:strong|b)>([\s\S]*?)<\/(?:strong|b)>/gi, '{{bold:$1}}')
-          // Preserve italic/em tags
-          .replace(/<(?:em|i)>([\s\S]*?)<\/(?:em|i)>/gi, '{{italic:$1}}')
-          // eslint-disable-next-line sonarjs/slow-regex
-          .replace(/<[^>]*>/g, '')
-          .replace(/&nbsp;/g, '\u00A0')
-          .replace(/&amp;/g, '&')
-          .replace(/&lt;/g, '<')
-          .replace(/&gt;/g, '>')
-          .replace(/&quot;/g, '"')
-          .replace(/&#39;/g, "'")
-          .trim()
-      );
-    };
-
-    const parseListItems = (listContent: string): string[] => {
-      const items: string[] = [];
-      const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi;
-      let match;
-      while ((match = liRegex.exec(listContent)) !== null) {
-        const itemText = stripHtml(match[1]);
-        if (itemText) {
-          items.push(itemText);
-        }
-      }
-      return items;
-    };
 
     interface ElementMatch {
       index: number;
@@ -458,6 +483,27 @@ const DynamicContentSection = async ({
           >
             <ImageSliderSection images={component.imageSlider.nodes} />
           </div>
+        );
+      }
+
+      case 'ComponentsComponentsButtonLayout': {
+        if (!component.button?.url || !component.button?.title) {
+          return null;
+        }
+
+        const marginClass = isLastComponent ? '' : 'mb-12.5';
+        const isExternal = component.button.target === '_blank';
+
+        return (
+          <Link
+            key={index}
+            href={component.button.url}
+            target={isExternal ? '_blank' : undefined}
+            rel={isExternal ? 'noopener noreferrer' : undefined}
+            className={marginClass}
+          >
+            <Button buttonText={component.button.title} />
+          </Link>
         );
       }
 

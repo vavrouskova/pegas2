@@ -9,6 +9,8 @@ interface ParsedSegment {
   className?: string;
   href?: string;
   target?: string;
+  // For nested content (e.g., bold inside link)
+  nestedSegments?: ParsedSegment[];
 }
 
 /**
@@ -20,8 +22,8 @@ interface ParsedSegment {
  * - {{br:lg:hidden}} - odřádkování skryté na lg a větších obrazovkách
  * - {{link:url|text}} - odkaz s URL a textem
  * - {{link:url|text|target}} - odkaz s URL, textem a target atributem
- * - {{bold:text}} - tučný text
- * - {{italic:text}} - kurzíva
+ * - {{bold:text}} - tučný text (může být i uvnitř odkazu)
+ * - {{italic:text}} - kurzíva (může být i uvnitř odkazu)
  *
  * @param text - Text k parsování
  * @returns Pole segmentů s textem, br elementy, odkazy a formátováním
@@ -29,17 +31,33 @@ interface ParsedSegment {
 function parseText(text: string): ParsedSegment[] {
   const segments: ParsedSegment[] = [];
 
-  // Combined pattern for {{br}}, {{br:className}}, {{link:url|text|target}}, {{bold:text}}, {{italic:text}}
-  // eslint-disable-next-line security/detect-unsafe-regex, sonarjs/regex-complexity -- bounded character classes cannot cause catastrophic backtracking
-  const pattern = /\{\{(?:br(?::([^}]+))?|link:([^|]+)\|([^|}]+)(?:\|([^}]+))?|bold:([^}]+)|italic:([^}]+))\}\}/g;
+  // Pattern for links - allows nested {{...}} in link text by using a more permissive capture
+  // Matches {{link:url|content}} or {{link:url|content|target}}
+  // The content can contain nested {{bold:...}} or {{italic:...}}
+  // eslint-disable-next-line security/detect-unsafe-regex, sonarjs/slow-regex
+  const linkPattern = /\{\{link:([^|]+)\|((?:[^{}]|\{\{[^}]+\}\})+?)(?:\|([^}]+))?\}\}/g;
+
+  // First pass: replace links with placeholders and extract them
+  const linkPlaceholders: Map<string, { href: string; content: string; target?: string }> = new Map();
+  let linkIndex = 0;
+  const textWithPlaceholders = text.replace(linkPattern, (_, href, content, target) => {
+    const placeholder = `__LINK_PLACEHOLDER_${linkIndex}__`;
+    linkPlaceholders.set(placeholder, { href, content, target });
+    linkIndex++;
+    return placeholder;
+  });
+
+  // Second pass: parse the text with placeholders
+  // eslint-disable-next-line security/detect-unsafe-regex, sonarjs/regex-complexity
+  const combinedPattern = /\{\{(?:br(?::([^}]+))?|bold:([^}]+)|italic:([^}]+))\}\}|__LINK_PLACEHOLDER_(\d+)__/g;
 
   let lastIndex = 0;
   let match;
 
-  while ((match = pattern.exec(text)) !== null) {
+  while ((match = combinedPattern.exec(textWithPlaceholders)) !== null) {
     // Přidat text před značkou
     if (match.index > lastIndex) {
-      const textContent = text.slice(lastIndex, match.index);
+      const textContent = textWithPlaceholders.slice(lastIndex, match.index);
       segments.push({
         type: 'text',
         content: textContent,
@@ -47,25 +65,32 @@ function parseText(text: string): ParsedSegment[] {
     }
 
     // Check what type of tag it is
-    if (match[2] && match[3]) {
-      // It's a link: {{link:url|text}} or {{link:url|text|target}}
-      segments.push({
-        type: 'link',
-        href: match[2],
-        content: match[3],
-        target: match[4] || undefined,
-      });
-    } else if (match[5]) {
+    if (match[4] !== undefined) {
+      // It's a link placeholder
+      const placeholder = `__LINK_PLACEHOLDER_${match[4]}__`;
+      const linkData = linkPlaceholders.get(placeholder);
+      if (linkData) {
+        // Recursively parse the link content for nested bold/italic
+        const nestedSegments = parseText(linkData.content);
+        segments.push({
+          type: 'link',
+          href: linkData.href,
+          content: linkData.content,
+          target: linkData.target || undefined,
+          nestedSegments,
+        });
+      }
+    } else if (match[2]) {
       // It's bold: {{bold:text}}
       segments.push({
         type: 'bold',
-        content: match[5],
+        content: match[2],
       });
-    } else if (match[6]) {
+    } else if (match[3]) {
       // It's italic: {{italic:text}}
       segments.push({
         type: 'italic',
-        content: match[6],
+        content: match[3],
       });
     } else {
       // It's a br: {{br}} or {{br:className}}
@@ -75,14 +100,14 @@ function parseText(text: string): ParsedSegment[] {
       });
     }
 
-    lastIndex = pattern.lastIndex;
+    lastIndex = combinedPattern.lastIndex;
   }
 
   // Přidat zbývající text
-  if (lastIndex < text.length) {
+  if (lastIndex < textWithPlaceholders.length) {
     segments.push({
       type: 'text',
-      content: text.slice(lastIndex),
+      content: textWithPlaceholders.slice(lastIndex),
     });
   }
 
@@ -129,67 +154,75 @@ export const FormattedText = ({
 }: FormattedTextProps) => {
   const segments = parseText(text);
 
-  return (
-    <Component className={className}>
-      {/* eslint-disable-next-line sonarjs/cognitive-complexity */}
-      {segments.map((segment, index) => {
-        if (segment.type === 'br') {
-          return (
-            <br
-              key={index}
-              className={segment.className}
-            />
-          );
-        }
+  // Helper to apply typography to text content
+  const applyTypography = (content: string | undefined) => {
+    if (!content) return content;
+    return applyCzechTypography ? czechTypography(content) : content;
+  };
 
-        if (segment.type === 'link' && segment.href) {
-          const linkText = applyCzechTypography && segment.content ? czechTypography(segment.content) : segment.content;
-          const target = segment.target || '_self';
-          const isNewWindow = target === '_blank';
+  // Helper function to render segments (used for both top-level and nested content)
+  const renderSegments = (segmentsToRender: ParsedSegment[], keyPrefix = ''): React.ReactNode[] => {
+    return segmentsToRender.map((segment, index) => {
+      const key = keyPrefix ? `${keyPrefix}-${index}` : index;
 
-          return (
-            <Link
-              key={index}
-              href={segment.href}
-              target={target}
-              rel={isNewWindow ? 'noopener noreferrer' : undefined}
-              className='text-primary underline hover:no-underline'
-            >
-              {linkText}
-            </Link>
-          );
-        }
+      if (segment.type === 'br') {
+        return (
+          <br
+            key={key}
+            className={segment.className}
+          />
+        );
+      }
 
-        if (segment.type === 'bold') {
-          const boldText = applyCzechTypography && segment.content ? czechTypography(segment.content) : segment.content;
-          return (
-            <span
-              key={index}
-              className='font-bold-text'
-            >
-              {boldText}
-            </span>
-          );
-        }
+      if (segment.type === 'link' && segment.href) {
+        const target = segment.target || '_self';
+        const isNewWindow = target === '_blank';
 
-        if (segment.type === 'italic') {
-          const italicText =
-            applyCzechTypography && segment.content ? czechTypography(segment.content) : segment.content;
-          return (
-            <span
-              key={index}
-              className='font-italic'
-            >
-              {italicText}
-            </span>
-          );
-        }
+        // If there are nested segments (e.g., bold inside link), render them
+        // Otherwise, render the plain content
+        const hasNestedSegments = segment.nestedSegments && segment.nestedSegments.length > 0;
+        const linkContent = hasNestedSegments
+          ? renderSegments(segment.nestedSegments!, `${key}-nested`)
+          : applyTypography(segment.content);
 
-        const textContent =
-          applyCzechTypography && segment.content ? czechTypography(segment.content) : segment.content;
+        return (
+          <Link
+            key={key}
+            href={segment.href}
+            target={target}
+            rel={isNewWindow ? 'noopener noreferrer' : undefined}
+            className='text-primary underline hover:no-underline'
+          >
+            {linkContent}
+          </Link>
+        );
+      }
 
-        return <React.Fragment key={index}>{textContent}</React.Fragment>;
-      })}
-    </Component>
-  );
+      if (segment.type === 'bold') {
+        return (
+          <span
+            key={key}
+            className='font-bold-text'
+          >
+            {applyTypography(segment.content)}
+          </span>
+        );
+      }
+
+      if (segment.type === 'italic') {
+        return (
+          <span
+            key={key}
+            className='font-italic'
+          >
+            {applyTypography(segment.content)}
+          </span>
+        );
+      }
+
+      return <React.Fragment key={key}>{applyTypography(segment.content)}</React.Fragment>;
+    });
+  };
+
+  return <Component className={className}>{renderSegments(segments)}</Component>;
 };
