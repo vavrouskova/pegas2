@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { IMAGE_GALLERY_CONFIG } from '@/config/imageGallery.config';
@@ -46,29 +47,42 @@ export const ImageGalleryProvider = ({ children }: ImageGalleryProviderProps) =>
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
-  const registerImage = useCallback((image: GalleryImage): number => {
-    const currentImages = imagesRef.current;
-    const existingIndex = currentImages.findIndex((img) => img.src === image.src);
+  // Track route changes to reset gallery
+  const pathname = usePathname();
+  const lastRegisteredPathnameRef = useRef<string | null>(null);
 
-    if (existingIndex !== -1) {
-      return existingIndex;
-    }
+  const registerImage = useCallback(
+    (image: GalleryImage): number => {
+      // If this is the first registration on a new route, clear previous images
+      if (lastRegisteredPathnameRef.current !== pathname) {
+        imagesRef.current = [];
+        lastRegisteredPathnameRef.current = pathname;
+      }
 
-    if (currentImages.length >= IMAGE_GALLERY_CONFIG.performance.maxImages) {
-      console.warn(
-        `Image gallery has reached maximum capacity (${IMAGE_GALLERY_CONFIG.performance.maxImages} images). New images will not be added.`
-      );
-      return -1;
-    }
+      const currentImages = imagesRef.current;
+      const existingIndex = currentImages.findIndex((img) => img.src === image.src);
 
-    const newIndex = currentImages.length;
+      if (existingIndex !== -1) {
+        return existingIndex;
+      }
 
-    const newImages = [...currentImages, image];
-    imagesRef.current = newImages;
-    setImages(newImages);
+      if (currentImages.length >= IMAGE_GALLERY_CONFIG.performance.maxImages) {
+        console.warn(
+          `Image gallery has reached maximum capacity (${IMAGE_GALLERY_CONFIG.performance.maxImages} images). New images will not be added.`
+        );
+        return -1;
+      }
 
-    return newIndex;
-  }, []);
+      const newIndex = currentImages.length;
+
+      const newImages = [...currentImages, image];
+      imagesRef.current = newImages;
+      setImages(newImages);
+
+      return newIndex;
+    },
+    [pathname]
+  );
 
   const clearImages = useCallback(() => {
     setImages([]);
