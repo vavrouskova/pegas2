@@ -209,6 +209,21 @@ const DynamicContentSection = async ({
       matches.push({ index: match.index, tag: 'h3', content: match[1] });
     }
 
+    const h4Regex = /<h4[^>]*>([\s\S]*?)<\/h4>/gi;
+    while ((match = h4Regex.exec(content)) !== null) {
+      matches.push({ index: match.index, tag: 'h4', content: match[1] });
+    }
+
+    const h5Regex = /<h5[^>]*>([\s\S]*?)<\/h5>/gi;
+    while ((match = h5Regex.exec(content)) !== null) {
+      matches.push({ index: match.index, tag: 'h5', content: match[1] });
+    }
+
+    const h6Regex = /<h6[^>]*>([\s\S]*?)<\/h6>/gi;
+    while ((match = h6Regex.exec(content)) !== null) {
+      matches.push({ index: match.index, tag: 'h6', content: match[1] });
+    }
+
     const pRegex = /<p[^>]*>([\s\S]*?)<\/p>/gi;
     while ((match = pRegex.exec(content)) !== null) {
       matches.push({ index: match.index, tag: 'p', content: match[1] });
@@ -276,6 +291,48 @@ const DynamicContentSection = async ({
               key={`h3-${key++}`}
               text={text}
               as='h3'
+              className={marginClass}
+            />
+          );
+
+          break;
+        }
+        case 'h4': {
+          const isNextTextOrList = nextItem && (nextItem.tag === 'p' || nextItem.isList);
+          const marginClass = isLastElement && isLastComponent ? '' : isNextTextOrList ? 'mb-2.5' : 'mb-12.5';
+          elements.push(
+            <FormattedText
+              key={`h4-${key++}`}
+              text={text}
+              as='h4'
+              className={marginClass}
+            />
+          );
+
+          break;
+        }
+        case 'h5': {
+          const isNextTextOrList = nextItem && (nextItem.tag === 'p' || nextItem.isList);
+          const marginClass = isLastElement && isLastComponent ? '' : isNextTextOrList ? 'mb-2.5' : 'mb-12.5';
+          elements.push(
+            <FormattedText
+              key={`h5-${key++}`}
+              text={text}
+              as='h5'
+              className={marginClass}
+            />
+          );
+
+          break;
+        }
+        case 'h6': {
+          const isNextTextOrList = nextItem && (nextItem.tag === 'p' || nextItem.isList);
+          const marginClass = isLastElement && isLastComponent ? '' : isNextTextOrList ? 'mb-2.5' : 'mb-12.5';
+          elements.push(
+            <FormattedText
+              key={`h6-${key++}`}
+              text={text}
+              as='h6'
               className={marginClass}
             />
           );

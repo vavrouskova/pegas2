@@ -28,86 +28,132 @@ interface ParsedSegment {
  * @param text - Text k parsování
  * @returns Pole segmentů s textem, br elementy, odkazy a formátováním
  */
+/**
+ * Helper to extract content from a marker, handling nested markers
+ * Returns the content and the end position
+ */
+function extractMarkerContent(text: string, startIndex: number): { content: string; endIndex: number } | null {
+  // Start at depth 1 because we're already inside one level of braces (the opening {{ was skipped)
+  let depth = 1;
+  let index = startIndex;
+
+  while (index < text.length) {
+    if (text[index] === '{' && text[index + 1] === '{') {
+      depth++;
+      index += 2;
+    } else if (text[index] === '}' && text[index + 1] === '}') {
+      depth--;
+      if (depth === 0) {
+        return {
+          content: text.slice(startIndex, index),
+          endIndex: index + 2,
+        };
+      }
+      index += 2;
+    } else {
+      index++;
+    }
+  }
+
+  return null;
+}
+
+// eslint-disable-next-line sonarjs/cognitive-complexity
 function parseText(text: string): ParsedSegment[] {
   const segments: ParsedSegment[] = [];
 
-  // Pattern for links - allows nested {{...}} in link text by using a more permissive capture
-  // Matches {{link:url|content}} or {{link:url|content|target}}
-  // The content can contain nested {{bold:...}} or {{italic:...}}
-  // eslint-disable-next-line security/detect-unsafe-regex, sonarjs/slow-regex
-  const linkPattern = /\{\{link:([^|]+)\|((?:[^{}]|\{\{[^}]+\}\})+?)(?:\|([^}]+))?\}\}/g;
-
-  // First pass: replace links with placeholders and extract them
-  const linkPlaceholders: Map<string, { href: string; content: string; target?: string }> = new Map();
-  let linkIndex = 0;
-  const textWithPlaceholders = text.replace(linkPattern, (_, href, content, target) => {
-    const placeholder = `__LINK_PLACEHOLDER_${linkIndex}__`;
-    linkPlaceholders.set(placeholder, { href, content, target });
-    linkIndex++;
-    return placeholder;
-  });
-
-  // Second pass: parse the text with placeholders
-  // eslint-disable-next-line security/detect-unsafe-regex, sonarjs/regex-complexity
-  const combinedPattern = /\{\{(?:br(?::([^}]+))?|bold:([^}]+)|italic:([^}]+))\}\}|__LINK_PLACEHOLDER_(\d+)__/g;
-
   let lastIndex = 0;
-  let match;
+  let currentIndex = 0;
 
-  while ((match = combinedPattern.exec(textWithPlaceholders)) !== null) {
-    // Přidat text před značkou
-    if (match.index > lastIndex) {
-      const textContent = textWithPlaceholders.slice(lastIndex, match.index);
-      segments.push({
-        type: 'text',
-        content: textContent,
-      });
-    }
-
-    // Check what type of tag it is
-    if (match[4] !== undefined) {
-      // It's a link placeholder
-      const placeholder = `__LINK_PLACEHOLDER_${match[4]}__`;
-      const linkData = linkPlaceholders.get(placeholder);
-      if (linkData) {
-        // Recursively parse the link content for nested bold/italic
-        const nestedSegments = parseText(linkData.content);
+  while (currentIndex < text.length) {
+    // Check for {{ marker start
+    if (text[currentIndex] === '{' && text[currentIndex + 1] === '{') {
+      // Add text before the marker
+      if (currentIndex > lastIndex) {
         segments.push({
-          type: 'link',
-          href: linkData.href,
-          content: linkData.content,
-          target: linkData.target || undefined,
-          nestedSegments,
+          type: 'text',
+          content: text.slice(lastIndex, currentIndex),
         });
       }
-    } else if (match[2]) {
-      // It's bold: {{bold:text}}
-      segments.push({
-        type: 'bold',
-        content: match[2],
-      });
-    } else if (match[3]) {
-      // It's italic: {{italic:text}}
-      segments.push({
-        type: 'italic',
-        content: match[3],
-      });
-    } else {
-      // It's a br: {{br}} or {{br:className}}
-      segments.push({
-        type: 'br',
-        className: match[1] || undefined,
-      });
+
+      const markerStart = currentIndex + 2; // Skip {{
+      const extracted = extractMarkerContent(text, markerStart);
+
+      if (extracted) {
+        const markerContent = extracted.content;
+
+        // Check marker type
+        if (markerContent.startsWith('br')) {
+          const className = markerContent.startsWith('br:') ? markerContent.slice(3) : undefined;
+          segments.push({
+            type: 'br',
+            className,
+          });
+        } else if (markerContent.startsWith('link:')) {
+          // Parse link: {{link:url|content}} or {{link:url|content|target}}
+          const linkContent = markerContent.slice(5); // Remove 'link:'
+          const pipeIndex = linkContent.indexOf('|');
+          if (pipeIndex !== -1) {
+            const href = linkContent.slice(0, pipeIndex);
+            const rest = linkContent.slice(pipeIndex + 1);
+            // Check for target (last pipe-separated value that doesn't contain nested markers)
+            const lastPipeIndex = rest.lastIndexOf('|');
+            let content: string;
+            let target: string | undefined;
+            if (lastPipeIndex !== -1 && !rest.slice(lastPipeIndex + 1).includes('{{')) {
+              content = rest.slice(0, lastPipeIndex);
+              target = rest.slice(lastPipeIndex + 1);
+            } else {
+              content = rest;
+              target = undefined;
+            }
+            const nestedSegments = parseText(content);
+            segments.push({
+              type: 'link',
+              href,
+              content,
+              target,
+              nestedSegments,
+            });
+          }
+        } else if (markerContent.startsWith('bold:')) {
+          const boldContent = markerContent.slice(5); // Remove 'bold:'
+          const nestedSegments = parseText(boldContent);
+          segments.push({
+            type: 'bold',
+            content: boldContent,
+            nestedSegments,
+          });
+        } else if (markerContent.startsWith('italic:')) {
+          const italicContent = markerContent.slice(7); // Remove 'italic:'
+          const nestedSegments = parseText(italicContent);
+          segments.push({
+            type: 'italic',
+            content: italicContent,
+            nestedSegments,
+          });
+        } else {
+          // Unknown marker, treat as text
+          segments.push({
+            type: 'text',
+            content: `{{${markerContent}}}`,
+          });
+        }
+
+        currentIndex = extracted.endIndex;
+        lastIndex = currentIndex;
+        continue;
+      }
     }
 
-    lastIndex = combinedPattern.lastIndex;
+    currentIndex++;
   }
 
-  // Přidat zbývající text
-  if (lastIndex < textWithPlaceholders.length) {
+  // Add remaining text
+  if (lastIndex < text.length) {
     segments.push({
       type: 'text',
-      content: textWithPlaceholders.slice(lastIndex),
+      content: text.slice(lastIndex),
     });
   }
 
@@ -162,6 +208,7 @@ export const FormattedText = ({
 
   // Helper function to render segments (used for both top-level and nested content)
   const renderSegments = (segmentsToRender: ParsedSegment[], keyPrefix = ''): React.ReactNode[] => {
+    // eslint-disable-next-line sonarjs/cognitive-complexity
     return segmentsToRender.map((segment, index) => {
       const key = keyPrefix ? `${keyPrefix}-${index}` : index;
 
@@ -199,23 +246,33 @@ export const FormattedText = ({
       }
 
       if (segment.type === 'bold') {
+        const hasNestedSegments = segment.nestedSegments && segment.nestedSegments.length > 0;
+        const boldContent = hasNestedSegments
+          ? renderSegments(segment.nestedSegments!, `${key}-nested`)
+          : applyTypography(segment.content);
+
         return (
           <span
             key={key}
             className='font-bold-text'
           >
-            {applyTypography(segment.content)}
+            {boldContent}
           </span>
         );
       }
 
       if (segment.type === 'italic') {
+        const hasNestedSegments = segment.nestedSegments && segment.nestedSegments.length > 0;
+        const italicContent = hasNestedSegments
+          ? renderSegments(segment.nestedSegments!, `${key}-nested`)
+          : applyTypography(segment.content);
+
         return (
           <span
             key={key}
             className='font-italic'
           >
-            {applyTypography(segment.content)}
+            {italicContent}
           </span>
         );
       }
