@@ -1917,14 +1917,15 @@ export async function getContactPeople(): Promise<ZamestnanciPost[]> {
 
 /**
  * Získá seznam všech poboček
+ * @param first - Počet poboček k načtení (výchozí 100)
  * @returns Promise se seznamem poboček
  */
-export async function getBranches(): Promise<PobockaPost[]> {
+export async function getBranches(first = 100): Promise<PobockaPost[]> {
   const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
 
   const query = `
-    query PobockaPosts {
-      pobockaPosts {
+    query PobockaPosts($first: Int!) {
+      pobockaPosts(first: $first) {
         nodes {
           id
           databaseId
@@ -1963,6 +1964,7 @@ export async function getBranches(): Promise<PobockaPost[]> {
       },
       body: JSON.stringify({
         query,
+        variables: { first },
       }),
       next: { tags: ['wordpress'], revalidate: 3600 },
     });
