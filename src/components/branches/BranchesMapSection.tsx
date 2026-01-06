@@ -1,17 +1,23 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import dynamic from 'next/dynamic';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
 import type { PobockaPost } from '@/utils/wordpress-types';
 
+const MapLoadingPlaceholder = () => {
+  const t = useTranslations('contacts');
+  return (
+    <div className='bg-muted flex h-full w-full items-center justify-center'>
+      <p>{t('loading-map')}</p>
+    </div>
+  );
+};
+
 const BranchesMap = dynamic(() => import('@/components/branches/BranchesMap'), {
   ssr: false,
-  loading: () => (
-    <div className='bg-muted flex h-full w-full items-center justify-center'>
-      <p>Loading map...</p>
-    </div>
-  ),
+  loading: () => <MapLoadingPlaceholder />,
 });
 
 interface BranchesMapSectionProps {

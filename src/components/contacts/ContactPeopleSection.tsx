@@ -58,7 +58,7 @@ const PersonCard = ({ person, className }: Readonly<PersonCardProps>) => {
         {email && (
           <Link
             href={`mailto:${email}`}
-            className='mt-5 text-lg underline hover:no-underline'
+            className='mt-5 text-sm break-all underline hover:no-underline'
           >
             {email}
           </Link>
@@ -87,7 +87,7 @@ const ContactPeopleSection = ({ people, title }: Readonly<ContactPeopleSectionPr
             <PersonCard
               key={person.id}
               person={person}
-              className='w-full max-w-[15.75rem] min-w-[15.75rem]'
+              className='w-full max-w-63 min-w-63'
             />
           ))}
         </div>
