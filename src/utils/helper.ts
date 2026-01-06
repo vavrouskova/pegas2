@@ -293,49 +293,30 @@ export function formatFarewellDateTime(dateString?: string): string {
 }
 
 /**
- * Formátuje datum rozloučení bez dne v týdnu a času
- * @param dateString - datum jako string z WordPressu (např. "2025-10-07T14:00:00+00:00")
- * @returns formátované datum v češtině (např. "7. 10. 2025")
+ * Formats date to Czech format: "D. M. YYYY"
+ * @param dateString - ISO date string or Date object
+ * @returns Formatted date string or empty string if invalid
  */
-export function formatFarewellDate(dateString?: string): string {
+export function formatCzechDate(dateString: string | Date | null | undefined): string {
   if (!dateString) return '';
-  try {
-    // Odstranit timezone suffix a interpretovat jako lokální čas
-    const dateWithoutTZ = dateString.replace(/([+-]\d{2}:\d{2}|Z)$/, '');
-    const date = new Date(dateWithoutTZ);
 
-    return new Intl.DateTimeFormat('cs-CZ', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    }).format(date);
+  try {
+    const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
+    if (Number.isNaN(date.getTime())) return '';
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    return `${day}. ${month}. ${year}`;
   } catch {
-    return dateString;
+    return '';
   }
 }
 
-/**
- * Formátuje datum z WordPress ACF pole do českého formátu
- * @param dateString - datum jako string z WordPressu (např. "2025-12-01T00:00:00+00:00")
- * @returns formátované datum v češtině (např. "1. 12. 2025")
- */
-// eslint-disable-next-line sonarjs/no-identical-functions
-export function formatSimpleDate(dateString?: string): string {
-  if (!dateString) return '';
-  try {
-    // Odstranit timezone suffix a interpretovat jako lokální čas
-    const dateWithoutTZ = dateString.replace(/([+-]\d{2}:\d{2}|Z)$/, '');
-    const date = new Date(dateWithoutTZ);
-
-    return new Intl.DateTimeFormat('cs-CZ', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    }).format(date);
-  } catch {
-    return dateString;
-  }
-}
+// Keep backwards compatibility aliases
+export const formatFarewellDate = formatCzechDate;
+export const formatSimpleDate = formatCzechDate;
 
 /**
  * Formátuje rozsah dvou datumů z WordPress ACF polí
