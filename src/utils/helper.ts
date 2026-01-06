@@ -301,7 +301,15 @@ export function formatCzechDate(dateString: string | Date | null | undefined): s
   if (!dateString) return '';
 
   try {
-    const date = typeof dateString === 'string' ? new Date(dateString) : dateString;
+    let date: Date;
+    if (typeof dateString === 'string') {
+      // Strip timezone suffix to interpret as local time (matches original behavior)
+      const dateWithoutTZ = dateString.replace(/([+-]\d{2}:\d{2}|Z)$/, '');
+      date = new Date(dateWithoutTZ);
+    } else {
+      date = dateString;
+    }
+
     if (Number.isNaN(date.getTime())) return '';
 
     const day = date.getDate();
