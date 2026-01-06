@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@radix-ui/react-collapsible';
+import * as Sentry from '@sentry/nextjs';
 
 interface ErrorProps {
   error: Error;
@@ -17,6 +18,7 @@ const Error = (props: ErrorProps) => {
 
   useEffect(() => {
     console.error(error);
+    Sentry.captureException(error);
   }, [error]);
 
   return (
