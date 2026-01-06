@@ -1,14 +1,9 @@
 /**
- * Helper funkce pro blog funkcionalitu
+ * Generic pagination helper functions
  */
 
-import { BLOG_QUERY_PARAMS } from '@/constants/blog';
-
 /**
- * Parsuje číslo stránky z URL parametrů s validací
- * @param pageParam - String hodnota z URL parametrů
- * @param defaultValue - Výchozí hodnota pokud parsing selže
- * @returns Validní číslo stránky
+ * Parses page number from URL params with validation
  */
 export function parsePageNumber(pageParameter: string | undefined, defaultValue = 1): number {
   if (!pageParameter) {
@@ -20,10 +15,7 @@ export function parsePageNumber(pageParameter: string | undefined, defaultValue 
 }
 
 /**
- * Vytvoří URL search params s aktualizovanými hodnotami
- * @param currentParams - Aktuální URLSearchParams
- * @param updates - Objekt s hodnotami k aktualizaci (null = smazat parametr)
- * @returns Nový URLSearchParams
+ * Creates URL search params with updated values
  */
 export function updateSearchParameters(
   currentParameters: URLSearchParams,
@@ -43,12 +35,10 @@ export function updateSearchParameters(
 }
 
 /**
- * Resetuje paginaci při změně filtru nebo vyhledávání
- * @param params - Aktuální URLSearchParams
- * @returns Nový URLSearchParams bez page parametru
+ * Resets pagination parameter
  */
-export function resetPagination(parameters: URLSearchParams): URLSearchParams {
+export function resetPagination(parameters: URLSearchParams, pageParameter: string): URLSearchParams {
   const newParameters = new URLSearchParams(parameters.toString());
-  newParameters.delete(BLOG_QUERY_PARAMS.PAGE);
+  newParameters.delete(pageParameter);
   return newParameters;
 }

@@ -11,7 +11,7 @@ import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PageHeroSection from '@/components/_shared/PageHeroSection';
 import { POSTS_PER_PAGE } from '@/constants/blog';
-import { parsePageNumber } from '@/utils/blog-helpers';
+import { parsePageNumber } from '@/utils/pagination-helpers';
 import { getSeoDataByUri } from '@/utils/seo';
 
 // Blog page needs to be dynamic because it uses searchParams for filtering

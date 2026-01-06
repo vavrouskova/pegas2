@@ -7,7 +7,7 @@ import { useCallback } from 'react';
 import ArrowRight from '@/components/icons/ArrowRight';
 import { REFERENCES_QUERY_PARAMS } from '@/constants/references';
 import { cn } from '@/lib/utils';
-import { updateSearchParameters } from '@/utils/references-helpers';
+import { updateSearchParameters } from '@/utils/pagination-helpers';
 
 interface ReferencesPaginationProps {
   totalPages: number;

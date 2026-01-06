@@ -16,7 +16,7 @@ import ReferencesFilter from '@/components/_shared/ReferencesFilter';
 import ReferencesGridSection from '@/components/_shared/ReferencesGridSection';
 import ReferencesPagination from '@/components/_shared/ReferencesPagination';
 import { REFERENCES_PER_PAGE } from '@/constants/references';
-import { parsePageNumber } from '@/utils/references-helpers';
+import { parsePageNumber } from '@/utils/pagination-helpers';
 import { getReferenceCategorySeoBySlug } from '@/utils/seo';
 
 export const dynamic = 'force-dynamic';

@@ -7,7 +7,7 @@ import { useCallback } from 'react';
 import ArrowRight from '@/components/icons/ArrowRight';
 import { BLOG_QUERY_PARAMS } from '@/constants/blog';
 import { cn } from '@/lib/utils';
-import { updateSearchParameters } from '@/utils/blog-helpers';
+import { updateSearchParameters } from '@/utils/pagination-helpers';
 
 interface BlogPaginationProps {
   totalPages: number;
