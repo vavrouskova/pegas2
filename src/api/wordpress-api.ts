@@ -12,6 +12,14 @@ import type {
   ZamestnanciPost,
 } from '@/utils/wordpress-types';
 
+export interface WordPressRedirect {
+  origin: string;
+  target: string;
+  code: number;
+  type: string;
+  matchType: string;
+}
+
 /**
  * Získá počet poboček (pobockaPosts)
  * @returns Promise s počtem poboček
@@ -2685,3 +2693,49 @@ export async function fetchSearchIndex(): Promise<SearchIndexItem[]> {
     return [];
   }
 }
+
+export const fetchRedirects = async (): Promise<WordPressRedirect[]> => {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetRedirects {
+      redirection {
+        redirects {
+          origin
+          target
+          code
+          type
+          matchType
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+      next: { tags: ['wordpress', 'redirects'], revalidate: 300 },
+    });
+
+    if (!response.ok) {
+      console.error('Failed to fetch redirects:', response.statusText);
+      return [];
+    }
+
+    const { data, errors } = await response.json();
+
+    if (errors) {
+      console.error('GraphQL errors fetching redirects:', errors);
+      return [];
+    }
+
+    return data?.redirection?.redirects || [];
+  } catch (error) {
+    console.error('Error fetching redirects:', error);
+    return [];
+  }
+};
