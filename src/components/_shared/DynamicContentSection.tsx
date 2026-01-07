@@ -242,17 +242,17 @@ const DynamicContentSection = async ({
         const listItems = parseListItems(item.content);
         if (listItems.length > 0) {
           const ListTag = item.listType === 'ul' ? 'ul' : 'ol';
-          const listStyleClass = item.listType === 'ul' ? 'list-disc' : 'list-decimal';
+          const listStyleClass = item.listType === 'ul' ? 'list-none' : 'list-decimal';
           const marginClass = isLastElement && isLastComponent ? '' : 'mb-12.5';
           elements.push(
             <ListTag
               key={`${item.listType}-${key++}`}
-              className={`ml-6 ${listStyleClass} ${marginClass}`}
+              className={`${listStyleClass} ${marginClass}`}
             >
               {listItems.map((listItem, itemIndex) => (
                 <li
                   key={itemIndex}
-                  className={`ml-4 ${itemIndex > 0 ? 'mt-5' : ''}`}
+                  className={`ml-4 ${itemIndex > 0 ? 'mt-5' : ''} ${item.listType === 'ul' ? "before:bg-primary relative pl-3.5 before:absolute before:top-4 before:left-0 before:block before:size-0.75 before:rounded-full before:content-['']" : ''}`}
                 >
                   <FormattedText
                     text={listItem}
