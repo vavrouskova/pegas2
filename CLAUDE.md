@@ -79,6 +79,14 @@ public/              # Static assets
 - SEO metadata helpers in `src/utils/seo.ts`
 - All GraphQL queries use ISR with `next: { revalidate: 3600 }` (1 hour)
 
+#### WordPress Redirects
+
+- Redirects managed via WordPress Redirection plugin
+- Fetched via GraphQL and cached in middleware (5-minute TTL)
+- Middleware handles redirect matching before i18n routing
+- Revalidation endpoint: `POST /api/v1/revalidate-redirects`
+- Cache tags: `wordpress`, `redirects`
+
 ### State Management & Data Fetching
 
 - React Query (`@tanstack/react-query`) for server state
