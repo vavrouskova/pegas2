@@ -29,20 +29,22 @@ const BranchCardContent = ({
 
   return (
     <div className={containerClasses}>
-      {city && (
-        <FormattedText
-          text={city}
-          as='p'
-          className='font-heading text-lg'
-        />
-      )}
-      {title && (
-        <FormattedText
-          text={title}
-          as='h3'
-          className='mb-2 text-lg'
-        />
-      )}
+      <Link href={`/${slug}`}>
+        {city && (
+          <FormattedText
+            text={city}
+            as='p'
+            className='font-heading text-lg'
+          />
+        )}
+        {title && (
+          <FormattedText
+            text={title}
+            as='h3'
+            className='mb-2 text-lg'
+          />
+        )}
+      </Link>
 
       {openDaysWorking && (
         <FormattedText
