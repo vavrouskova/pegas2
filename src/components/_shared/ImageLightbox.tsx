@@ -16,7 +16,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 
 const LightboxOverlay = () => (
   <Dialog.Overlay
-    className='data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50'
+    className='data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-[1100]'
     style={{
       backgroundColor: IMAGE_GALLERY_CONFIG.colors.overlayBg,
       height: 'calc(var(--vh, 1vh) * 100)',
@@ -253,7 +253,7 @@ export const ImageLightbox = () => {
         <LightboxOverlay />
 
         <Dialog.Content
-          className='fixed inset-0 z-50 flex items-center justify-center overflow-hidden'
+          className='fixed inset-0 z-[1100] flex items-center justify-center overflow-hidden'
           style={{
             height: 'calc(var(--vh, 1vh) * 100)',
           }}
