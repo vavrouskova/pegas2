@@ -247,12 +247,12 @@ const DynamicContentSection = async ({
           elements.push(
             <ListTag
               key={`${item.listType}-${key++}`}
-              className={`ml-6 ${listStyleClass} space-y-2 ${marginClass}`}
+              className={`ml-6 ${listStyleClass} ${marginClass}`}
             >
               {listItems.map((listItem, itemIndex) => (
                 <li
                   key={itemIndex}
-                  className='ml-4'
+                  className={`ml-4 ${itemIndex > 0 ? 'mt-5' : ''}`}
                 >
                   <FormattedText
                     text={listItem}
