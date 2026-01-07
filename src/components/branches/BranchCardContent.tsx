@@ -25,7 +25,7 @@ const BranchCardContent = ({
   detailButtonText,
   layout,
 }: BranchCardContentProps) => {
-  const containerClasses = cn('flex flex-1 flex-col', layout === 'vertical' ? 'py-5' : 'py-1');
+  const containerClasses = cn('flex flex-1 flex-col', layout === 'vertical' ? 'py-5 px-4' : 'py-1');
 
   return (
     <div className={containerClasses}>

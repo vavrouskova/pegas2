@@ -71,7 +71,7 @@ const BranchCard = ({
   }
 
   return (
-    <article className={cn('group flex h-full flex-col', className)}>
+    <article className={cn('group flex h-full flex-col bg-white', className)}>
       <div className='relative aspect-square w-full overflow-hidden'>
         <BranchCardImage
           imageUrl={imageUrl}
