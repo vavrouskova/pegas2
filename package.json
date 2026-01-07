@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "bun --bun next dev --turbopack",
+    "build": "bun --bun next build --turbopack",
+    "start": "bun --bun next start",
+    "lint": "bun eslint"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -34,7 +34,7 @@
     "embla-carousel": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
-    "framer-motion": "^12.23.24",
+    "framer-motion": "12.23.24",
     "fuse.js": "^7.1.0",
     "holy-loader": "^2.3.14",
     "html-react-parser": "^5.2.10",
@@ -43,7 +43,7 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.555.0",
     "matter-js": "^0.20.0",
-    "motion": "^12.23.24",
+    "motion": "12.23.24",
     "next": "16.0.10",
     "next-intl": "^4.5.5",
     "next-nprogress-bar": "^2.4.7",
@@ -106,6 +106,7 @@
     "prettier-plugin-tailwindcss": "^0.7.1",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
-    "wp-types": "^4.68.3"
+    "wp-types": "^4.68.3",
+    "zod-validation-error": "4.0.2"
   }
 }

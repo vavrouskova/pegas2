@@ -9,22 +9,32 @@ This is a Next.js 16 (beta) application for Pegas, using React 19 and TypeScript
 ## Development Commands
 
 ```bash
-# Start development server with Turbopack
-npm run dev
+# Start development server with Turbopack (using Bun runtime)
+bun run dev
 
 # Build for production with Turbopack
-npm run build
+bun run build
 
 # Start production server
-npm start
+bun run start
 
 # Run linter
-npm run lint
+bun run lint
+
+# Install dependencies
+bun install
 ```
 
 **IMPORTANT**: Do NOT restart the dev server or run builds. The developer handles these tasks separately in their own terminal.
 
 ## Architecture
+
+### Runtime
+
+- Uses **Bun** as JavaScript runtime and package manager (instead of Node.js/npm)
+- Bun provides faster dependency installation and script execution
+- Configuration in `bunfig.toml`
+- Lock file: `bun.lock` (text format for better git diff)
 
 ### Internationalization (i18n)
 
@@ -187,7 +197,7 @@ All pages render within this layout hierarchy:
 - Image optimization disabled (`unoptimized: true`) - images served from WordPress
 - Static image caching with long cache headers
 - ISR with 1-hour revalidation for WordPress content
-- Bundle analyzer available with `ANALYZE=true npm run build`
+- Bundle analyzer available with `ANALYZE=true bun run build`
 
 ## TypeScript
 

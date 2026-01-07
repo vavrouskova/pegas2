@@ -1,0 +1,3 @@
+[install]
+# Ekvivalent legacy-peer-deps=true z .npmrc
+peer = false
