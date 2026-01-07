@@ -166,6 +166,7 @@ Required environment variables (see `.env.local`):
 - `NEXT_PUBLIC_BACKEND_URL` - WordPress backend URL
 - `NEXT_PUBLIC_GRAPHQL_URL` - WordPress GraphQL endpoint
 - `GTM_ID` - Google Tag Manager ID (optional)
+- `WORDPRESS_API_KEY` - API key for WordPress webhook authentication (required for redirect revalidation)
 
 ### Layout Structure
 
