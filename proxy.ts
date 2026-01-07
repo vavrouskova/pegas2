@@ -56,7 +56,7 @@ const fetchRedirectsForMiddleware = async () => {
   }
 };
 
-export const middleware = async (request: NextRequest) => {
+export const proxy = async (request: NextRequest) => {
   const { pathname } = request.nextUrl;
 
   // Skip static files and API routes
