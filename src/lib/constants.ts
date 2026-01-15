@@ -3,7 +3,7 @@ export const PhoneNumber = '+420 800 176 423';
 export const SecondaryPhoneNumber = '+420 224 942 048';
 
 export const FacebookUrl = 'https://www.facebook.com/pohrebpegascz/?locale=cs_CZ';
-export const InstagramUrl = 'https://www.instagram.com/pohrebpegas/?hl=cs';
+export const InstagramUrl = 'https://www.instagram.com/pegas_pohrebnisluzba/';
 
 export const DirectorateInformation = {
   name: 'PEGAS CZ s.r.o.',
