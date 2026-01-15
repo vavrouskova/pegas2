@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
 import { PARTNERS } from '@/lib/constants';
@@ -15,11 +16,8 @@ const PartnersSection = async () => {
           as='h2'
         />
         <div className='grid grid-cols-2 gap-7.5 md:grid-cols-6'>
-          {PARTNERS.map((partner) => (
-            <div
-              key={partner.id}
-              className='flex items-center justify-center'
-            >
+          {PARTNERS.map((partner) => {
+            const imageElement = (
               <Image
                 src={partner.imageSrc}
                 alt={partner.name}
@@ -27,8 +25,27 @@ const PartnersSection = async () => {
                 height={partner.height}
                 className='mix-blend-darken'
               />
-            </div>
-          ))}
+            );
+
+            return (
+              <div
+                key={partner.id}
+                className='flex items-center justify-center'
+              >
+                {partner.url ? (
+                  <Link
+                    href={partner.url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    {imageElement}
+                  </Link>
+                ) : (
+                  imageElement
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

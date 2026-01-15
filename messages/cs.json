@@ -105,7 +105,7 @@
       "description": "V Praze a okolí jsme vám nablízku, ať už bydlíte kdekoli. Na vybraných pobočkách jsme tu pro vás i o víkendech a ve státní svátky.",
       "button-text": "Všechny pobočky",
       "alt": "Hlavní místnost pobočky",
-      "link": "kontakt"
+      "link": "kontakty"
     },
     "organized-by-us": {
       "title": "Jsme tu. Tiše, ale pevně.",
@@ -343,7 +343,7 @@
     "description": "Provedeme vás. Jsme tu tiše, ale pevně.",
     "branches-desc": "Vyberte si ze 13 poboček v Praze a okolí:",
     "branches-button": "Seznam poboček",
-    "other-services-desc":"Vším ostatním vás provedeme. Jsme tu tiše, ale pevně."
+    "other-services-desc": "Vším ostatním vás provedeme. Jsme tu tiše, ale pevně."
   },
 
   "gdpr": {

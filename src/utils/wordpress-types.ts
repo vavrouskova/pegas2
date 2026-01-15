@@ -40,6 +40,7 @@ export interface ReferenceCategory {
   name: string;
   slug: string;
   description?: string;
+  count?: number;
 }
 
 // Reference Posts Types
@@ -199,6 +200,7 @@ export interface BlogCategory {
   databaseId: number;
   name: string;
   slug: string;
+  count?: number;
 }
 
 // Blog Post Component Types (ACF)

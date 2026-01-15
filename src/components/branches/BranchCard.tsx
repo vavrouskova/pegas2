@@ -12,7 +12,6 @@ interface BranchCardProps {
   showClosedInfo?: boolean;
   showParking?: boolean;
   translations: {
-    noImage: string;
     closed: string;
     detailButton: string;
   };
@@ -51,7 +50,6 @@ const BranchCard = ({
         <BranchCardImage
           imageUrl={imageUrl}
           imageAlt={imageAlt}
-          noImageText={t.noImage}
           layout='horizontal'
           slug={branch.slug}
           linkToDetail={true}
@@ -76,7 +74,6 @@ const BranchCard = ({
         <BranchCardImage
           imageUrl={imageUrl}
           imageAlt={imageAlt}
-          noImageText={t.noImage}
           layout='vertical'
           slug={branch.slug}
           linkToDetail={true}

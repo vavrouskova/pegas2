@@ -21,6 +21,7 @@ export const PARTNERS = [
     imageSrc: '/images/effs.webp',
     width: 132,
     height: 132,
+    url: 'https://www.effs.eu/',
   },
   {
     id: 'csups',
@@ -28,6 +29,7 @@ export const PARTNERS = [
     imageSrc: '/images/csups.webp',
     width: 132,
     height: 132,
+    url: 'https://unieps.cz/',
   },
   {
     id: 'pmu',
@@ -35,6 +37,7 @@ export const PARTNERS = [
     imageSrc: '/images/pmu.webp',
     width: 132,
     height: 132,
+    url: null,
   },
   {
     id: 'sp',
@@ -42,5 +45,6 @@ export const PARTNERS = [
     imageSrc: '/images/sp.webp',
     width: 132,
     height: 132,
+    url: 'https://www.pohrebnictvi.cz/cs/',
   },
 ] as const;

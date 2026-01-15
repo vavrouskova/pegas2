@@ -13,6 +13,7 @@ interface Category {
   databaseId: number;
   name: string;
   slug?: string;
+  count?: number;
 }
 
 interface FilterConfig {
@@ -68,10 +69,17 @@ const Filter = ({ categories, config }: FilterProps) => {
   );
 
   const filteredCategories = useMemo(() => {
-    if (!config.excludeCategoryIds || config.excludeCategoryIds.length === 0) {
-      return categories;
+    let filtered = categories;
+
+    // Filter out categories with no posts
+    filtered = filtered.filter((category) => category.count === undefined || category.count > 0);
+
+    // Filter out excluded category IDs
+    if (config.excludeCategoryIds && config.excludeCategoryIds.length > 0) {
+      filtered = filtered.filter((category) => !config.excludeCategoryIds?.includes(category.databaseId));
     }
-    return categories.filter((category) => !config.excludeCategoryIds?.includes(category.databaseId));
+
+    return filtered;
   }, [categories, config.excludeCategoryIds]);
 
   const isAllActive = !selectedCategory && !hasActiveSearch;

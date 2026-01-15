@@ -20,7 +20,6 @@ const BranchCardClient = (props: BranchCardClientProps) => {
     <BranchCard
       {...props}
       translations={{
-        noImage: t('no-image'),
         closed: t('closed'),
         detailButton: t('detail-button'),
       }}

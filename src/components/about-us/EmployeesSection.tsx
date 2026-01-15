@@ -41,9 +41,13 @@ const EmployeeCard = ({ employee, className }: Readonly<EmployeeCardProps>) => {
             className='object-cover'
           />
         ) : (
-          <div className='flex h-full w-full items-center justify-center bg-gray-200'>
-            <span className='text-gray-400'>No image</span>
-          </div>
+          <Image
+            src='/images/placeholder.webp'
+            alt={imageAlt}
+            fill
+            sizes='(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
+            className='object-cover'
+          />
         )}
       </div>
       <div className='flex flex-1 flex-col bg-white px-3.5 py-6'>

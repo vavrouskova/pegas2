@@ -27,9 +27,14 @@ export const MAP_STYLES = {
       font-family: var(--font-body), sans-serif !important;
       font-size: inherit !important;
       line-height: inherit !important;
+      z-index: 1 !important;
     }
     .leaflet-container a {
       color: oklch(var(--primary)) !important;
+    }
+    .leaflet-pane,
+    .leaflet-control {
+      z-index: auto !important;
     }
   `,
 

@@ -32,6 +32,7 @@ const BaseForm = (props: BaseFormProps) => {
 
   const [isSending, setIsSending] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [, forceUpdate] = useState(0);
   const successMessageRef = useRef<HTMLDivElement>(null);
   const t = useTranslations('forms');
 
@@ -76,7 +77,10 @@ const BaseForm = (props: BaseFormProps) => {
         autoComplete='off'
         className={`mx-auto w-full ${className}`}
         onSubmit={(event) => {
-          form.handleSubmit(handleSubmit)(event);
+          form.handleSubmit(handleSubmit, () => {
+            // eslint-disable-next-line sonarjs/no-nested-functions
+            setTimeout(() => forceUpdate((n) => n + 1), 0);
+          })(event);
         }}
       >
         {children}

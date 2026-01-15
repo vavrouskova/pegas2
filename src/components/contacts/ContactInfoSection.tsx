@@ -35,7 +35,7 @@ const ContactInfoCard = ({ title, items, className }: Readonly<ContactInfoCardPr
                 key={index}
                 href={item.href}
                 className={cn(
-                  'font-text text-sm underline hover:no-underline',
+                  'font-text text-[15px] underline hover:no-underline',
                   item.marginTop,
                   item.large && 'text-lg'
                 )}
@@ -52,7 +52,7 @@ const ContactInfoCard = ({ title, items, className }: Readonly<ContactInfoCardPr
               <Link
                 key={index}
                 href={`tel:${item.href}`}
-                className={cn('text-sm underline hover:no-underline', item.marginTop, item.large && 'text-lg')}
+                className={cn('text-[15px] underline hover:no-underline', item.marginTop, item.large && 'text-lg')}
               >
                 {item.content}
               </Link>
@@ -64,7 +64,7 @@ const ContactInfoCard = ({ title, items, className }: Readonly<ContactInfoCardPr
               <Link
                 key={index}
                 href={`mailto:${item.href}`}
-                className={cn('text-sm underline hover:no-underline', item.marginTop, item.large && 'text-lg')}
+                className={cn('text-[15px] underline hover:no-underline', item.marginTop, item.large && 'text-lg')}
               >
                 {item.content}
               </Link>
@@ -76,7 +76,7 @@ const ContactInfoCard = ({ title, items, className }: Readonly<ContactInfoCardPr
               key={index}
               text={item.content}
               as='p'
-              className={cn('text-sm', item.bold && 'font-heading', item.marginTop, item.large && 'text-lg')}
+              className={cn('text-[15px]', item.bold && 'font-heading', item.marginTop, item.large && 'text-lg')}
             />
           );
         })}

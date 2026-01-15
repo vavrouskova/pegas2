@@ -764,6 +764,7 @@ export async function getBlogCategories(first = 100) {
           databaseId
           name
           slug
+          count
         }
       }
     }
@@ -1071,6 +1072,7 @@ export async function getReferenceTaxonomies(first = 100): Promise<ReferenceCate
           name
           slug
           description
+          count
         }
       }
     }

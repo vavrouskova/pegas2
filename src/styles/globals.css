@@ -88,7 +88,8 @@
   html {
     font-family: var(--font-family-sans);
     overflow-x: hidden;
-    overflow-y: visible;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
     @apply bg-white-smoke;
   }
 
@@ -238,7 +239,8 @@ html.lenis body {
 }
 
 .lenis.lenis-stopped {
-  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .lenis.lenis-smooth iframe {

@@ -6,20 +6,12 @@ import { cn } from '@/lib/utils';
 interface BranchCardImageProps {
   imageUrl?: string;
   imageAlt: string;
-  noImageText: string;
   layout: 'vertical' | 'horizontal';
   slug?: string;
   linkToDetail?: boolean;
 }
 
-const BranchCardImage = ({
-  imageUrl,
-  imageAlt,
-  noImageText,
-  layout,
-  slug,
-  linkToDetail = false,
-}: BranchCardImageProps) => {
+const BranchCardImage = ({ imageUrl, imageAlt, layout, slug, linkToDetail = false }: BranchCardImageProps) => {
   const containerClasses = cn(
     'relative overflow-hidden block',
     layout === 'vertical' && 'aspect-square w-full',
@@ -39,9 +31,13 @@ const BranchCardImage = ({
           className='object-cover'
         />
       ) : (
-        <div className='flex h-full w-full items-center justify-center bg-gray-200'>
-          <span className={cn('text-gray-400', layout === 'vertical' ? 'text-base' : 'text-xs')}>{noImageText}</span>
-        </div>
+        <Image
+          src='/images/placeholder.webp'
+          alt={imageAlt}
+          fill
+          sizes={sizes}
+          className='object-cover'
+        />
       )}
     </>
   );
