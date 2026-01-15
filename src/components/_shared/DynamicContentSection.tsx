@@ -106,8 +106,13 @@ const stripHtml = (html: string) => {
       .replace(/<br\s*\/?>/gi, '{{br}}')
       .replace(
         // eslint-disable-next-line security/detect-unsafe-regex, sonarjs/slow-regex
-        /<a\s+[^>]*href=["']([^"']*)["'][^>]*?(?:target=["']([^"']*)["'])?[^>]*>([\s\S]*?)<\/a>/gi,
-        (_, href, target, text) => {
+        /<a\s+([^>]*)>([\s\S]*?)<\/a>/gi,
+        (_, attributes, text) => {
+          // Extract href and target from attributes (order-independent)
+          const hrefMatch = /href=["']([^"']*)["']/i.exec(attributes);
+          const targetMatch = /target=["']([^"']*)["']/i.exec(attributes);
+          const href = hrefMatch ? hrefMatch[1] : '';
+          const target = targetMatch ? targetMatch[1] : undefined;
           // Process bold/italic inside link text first
           const processedText = transformTextFormatting(text);
           return target ? `{{link:${href}|${processedText}|${target}}}` : `{{link:${href}|${processedText}}}`;
