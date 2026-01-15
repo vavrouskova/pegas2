@@ -830,7 +830,7 @@ export async function getBlogCategoryBySlug(slug: string): Promise<BlogCategory 
         query,
         variables: { slug },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1139,7 +1139,7 @@ export async function getReferenceCategoryBySlug(slug: string): Promise<Referenc
         query,
         variables: { slug },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1359,7 +1359,7 @@ export async function getReferencePostsByCategorySlug(
         query,
         variables: { first: 1000 },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {
@@ -1816,7 +1816,7 @@ export async function getBlogPostsByCategorySlug(
           where: finalWhereClause,
         },
       }),
-      next: { revalidate: 3600 },
+      next: { tags: ['wordpress'], revalidate: 3600 },
     });
 
     if (!response.ok) {

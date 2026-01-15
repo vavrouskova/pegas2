@@ -15,8 +15,6 @@ import { POSTS_PER_PAGE } from '@/constants/blog';
 import { parsePageNumber } from '@/utils/pagination-helpers';
 import { getBlogCategorySeoBySlug } from '@/utils/seo';
 
-export const dynamic = 'force-dynamic';
-
 interface BlogCategoryPageProps {
   params: Promise<{
     locale: string;
