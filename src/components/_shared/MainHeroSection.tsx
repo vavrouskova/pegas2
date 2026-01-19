@@ -85,7 +85,7 @@ const MainHeroSection = async ({
               <span className='leading-9'>{t('prepare')}</span>
               <Link
                 className='link'
-                href='/'
+                href={`/${t('needed-documents-link')}`}
               >
                 {t('needed-documents')}
               </Link>
