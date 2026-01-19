@@ -1,4 +1,5 @@
 import { getTranslations } from 'next-intl/server';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -37,9 +38,19 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
         ))}
         <Link
           href={`/${t('routes.services')}`}
-          className='flex flex-col gap-2.5 transition-opacity duration-300 hover:opacity-70 lg:flex-1'
+          className='flex flex-col gap-2.5 transition-opacity duration-300 hover:opacity-80 lg:flex-1'
         >
-          <div className='bg-primary flex aspect-square w-full items-center gap-2.5 self-stretch p-12' />
+          <div className='bg-grey-warm p-[13%]'>
+            <div className='relative aspect-square w-full overflow-hidden'>
+              <Image
+                src='/images/heart.webp'
+                alt={t('home.services-nav.all-services')}
+                fill
+                sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'
+                className='object-cover'
+              />
+            </div>
+          </div>
           <FormattedText
             text={t('home.services-nav.all-services')}
             as='h3'
