@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import {
   checkSlugType,
   getBlogPostBySlug,
+  getBranchBySlug,
   getBranchesCount,
   getPostupBySlug,
   getReferenceBySlug,
@@ -21,6 +22,7 @@ import FooterClaim from '@/components/_shared/FooterClaim';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import LeavesImage from '@/components/_shared/LeavesImage';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
+import ViewItemTracker from '@/components/_shared/ViewItemTracker';
 import BranchDetailSection from '@/components/branches/BranchDetailSection';
 import ContactForm from '@/components/forms/contact/ContactForm';
 import ServicesGridSection from '@/components/services/ServicesGridSection';
@@ -200,10 +202,26 @@ const SlugPage = async ({ params }: SlugPageProps) => {
   }
 
   if (slugType === 'pobockaPost') {
-    const funeralEssentials = await getServicesByTaxonomy('nalezitosti-pohrbu');
+    const [funeralEssentials, branchData] = await Promise.all([
+      getServicesByTaxonomy('nalezitosti-pohrbu'),
+      getBranchBySlug(slug),
+    ]);
+
+    const branchTitle = branchData?.title || slug;
+    const branchCity = branchData?.pobockyACF?.city || '';
 
     return (
       <main className='max-w-container mx-auto'>
+        <ViewItemTracker
+          itemId={slug}
+          itemName={
+            branchCity
+              ? `${branchCity}, ${t('branches.branch')} ${branchTitle}`
+              : `${t('branches.branch')} ${branchTitle}`
+          }
+          itemCategory={t('tracking.category-branches')}
+          itemCategory2={t('tracking.category-services')}
+        />
         <BranchDetailSection slug={slug} />
 
         <ContactForm />
@@ -344,6 +362,16 @@ const SlugPage = async ({ params }: SlugPageProps) => {
 
   return (
     <main className='max-w-container mx-auto'>
+      <ViewItemTracker
+        itemId={serviceData.id}
+        itemName={title}
+        itemCategory={typSluzby?.nodes?.[0]?.name || t('tracking.category-services')}
+        itemCategory2={
+          typSluzby?.nodes?.[0]?.slug === 'nalezitosti-pohrbu'
+            ? t('tracking.category-products')
+            : t('tracking.category-services')
+        }
+      />
       <BasicHeroSection
         title={title}
         description={introText}

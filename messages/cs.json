@@ -32,6 +32,13 @@
     "search": "Hledat"
   },
 
+  "tracking": {
+    "section-our-services": "Naše služby",
+    "category-branches": "Pobočky",
+    "category-services": "Služby",
+    "category-products": "Produkty"
+  },
+
   "search": {
     "label": "Vyhledávání",
     "hint": "Zadejte alespoň 2 znaky pro vyhledávání",

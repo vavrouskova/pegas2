@@ -1,7 +1,11 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
+import { cn } from '@/lib/utils';
+import { pushSelectItem } from '@/utils/datalayer';
 
 interface ServiceCardProps {
   id: string;
@@ -18,16 +22,44 @@ interface ServiceCardProps {
     };
   };
   className?: string;
+  sectionTitle?: string;
+  type?: 'product' | 'service';
+  itemCategory2?: string;
+  index?: number;
 }
 
-const ServiceCard = ({ title, slug, featuredImage, className }: ServiceCardProps) => {
+const ServiceCard = ({
+  id,
+  title,
+  slug,
+  featuredImage,
+  className,
+  sectionTitle,
+  type = 'service',
+  itemCategory2,
+  index,
+}: ServiceCardProps) => {
   const imageUrl = featuredImage?.node?.sourceUrl || '/images/placeholder.webp';
   const imageAlt = featuredImage?.node?.altText || title;
+
+  const handleClick = () => {
+    if (sectionTitle) {
+      const category2 = itemCategory2 ?? (type === 'product' ? 'Produkty' : 'Služby');
+      pushSelectItem({
+        item_id: id,
+        item_name: title,
+        item_category: sectionTitle,
+        item_category2: category2,
+        index,
+      });
+    }
+  };
 
   return (
     <Link
       href={`/${slug}`}
-      className={`group flex flex-col gap-2.5 transition-opacity duration-300 hover:opacity-80 ${className}`}
+      onClick={handleClick}
+      className={cn('group flex flex-col gap-2.5 transition-opacity duration-300 hover:opacity-80', className)}
     >
       <div className='bg-grey-warm p-[13%]'>
         <div className='relative aspect-square w-full overflow-hidden'>

@@ -26,7 +26,7 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
         className='mb-12 text-center md:mb-25'
       />
       <div className='grid grid-cols-1 gap-7.5 md:grid-cols-2 lg:flex'>
-        {services.map((service) => (
+        {services.map((service, index) => (
           <ServiceCard
             key={getUniqueId()}
             id={service.id}
@@ -34,6 +34,10 @@ const ServicesSection = async ({ services = [] }: ServicesSectionProps) => {
             slug={service.slug}
             featuredImage={service.featuredImage}
             className='lg:flex-1'
+            sectionTitle={t('tracking.section-our-services')}
+            type='service'
+            itemCategory2={t('tracking.category-services')}
+            index={index}
           />
         ))}
         <Link

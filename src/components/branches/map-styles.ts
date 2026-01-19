@@ -39,6 +39,9 @@ export const MAP_STYLES = {
   `,
 
   POPUP: `
+    .leaflet-popup-pane {
+      z-index: 700 !important;
+    }
     .leaflet-popup-content-wrapper {
       padding: 0;
       border-radius: 0;

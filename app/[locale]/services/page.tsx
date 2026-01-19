@@ -69,6 +69,8 @@ const ServicesPage = async () => {
         title={funeralCeremonies.taxonomy?.name || 'Smuteční obřady'}
         description={funeralCeremonies.taxonomy?.description || ''}
         services={funeralCeremonies.posts}
+        type='service'
+        itemCategory2={t('tracking.category-services')}
       />
 
       <ContentSection
@@ -85,6 +87,8 @@ const ServicesPage = async () => {
         title={funeralEssentials.taxonomy?.name || 'Náležitosti pohřbu'}
         description={funeralEssentials.taxonomy?.description || ''}
         services={funeralEssentials.posts}
+        type='product'
+        itemCategory2={t('tracking.category-products')}
       />
 
       <OtherServicesSection

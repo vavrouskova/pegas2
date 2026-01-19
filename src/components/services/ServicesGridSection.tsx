@@ -25,9 +25,18 @@ interface ServicesGridSectionProps {
   description: string;
   services: ServicePost[];
   id?: string;
+  type?: 'product' | 'service';
+  itemCategory2?: string;
 }
 
-const ServicesGridSection = ({ title, description, services, id }: ServicesGridSectionProps) => {
+const ServicesGridSection = ({
+  title,
+  description,
+  services,
+  id,
+  type = 'service',
+  itemCategory2,
+}: ServicesGridSectionProps) => {
   if (!services || services.length === 0) {
     return null;
   }
@@ -52,13 +61,17 @@ const ServicesGridSection = ({ title, description, services, id }: ServicesGridS
 
       {/* Grid služeb */}
       <div className='grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4'>
-        {services.map((service) => (
+        {services.map((service, index) => (
           <ServiceCard
             key={getUniqueId()}
             id={service.id}
             title={service.title}
             slug={service.slug}
             featuredImage={service.featuredImage}
+            sectionTitle={title}
+            type={type}
+            itemCategory2={itemCategory2}
+            index={index}
           />
         ))}
       </div>
