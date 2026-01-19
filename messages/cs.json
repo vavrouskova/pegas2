@@ -314,7 +314,7 @@
       "contact-info": {
         "title": "Kontaktní informace",
         "phone": "+420 800 176 423",
-        "email": "pegas@pegascz.cz",
+        "email": "posta@pohrebpegas.cz",
         "data-box": "Datová schránka: c76sqby"
       },
       "cooling-facility": {
@@ -329,12 +329,10 @@
         "title": "Zahraniční repatriace",
         "address": "Kateřinská 13, Praha 2, 120 00",
         "coordinator-name": "Monika Langerová",
-        "coordinator-title": "Repatriations Coordinator",
-        "phone1": "+420 606 614 013",
-        "phone1-raw": "+420606614013",
-        "phone2": "+420 606 614 089",
-        "phone2-raw": "+420606614089",
-        "email": "repatriations@pegascz.cz"
+        "coordinator-title": "Repatriations Executive",
+        "phone": "(+420) 606 614 013",
+        "phone-raw": "+420606614013",
+        "email": "repatriations@pohrebpegas.cz"
       }
     }
   },

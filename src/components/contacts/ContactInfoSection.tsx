@@ -152,16 +152,9 @@ const ContactInfoSection = () => {
       { type: 'text' as const, content: t('repatriation.coordinator-title'), large: true },
       {
         type: 'phone' as const,
-        content: t('repatriation.phone1'),
-        href: t('repatriation.phone1-raw'),
+        content: t('repatriation.phone'),
+        href: t('repatriation.phone-raw'),
         marginTop: 'mt-5',
-        large: true,
-      },
-      {
-        type: 'phone' as const,
-        content: t('repatriation.phone2'),
-        href: t('repatriation.phone2-raw'),
-        marginTop: 'mt-2.5',
         large: true,
       },
       {
