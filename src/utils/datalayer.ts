@@ -2,12 +2,6 @@
  * DataLayer utility functions for GA4 ecommerce tracking
  */
 
-declare global {
-  interface Window {
-    dataLayer: Record<string, unknown>[];
-  }
-}
-
 export interface DataLayerItem {
   item_id: string;
   item_name: string;
