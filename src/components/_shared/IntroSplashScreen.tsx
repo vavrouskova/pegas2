@@ -26,12 +26,10 @@ const IntroSplashScreen = () => {
     if (hasSeen === 'true') {
       setIsVisible(false);
     } else {
-      // Prevent scrolling while splash is visible
       document.body.style.overflow = 'hidden';
     }
   }, []);
 
-  // Add cleanup effect
   useEffect(() => {
     if (!isVisible && isMounted) {
       document.body.style.overflow = '';
@@ -41,7 +39,6 @@ const IntroSplashScreen = () => {
     };
   }, [isVisible, isMounted]);
 
-  // Keyboard accessibility - dismiss on Enter, Space, or Escape
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Enter' || event.key === ' ' || event.key === 'Escape') {
@@ -58,13 +55,12 @@ const IntroSplashScreen = () => {
     };
   }, [isVisible]);
 
-  // Auto-dismiss after 3 seconds
   useEffect(() => {
     if (!isVisible) return;
 
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 700);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [isVisible]);
@@ -73,12 +69,10 @@ const IntroSplashScreen = () => {
     setIsVisible(false);
   };
 
-  // Show static placeholder before hydration to prevent content flash
   if (!isMounted) {
     return <div className='bg-white-smoke fixed inset-0 z-9999' />;
   }
 
-  // Let AnimatePresence handle the exit animation
   return (
     <AnimatePresence onExitComplete={handleAnimationComplete}>
       {isVisible && (
@@ -89,13 +83,11 @@ const IntroSplashScreen = () => {
           transition={{ duration: 0.3, ease: 'easeInOut' }}
           onClick={handleDismiss}
         >
-          <div className='flex flex-col items-center gap-4'>
-            {/* Winged Horse Icon */}
-            <div className='mb-5 w-40'>
+          <div className='flex flex-col items-center gap-5'>
+            <div className='w-40 lg:w-53'>
               <Logo className='text-primary h-auto w-full' />
             </div>
 
-            {/* Tagline */}
             <FormattedText
               text={t('claim')}
               as='p'
