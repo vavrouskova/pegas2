@@ -12,7 +12,7 @@ interface FadeInOnActivityProps {
   className?: string;
 }
 
-const FadeInOnActivity = ({ children, delay = 0, duration = 0.3, className }: FadeInOnActivityProps) => {
+const FadeInOnActivity = ({ children, delay = 0, duration = 0.5, className }: FadeInOnActivityProps) => {
   const [isActivated, setIsActivated] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
