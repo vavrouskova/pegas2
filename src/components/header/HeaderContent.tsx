@@ -11,8 +11,10 @@ import { cn } from '@/lib/utils';
 import { getUniqueId } from '@/utils/helper';
 
 export interface HeaderLink {
+  id?: string;
   href: string;
   label: string;
+  children?: HeaderLink[];
 }
 
 interface HeaderContentProps {
