@@ -35,10 +35,11 @@ const BranchesSection = ({ branches, title, filterType = 'all' }: Readonly<Branc
         )}
 
         <div className='flex flex-wrap gap-x-7.5 gap-y-12.5 max-lg:justify-center lg:gap-7.5'>
-          {filteredBranches.map((branch) => (
+          {filteredBranches.map((branch, index) => (
             <BranchCardClient
               key={branch.id}
               branch={branch}
+              index={index}
               className='w-full max-w-[15.75rem] min-w-[15.75rem]'
             />
           ))}
