@@ -4,8 +4,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 
-import Logo from '../icons/Logo';
-import { FormattedText } from './FormattedText';
+import { FormattedText } from '@/components/_shared/FormattedText';
+import Logo from '@/components/icons/Logo';
 
 const STORAGE_KEY = 'pegas_intro_seen';
 
@@ -75,7 +75,7 @@ const IntroSplashScreen = () => {
 
   // Show static placeholder before hydration to prevent content flash
   if (!isMounted) {
-    return <div className='bg-white-smoke fixed inset-0 z-[9999]' />;
+    return <div className='bg-white-smoke fixed inset-0 z-9999' />;
   }
 
   // Let AnimatePresence handle the exit animation
@@ -83,7 +83,7 @@ const IntroSplashScreen = () => {
     <AnimatePresence onExitComplete={handleAnimationComplete}>
       {isVisible && (
         <motion.div
-          className='bg-white-smoke fixed inset-0 z-[9999] flex cursor-pointer items-center justify-center'
+          className='bg-white-smoke fixed inset-0 z-9999 flex cursor-pointer items-center justify-center'
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
