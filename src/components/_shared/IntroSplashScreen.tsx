@@ -35,6 +35,23 @@ const IntroSplashScreen = () => {
     };
   }, [isVisible, isMounted]);
 
+  // Keyboard accessibility - dismiss on Enter, Space, or Escape
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Enter' || event.key === ' ' || event.key === 'Escape') {
+        setIsVisible(false);
+      }
+    };
+
+    if (isVisible) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isVisible]);
+
   const handleDismiss = () => {
     setIsVisible(false);
   };
