@@ -25,8 +25,11 @@ export const MegamenuOverlay = ({ isVisible }: MegamenuOverlayProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className='fixed inset-0 top-[var(--header-height,80px)] z-40 bg-black/20 backdrop-blur-sm'
+          transition={{
+            duration: 0.1,
+            delay: 0.1,
+          }}
+          className='bg-gray-cold fixed inset-0 top-[var(--header-height,80px)] z-40 backdrop-blur-sm'
           aria-hidden='true'
         />
       )}
