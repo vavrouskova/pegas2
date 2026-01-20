@@ -5,8 +5,6 @@ import { ClassNameProps } from '@/utils/types';
 const Logo = ({ className }: ClassNameProps) => {
   return (
     <svg
-      width='120'
-      height='92'
       viewBox='0 0 120 92'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
