@@ -22,9 +22,10 @@ interface EmployeesSectionProps {
 interface EmployeeCardProps {
   employee: ZamestnanciPost;
   className?: string;
+  showQuote?: boolean;
 }
 
-const EmployeeCard = ({ employee, className }: Readonly<EmployeeCardProps>) => {
+const EmployeeCard = ({ employee, className, showQuote = true }: Readonly<EmployeeCardProps>) => {
   const { zamestnanciACF } = employee;
   const imageUrl = zamestnanciACF?.profileImage?.node?.sourceUrl;
   const imageAlt = zamestnanciACF?.profileImage?.node?.altText || employee.title || 'Employee';
@@ -65,7 +66,7 @@ const EmployeeCard = ({ employee, className }: Readonly<EmployeeCardProps>) => {
             className='text-lg'
           />
         )}
-        {zamestnanciACF?.employeeQuote && (
+        {showQuote && zamestnanciACF?.employeeQuote && (
           <p className='font-italic mt-7.5 text-sm tracking-[0.03125rem]'>
             &bdquo;{zamestnanciACF.employeeQuote}&ldquo;
           </p>
@@ -140,7 +141,10 @@ const TeamCarousel = ({ employees, title }: Readonly<TeamCarouselProps>) => {
                 key={employee.id}
                 className='basis-full pl-4 max-lg:max-w-[16.625rem] sm:basis-1/2 lg:basis-1/3 lg:pl-8 xl:basis-1/4'
               >
-                <EmployeeCard employee={employee} />
+                <EmployeeCard
+                  employee={employee}
+                  showQuote={false}
+                />
               </CarouselItem>
             ))}
           </CarouselContent>
