@@ -15,6 +15,8 @@ interface BranchCardProps {
     closed: string;
     detailButton: string;
   };
+  // Tracking props
+  index?: number;
 }
 
 const BranchCard = ({
@@ -24,6 +26,7 @@ const BranchCard = ({
   showClosedInfo = true,
   showParking = true,
   translations,
+  index,
 }: Readonly<BranchCardProps>) => {
   const t = translations;
   const { pobockyACF, featuredImage } = branch;
@@ -53,6 +56,9 @@ const BranchCard = ({
           layout='horizontal'
           slug={branch.slug}
           linkToDetail={true}
+          branchId={branch.id}
+          branchTitle={branch.title}
+          index={index}
         />
         <BranchCardContent
           city={city}
@@ -63,6 +69,9 @@ const BranchCard = ({
           slug={branch.slug}
           detailButtonText={t.detailButton}
           layout='horizontal'
+          branchId={branch.id}
+          branchTitle={branch.title}
+          index={index}
         />
       </article>
     );
@@ -77,6 +86,9 @@ const BranchCard = ({
           layout='vertical'
           slug={branch.slug}
           linkToDetail={true}
+          branchId={branch.id}
+          branchTitle={branch.title}
+          index={index}
         />
         {isClosed && (
           <div className='bg-primary absolute bottom-0 left-0 z-10 min-h-[70px] w-full p-3 pr-[70px]'>
@@ -99,6 +111,9 @@ const BranchCard = ({
         slug={branch.slug}
         detailButtonText={t.detailButton}
         layout='vertical'
+        branchId={branch.id}
+        branchTitle={branch.title}
+        index={index}
       />
     </article>
   );
