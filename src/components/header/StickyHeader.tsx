@@ -21,15 +21,17 @@ interface StickyHeaderProps {
 }
 
 const StickyHeader = ({ headerLinks }: StickyHeaderProps) => {
-  const { scrollDirection, isScrolled } = useScrollDirection({ threshold: 100 });
+  const { scrollDirection, isScrolled } = useScrollDirection({ threshold: 24 });
 
   const isVisible = isScrolled && scrollDirection === 'up';
+  const isAtTop = !isScrolled;
 
   return (
     <header
       className={cn(
-        'bg-white-smoke fixed top-0 right-0 left-0 z-50 shadow-sm transition-transform duration-300 ease-out',
-        isVisible ? 'translate-y-0' : '-translate-y-full'
+        'bg-white-smoke fixed top-0 right-0 left-0 z-50 transition-all ease-out',
+        isAtTop ? 'translate-y-0 duration-0' : isVisible ? 'translate-y-0' : '-translate-y-full duration-300',
+        isVisible ? 'opacity-100' : 'opacity-0'
       )}
     >
       <div className='mx-auto flex w-full max-w-378 items-end justify-between px-6 py-2 lg:px-14 lg:py-4'>
