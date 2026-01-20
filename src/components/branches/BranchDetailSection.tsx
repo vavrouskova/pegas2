@@ -6,6 +6,7 @@ import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import { BranchClosureAnnouncement } from '@/components/branches/BranchClosureAnnouncement';
 import { BranchConsultant } from '@/components/branches/BranchConsultant';
 import { BranchContactInfo } from '@/components/branches/BranchContactInfo';
+import BranchDetailTracker from '@/components/branches/BranchDetailTracker';
 import { BranchHeader } from '@/components/branches/BranchHeader';
 import { BranchImages } from '@/components/branches/BranchImages';
 import { BranchLocation } from '@/components/branches/BranchLocation';
@@ -46,6 +47,10 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
 
   return (
     <>
+      <BranchDetailTracker
+        branchId={branchData.id}
+        branchTitle={title || ''}
+      />
       <Breadcrumbs
         className='px-4 pb-23 md:px-14'
         items={[
