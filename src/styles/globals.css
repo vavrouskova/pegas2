@@ -49,6 +49,9 @@
 @layer base {
   :root,
   .default {
+    /* Header height */
+    --header-height: 80px;
+
     --max-w: 75.75rem;
     --section-w: 60.625rem;
     --dynamic-content-w: 41.875rem;
@@ -72,6 +75,13 @@
     --font-bold-cta: 'slnt' 1, 'wdth' 80, 'wght' 50;
     --font-bold-text: 'slnt' 1, 'wdth' 80, 'wght' 65;
     --font-italic: 'slnt' 110, 'wdth' 80, 'wght' 20;
+  }
+
+  @media (min-width: 1024px) {
+    :root,
+    .default {
+      --header-height: 100px;
+    }
   }
 }
 
