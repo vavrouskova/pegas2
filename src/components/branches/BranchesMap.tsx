@@ -120,7 +120,7 @@ const BranchesMap = ({ branches, className }: BranchesMapProps) => {
           maxClusterRadius={40}
           iconCreateFunction={createClusterIcon}
         >
-          {branchesWithCoords.map((branch) => (
+          {branchesWithCoords.map((branch, index) => (
             <Marker
               key={branch.id}
               position={[branch.coords.lat, branch.coords.lng]}
@@ -129,6 +129,7 @@ const BranchesMap = ({ branches, className }: BranchesMapProps) => {
               <Popup>
                 <BranchCardClient
                   branch={branch}
+                  index={index}
                   layout='horizontal'
                   showClosedInfo={false}
                   showParking={false}
