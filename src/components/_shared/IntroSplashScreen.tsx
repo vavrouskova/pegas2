@@ -72,11 +72,7 @@ const IntroSplashScreen = () => {
     return <div className='bg-white-smoke fixed inset-0 z-[9999]' />;
   }
 
-  // After hydration, if already seen, don't show
-  if (!isVisible) {
-    return null;
-  }
-
+  // Let AnimatePresence handle the exit animation
   return (
     <AnimatePresence onExitComplete={handleAnimationComplete}>
       {isVisible && (
