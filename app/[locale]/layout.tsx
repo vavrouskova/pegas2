@@ -10,6 +10,7 @@ import CookieConsent from '@/components/cookie/CookieConsent';
 import Footer from '@/components/footer/Footer';
 import GoogleTagManagerComponent from '@/components/gtm/GoogleTagManagerComponent';
 import Header from '@/components/header/Header';
+import StickyHeaderWrapper from '@/components/header/StickyHeaderWrapper';
 import { SearchOverlay } from '@/components/search';
 import BaseProvider from '@/providers/BaseProvider';
 import { SearchProvider } from '@/providers/SearchProvider';
@@ -73,6 +74,7 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
               <SmoothScrollProvider>
                 <CookieConsent />
                 <Header />
+                <StickyHeaderWrapper />
                 {children}
                 <Footer />
                 <StickyContact />
