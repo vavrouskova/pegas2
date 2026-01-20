@@ -52,6 +52,17 @@ const IntroSplashScreen = () => {
     };
   }, [isVisible]);
 
+  // Auto-dismiss after 3 seconds
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const timer = setTimeout(() => {
+      setIsVisible(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [isVisible]);
+
   const handleDismiss = () => {
     setIsVisible(false);
   };
@@ -117,14 +128,6 @@ const IntroSplashScreen = () => {
               V tichu jsme.
             </motion.p>
           </div>
-
-          {/* Auto-dismiss after 3 seconds */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0 }}
-            transition={{ delay: 3 }}
-            onAnimationComplete={handleDismiss}
-          />
         </motion.div>
       )}
     </AnimatePresence>
