@@ -1,14 +1,15 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
 import Logo from '@/components/header/Logo';
+import { MegamenuOverlay } from '@/components/header/MegamenuOverlay';
 import MobileMenu from '@/components/header/MobileMenu';
+import { NavItem } from '@/components/header/NavItem';
 import { SearchTriggerButton } from '@/components/header/SearchTriggerButton';
 import Search from '@/components/icons/Search';
-import { cn } from '@/lib/utils';
-import { getUniqueId } from '@/utils/helper';
+import { getMegamenuItems } from '@/utils/data';
 
 export interface HeaderLink {
   id?: string;
@@ -23,6 +24,7 @@ interface HeaderContentProps {
 
 const HeaderContent = ({ headerLinks }: HeaderContentProps) => {
   const pathname = usePathname();
+  const [isMegamenuOpen, setIsMegamenuOpen] = useState(false);
 
   const isActiveLink = (href: string) => {
     // Remove locale prefix for comparison (e.g., /cs/about -> /about)
@@ -36,21 +38,22 @@ const HeaderContent = ({ headerLinks }: HeaderContentProps) => {
     return pathWithoutLocale.startsWith(hrefWithoutLocale);
   };
 
+  const handleMegamenuOpen = () => setIsMegamenuOpen(true);
+  const handleMegamenuClose = () => setIsMegamenuOpen(false);
+
   return (
     <>
       <Logo className='lg:mb-[0.19rem]' />
       <nav className='2lg:gap-8 hidden gap-6 lg:flex'>
         {headerLinks.map((link) => (
-          <Link
-            href={link.href}
-            key={getUniqueId()}
-            className={cn(
-              'hover:text-secondary text-sm transition-all duration-300 hover:opacity-70 xl:text-base',
-              isActiveLink(link.href) ? 'font-cta' : 'font-text'
-            )}
-          >
-            {link.label}
-          </Link>
+          <NavItem
+            key={link.id || link.href}
+            link={link}
+            isActive={isActiveLink(link.href)}
+            megamenuItems={link.id ? getMegamenuItems(link.id) : undefined}
+            onMegamenuOpen={handleMegamenuOpen}
+            onMegamenuClose={handleMegamenuClose}
+          />
         ))}
       </nav>
       <div className='flex items-center gap-4'>
@@ -59,6 +62,7 @@ const HeaderContent = ({ headerLinks }: HeaderContentProps) => {
         </SearchTriggerButton>
         <MobileMenu headerLinks={headerLinks} />
       </div>
+      <MegamenuOverlay isVisible={isMegamenuOpen} />
     </>
   );
 };
