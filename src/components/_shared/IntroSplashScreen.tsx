@@ -91,7 +91,7 @@ const IntroSplashScreen = () => {
         >
           <div className='flex flex-col items-center gap-4'>
             {/* Winged Horse Icon */}
-            <Logo className='text-primary mb-5 w-53' />
+            <Logo className='text-primary mb-5 w-100' />
 
             {/* Tagline */}
             <FormattedText
