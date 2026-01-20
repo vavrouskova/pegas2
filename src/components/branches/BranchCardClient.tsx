@@ -11,6 +11,7 @@ interface BranchCardClientProps {
   layout?: 'vertical' | 'horizontal';
   showClosedInfo?: boolean;
   showParking?: boolean;
+  index?: number;
 }
 
 const BranchCardClient = (props: BranchCardClientProps) => {
