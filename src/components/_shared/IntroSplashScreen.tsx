@@ -67,8 +67,13 @@ const IntroSplashScreen = () => {
     setIsVisible(false);
   };
 
-  // Don't render anything on server or if already seen
+  // Show static placeholder before hydration to prevent content flash
   if (!isMounted) {
+    return <div className='bg-white-smoke fixed inset-0 z-[9999]' />;
+  }
+
+  // After hydration, if already seen, don't show
+  if (!isVisible) {
     return null;
   }
 
