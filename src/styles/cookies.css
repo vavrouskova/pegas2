@@ -1,6 +1,6 @@
 #cc-main {
-  /* Ensure cookie consent is below intro splash */
-  z-index: 9998 !important;
+  /* Ensure cookie consent is below megamenu overlay */
+  z-index: 30 !important;
 
   /* Change buttons */
   --cc-btn-border-radius: 0px;
