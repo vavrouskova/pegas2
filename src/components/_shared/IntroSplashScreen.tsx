@@ -19,8 +19,21 @@ const IntroSplashScreen = () => {
     const hasSeen = sessionStorage.getItem(STORAGE_KEY);
     if (hasSeen === 'true') {
       setIsVisible(false);
+    } else {
+      // Prevent scrolling while splash is visible
+      document.body.style.overflow = 'hidden';
     }
   }, []);
+
+  // Add cleanup effect
+  useEffect(() => {
+    if (!isVisible && isMounted) {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isVisible, isMounted]);
 
   const handleDismiss = () => {
     setIsVisible(false);
