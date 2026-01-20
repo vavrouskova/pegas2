@@ -27,6 +27,7 @@ const StickyHeader = ({ headerLinks }: StickyHeaderProps) => {
       userAgent.includes('iPhone') ||
       userAgent.includes('iPad') ||
       userAgent.includes('iPod');
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsMobile(mobile);
   }, []);
 
