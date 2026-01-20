@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import HeaderContent, { HeaderLink } from '@/components/header/HeaderContent';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { cn } from '@/lib/utils';
@@ -15,13 +17,18 @@ const getVisibilityClass = (isAtTop: boolean, isVisible: boolean) => {
 };
 
 const StickyHeader = ({ headerLinks }: StickyHeaderProps) => {
-  const userAgent = navigator.userAgent;
-  const isMobile =
-    userAgent.includes('Mobile') ||
-    userAgent.includes('Android') ||
-    userAgent.includes('iPhone') ||
-    userAgent.includes('iPad') ||
-    userAgent.includes('iPod');
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const userAgent = navigator.userAgent;
+    const mobile =
+      userAgent.includes('Mobile') ||
+      userAgent.includes('Android') ||
+      userAgent.includes('iPhone') ||
+      userAgent.includes('iPad') ||
+      userAgent.includes('iPod');
+    setIsMobile(mobile);
+  }, []);
 
   const { scrollDirection, isScrolled } = useScrollDirection({ threshold: isMobile ? 0 : 24 });
 

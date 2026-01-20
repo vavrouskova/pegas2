@@ -12,6 +12,7 @@ const Logo = ({ className }: ClassNameProps) => {
         alt='Logo'
         width={160}
         height={35}
+        priority
         className={className}
       />
     </Link>

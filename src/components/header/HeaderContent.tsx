@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useCallback, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Logo from '@/components/header/Logo';
 import { MegamenuDropdown } from '@/components/header/MegamenuDropdown';
@@ -29,11 +29,18 @@ const HeaderContent = ({ headerLinks }: HeaderContentProps) => {
   const [navLeftOffset, setNavLeftOffset] = useState(0);
   const [lastMenuItems, setLastMenuItems] = useState<HeaderLink[]>([]);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navElementRef = useRef<HTMLElement | null>(null);
 
-  const navRef = useCallback((node: HTMLElement | null) => {
-    if (node) {
-      setNavLeftOffset(node.getBoundingClientRect().left);
+  const updateNavOffset = () => {
+    if (navElementRef.current) {
+      setNavLeftOffset(navElementRef.current.getBoundingClientRect().left);
     }
+  };
+
+  useEffect(() => {
+    updateNavOffset();
+    window.addEventListener('resize', updateNavOffset);
+    return () => window.removeEventListener('resize', updateNavOffset);
   }, []);
 
   const isActiveLink = (href: string) => {
@@ -70,7 +77,7 @@ const HeaderContent = ({ headerLinks }: HeaderContentProps) => {
     <>
       <Logo className='lg:mb-[0.19rem]' />
       <nav
-        ref={navRef}
+        ref={navElementRef}
         className='2lg:gap-8 hidden gap-6 lg:flex'
       >
         {headerLinks.map((link) => {
