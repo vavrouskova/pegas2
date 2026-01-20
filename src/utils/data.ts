@@ -8,26 +8,32 @@ export const getHeaderLinks = async () => {
 
   return [
     {
+      id: 'faq',
       label: tHeader('faq'),
       href: `/${tRoutes('faq')}`,
     },
     {
+      id: 'services',
       label: tHeader('services'),
       href: `/${tRoutes('services')}`,
     },
     {
+      id: 'references',
       label: tHeader('references'),
       href: `/${tRoutes('references')}`,
     },
     {
+      id: 'blog',
       label: tHeader('blog'),
       href: `/${tRoutes('blog')}`,
     },
     {
+      id: 'about-us',
       label: tHeader('about-us'),
       href: `/${tRoutes('about-us')}`,
     },
     {
+      id: 'contacts',
       label: tHeader('contacts'),
       href: `/${tRoutes('contacts')}`,
     },
