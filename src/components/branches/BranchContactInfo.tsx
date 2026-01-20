@@ -1,4 +1,8 @@
+'use client';
+
 import Link from 'next/link';
+
+import { pushContactClick } from '@/utils/datalayer';
 
 interface BranchContactInfoProps {
   phoneNumber?: string;
@@ -10,6 +14,12 @@ const CONTACT_LINK_CLASS = 'text-lg underline hover:no-underline';
 export const BranchContactInfo = ({ phoneNumber, email }: BranchContactInfoProps) => {
   if (!phoneNumber && !email) return null;
 
+  const handlePhoneClick = () => {
+    if (phoneNumber) {
+      pushContactClick(phoneNumber, 'Pobočky - Detail');
+    }
+  };
+
   return (
     <>
       {phoneNumber && (
@@ -17,6 +27,7 @@ export const BranchContactInfo = ({ phoneNumber, email }: BranchContactInfoProps
           <Link
             href={`tel:${phoneNumber.replace(/\s/g, '')}`}
             className={CONTACT_LINK_CLASS}
+            onClick={handlePhoneClick}
           >
             {phoneNumber}
           </Link>
