@@ -27,7 +27,6 @@ const StickyContact = () => {
 
     // If not first visit, show immediately
     if (!firstVisit) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- Intentional: show immediately for returning visitors
       setIsActivated(true);
       return;
     }

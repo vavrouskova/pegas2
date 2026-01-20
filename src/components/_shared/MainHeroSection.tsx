@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import FadeIn from '@/components/_shared/FadeIn';
+import FadeInOnActivity from '@/components/_shared/FadeInOnActivity';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import { PhoneNumber } from '@/lib/constants';
 import { cn } from '@/lib/utils';
@@ -76,7 +77,7 @@ const MainHeroSection = async ({
               />
             </FadeIn>
           </div>
-          <FadeIn delay={1.7}>
+          <FadeInOnActivity>
             <div className='flex flex-col justify-between gap-7.5 text-lg md:flex-row lg:gap-4'>
               <div className='flex flex-col'>
                 <span className='leading-9'>{t('contact-us')}</span>
@@ -106,7 +107,7 @@ const MainHeroSection = async ({
                 </Link>
               </div>
             </div>
-          </FadeIn>
+          </FadeInOnActivity>
         </div>
       </div>
       {!noImage && (
