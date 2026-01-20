@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
+import FadeIn from '@/components/_shared/FadeIn';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import { PhoneNumber } from '@/lib/constants';
 import { cn } from '@/lib/utils';
@@ -48,68 +49,76 @@ const MainHeroSection = async ({
       <div className={cn('mx-auto mt-114 max-w-267.5', contentClassName)}>
         <div className={cn('max-w-lg-content flex flex-col justify-center gap-12 lg:gap-25')}>
           <div className='space-y-2.5'>
-            {Array.isArray(title) ? (
-              <h1 className='flex flex-col gap-8'>
-                {title.map((line, index) => (
-                  <FormattedText
-                    key={index}
-                    text={line}
-                    as='span'
-                    className='font-heading text-3xl leading-[150%]'
-                  />
-                ))}
-              </h1>
-            ) : (
+            <FadeIn delay={1.5}>
+              {Array.isArray(title) ? (
+                <h1 className='flex flex-col gap-8'>
+                  {title.map((line, index) => (
+                    <FormattedText
+                      key={index}
+                      text={line}
+                      as='span'
+                      className='font-heading text-3xl leading-[150%]'
+                    />
+                  ))}
+                </h1>
+              ) : (
+                <FormattedText
+                  text={title}
+                  as='h1'
+                />
+              )}
+            </FadeIn>
+            <FadeIn delay={1.6}>
               <FormattedText
-                text={title}
-                as='h1'
+                text={description}
+                as='p'
+                className='text-lg'
               />
-            )}
-            <FormattedText
-              text={description}
-              as='p'
-              className='text-lg'
-            />
+            </FadeIn>
           </div>
-          <div className='flex flex-col justify-between gap-7.5 text-lg md:flex-row lg:gap-4'>
-            <div className='flex flex-col'>
-              <span className='leading-9'>{t('contact-us')}</span>
-              <Link
-                className='link'
-                href={`tel:${PhoneNumber}`}
-              >
-                {PhoneNumber}
-              </Link>
+          <FadeIn delay={1.7}>
+            <div className='flex flex-col justify-between gap-7.5 text-lg md:flex-row lg:gap-4'>
+              <div className='flex flex-col'>
+                <span className='leading-9'>{t('contact-us')}</span>
+                <Link
+                  className='link'
+                  href={`tel:${PhoneNumber}`}
+                >
+                  {PhoneNumber}
+                </Link>
+              </div>
+              <div className='flex flex-col'>
+                <span className='leading-9'>{t('prepare')}</span>
+                <Link
+                  className='link'
+                  href={`/${t('needed-documents-link')}`}
+                >
+                  {t('needed-documents')}
+                </Link>
+              </div>
+              <div className='flex flex-col'>
+                <span className='leading-9'>{t('visit-us')}</span>
+                <Link
+                  className='link'
+                  href='/contacts'
+                >
+                  {branchesCount} {t('branches')}
+                </Link>
+              </div>
             </div>
-            <div className='flex flex-col'>
-              <span className='leading-9'>{t('prepare')}</span>
-              <Link
-                className='link'
-                href={`/${t('needed-documents-link')}`}
-              >
-                {t('needed-documents')}
-              </Link>
-            </div>
-            <div className='flex flex-col'>
-              <span className='leading-9'>{t('visit-us')}</span>
-              <Link
-                className='link'
-                href='/contacts'
-              >
-                {branchesCount} {t('branches')}
-              </Link>
-            </div>
-          </div>
+          </FadeIn>
         </div>
       </div>
       {!noImage && (
-        <Image
-          src='/images/wing.webp'
-          alt='Background Image'
-          width={2000}
-          height={2000}
-          className={cn('absolute top-20 right-0 z-[-1] w-180 min-w-140 lg:w-200 xl:top-40 xl:w-232', imageClassName)}
-        />
+        <FadeIn delay={1.4}>
+          <Image
+            src='/images/wing.webp'
+            alt='Background Image'
+            width={2000}
+            height={2000}
+            className={cn('absolute top-20 right-0 z-[-1] w-180 min-w-140 lg:w-200 xl:top-40 xl:w-232', imageClassName)}
+          />
+        </FadeIn>
       )}
     </section>
   );
