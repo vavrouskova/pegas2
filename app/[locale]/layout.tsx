@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 import { Toaster } from 'sonner';
 
+import FadeIn from '@/components/_shared/FadeIn';
 import IntroSplashScreen from '@/components/_shared/IntroSplashScreen';
 import StickyContact from '@/components/_shared/StickyContact';
 import CookieConsent from '@/components/cookie/CookieConsent';
@@ -75,9 +76,11 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
               <SmoothScrollProvider>
                 <IntroSplashScreen />
                 <CookieConsent />
-                <Header />
+                <FadeIn delay={1.3}>
+                  <Header />
+                </FadeIn>
                 <StickyHeaderWrapper />
-                {children}
+                <FadeIn delay={1.5}>{children}</FadeIn>
                 <Footer />
                 <StickyContact />
                 <Toaster />
