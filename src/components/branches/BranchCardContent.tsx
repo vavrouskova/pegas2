@@ -1,8 +1,11 @@
+'use client';
+
 import Link from 'next/link';
 
 import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import { cn } from '@/lib/utils';
+import { pushBranchSelectItem, pushContactClick } from '@/utils/datalayer';
 
 interface BranchCardContentProps {
   city?: string;
@@ -13,6 +16,10 @@ interface BranchCardContentProps {
   slug: string;
   detailButtonText: string;
   layout: 'vertical' | 'horizontal';
+  // Tracking props
+  branchId?: string;
+  branchTitle?: string;
+  index?: number;
 }
 
 const BranchCardContent = ({
@@ -24,12 +31,36 @@ const BranchCardContent = ({
   slug,
   detailButtonText,
   layout,
+  branchId,
+  branchTitle,
+  index,
 }: BranchCardContentProps) => {
   const containerClasses = cn('flex flex-1 flex-col', layout === 'vertical' ? 'py-5 px-4' : 'py-1');
 
+  const handleDetailClick = () => {
+    if (branchId && branchTitle) {
+      pushBranchSelectItem({
+        item_id: branchId,
+        item_name: branchTitle,
+        item_category: 'Pobočky',
+        item_list_name: 'Pobočky',
+        index,
+      });
+    }
+  };
+
+  const handlePhoneClick = () => {
+    if (phoneNumber) {
+      pushContactClick(phoneNumber, 'Pobočky');
+    }
+  };
+
   return (
     <div className={containerClasses}>
-      <Link href={`/${slug}`}>
+      <Link
+        href={`/${slug}`}
+        onClick={handleDetailClick}
+      >
         {city && (
           <FormattedText
             text={city}
@@ -66,6 +97,7 @@ const BranchCardContent = ({
         <Link
           href={`tel:${phoneNumber}`}
           className='text-lg underline hover:no-underline'
+          onClick={handlePhoneClick}
         >
           {phoneNumber}
         </Link>
@@ -74,6 +106,7 @@ const BranchCardContent = ({
       <Link
         href={`/${slug}`}
         className='mt-2 -ml-4 lg:-ml-8'
+        onClick={handleDetailClick}
       >
         <Button
           buttonText={detailButtonText}
