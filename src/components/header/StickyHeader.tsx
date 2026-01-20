@@ -30,7 +30,7 @@ const StickyHeader = ({ headerLinks }: StickyHeaderProps) => {
     <header
       className={cn(
         'bg-white-smoke fixed top-0 right-0 left-0 z-50 transition-all ease-out',
-        isAtTop ? 'translate-y-0 duration-0' : isVisible ? 'translate-y-0' : '-translate-y-full duration-300',
+        isAtTop ? 'hidden' : isVisible ? 'translate-y-0 duration-300' : '-translate-y-full duration-300',
         isVisible ? 'opacity-100' : 'opacity-0'
       )}
     >
