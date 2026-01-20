@@ -64,7 +64,7 @@ const IntroSplashScreen = () => {
 
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 1000);
+    }, 700);
 
     return () => clearTimeout(timer);
   }, [isVisible]);

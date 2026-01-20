@@ -76,7 +76,7 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
               <SmoothScrollProvider>
                 <IntroSplashScreen />
                 <CookieConsent />
-                <FadeIn delay={1.4}>
+                <FadeIn delay={1}>
                   <Header />
                 </FadeIn>
                 <StickyHeaderWrapper />
