@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 import { Toaster } from 'sonner';
 
+import IntroSplashScreen from '@/components/_shared/IntroSplashScreen';
 import StickyContact from '@/components/_shared/StickyContact';
 import CookieConsent from '@/components/cookie/CookieConsent';
 import Footer from '@/components/footer/Footer';
@@ -72,6 +73,7 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
           <NextIntlClientProvider messages={messages}>
             <SearchProvider>
               <SmoothScrollProvider>
+                <IntroSplashScreen />
                 <CookieConsent />
                 <Header />
                 <StickyHeaderWrapper />
