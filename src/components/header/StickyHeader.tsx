@@ -15,7 +15,15 @@ const getVisibilityClass = (isAtTop: boolean, isVisible: boolean) => {
 };
 
 const StickyHeader = ({ headerLinks }: StickyHeaderProps) => {
-  const { scrollDirection, isScrolled } = useScrollDirection({ threshold: 24 });
+  const userAgent = navigator.userAgent;
+  const isMobile =
+    userAgent.includes('Mobile') ||
+    userAgent.includes('Android') ||
+    userAgent.includes('iPhone') ||
+    userAgent.includes('iPad') ||
+    userAgent.includes('iPod');
+
+  const { scrollDirection, isScrolled } = useScrollDirection({ threshold: isMobile ? 0 : 24 });
 
   const isVisible = isScrolled && scrollDirection === 'up';
   const isAtTop = !isScrolled;
