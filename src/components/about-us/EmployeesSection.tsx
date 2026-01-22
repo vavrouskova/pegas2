@@ -17,12 +17,14 @@ interface EmployeesSectionProps {
   teamTitle: string;
 }
 
-interface ManagementGridProps {
+interface ManagementSectionProps {
   employees: ZamestnanciPost[];
   title: string;
 }
 
-const ManagementGrid = ({ employees, title }: Readonly<ManagementGridProps>) => {
+const ManagementSection = ({ employees, title }: Readonly<ManagementSectionProps>) => {
+  const { currentIndex, setApi, carouselRef, setIsHovering, goToSlide } = useCarouselAutoplay();
+
   if (employees.length === 0) return null;
 
   return (
@@ -33,7 +35,8 @@ const ManagementGrid = ({ employees, title }: Readonly<ManagementGridProps>) => 
           as='h2'
           className='mb-12'
         />
-        <div className='grid grid-cols-[repeat(auto-fill,minmax(16.625rem,16.625rem))] gap-4 lg:gap-8'>
+        {/* Desktop: Grid layout */}
+        <div className='hidden lg:grid lg:grid-cols-[repeat(auto-fill,minmax(16.625rem,16.625rem))] lg:gap-8'>
           {employees.map((employee) => (
             <PersonCard
               key={employee.id}
@@ -41,6 +44,42 @@ const ManagementGrid = ({ employees, title }: Readonly<ManagementGridProps>) => 
               showQuote
             />
           ))}
+        </div>
+        {/* Mobile: Carousel */}
+        <div
+          ref={carouselRef}
+          className='relative -mr-4 sm:-mr-14 lg:hidden'
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          <Carousel
+            opts={{ align: 'start', loop: true }}
+            setApi={setApi}
+          >
+            <CarouselContent className='-ml-4'>
+              {employees.map((employee) => (
+                <CarouselItem
+                  key={employee.id}
+                  className='basis-full pl-4 max-lg:max-w-[16.625rem] sm:basis-1/2'
+                >
+                  <PersonCard
+                    person={employee}
+                    showQuote
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            {employees.length > 1 && (
+              <CarouselNavigation
+                itemsCount={employees.length}
+                currentIndex={currentIndex}
+                onDotClick={goToSlide}
+                maxDots={7}
+                // Hide pagination when all items fit: <=2 items fit on sm+ (basis-1/2)
+                className={employees.length <= 2 ? 'sm:hidden' : undefined}
+              />
+            )}
+          </Carousel>
         </div>
       </div>
     </div>
@@ -91,6 +130,9 @@ const TeamCarousel = ({ employees, title }: Readonly<TeamCarouselProps>) => {
               itemsCount={employees.length}
               currentIndex={currentIndex}
               onDotClick={goToSlide}
+              maxDots={7}
+              // Hide pagination when all items fit on viewport
+              className={employees.length <= 2 ? 'sm:hidden' : undefined}
             />
           )}
         </Carousel>
@@ -112,7 +154,7 @@ const EmployeesSection = ({ employees, managementTitle, teamTitle }: Readonly<Em
         leaves2ClassName='w-[34.8125rem] rotate-[260deg]'
         motionDiv2ClassName='top-64 left-1/2 translate-x-[34.5rem]'
       />
-      <ManagementGrid
+      <ManagementSection
         employees={management}
         title={managementTitle}
       />
