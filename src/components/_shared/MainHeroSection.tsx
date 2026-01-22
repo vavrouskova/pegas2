@@ -1,11 +1,11 @@
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
-import Link from 'next/link';
 
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import FadeIn from '@/components/_shared/FadeIn';
 import FadeInOnActivity from '@/components/_shared/FadeInOnActivity';
 import { FormattedText } from '@/components/_shared/FormattedText';
+import { Link } from '@/i18n/routing';
 import { PhoneNumber } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
@@ -83,7 +83,7 @@ const MainHeroSection = async ({
                 <span className='leading-9'>{t('contact-us')}</span>
                 <Link
                   className='link'
-                  href={`tel:${PhoneNumber}`}
+                  href={`tel:${PhoneNumber}` as any}
                 >
                   {PhoneNumber}
                 </Link>
@@ -92,7 +92,7 @@ const MainHeroSection = async ({
                 <span className='leading-9'>{t('prepare')}</span>
                 <Link
                   className='link'
-                  href={`/${t('needed-documents-link')}`}
+                  href={`/${t('needed-documents-link')}` as any}
                 >
                   {t('needed-documents')}
                 </Link>

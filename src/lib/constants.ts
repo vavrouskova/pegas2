@@ -29,7 +29,7 @@ export const PARTNERS = [
     imageSrc: '/images/effs.webp',
     width: 132,
     height: 132,
-    url: 'https://effs.eu/events/details/41.html',
+    url: 'https://www.effs.eu/',
   },
   {
     id: 'nfda',

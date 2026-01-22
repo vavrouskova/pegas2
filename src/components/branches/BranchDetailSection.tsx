@@ -69,10 +69,12 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
             city={city}
             branchTitle={branchTitle}
           />
-          <BranchClosureAnnouncement
-            closeAnnouncement={pobockyACF?.closeAccouncment}
-            announcementButton={pobockyACF?.announcementButton}
-          />
+          {pobockyACF?.dateCloseFrom && (
+            <BranchClosureAnnouncement
+              closeAnnouncement={pobockyACF?.closeAccouncment}
+              announcementButton={pobockyACF?.announcementButton}
+            />
+          )}
           <BranchOpeningHours
             workingDays={pobockyACF?.openDaysWorking}
             weekendDays={pobockyACF?.openDaysWeekend}
