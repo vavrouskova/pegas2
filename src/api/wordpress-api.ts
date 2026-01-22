@@ -138,6 +138,21 @@ export async function getHomepageData() {
         databaseId
         title
         homepageACF {
+          slider {
+            slideDescription
+            slideImage {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            slideLink {
+              target
+              title
+              url
+            }
+            slideTitle
+          }
           selectedReference {
             nodes {
               ... on ReferencePost {
