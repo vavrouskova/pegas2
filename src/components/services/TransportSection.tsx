@@ -9,6 +9,7 @@ interface TransportFeature {
 }
 
 interface TransportSectionProps {
+  id: string;
   title: string;
   description: string;
   features: TransportFeature[];
@@ -22,9 +23,19 @@ interface TransportSectionProps {
   };
 }
 
-const TransportSection = ({ title, description, features, primaryButton, secondaryButton }: TransportSectionProps) => {
+const TransportSection = ({
+  id,
+  title,
+  description,
+  features,
+  primaryButton,
+  secondaryButton,
+}: TransportSectionProps) => {
   return (
-    <section className='section-container'>
+    <section
+      id={id}
+      className='section-container'
+    >
       <div className='max-w-lg-content lg:ml-30'>
         {/* Hlavní nadpis a popis */}
         <div className='mb-9 flex flex-col gap-2.5'>

@@ -38,6 +38,7 @@ const ServicesPage = async () => {
       />
 
       <TransportSection
+        id='prevoz-zesnulych'
         title={t('services.transport.title')}
         description={t('services.transport.description')}
         features={[
