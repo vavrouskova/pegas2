@@ -65,7 +65,7 @@ export const MegamenuDropdown = ({
                   onClick={onClose}
                   className={cn(
                     'text-secondary hover:text-primary inline-block py-1 text-sm transition-colors duration-200 hover:underline',
-                    index === 0 && 'font-cta'
+                    index === 0 && 'font-heading'
                   )}
                 >
                   {item.label}

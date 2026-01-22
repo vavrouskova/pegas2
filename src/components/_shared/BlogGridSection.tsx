@@ -1,8 +1,8 @@
 import { getTranslations } from 'next-intl/server';
 
-import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import GridCard from '@/components/_shared/GridCard';
+import ArrowRight from '@/components/icons/ArrowRight';
 import { stripHtmlTags } from '@/utils/helper';
 import { BlogPost } from '@/utils/wordpress-types';
 
@@ -37,11 +37,10 @@ const BlogGridSection = async ({ posts }: BlogGridSectionProps) => {
               as='p'
               className='font-text line-clamp-3 text-sm'
             />
-            <Button
-              buttonText={t('post-detail')}
-              variant='destructive'
-              className='-ml-8 w-fit lg:-ml-16'
-            />
+            <div className='flex items-center gap-3 text-lg'>
+              {t('post-detail')}
+              <ArrowRight className='size-5 shrink-0' />
+            </div>
           </GridCard>
         );
       })}

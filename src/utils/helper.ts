@@ -190,7 +190,7 @@ export function formatDate(
 }
 
 /**
- * Formats a date with time in Czech format: "26. 11. 2025 – 10:00"
+ * Formats a date in Czech format: "26. 11. 2025"
  * @param dateInput - date string, number, or Date object
  * @returns formatted date string or empty string if invalid
  */
@@ -203,10 +203,8 @@ export function formatBlogDate(dateInput: string | number | Date | undefined): s
   const day = dateObject.getDate();
   const month = dateObject.getMonth() + 1;
   const year = dateObject.getFullYear();
-  const hours = dateObject.getHours().toString().padStart(2, '0');
-  const minutes = dateObject.getMinutes().toString().padStart(2, '0');
 
-  return `${day}. ${month}. ${year} – ${hours}:${minutes}`;
+  return `${day}. ${month}. ${year}`;
 }
 
 /**

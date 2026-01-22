@@ -19,7 +19,7 @@ interface NavItemProps {
 export const NavItem = ({ link, isActive, isOpen, hasMegamenu, onMouseEnter, onMouseLeave, onClick }: NavItemProps) => {
   const linkClassName = cn(
     'hover:text-secondary flex items-center gap-1 text-sm transition-all duration-300 hover:opacity-70 xl:text-base',
-    isActive ? 'font-cta' : 'font-text'
+    isActive ? 'font-heading' : 'font-text'
   );
 
   if (!hasMegamenu) {

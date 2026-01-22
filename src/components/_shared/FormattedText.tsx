@@ -254,7 +254,7 @@ export const FormattedText = ({
         return (
           <span
             key={key}
-            className='font-bold-text'
+            className='font-heading'
           >
             {boldContent}
           </span>

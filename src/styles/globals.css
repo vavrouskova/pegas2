@@ -71,9 +71,7 @@
     /* Font Variation Settings */
     --font-text: 'slnt' 1, 'wdth' 80, 'wght' 20;
     --font-heading: 'slnt' 1, 'wdth' 80, 'wght' 40;
-    --font-cta: 'slnt' 1, 'wdth' 80, 'wght' 40;
     --font-bold-cta: 'slnt' 1, 'wdth' 80, 'wght' 50;
-    --font-bold-text: 'slnt' 1, 'wdth' 80, 'wght' 65;
     --font-italic: 'slnt' 110, 'wdth' 80, 'wght' 20;
   }
 
@@ -150,7 +148,7 @@
   a[href] {
     @apply leading-[150%];
     cursor: pointer;
-    font-variation-settings: var(--font-cta);
+    font-variation-settings: var(--font-heading);
   }
 
   p,
@@ -179,13 +177,6 @@
     font-variation-settings: var(--font-heading);
   }
 
-  .font-cta {
-    font-variation-settings: var(--font-cta);
-  }
-
-  .font-bold-text {
-    font-variation-settings: var(--font-bold-text);
-  }
 
   .font-bold-cta {
     font-variation-settings: var(--font-bold-cta);

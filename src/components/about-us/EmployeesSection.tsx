@@ -26,7 +26,7 @@ const ManagementGrid = ({ employees, title }: Readonly<ManagementGridProps>) => 
   if (employees.length === 0) return null;
 
   return (
-    <div className='relative z-10 pb-16 lg:pt-40'>
+    <div className='relative z-10 pb-16'>
       <div className='mx-auto max-w-7xl'>
         <FormattedText
           text={title}
@@ -58,7 +58,7 @@ const TeamCarousel = ({ employees, title }: Readonly<TeamCarouselProps>) => {
   if (employees.length === 0) return null;
 
   return (
-    <div className='relative z-10 pt-16 pb-40'>
+    <div className='relative z-10 pt-16 pb-30'>
       <div className='mx-auto max-w-7xl'>
         <FormattedText
           text={title}

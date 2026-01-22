@@ -34,7 +34,7 @@ const GridCard = ({ href, imageUrl, imageAlt, title, children }: GridCardProps) 
         <FormattedText
           text={title}
           as='h3'
-          className='text-lg'
+          className='text-lg text-balance'
         />
         {children}
       </div>

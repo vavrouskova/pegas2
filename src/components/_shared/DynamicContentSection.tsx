@@ -257,7 +257,7 @@ const DynamicContentSection = async ({
               {listItems.map((listItem, itemIndex) => (
                 <li
                   key={itemIndex}
-                  className={`ml-4 ${itemIndex > 0 ? 'mt-5' : ''} ${item.listType === 'ul' ? "before:bg-primary relative pl-3.5 before:absolute before:top-4 before:left-0 before:block before:size-0.75 before:rounded-full before:content-['']" : ''}`}
+                  className={`ml-4 ${itemIndex > 0 ? 'mt-3.5' : ''} ${item.listType === 'ul' ? "before:bg-primary relative pl-3.5 before:absolute before:top-4 before:left-0 before:block before:size-0.75 before:rounded-full before:content-['']" : ''}`}
                 >
                   <FormattedText
                     text={listItem}

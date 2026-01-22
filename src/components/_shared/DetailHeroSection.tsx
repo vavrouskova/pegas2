@@ -109,7 +109,7 @@ const DetailHeroSection = ({
           <FormattedText
             text={description}
             as='p'
-            className='text-primary font-cta text-lg'
+            className='text-primary font-heading text-lg'
           />
         )}
       </div>

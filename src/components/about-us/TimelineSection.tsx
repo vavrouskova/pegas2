@@ -227,7 +227,7 @@ const TimelineSection = ({ timeline }: Readonly<TimelineSectionProps>) => {
           <div className='mt-12 flex justify-center'>
             <button
               onClick={() => setShowAll(true)}
-              className={cn('font-cta inline-flex items-center gap-2 transition-opacity hover:opacity-70')}
+              className={cn('font-heading inline-flex items-center gap-2 transition-opacity hover:opacity-70')}
             >
               <span>{t('show-more')}</span>
               <ChevronDown className='h-5 w-5' />

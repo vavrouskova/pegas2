@@ -270,7 +270,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
           branchesCount={branchesCount}
           pageTitle={title}
           noImage
-          contentClassName='mt-18 lg:mt-[15.25rem] lg:ml-30 pb-25 lg:pb-40'
+          contentClassName='mt-18 lg:mt-[15.25rem] lg:ml-30 pb-25'
         />
 
         {hasComponents && (
