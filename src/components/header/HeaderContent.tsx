@@ -10,7 +10,7 @@ import MobileMenu from '@/components/header/MobileMenu';
 import { NavItem } from '@/components/header/NavItem';
 import { SearchTriggerButton } from '@/components/header/SearchTriggerButton';
 import Search from '@/components/icons/Search';
-import { getMegamenuItems } from '@/utils/data';
+import { getMegamenuItemsFromData, MegamenuData } from '@/utils/data';
 
 export interface HeaderLink {
   id?: string;
@@ -21,9 +21,10 @@ export interface HeaderLink {
 
 interface HeaderContentProps {
   headerLinks: HeaderLink[];
+  megamenuData: MegamenuData;
 }
 
-const HeaderContent = ({ headerLinks }: HeaderContentProps) => {
+const HeaderContent = ({ headerLinks, megamenuData }: HeaderContentProps) => {
   const pathname = usePathname();
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [navLeftOffset, setNavLeftOffset] = useState(0);
@@ -58,7 +59,7 @@ const HeaderContent = ({ headerLinks }: HeaderContentProps) => {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-    const items = getMegamenuItems(linkId);
+    const items = getMegamenuItemsFromData(linkId, megamenuData);
     if (items) {
       setLastMenuItems(items);
     }
@@ -71,7 +72,7 @@ const HeaderContent = ({ headerLinks }: HeaderContentProps) => {
     }, 150);
   };
 
-  const currentMenuItems = openMenuId ? getMegamenuItems(openMenuId) : undefined;
+  const currentMenuItems = openMenuId ? getMegamenuItemsFromData(openMenuId, megamenuData) : undefined;
 
   return (
     <>
@@ -81,7 +82,7 @@ const HeaderContent = ({ headerLinks }: HeaderContentProps) => {
         className='2lg:gap-8 hidden gap-6 lg:flex'
       >
         {headerLinks.map((link) => {
-          const megamenuItems = link.id ? getMegamenuItems(link.id) : undefined;
+          const megamenuItems = link.id ? getMegamenuItemsFromData(link.id, megamenuData) : undefined;
           const hasMegamenu = megamenuItems && megamenuItems.length > 0;
 
           return (
@@ -101,7 +102,10 @@ const HeaderContent = ({ headerLinks }: HeaderContentProps) => {
         <SearchTriggerButton>
           <Search className='h-6 w-6' />
         </SearchTriggerButton>
-        <MobileMenu headerLinks={headerLinks} />
+        <MobileMenu
+          headerLinks={headerLinks}
+          megamenuData={megamenuData}
+        />
       </div>
       <MegamenuOverlay isVisible={!!openMenuId} />
       <MegamenuDropdown

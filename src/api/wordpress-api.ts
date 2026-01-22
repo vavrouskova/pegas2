@@ -5,6 +5,7 @@ import type {
   BlogCategory,
   BlogPost,
   BlogPostDetail,
+  GlobalData,
   PobockaPost,
   PostupPost,
   ReferenceCategory,
@@ -2741,3 +2742,63 @@ export const fetchRedirects = async (): Promise<WordPressRedirect[]> => {
     return [];
   }
 };
+
+/**
+ * Získá megamenu data z Global ACF
+ * @returns Promise s daty pro megamenu (services a blog submenu)
+ */
+export async function getHeaderMegamenuData(): Promise<GlobalData | null> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+
+  const query = `
+    query GetHeaderMegamenu {
+      global {
+        globalACF {
+          headerSection {
+            submenuBlog {
+              sluzbyLink {
+                target
+                title
+                url
+              }
+            }
+            submenuSluzby {
+              sluzbyLink {
+                target
+                title
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+      next: { tags: ['wordpress'], revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors for getHeaderMegamenuData:', JSON.stringify(result.errors, null, 2));
+      throw new Error('GraphQL query failed');
+    }
+
+    return result.data?.global || null;
+  } catch (error) {
+    console.error('Error fetching header megamenu data:', error);
+    return null;
+  }
+}

@@ -54,23 +54,25 @@ export const getFooterLinks = async () => {
   ];
 };
 
-// Dummy data for megamenu - will be replaced with GraphQL data later
-export const getMegamenuItems = (linkId: string): HeaderLink[] | undefined => {
-  const megamenuData: Record<string, HeaderLink[]> = {
-    services: [
-      { id: 'all-services', label: 'Všechny služby', href: '/sluzby' },
-      { id: 'prevoz', label: 'Převoz zesnulých', href: '/sluzby/prevoz-zesnulych' },
-      { id: 'smutecni', label: 'Smuteční obřady', href: '/sluzby/smutecni-obrady' },
-      { id: 'doplnkove', label: 'Doplňkové služby a produky', href: '/sluzby/doplnkove-sluzby' },
-      { id: 'vazby', label: 'Vazby květin', href: '/sluzby/vazby-kvetin' },
-      { id: 'mista', label: 'Místa rozloučení', href: '/sluzby/mista-rozlouceni' },
-    ],
-    blog: [
-      { id: 'all-blog', label: 'Všechny články', href: '/blog' },
-      { id: 'rady', label: 'Rady a tipy', href: '/blog/kategorie/rady-a-tipy' },
-      { id: 'novinky', label: 'Novinky', href: '/blog/kategorie/novinky' },
-    ],
-  };
+// Type for megamenu data structure passed from server
+export interface MegamenuData {
+  services: HeaderLink[];
+  blog: HeaderLink[];
+}
 
-  return megamenuData[linkId];
+// Helper to get megamenu items by linkId from pre-fetched data
+export const getMegamenuItemsFromData = (
+  linkId: string,
+  megamenuData: MegamenuData | null
+): HeaderLink[] | undefined => {
+  if (!megamenuData) return undefined;
+
+  if (linkId === 'services') {
+    return megamenuData.services.length > 0 ? megamenuData.services : undefined;
+  }
+  if (linkId === 'blog') {
+    return megamenuData.blog.length > 0 ? megamenuData.blog : undefined;
+  }
+
+  return undefined;
 };

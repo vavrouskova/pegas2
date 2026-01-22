@@ -5,9 +5,11 @@ import { useEffect, useState } from 'react';
 import HeaderContent, { HeaderLink } from '@/components/header/HeaderContent';
 import { useScrollDirection } from '@/hooks/useScrollDirection';
 import { cn } from '@/lib/utils';
+import { MegamenuData } from '@/utils/data';
 
 interface StickyHeaderProps {
   headerLinks: HeaderLink[];
+  megamenuData: MegamenuData;
 }
 
 const getVisibilityClass = (isAtTop: boolean, isVisible: boolean) => {
@@ -16,7 +18,7 @@ const getVisibilityClass = (isAtTop: boolean, isVisible: boolean) => {
   return '-translate-y-full duration-300';
 };
 
-const StickyHeader = ({ headerLinks }: StickyHeaderProps) => {
+const StickyHeader = ({ headerLinks, megamenuData }: StickyHeaderProps) => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -45,7 +47,10 @@ const StickyHeader = ({ headerLinks }: StickyHeaderProps) => {
       )}
     >
       <div className='mx-auto flex w-full max-w-378 items-end justify-between px-6 py-2 lg:px-14 lg:py-4'>
-        <HeaderContent headerLinks={headerLinks} />
+        <HeaderContent
+          headerLinks={headerLinks}
+          megamenuData={megamenuData}
+        />
       </div>
     </header>
   );

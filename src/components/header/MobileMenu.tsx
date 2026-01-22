@@ -10,7 +10,7 @@ import { HeaderLink } from '@/components/header/HeaderContent';
 import Logo from '@/components/header/Logo';
 import Hamburger from '@/components/icons/Hamburger';
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
-import { getMegamenuItems } from '@/utils/data';
+import { getMegamenuItemsFromData, MegamenuData } from '@/utils/data';
 import { Separator } from '@radix-ui/react-separator';
 
 const noopUnsubscribe = () => {};
@@ -20,9 +20,10 @@ const getSnapshotFalse = () => false;
 
 interface MobileMenuProps {
   headerLinks: HeaderLink[];
+  megamenuData: MegamenuData;
 }
 
-const MobileMenu = ({ headerLinks }: MobileMenuProps) => {
+const MobileMenu = ({ headerLinks, megamenuData }: MobileMenuProps) => {
   const pathname = usePathname();
   const previousPathnameReference = useRef(pathname);
 
@@ -30,7 +31,7 @@ const MobileMenu = ({ headerLinks }: MobileMenuProps) => {
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
   const mounted = useSyncExternalStore(emptySubscribe, getSnapshotTrue, getSnapshotFalse);
 
-  const submenuItems = activeSubmenu ? getMegamenuItems(activeSubmenu) : undefined;
+  const submenuItems = activeSubmenu ? getMegamenuItemsFromData(activeSubmenu, megamenuData) : undefined;
 
   // Close menu when pathname changes (navigation occurred)
   // eslint-disable-next-line react-hooks/refs
@@ -53,7 +54,7 @@ const MobileMenu = ({ headerLinks }: MobileMenuProps) => {
   };
 
   const handleItemClick = (item: HeaderLink) => {
-    const hasSubmenu = item.id && getMegamenuItems(item.id);
+    const hasSubmenu = item.id && getMegamenuItemsFromData(item.id, megamenuData);
     if (hasSubmenu) {
       setActiveSubmenu(item.id!);
     } else {
@@ -146,7 +147,7 @@ const MobileMenu = ({ headerLinks }: MobileMenuProps) => {
                 className='flex flex-col gap-8 p-4'
               >
                 {headerLinks.map((item) => {
-                  const hasSubmenu = item.id && getMegamenuItems(item.id);
+                  const hasSubmenu = item.id && getMegamenuItemsFromData(item.id, megamenuData);
                   return hasSubmenu ? (
                     <button
                       key={item.id || item.href}

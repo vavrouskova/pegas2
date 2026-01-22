@@ -274,3 +274,27 @@ export interface PostupPost {
   jakPostupovatAcf?: JakPostupovatACF;
   components?: BlogComponents;
 }
+
+// Header Megamenu Types (Global ACF)
+export interface MegamenuLink {
+  target?: string;
+  title: string;
+  url: string;
+}
+
+export interface HeaderSubmenu {
+  sluzbyLink: MegamenuLink;
+}
+
+export interface HeaderSection {
+  submenuBlog: HeaderSubmenu[];
+  submenuSluzby: HeaderSubmenu[];
+}
+
+export interface GlobalACF {
+  headerSection: HeaderSection;
+}
+
+export interface GlobalData {
+  globalACF: GlobalACF;
+}
