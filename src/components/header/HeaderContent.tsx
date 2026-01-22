@@ -22,19 +22,24 @@ export interface HeaderLink {
 interface HeaderContentProps {
   headerLinks: HeaderLink[];
   megamenuData: MegamenuData;
+  isVisible?: boolean;
 }
 
-const HeaderContent = ({ headerLinks, megamenuData }: HeaderContentProps) => {
+const HeaderContent = ({ headerLinks, megamenuData, isVisible }: HeaderContentProps) => {
   const pathname = usePathname();
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [navLeftOffset, setNavLeftOffset] = useState(0);
+  const [navBottomOffset, setNavBottomOffset] = useState(0);
   const [lastMenuItems, setLastMenuItems] = useState<HeaderLink[]>([]);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const navElementRef = useRef<HTMLElement | null>(null);
 
   const updateNavOffset = () => {
     if (navElementRef.current) {
-      setNavLeftOffset(navElementRef.current.getBoundingClientRect().left);
+      const rect = navElementRef.current.getBoundingClientRect();
+      setNavLeftOffset(rect.left);
+      // Add 16px gap below nav for consistent spacing
+      setNavBottomOffset(rect.bottom + 16);
     }
   };
 
@@ -43,6 +48,14 @@ const HeaderContent = ({ headerLinks, megamenuData }: HeaderContentProps) => {
     window.addEventListener('resize', updateNavOffset);
     return () => window.removeEventListener('resize', updateNavOffset);
   }, []);
+
+  // Recalculate offset when sticky header becomes visible
+  useEffect(() => {
+    if (isVisible) {
+      // Small delay to ensure layout is complete after visibility change
+      requestAnimationFrame(updateNavOffset);
+    }
+  }, [isVisible]);
 
   const isActiveLink = (href: string) => {
     const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, '') || '/';
@@ -59,6 +72,8 @@ const HeaderContent = ({ headerLinks, megamenuData }: HeaderContentProps) => {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
+    // Recalculate offset when menu opens to ensure correct position
+    updateNavOffset();
     const items = getMegamenuItemsFromData(linkId, megamenuData);
     if (items) {
       setLastMenuItems(items);
@@ -112,6 +127,7 @@ const HeaderContent = ({ headerLinks, megamenuData }: HeaderContentProps) => {
         items={currentMenuItems || lastMenuItems}
         isOpen={!!openMenuId}
         navLeftOffset={navLeftOffset}
+        headerHeight={navBottomOffset}
         onMouseEnter={() => openMenuId && handleMouseEnter(openMenuId)}
         onMouseLeave={handleMouseLeave}
       />

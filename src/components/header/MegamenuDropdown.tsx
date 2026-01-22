@@ -12,6 +12,7 @@ interface MegamenuDropdownProps {
   items: HeaderLink[];
   isOpen: boolean;
   navLeftOffset: number;
+  headerHeight?: number;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 }
@@ -25,6 +26,7 @@ export const MegamenuDropdown = ({
   items,
   isOpen,
   navLeftOffset,
+  headerHeight,
   onMouseEnter,
   onMouseLeave,
 }: MegamenuDropdownProps) => {
@@ -41,6 +43,7 @@ export const MegamenuDropdown = ({
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2, ease: 'easeOut' }}
           className='bg-white-smoke fixed inset-x-0 top-[var(--header-height,80px)] z-50 py-6'
+          style={headerHeight ? { top: headerHeight } : undefined}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >

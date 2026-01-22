@@ -50,6 +50,7 @@ const StickyHeader = ({ headerLinks, megamenuData }: StickyHeaderProps) => {
         <HeaderContent
           headerLinks={headerLinks}
           megamenuData={megamenuData}
+          isVisible={isVisible}
         />
       </div>
     </header>

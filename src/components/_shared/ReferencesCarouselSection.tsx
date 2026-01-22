@@ -7,34 +7,34 @@ import { useMemo } from 'react';
 import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
-import { formatFarewellDateTime } from '@/utils/helper';
-import type { ReferencePost } from '@/utils/wordpress-types';
+import { stripHtmlTags } from '@/utils/helper';
+import type { BlogPost } from '@/utils/wordpress-types';
 
-interface ReferencesCarouselItemData {
+interface BlogCarouselItemData {
   id: number;
   title: string;
-  where?: string;
-  when?: string;
+  description: string;
   image: string;
   link: string;
 }
 
-interface ReferencesCarouselSectionProps {
-  referencePosts?: ReferencePost[];
+interface BlogCarouselSectionProps {
+  posts?: BlogPost[];
 }
 
-const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSectionProps) => {
-  const carouselData: ReferencesCarouselItemData[] = useMemo(() => {
-    return referencePosts.map((post) => ({
+const BlogCarouselSection = ({ posts = [] }: BlogCarouselSectionProps) => {
+  // Transformace WordPress blog postu na format pro carousel
+  const carouselData: BlogCarouselItemData[] = useMemo(() => {
+    return posts.map((post) => ({
       id: post.databaseId,
       title: post.title,
-      where: post.referenceACF?.farewellPlace,
-      when: formatFarewellDateTime(post.referenceACF?.farewellDate),
-      image: post.featuredImage?.node.sourceUrl || '/images/placeholder.webp',
+      description: post.excerpt ? stripHtmlTags(post.excerpt) : '',
+      image: post.featuredImage?.node?.sourceUrl || '/images/placeholder.webp',
       link: `/${post.slug}`,
     }));
-  }, [referencePosts]);
+  }, [posts]);
 
+  // Pokud nejsou zadne posty, nezobrazuj sekci
   if (carouselData.length === 0) {
     return null;
   }
@@ -42,42 +42,32 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
   return (
     <GenericCarouselSection
       data={carouselData}
-      carouselMaxWidth='max-w-88 lg:max-w-[48.1875rem]'
-      articleClassName='flex min-h-[10rem] mx-auto items-stretch max-lg:flex-col lg:max-h-[14.375rem]'
-      imageFirst
+      carouselMaxWidth='max-w-[23.125rem] lg:max-w-[59rem]'
+      articleClassName='flex flex-col-reverse items-center lg:flex-row'
       renderImage={(item) => (
-        <picture className='relative aspect-square h-auto w-full lg:max-h-[14.375rem] lg:max-w-[14.375rem]'>
+        <picture className='relative aspect-square h-auto max-h-[23.125rem] w-full max-w-[23.125rem] lg:col-span-2'>
           <Image
             src={item.image}
             alt={item.title}
             fill
-            sizes='(max-width: 768px) 160px, 256px'
+            sizes='(max-width: 1024px) 100vw, 40vw'
             className='object-cover'
           />
         </picture>
       )}
       renderContent={(item, t) => (
-        <div className='flex flex-1 flex-col space-y-2 px-4 py-5 max-lg:h-full max-lg:justify-between lg:px-17.5 lg:py-7.5'>
-          <div className='flex flex-col'>
+        <div className='mx-auto flex flex-1 flex-col space-y-2 px-4 py-8 max-md:h-full max-md:justify-between lg:col-span-3 lg:px-25'>
+          <div className='flex flex-col space-y-2'>
             <FormattedText
               text={item.title}
               as='h3'
-              className='text-white-smoke mb-2.5 text-xl'
+              className='text-white-smoke mb-6 text-xl'
             />
-            {item.where && (
-              <FormattedText
-                text={item.where}
-                as='span'
-                className='text-lg text-white'
-              />
-            )}
-            {item.when && (
-              <FormattedText
-                text={item.when}
-                as='span'
-                className='text-lg text-white'
-              />
-            )}
+            <FormattedText
+              text={item.description}
+              as='p'
+              className='text-tertiary line-clamp-3 text-base'
+            />
           </div>
           <Link href={item.link}>
             <Button
@@ -91,4 +81,4 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
   );
 };
 
-export default ReferencesCarouselSection;
+export default BlogCarouselSection;
