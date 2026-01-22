@@ -87,7 +87,7 @@
   "home": {
     "hero": {
       "title": "Rozlučte se.'{{br}}' Po svém, s vděčností.",
-      "description": "Vytváříme prostor pro okamžik, který patří jen vám.'{{br}}' Jsme pohřební služba, která naslouchá – a plní vaše představy o vděčném a osobitém rozloučení.",
+      "description": "Jsme pohřební služba, která Vám naslouchá.",
       "contact-us": "Kontaktujte nás",
       "prepare": "Připravte si",
       "needed-documents": "Potřebné dokumenty",
@@ -104,13 +104,13 @@
     },
     "services": {
       "title": "Obřad, ceremoniál nebo tichá vzpomínka?",
-      "description": "Důstojné a opravdové rozloučení není otázkou peněz – může být tiché i pompézní, veřejné či osobní. Pomůžeme Vám s přípravou obřadu, který odpovídá vašim představám i možnostem.'{{br}}{{br}}' Společně vytvoříme prostor okamžiku, který stojí za to prožít opravdově.",
+      "description": "Důstojné a vděčné rozloučení může být tiché i pompézní, veřejné či osobní. Pomůžeme Vám s přípravou obřadu, který odpovídá Vašim představám i možnostem.",
       "button-text": "Naše služby",
       "link": "sluzby"
     },
     "branches": {
       "title": "13 poboček v Praze a okolí",
-      "description": "V Praze a okolí jsme vám nablízku, ať už bydlíte kdekoli. Na vybraných pobočkách jsme tu pro vás i o víkendech a ve státní svátky.",
+      "description": "V Praze a okolí jsme Vám nablízku, ať už bydlíte kdekoli. Na vybraných pobočkách jsme tu pro Vás i o víkendech a ve státní svátky.",
       "button-text": "Všechny pobočky",
       "alt": "Hlavní místnost pobočky",
       "link": "kontakty"
@@ -124,7 +124,7 @@
     "about-us": {
       "title": "O nás",
       "description": "V životě jsou okamžiky, kdy slova nestačí. Organizujeme citlivá a osobitá rozloučení, která si zaslouží prožít. Jsme nejvetší pohřební služba v České republice. Naším cílem je, aby každé rozloučení bylo důstojné a připravené s péčí i vděčností.",
-      "button-text": "Více o Pegasu",
+      "button-text": "Více o nás",
       "alt": "Hosté na obřadu",
       "link": "o-nas"
     },
