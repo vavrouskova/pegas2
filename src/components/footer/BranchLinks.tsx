@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
+import { sortBranches } from '@/utils/branch-filters';
 import { PobockaPost } from '@/utils/wordpress-types';
 
 interface BranchLinksProps {
@@ -15,6 +16,8 @@ export const BranchLinks = ({ title, branches, filterNonstop = false, maxWidth }
     ? branches.filter((pobocka) => pobocka.pobockyACF?.openSwitcher === true)
     : branches;
 
+  const sortedBranches = sortBranches(filteredBranches);
+
   return (
     <div className='flex flex-col'>
       <span
@@ -24,7 +27,7 @@ export const BranchLinks = ({ title, branches, filterNonstop = false, maxWidth }
         {title}
       </span>
       <div className='flex flex-col gap-4'>
-        {filteredBranches.map((pobocka) => (
+        {sortedBranches.map((pobocka) => (
           <Link
             key={pobocka.id}
             href={`/${pobocka.slug}`}
