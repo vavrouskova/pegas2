@@ -1,13 +1,11 @@
 'use client';
 
-import Image from 'next/image';
-
 import { CarouselNavigation } from '@/components/_shared/CarouselNavigation';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import LeavesAnimation from '@/components/_shared/LeavesAnimation';
+import PersonCard from '@/components/_shared/PersonCard';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { useCarouselAutoplay } from '@/hooks/useCarouselAutoplay';
-import { cn } from '@/lib/utils';
 import { filterEmployeesByPosition } from '@/utils/helper';
 import type { ZamestnanciPost } from '@/utils/wordpress-types';
 
@@ -18,63 +16,6 @@ interface EmployeesSectionProps {
   managementTitle: string;
   teamTitle: string;
 }
-
-interface EmployeeCardProps {
-  employee: ZamestnanciPost;
-  className?: string;
-  showQuote?: boolean;
-}
-
-const EmployeeCard = ({ employee, className, showQuote = true }: Readonly<EmployeeCardProps>) => {
-  const { zamestnanciACF } = employee;
-  const imageUrl = zamestnanciACF?.profileImage?.node?.sourceUrl;
-  const imageAlt = zamestnanciACF?.profileImage?.node?.altText || employee.title || 'Employee';
-
-  return (
-    <article className={cn('group flex h-full flex-col max-lg:max-w-[16.625rem]', className)}>
-      <div className='relative aspect-square w-full overflow-hidden'>
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt={imageAlt}
-            fill
-            sizes='(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
-            className='object-cover'
-          />
-        ) : (
-          <Image
-            src='/images/placeholder.webp'
-            alt={imageAlt}
-            fill
-            sizes='(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
-            className='object-cover'
-          />
-        )}
-      </div>
-      <div className='flex flex-1 flex-col bg-white px-3.5 py-6'>
-        {employee.title && (
-          <FormattedText
-            text={employee.title}
-            as='h3'
-            className='text-xl'
-          />
-        )}
-        {zamestnanciACF?.positionDescription && (
-          <FormattedText
-            text={zamestnanciACF.positionDescription}
-            as='p'
-            className='text-lg'
-          />
-        )}
-        {showQuote && zamestnanciACF?.employeeQuote && (
-          <p className='font-italic mt-7.5 text-sm tracking-[0.03125rem]'>
-            &bdquo;{zamestnanciACF.employeeQuote}&ldquo;
-          </p>
-        )}
-      </div>
-    </article>
-  );
-};
 
 interface ManagementGridProps {
   employees: ZamestnanciPost[];
@@ -92,12 +33,12 @@ const ManagementGrid = ({ employees, title }: Readonly<ManagementGridProps>) => 
           as='h2'
           className='mb-12'
         />
-        <div className='flex flex-wrap gap-4 lg:gap-8'>
+        <div className='grid grid-cols-[repeat(auto-fill,minmax(16.625rem,16.625rem))] gap-4 lg:gap-8'>
           {employees.map((employee) => (
-            <EmployeeCard
+            <PersonCard
               key={employee.id}
-              employee={employee}
-              className='w-full max-w-[16.625rem] min-w-[16.625rem]'
+              person={employee}
+              showQuote
             />
           ))}
         </div>
@@ -141,10 +82,7 @@ const TeamCarousel = ({ employees, title }: Readonly<TeamCarouselProps>) => {
                 key={employee.id}
                 className='basis-full pl-4 max-lg:max-w-[16.625rem] sm:basis-1/2 lg:basis-1/3 lg:pl-8 xl:basis-1/4'
               >
-                <EmployeeCard
-                  employee={employee}
-                  showQuote={false}
-                />
+                <PersonCard person={employee} />
               </CarouselItem>
             ))}
           </CarouselContent>

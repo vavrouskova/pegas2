@@ -77,7 +77,7 @@ const ServiceCard = ({
       <FormattedText
         text={title}
         as='h3'
-        className='text-lg leading-tight font-black tracking-wide'
+        className='text-lg leading-tight tracking-wide'
       />
     </Link>
   );

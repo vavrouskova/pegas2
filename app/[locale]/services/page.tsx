@@ -33,8 +33,8 @@ const ServicesPage = async () => {
         description={t('services.hero.description')}
         branchesCount={branchesCount}
         pageTitle={t('services.hero.page-title')}
-        contentClassName='lg:ml-30 mt-18 lg:mt-[15.25rem] pb-[30.75rem] lg:pb-[41.5rem]'
-        imageClassName='top-220 sm:top-180 md:top-150 lg:top-230 xl:top-250'
+        contentClassName='lg:ml-30 mt-18 lg:mt-[15.25rem] pb-[22rem]'
+        imageClassName='top-205 sm:top-170 md:top-135 lg:top-215 xl:top-235'
       />
 
       <TransportSection

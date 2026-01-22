@@ -105,7 +105,7 @@ const stripHtml = (html: string) => {
     html
       .replace(/<br\s*\/?>/gi, '{{br}}')
       .replace(
-        // eslint-disable-next-line security/detect-unsafe-regex, sonarjs/slow-regex
+        // eslint-disable-next-line sonarjs/slow-regex
         /<a\s+([^>]*)>([\s\S]*?)<\/a>/gi,
         (_, attributes, text) => {
           // Extract href and target from attributes (order-independent)

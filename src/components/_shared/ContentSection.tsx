@@ -44,7 +44,7 @@ const ContentSection = ({
       <section
         className={cn(
           'section-container relative',
-          withFeathers && featherPosition === 'right' ? '!pt-[26rem] lg:!pt-[15rem]' : '',
+          withFeathers && featherPosition === 'right' ? '!pt-[26rem] lg:!pt-[12rem]' : '',
           sectionClassName
         )}
       >

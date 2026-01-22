@@ -18,7 +18,7 @@ export const FaqItem = ({ postup, buttonText }: FaqItemProps) => {
       <FormattedText
         text={postup.title}
         as='h2'
-        className='font-heading pr-4 text-xl text-white md:text-2xl'
+        className='font-heading pr-4 text-xl text-balance text-white md:text-2xl'
       />
       <div className='absolute right-12 bottom-6 text-lg'>
         <div className='text-white-smoke flex items-center gap-3'>

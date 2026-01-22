@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 
-import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import { cn } from '@/lib/utils';
 import { pushBranchSelectItem, pushContactClick } from '@/utils/datalayer';
+
 import LinkWithArrow from '../_shared/LinkWithArrow';
 
 interface BranchCardContentProps {

@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/_next/', '/*?osoba=*'],
+      disallow: ['/*?osoba=*'],
     },
     sitemap: `${process.env.FRONTEND_URL}/sitemap.xml`,
   };
