@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
-import { getBlogPostsForCarousel, getBranchesCount, getHomepageData } from '@/api/wordpress-api';
-import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
+import { getBranchesCount, getHomepageData } from '@/api/wordpress-api';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
+import HomepageSliderSection from '@/components/_shared/HomepageSliderSection';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 import ReferencesCarouselSection from '@/components/_shared/ReferencesCarouselSection';
 import ServicesSection from '@/components/_shared/ServicesSection';
@@ -18,13 +18,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const Homepage = async () => {
-  const [homepageData, branchesCount, blogPosts, t] = await Promise.all([
+  const [homepageData, branchesCount, t] = await Promise.all([
     getHomepageData(),
     getBranchesCount(),
-    getBlogPostsForCarousel(6),
     getTranslations('home'),
   ]);
 
+  const slides = homepageData?.homepageACF?.slider || [];
   const referencePosts = homepageData?.homepageACF?.selectedReference?.nodes || [];
   const services = homepageData?.homepageACF?.selectedSluzby?.nodes || [];
 
@@ -36,7 +36,7 @@ const Homepage = async () => {
         branchesCount={branchesCount}
       />
 
-      <ReferencesCarouselSection referencePosts={referencePosts} />
+      <HomepageSliderSection slides={slides} />
 
       <ContentSection
         title={t('faq.title')}
@@ -72,7 +72,7 @@ const Homepage = async () => {
         featherPosition='right'
       />
 
-      <BlogCarouselSection posts={blogPosts} />
+      <ReferencesCarouselSection referencePosts={referencePosts} />
 
       <ContentSection
         title={t('about-us.title')}
