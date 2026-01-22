@@ -137,8 +137,26 @@ export interface PobockaPost {
   pobockyACF?: PobockyACF;
 }
 
+// Homepage Slider Types
+export interface SliderSlide {
+  slideTitle?: string;
+  slideDescription?: string;
+  slideImage?: {
+    node: {
+      altText: string;
+      sourceUrl: string;
+    };
+  };
+  slideLink?: {
+    target?: string;
+    title?: string;
+    url?: string;
+  };
+}
+
 // Homepage ACF Types
 export interface HomepageACF {
+  slider?: SliderSlide[];
   selectedReference?: {
     nodes: ReferencePost[];
   };
