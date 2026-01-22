@@ -1,12 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { useMemo } from 'react';
 
-import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
+import LinkWithArrow from '@/components/_shared/LinkWithArrow';
 import { formatFarewellDateTime } from '@/utils/helper';
 import type { ReferencePost } from '@/utils/wordpress-types';
 
@@ -45,7 +44,7 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
       carouselMaxWidth='max-w-[23.125rem] lg:max-w-[59rem]'
       articleClassName='flex flex-col-reverse items-center lg:flex-row'
       renderImage={(item) => (
-        <picture className='relative aspect-square h-auto max-h-[23.125rem] w-full max-w-[23.125rem] lg:col-span-2'>
+        <picture className='relative aspect-square h-auto max-h-92.5 w-full max-w-92.5 lg:col-span-2'>
           <Image
             src={item.image}
             alt={item.title}
@@ -78,12 +77,11 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
               />
             )}
           </div>
-          <Link href={item.link}>
-            <Button
-              buttonText={t('find-out-more')}
-              className='-ml-8 lg:-ml-16'
-            />
-          </Link>
+          <LinkWithArrow
+            variant='destructive'
+            href={item.link}
+            title={t('find-out-more')}
+          />
         </div>
       )}
     />

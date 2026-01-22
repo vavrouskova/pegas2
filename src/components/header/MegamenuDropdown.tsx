@@ -15,6 +15,7 @@ interface MegamenuDropdownProps {
   headerHeight?: number;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  onClose?: () => void;
 }
 
 const emptyUnsubscribe = () => {};
@@ -29,6 +30,7 @@ export const MegamenuDropdown = ({
   headerHeight,
   onMouseEnter,
   onMouseLeave,
+  onClose,
 }: MegamenuDropdownProps) => {
   const isMounted = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
@@ -60,6 +62,7 @@ export const MegamenuDropdown = ({
               >
                 <Link
                   href={item.href}
+                  onClick={onClose}
                   className={cn(
                     'text-secondary hover:text-primary inline-block py-1 text-sm transition-colors duration-200 hover:underline',
                     index === 0 && 'font-cta'

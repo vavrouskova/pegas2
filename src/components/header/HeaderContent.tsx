@@ -87,6 +87,14 @@ const HeaderContent = ({ headerLinks, megamenuData, isVisible }: HeaderContentPr
     }, 150);
   };
 
+  const handleClose = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    setOpenMenuId(null);
+  };
+
   const currentMenuItems = openMenuId ? getMegamenuItemsFromData(openMenuId, megamenuData) : undefined;
 
   return (
@@ -109,6 +117,7 @@ const HeaderContent = ({ headerLinks, megamenuData, isVisible }: HeaderContentPr
               hasMegamenu={hasMegamenu}
               onMouseEnter={hasMegamenu && link.id ? () => handleMouseEnter(link.id!) : undefined}
               onMouseLeave={hasMegamenu ? handleMouseLeave : undefined}
+              onClick={hasMegamenu ? handleClose : undefined}
             />
           );
         })}
@@ -130,6 +139,7 @@ const HeaderContent = ({ headerLinks, megamenuData, isVisible }: HeaderContentPr
         headerHeight={navBottomOffset}
         onMouseEnter={() => openMenuId && handleMouseEnter(openMenuId)}
         onMouseLeave={handleMouseLeave}
+        onClose={handleClose}
       />
     </>
   );

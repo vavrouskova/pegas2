@@ -6,6 +6,7 @@ import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import { cn } from '@/lib/utils';
 import { pushBranchSelectItem, pushContactClick } from '@/utils/datalayer';
+import LinkWithArrow from '../_shared/LinkWithArrow';
 
 interface BranchCardContentProps {
   city?: string;
@@ -103,17 +104,12 @@ const BranchCardContent = ({
         </Link>
       )}
 
-      <Link
+      <LinkWithArrow
         href={`/${slug}`}
-        className='mt-2 -ml-4 lg:-ml-8'
+        title={detailButtonText}
         onClick={handleDetailClick}
-      >
-        <Button
-          buttonText={detailButtonText}
-          size='small'
-          variant='destructive'
-        />
-      </Link>
+        className='mt-4'
+      />
     </div>
   );
 };

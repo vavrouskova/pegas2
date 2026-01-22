@@ -1,12 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 
-import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
+import LinkWithArrow from '@/components/_shared/LinkWithArrow';
 import type { SliderSlide } from '@/utils/wordpress-types';
 
 interface SliderCarouselItemData {
@@ -49,7 +48,7 @@ const HomepageSliderSection = ({ slides }: HomepageSliderSectionProps) => {
       articleClassName='flex min-h-[10rem] mx-auto items-stretch max-lg:flex-col lg:max-h-[14.375rem]'
       imageFirst
       renderImage={(item) => (
-        <picture className='relative aspect-square h-auto w-full lg:max-h-[14.375rem] lg:max-w-[14.375rem]'>
+        <picture className='relative aspect-square h-auto w-full lg:max-h-57.5 lg:max-w-57.5'>
           <Image
             src={item.image}
             alt={item.title}
@@ -60,7 +59,7 @@ const HomepageSliderSection = ({ slides }: HomepageSliderSectionProps) => {
         </picture>
       )}
       renderContent={(item, t) => (
-        <div className='flex flex-1 flex-col space-y-2 px-4 py-5 max-lg:h-full max-lg:justify-between lg:px-17.5 lg:py-7.5'>
+        <div className='flex flex-1 flex-col justify-between space-y-2 px-4 py-5 max-lg:h-full lg:px-17.5 lg:py-7.5'>
           <div className='flex flex-col'>
             <FormattedText
               text={item.title}
@@ -75,15 +74,12 @@ const HomepageSliderSection = ({ slides }: HomepageSliderSectionProps) => {
               />
             )}
           </div>
-          <Link
+          <LinkWithArrow
+            variant='destructive'
             href={item.link}
             target={item.linkTarget}
-          >
-            <Button
-              buttonText={item.linkTitle || t('find-out-more')}
-              className='-ml-8 lg:-ml-16'
-            />
-          </Link>
+            title={item.linkTitle || t('find-out-more')}
+          />
         </div>
       )}
     />
