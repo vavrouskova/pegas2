@@ -2,13 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import { useMemo } from 'react';
 
 import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
 import { formatFarewellDateTime } from '@/utils/helper';
-import { ReferencePost } from '@/utils/wordpress-types';
+import type { ReferencePost } from '@/utils/wordpress-types';
 
 interface ReferencesCarouselItemData {
   id: number;
@@ -23,27 +23,25 @@ interface ReferencesCarouselSectionProps {
   referencePosts?: ReferencePost[];
 }
 
-function convertToCarouselData(referencePosts: ReferencePost[]): ReferencesCarouselItemData[] {
-  return referencePosts.map((post) => ({
-    id: post.databaseId,
-    title: post.title,
-    where: post.referenceACF?.farewellPlace,
-    when: formatFarewellDateTime(post.referenceACF?.farewellDate),
-    image: post.featuredImage?.node.sourceUrl || '/images/car.webp',
-    link: post.slug,
-  }));
-}
+const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSectionProps) => {
+  const carouselData: ReferencesCarouselItemData[] = useMemo(() => {
+    return referencePosts.map((post) => ({
+      id: post.databaseId,
+      title: post.title,
+      where: post.referenceACF?.farewellPlace,
+      when: formatFarewellDateTime(post.referenceACF?.farewellDate),
+      image: post.featuredImage?.node.sourceUrl || '/images/placeholder.webp',
+      link: `/${post.slug}`,
+    }));
+  }, [referencePosts]);
 
-const ReferencesCarouselSection = ({ referencePosts }: ReferencesCarouselSectionProps) => {
-  if (!referencePosts || referencePosts.length === 0) {
+  if (carouselData.length === 0) {
     return null;
   }
 
-  const data = convertToCarouselData(referencePosts);
-
   return (
     <GenericCarouselSection
-      data={data}
+      data={carouselData}
       carouselMaxWidth='max-w-88 lg:max-w-[48.1875rem]'
       articleClassName='flex min-h-[10rem] mx-auto items-stretch max-lg:flex-col lg:max-h-[14.375rem]'
       imageFirst
