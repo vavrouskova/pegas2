@@ -52,19 +52,19 @@ export const ImageBoxesSection = ({ imageBoxes }: ImageBoxesSectionProps) => {
                 sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw'
               />
             </ArticleGalleryWrapper>
-            <div className='flex flex-1 flex-col bg-white px-2.5 py-1.5'>
+            <div className='flex flex-1 flex-col gap-1 bg-white px-2.5 py-1.5'>
               {box.boxHeadline && (
                 <FormattedText
                   text={box.boxHeadline}
                   as='h3'
-                  className='text-sm'
+                  className='text-sm leading-[144%]'
                 />
               )}
               {box.boxDescription && (
                 <FormattedText
                   text={box.boxDescription}
                   as='p'
-                  className='text-sm'
+                  className='text-sm leading-[144%]'
                 />
               )}
             </div>
