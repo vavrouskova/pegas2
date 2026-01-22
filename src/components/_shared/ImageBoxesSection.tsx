@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import { ArticleGalleryWrapper } from '@/components/_shared/ArticleGalleryWrapper';
 import { FormattedText } from '@/components/_shared/FormattedText';
+import { htmlToMarkers } from '@/utils/htmlToMarkers';
 
 interface ImageBox {
   boxHeadline?: string;
@@ -62,7 +63,7 @@ export const ImageBoxesSection = ({ imageBoxes }: ImageBoxesSectionProps) => {
               )}
               {box.boxDescription && (
                 <FormattedText
-                  text={box.boxDescription}
+                  text={htmlToMarkers(box.boxDescription)}
                   as='p'
                   className='text-sm leading-[144%]'
                 />

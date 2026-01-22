@@ -254,7 +254,7 @@ export const FormattedText = ({
         return (
           <span
             key={key}
-            className='font-heading'
+            className='font-heading text-[length:inherit] leading-[inherit]'
           >
             {boldContent}
           </span>
@@ -270,7 +270,7 @@ export const FormattedText = ({
         return (
           <span
             key={key}
-            className='font-italic'
+            className='font-italic text-[length:inherit] leading-[inherit]'
           >
             {italicContent}
           </span>
