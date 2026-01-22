@@ -27,7 +27,7 @@ const TransportSection = ({ title, description, features, primaryButton, seconda
     <section className='section-container'>
       <div className='max-w-lg-content lg:ml-30'>
         {/* Hlavní nadpis a popis */}
-        <div className='mb-9 flex flex-col gap-8'>
+        <div className='mb-9 flex flex-col gap-2.5'>
           <FormattedText
             text={title}
             as='h2'

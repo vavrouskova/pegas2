@@ -41,7 +41,7 @@ const OtherServicesSection = ({ services, id }: OtherServicesSectionProps) => {
         {services.map((service) => (
           <div
             key={service.id}
-            className='flex flex-col gap-7'
+            className='flex flex-col gap-2.5'
           >
             {/* Nadpis */}
             <FormattedText
@@ -61,7 +61,7 @@ const OtherServicesSection = ({ services, id }: OtherServicesSectionProps) => {
             {/* CTA tlačítko */}
             <Link
               href={`/${service.slug}`}
-              className='mt-2 w-fit'
+              className='mt-9 w-fit'
             >
               <Button buttonText='Detail služby' />
             </Link>

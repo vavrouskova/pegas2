@@ -47,7 +47,7 @@ const ServicesGridSection = ({
       className='section-container'
     >
       {/* Nadpis a popis sekce */}
-      <div className='max-w-lg-content mb-16 flex flex-col gap-8 lg:ml-30'>
+      <div className='max-w-lg-content mb-16 flex flex-col gap-2.5 lg:ml-30'>
         <FormattedText
           text={title}
           as='h2'
