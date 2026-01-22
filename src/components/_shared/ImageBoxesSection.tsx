@@ -34,7 +34,7 @@ export const ImageBoxesSection = ({ imageBoxes }: ImageBoxesSectionProps) => {
         return (
           <div
             key={index}
-            className='flex flex-col'
+            className='flex h-full flex-col'
           >
             <ArticleGalleryWrapper
               src={imageUrl}
@@ -52,7 +52,7 @@ export const ImageBoxesSection = ({ imageBoxes }: ImageBoxesSectionProps) => {
                 sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw'
               />
             </ArticleGalleryWrapper>
-            <div className='flex flex-col bg-white px-2.5 py-1.5'>
+            <div className='flex flex-1 flex-col bg-white px-2.5 py-1.5'>
               {box.boxHeadline && (
                 <FormattedText
                   text={box.boxHeadline}
