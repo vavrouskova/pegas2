@@ -13,6 +13,8 @@ const withBundleAnalyzer = bundleAnalyzer({
 const nextConfig = {
   trailingSlash: true,
   reactCompiler: true,
+  htmlLimitedBots:
+    /Googlebot|Bingbot|Yandex|DuckDuckBot|Slurp|Baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora link preview|showyoubot|outbrain|pinterest|applebot|SeznamBot/i,
   async rewrites() {
     return [
       {
