@@ -7,34 +7,34 @@ import { useMemo } from 'react';
 import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
-import { stripHtmlTags } from '@/utils/helper';
-import type { BlogPost } from '@/utils/wordpress-types';
+import { formatFarewellDateTime } from '@/utils/helper';
+import type { ReferencePost } from '@/utils/wordpress-types';
 
-interface BlogCarouselItemData {
+interface ReferencesCarouselItemData {
   id: number;
   title: string;
-  description: string;
+  where?: string;
+  when?: string;
   image: string;
   link: string;
 }
 
-interface BlogCarouselSectionProps {
-  posts?: BlogPost[];
+interface ReferencesCarouselSectionProps {
+  referencePosts?: ReferencePost[];
 }
 
-const BlogCarouselSection = ({ posts = [] }: BlogCarouselSectionProps) => {
-  // Transformace WordPress blog postu na format pro carousel
-  const carouselData: BlogCarouselItemData[] = useMemo(() => {
-    return posts.map((post) => ({
+const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSectionProps) => {
+  const carouselData: ReferencesCarouselItemData[] = useMemo(() => {
+    return referencePosts.map((post) => ({
       id: post.databaseId,
       title: post.title,
-      description: post.excerpt ? stripHtmlTags(post.excerpt) : '',
+      where: post.referenceACF?.farewellPlace,
+      when: formatFarewellDateTime(post.referenceACF?.farewellDate),
       image: post.featuredImage?.node?.sourceUrl || '/images/placeholder.webp',
       link: `/${post.slug}`,
     }));
-  }, [posts]);
+  }, [referencePosts]);
 
-  // Pokud nejsou zadne posty, nezobrazuj sekci
   if (carouselData.length === 0) {
     return null;
   }
@@ -63,11 +63,20 @@ const BlogCarouselSection = ({ posts = [] }: BlogCarouselSectionProps) => {
               as='h3'
               className='text-white-smoke mb-6 text-xl'
             />
-            <FormattedText
-              text={item.description}
-              as='p'
-              className='text-tertiary line-clamp-3 text-base'
-            />
+            {item.where && (
+              <FormattedText
+                text={item.where}
+                as='span'
+                className='text-tertiary text-base'
+              />
+            )}
+            {item.when && (
+              <FormattedText
+                text={item.when}
+                as='span'
+                className='text-tertiary text-base'
+              />
+            )}
           </div>
           <Link href={item.link}>
             <Button
@@ -81,4 +90,4 @@ const BlogCarouselSection = ({ posts = [] }: BlogCarouselSectionProps) => {
   );
 };
 
-export default BlogCarouselSection;
+export default ReferencesCarouselSection;

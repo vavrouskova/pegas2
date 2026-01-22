@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
-import { getAboutUsTimeline, getBlogPostsForCarousel, getZamestnanciPosts } from '@/api/wordpress-api';
+import { getAboutUsTimeline, getReferencePosts, getZamestnanciPosts } from '@/api/wordpress-api';
 import BasicHeroSection from '@/components/_shared/BasicHeroSection';
-import BlogCarouselSection from '@/components/_shared/BlogCarouselSection';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import PartnersSection from '@/components/_shared/PartnersSection';
+import ReferencesCarouselSection from '@/components/_shared/ReferencesCarouselSection';
 import CitationSection from '@/components/about-us/CitationSection';
 import EmployeesSection from '@/components/about-us/EmployeesSection';
 import TimelineSection from '@/components/about-us/TimelineSection';
@@ -21,14 +21,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const AboutUsPage = async () => {
-  const [t, aboutUsData, employees, blogPosts] = await Promise.all([
+  const [t, aboutUsData, employees, referencePostsData] = await Promise.all([
     getTranslations(),
     getAboutUsTimeline(),
     getZamestnanciPosts(),
-    getBlogPostsForCarousel(6),
+    getReferencePosts(6),
   ]);
 
   const timeline = aboutUsData?.oNasACF?.timeline ?? [];
+  const referencePosts = referencePostsData?.nodes ?? [];
 
   return (
     <main className='max-w-container mx-auto'>
@@ -77,7 +78,7 @@ const AboutUsPage = async () => {
         image={{ src: '/images/support.webp', alt: t('about-us.faq.alt') }}
       />
 
-      <BlogCarouselSection posts={blogPosts} />
+      <ReferencesCarouselSection referencePosts={referencePosts} />
 
       <ContentSection
         title={t('about-us.branches.title')}
