@@ -385,7 +385,8 @@ const DynamicContentSection = async ({
           ? component.mediaType[0]?.toLowerCase()
           : component.mediaType?.toLowerCase();
 
-        const marginClass = isLastComponent ? '' : 'mb-25';
+        const isImage = (mediaTypeValue === 'image' || !component.mediaType) && component.image?.node?.sourceUrl;
+        const marginClass = isLastComponent ? '' : isImage ? 'mb-12.5' : 'mb-25';
 
         if (mediaTypeValue === 'youtube' && component.youtubeEmbedLink) {
           return (
@@ -555,7 +556,7 @@ const DynamicContentSection = async ({
           return null;
         }
 
-        const marginClass = isLastComponent ? '' : 'mb-12.5';
+        const marginClass = isLastComponent ? '' : 'mb-25 lg:mb-37.5';
         const isExternal = component.button.target === '_blank';
 
         return (

@@ -39,12 +39,14 @@ const ContactsPage = async () => {
         branches={branches}
         title={t('contacts.weekend-branches-section-title')}
         filterType='weekend'
+        className='lg:pb-0!'
       />
 
       <BranchesSection
         branches={branches}
         title={t('contacts.showroom-branches-section-title')}
         filterType='showroom'
+        className='lg:pb-0!'
       />
 
       <BranchesSection

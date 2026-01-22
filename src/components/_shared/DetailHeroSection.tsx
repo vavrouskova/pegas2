@@ -89,7 +89,7 @@ const DetailHeroSection = ({
 
           {/* Featured Image */}
           {image && (
-            <div className={`bg-grey-warm w-full p-[8%] ${isBlogPost ? 'mb-12.5' : ''}`}>
+            <div className={`bg-grey-warm w-full p-[8%]`}>
               <div className='relative w-full overflow-hidden'>
                 <Image
                   src={image}
