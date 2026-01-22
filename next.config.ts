@@ -11,6 +11,7 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  trailingSlash: true,
   reactCompiler: true,
   async rewrites() {
     return [

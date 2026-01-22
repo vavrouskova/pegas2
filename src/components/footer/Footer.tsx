@@ -47,7 +47,7 @@ const Footer = async () => {
 
       <FooterNavLinks
         links={navLinks}
-        copyrightText={`© 2025 PEGAS | ${t('footer.copyright')}`}
+        copyrightText={`© ${new Date().getFullYear()} PEGAS | ${t('footer.copyright')}`}
       />
     </footer>
   );
