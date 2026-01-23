@@ -50,7 +50,10 @@ const MainHeroSection = async ({
       <div className={cn('mx-auto mt-114 max-w-267.5', contentClassName)}>
         <div className={cn('max-w-lg-content flex flex-col justify-center gap-12 lg:gap-25')}>
           <div className='space-y-2.5'>
-            <FadeIn delay={1.3}>
+            <FadeIn
+              delay={1.5}
+              duration={0.45}
+            >
               {Array.isArray(title) ? (
                 <h1 className='flex flex-col gap-8'>
                   {title.map((line, index) => (
@@ -69,7 +72,10 @@ const MainHeroSection = async ({
                 />
               )}
             </FadeIn>
-            <FadeIn delay={1.5}>
+            <FadeIn
+              delay={1.8}
+              duration={0.45}
+            >
               <FormattedText
                 text={description}
                 as='p'

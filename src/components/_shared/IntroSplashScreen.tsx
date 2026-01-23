@@ -84,15 +84,26 @@ const IntroSplashScreen = () => {
           onClick={handleDismiss}
         >
           <div className='flex flex-col items-center gap-5'>
-            <div className='w-40 lg:w-53'>
+            <motion.div
+              className='w-40 lg:w-53'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
+            >
               <Logo className='text-primary h-auto w-full' />
-            </div>
+            </motion.div>
 
-            <FormattedText
-              text={t('claim')}
-              as='p'
-              className='text-xl'
-            />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
+            >
+              <FormattedText
+                text={t('claim')}
+                as='p'
+                className='text-xl'
+              />
+            </motion.div>
           </div>
         </motion.div>
       )}
