@@ -2,7 +2,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
-import { Link } from '@/i18n/routing';
+import Link from 'next/link';
 
 interface ThankYouPageProps {
   params: Promise<{ locale: string }>;
