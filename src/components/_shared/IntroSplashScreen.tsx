@@ -9,6 +9,9 @@ import Logo from '@/components/icons/Logo';
 
 const STORAGE_KEY = 'pegas_intro_seen';
 
+// Module-level variable persists across HMR - prevents white flash on hot reload
+let hasEverMounted = false;
+
 const handleAnimationComplete = () => {
   sessionStorage.setItem(STORAGE_KEY, 'true');
 };
@@ -22,6 +25,7 @@ const IntroSplashScreen = () => {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- Intentional: hydration detection pattern
     setIsMounted(true);
+    hasEverMounted = true;
     const hasSeen = sessionStorage.getItem(STORAGE_KEY);
     if (hasSeen === 'true') {
       setIsVisible(false);
@@ -69,7 +73,11 @@ const IntroSplashScreen = () => {
     setIsVisible(false);
   };
 
+  // Skip white overlay during HMR (hasEverMounted persists across hot reloads)
   if (!isMounted) {
+    if (hasEverMounted) {
+      return null;
+    }
     return <div className='bg-white-smoke fixed inset-0 z-9999' />;
   }
 
