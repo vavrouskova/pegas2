@@ -57,41 +57,41 @@ const BranchCardContent = ({
 
   return (
     <div className={containerClasses}>
-      <Link
-        href={`/${slug}`}
-        onClick={handleDetailClick}
-      >
-        {city && (
+      <div>
+        <Link
+          href={`/${slug}`}
+          onClick={handleDetailClick}
+        >
+          {city && (
+            <FormattedText
+              text={city}
+              as='p'
+              className='font-heading text-lg'
+            />
+          )}
+          {title && (
+            <FormattedText
+              text={title}
+              as='h3'
+              className='mb-2 text-lg'
+            />
+          )}
+        </Link>
+        {openDaysWorking && (
           <FormattedText
-            text={city}
+            text={openDaysWorking}
             as='p'
-            className='font-heading text-lg'
+            className={cn('text-sm', !openDaysWeekend && 'mb-6')}
           />
         )}
-        {title && (
+        {openDaysWeekend && (
           <FormattedText
-            text={title}
-            as='h3'
-            className='mb-2 text-lg'
+            text={openDaysWeekend}
+            as='p'
+            className='mb-6 text-sm'
           />
         )}
-      </Link>
-
-      {openDaysWorking && (
-        <FormattedText
-          text={openDaysWorking}
-          as='p'
-          className={cn('text-sm', !openDaysWeekend && 'mb-12')}
-        />
-      )}
-
-      {openDaysWeekend && (
-        <FormattedText
-          text={openDaysWeekend}
-          as='p'
-          className='mb-12 text-sm'
-        />
-      )}
+      </div>
 
       <div>
         {phoneNumber && (
