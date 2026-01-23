@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import ContentBox from '@/components/_shared/ContentBox';
+import FadeInOnScroll from '@/components/_shared/FadeInOnScroll';
 import FeatherAnimation from '@/components/_shared/FeatherAnimation';
 import FeatherStatic from '@/components/_shared/FeatherStatic';
 import { cn } from '@/lib/utils';
@@ -48,13 +49,15 @@ const ContentSection = ({
           sectionClassName
         )}
       >
-        <ContentBox
-          title={title}
-          description={description}
-          buttonText={buttonText}
-          link={link}
-          className={cn('max-w-content relative z-20 lg:mx-auto', contentBoxClassName)}
-        />
+        <FadeInOnScroll>
+          <ContentBox
+            title={title}
+            description={description}
+            buttonText={buttonText}
+            link={link}
+            className={cn('max-w-content relative z-20 lg:mx-auto', contentBoxClassName)}
+          />
+        </FadeInOnScroll>
         {withFeathers && (
           <>
             <FeatherAnimation featherPosition={featherPosition} />
@@ -79,14 +82,16 @@ const ContentSection = ({
         className
       )}
     >
-      <ContentBox
-        title={title}
-        description={description}
-        buttonText={buttonText}
-        link={link}
-        className={cn('max-w-content lg:flex-shrink-0', contentBoxClassName)}
-      />
-      <div className='lg:max-w-content min-w-0 lg:flex-1'>
+      <FadeInOnScroll delay={0.1}>
+        <ContentBox
+          title={title}
+          description={description}
+          buttonText={buttonText}
+          link={link}
+          className={cn('max-w-content lg:flex-shrink-0', contentBoxClassName)}
+        />
+      </FadeInOnScroll>
+      <FadeInOnScroll className='lg:max-w-content min-w-0 lg:flex-1'>
         <Image
           src={imageSource}
           alt={imageAlt}
@@ -95,7 +100,7 @@ const ContentSection = ({
           sizes='(min-width: 1024px) 50vw, 100vw'
           className='h-auto w-full'
         />
-      </div>
+      </FadeInOnScroll>
     </section>
   );
 };
