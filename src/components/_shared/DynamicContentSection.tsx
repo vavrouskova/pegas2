@@ -176,7 +176,7 @@ const DynamicContentSection = async ({
       backLink = `/${t('routes.services')}#smutecni-obrady`;
       backLinkText = t('services.back-to-services.ceremony-variants');
     } else if (categorySlug === t('routes.funeral-essentials')) {
-      backLink = `/${t('routes.services')}#nalezitosti-pohrbu`;
+      backLink = `/${t('routes.services')}#doplnkove-sluzby-a-produky`;
       backLinkText = t('services.back-to-services.funeral-essentials');
     }
   }

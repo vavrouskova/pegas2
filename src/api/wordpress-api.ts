@@ -397,7 +397,7 @@ export async function getAllServicesData(first = 100) {
           }
         }
       }
-      funeralEssentials: typSluzby(id: "nalezitosti-pohrbu", idType: SLUG) {
+      funeralEssentials: typSluzby(id: "doplnkove-sluzby-a-produky", idType: SLUG) {
         name
         description
         sluzbyPosts(first: $first) {

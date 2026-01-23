@@ -203,7 +203,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
 
   if (slugType === 'pobockaPost') {
     const [funeralEssentials, branchData] = await Promise.all([
-      getServicesByTaxonomy('nalezitosti-pohrbu'),
+      getServicesByTaxonomy('doplnkove-sluzby-a-produky'),
       getBranchBySlug(slug),
     ]);
 
@@ -227,8 +227,8 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         <ContactForm />
 
         <ServicesGridSection
-          id='nalezitosti-pohrbu'
-          title={funeralEssentials.taxonomy?.name || 'Náležitosti pohřbu'}
+          id='doplnkove-sluzby-a-produky'
+          title={funeralEssentials.taxonomy?.name || 'Doplňkové služby a produky'}
           description={funeralEssentials.taxonomy?.description || ''}
           services={funeralEssentials.posts}
         />
@@ -367,7 +367,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         itemName={title}
         itemCategory={typSluzby?.nodes?.[0]?.name || t('tracking.category-services')}
         itemCategory2={
-          typSluzby?.nodes?.[0]?.slug === 'nalezitosti-pohrbu'
+          typSluzby?.nodes?.[0]?.slug === 'doplnkove-sluzby-a-produky'
             ? t('tracking.category-products')
             : t('tracking.category-services')
         }

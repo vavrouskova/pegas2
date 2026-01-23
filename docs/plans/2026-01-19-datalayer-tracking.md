@@ -13,16 +13,19 @@
 ## Task 1: Fix undefined className Bug in ServiceCard
 
 **Files:**
+
 - Modify: `src/components/_shared/ServiceCard.tsx:30`
 
 **Step 1: Fix the className interpolation**
 
 Change line 30 from:
+
 ```tsx
 className={`group flex flex-col gap-2.5 transition-opacity duration-300 hover:opacity-80 ${className}`}
 ```
 
 To:
+
 ```tsx
 className={`group flex flex-col gap-2.5 transition-opacity duration-300 hover:opacity-80${className ? ` ${className}` : ''}`}
 ```
@@ -44,6 +47,7 @@ git commit -m "fix: resolve undefined class in ServiceCard className interpolati
 ## Task 2: Create DataLayer Utility Functions
 
 **Files:**
+
 - Create: `src/utils/datalayer.ts`
 
 **Step 1: Create the DataLayer utility file**
@@ -116,11 +120,13 @@ git commit -m "feat: add DataLayer utility functions for GA4 ecommerce tracking"
 ## Task 3: Convert ServiceCard to Client Component with Tracking
 
 **Files:**
+
 - Modify: `src/components/_shared/ServiceCard.tsx`
 
 **Step 1: Add 'use client' directive and imports**
 
 Add at the top of the file:
+
 ```tsx
 'use client';
 
@@ -134,6 +140,7 @@ import { pushSelectItem } from '@/utils/datalayer';
 **Step 2: Update interface with tracking props**
 
 Replace interface:
+
 ```tsx
 interface ServiceCardProps {
   id: string;
@@ -160,6 +167,7 @@ interface ServiceCardProps {
 **Step 3: Update component with click handler**
 
 Replace component implementation:
+
 ```tsx
 const ServiceCard = ({
   id,
@@ -234,11 +242,13 @@ git commit -m "feat: add DataLayer select_item tracking to ServiceCard"
 ## Task 4: Update ServicesGridSection to Pass Tracking Props
 
 **Files:**
+
 - Modify: `src/components/services/ServicesGridSection.tsx`
 
 **Step 1: Update interface with type prop**
 
 Update interface:
+
 ```tsx
 interface ServicesGridSectionProps {
   title: string;
@@ -252,24 +262,28 @@ interface ServicesGridSectionProps {
 **Step 2: Update component to pass tracking props**
 
 Update component signature and ServiceCard usage:
+
 ```tsx
 const ServicesGridSection = ({ title, description, services, id, type = 'service' }: ServicesGridSectionProps) => {
 ```
 
 Update the ServiceCard mapping (replace existing map):
+
 ```tsx
-{services.map((service, index) => (
-  <ServiceCard
-    key={getUniqueId()}
-    id={service.id}
-    title={service.title}
-    slug={service.slug}
-    featuredImage={service.featuredImage}
-    sectionTitle={title}
-    type={type}
-    index={index}
-  />
-))}
+{
+  services.map((service, index) => (
+    <ServiceCard
+      key={getUniqueId()}
+      id={service.id}
+      title={service.title}
+      slug={service.slug}
+      featuredImage={service.featuredImage}
+      sectionTitle={title}
+      type={type}
+      index={index}
+    />
+  ));
+}
 ```
 
 **Step 3: Verify lint passes**
@@ -289,11 +303,13 @@ git commit -m "feat: pass tracking props to ServiceCard in ServicesGridSection"
 ## Task 5: Update Services Page to Specify Content Types
 
 **Files:**
+
 - Modify: `app/[locale]/services/page.tsx`
 
 **Step 1: Add type prop to funeral ceremonies section**
 
 Update the first ServicesGridSection (line 67-72):
+
 ```tsx
 <ServicesGridSection
   id='smutecni-obrady'
@@ -307,9 +323,10 @@ Update the first ServicesGridSection (line 67-72):
 **Step 2: Add type prop to funeral essentials section**
 
 Update the second ServicesGridSection (line 83-88):
+
 ```tsx
 <ServicesGridSection
-  id='nalezitosti-pohrbu'
+  id='doplnkove-sluzby-a-produky'
   title={funeralEssentials.taxonomy?.name || 'Náležitosti pohřbu'}
   description={funeralEssentials.taxonomy?.description || ''}
   services={funeralEssentials.posts}
@@ -334,6 +351,7 @@ git commit -m "feat: specify content types for DataLayer tracking on services pa
 ## Task 6: Create ViewItemTracker Client Component
 
 **Files:**
+
 - Create: `src/components/_shared/ViewItemTracker.tsx`
 
 **Step 1: Create the client component**
@@ -387,11 +405,13 @@ git commit -m "feat: add ViewItemTracker client component for detail page tracki
 ## Task 7: Add view_item Tracking to Service Detail Pages
 
 **Files:**
+
 - Modify: `app/[locale]/[slug]/page.tsx`
 
 **Step 1: Add ViewItemTracker import**
 
 Add to imports (around line 19):
+
 ```tsx
 import ViewItemTracker from '@/components/_shared/ViewItemTracker';
 ```
@@ -399,6 +419,7 @@ import ViewItemTracker from '@/components/_shared/ViewItemTracker';
 **Step 2: Add tracking to sluzbyPost detail (service pages)**
 
 Find the return statement for service detail (around line 345) and add ViewItemTracker after opening `<main>`:
+
 ```tsx
 return (
   <main className='max-w-container mx-auto'>
@@ -406,7 +427,7 @@ return (
       itemId={serviceData.id}
       itemName={title}
       itemCategory={typSluzby?.nodes?.[0]?.name || 'Služby'}
-      itemCategory2={typSluzby?.nodes?.[0]?.slug === 'nalezitosti-pohrbu' ? 'Produkty' : 'Služby'}
+      itemCategory2={typSluzby?.nodes?.[0]?.slug === 'doplnkove-sluzby-a-produky' ? 'Produkty' : 'Služby'}
     />
     <BasicHeroSection
 ```
@@ -414,6 +435,7 @@ return (
 **Step 3: Add tracking to pobockaPost detail (branch pages)**
 
 Find the return statement for pobockaPost (around line 205) and add ViewItemTracker:
+
 ```tsx
 return (
   <main className='max-w-container mx-auto'>
@@ -431,10 +453,11 @@ Note: Branch tracking requires fetching branch data first. Let me update this st
 **Step 3 (revised): Get branch data for proper tracking**
 
 Since we need the branch title, we need to fetch the data. Update the pobockaPost section:
+
 ```tsx
 if (slugType === 'pobockaPost') {
   const [funeralEssentials, branchData] = await Promise.all([
-    getServicesByTaxonomy('nalezitosti-pohrbu'),
+    getServicesByTaxonomy('doplnkove-sluzby-a-produky'),
     getBranchBySlug(slug),
   ]);
 
@@ -453,6 +476,7 @@ if (slugType === 'pobockaPost') {
 ```
 
 Also add the import at the top:
+
 ```tsx
 import { getBranchBySlug } from '@/api/wordpress-api';
 ```
@@ -476,25 +500,29 @@ git commit -m "feat: add view_item DataLayer tracking to service and branch deta
 ## Task 8: Update ServicesSection (Homepage) with Tracking Props
 
 **Files:**
+
 - Modify: `src/components/_shared/ServicesSection.tsx`
 
 **Step 1: Update ServiceCard usage with tracking props**
 
 Update the ServiceCard mapping in the component:
+
 ```tsx
-{services.map((service, index) => (
-  <ServiceCard
-    key={getUniqueId()}
-    id={service.id}
-    title={service.title}
-    slug={service.slug}
-    featuredImage={service.featuredImage}
-    className='lg:flex-1'
-    sectionTitle={t('home.services-nav.title')}
-    type='service'
-    index={index}
-  />
-))}
+{
+  services.map((service, index) => (
+    <ServiceCard
+      key={getUniqueId()}
+      id={service.id}
+      title={service.title}
+      slug={service.slug}
+      featuredImage={service.featuredImage}
+      className='lg:flex-1'
+      sectionTitle={t('home.services-nav.title')}
+      type='service'
+      index={index}
+    />
+  ));
+}
 ```
 
 Note: This component uses `getTranslations()` which returns a Promise, but the `t` function is already available. The section title comes from translations.
@@ -536,6 +564,7 @@ Expected: Build succeeds
 - [ ] Visit a branch detail page - verify `view_item` event in DataLayer
 
 To check DataLayer in browser:
+
 ```javascript
 // In browser console
 console.log(window.dataLayer);
@@ -552,12 +581,12 @@ git commit -m "feat: complete DataLayer GA4 ecommerce tracking implementation"
 
 ## Summary of Changes
 
-| File | Change |
-|------|--------|
-| `src/components/_shared/ServiceCard.tsx` | Fixed undefined class bug, added click tracking |
-| `src/utils/datalayer.ts` | New utility for DataLayer events |
-| `src/components/services/ServicesGridSection.tsx` | Pass section title and type to ServiceCard |
-| `app/[locale]/services/page.tsx` | Specify product vs service types |
-| `src/components/_shared/ViewItemTracker.tsx` | New component for view_item tracking |
-| `app/[locale]/[slug]/page.tsx` | Add view_item tracking to detail pages |
-| `src/components/_shared/ServicesSection.tsx` | Add tracking to homepage services |
+| File                                              | Change                                          |
+| ------------------------------------------------- | ----------------------------------------------- |
+| `src/components/_shared/ServiceCard.tsx`          | Fixed undefined class bug, added click tracking |
+| `src/utils/datalayer.ts`                          | New utility for DataLayer events                |
+| `src/components/services/ServicesGridSection.tsx` | Pass section title and type to ServiceCard      |
+| `app/[locale]/services/page.tsx`                  | Specify product vs service types                |
+| `src/components/_shared/ViewItemTracker.tsx`      | New component for view_item tracking            |
+| `app/[locale]/[slug]/page.tsx`                    | Add view_item tracking to detail pages          |
+| `src/components/_shared/ServicesSection.tsx`      | Add tracking to homepage services               |
