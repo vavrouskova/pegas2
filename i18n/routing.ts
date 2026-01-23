@@ -34,6 +34,8 @@ export const pathnames = {
 
   '/consumer-information': { cs: '/informace-pro-spotrebitele' },
 
+  '/thank-you': { cs: '/dekujeme' },
+
   '/[slug]': { cs: '/[slug]' },
 } satisfies Pathnames<typeof locales>;
 

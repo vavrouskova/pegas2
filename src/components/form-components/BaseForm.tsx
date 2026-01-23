@@ -1,3 +1,5 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
@@ -5,6 +7,7 @@ import { UseFormReturn } from 'react-hook-form';
 
 import Button from '@/components/_shared/Button';
 import { Form } from '@/components/ui/form';
+import { useRouter } from '@/i18n/routing';
 
 export interface BaseFormFieldProps {
   name: string;
@@ -25,11 +28,13 @@ interface BaseFormProps {
   className?: string;
   successText?: string;
   showGdprConsent?: boolean;
+  redirectUrl?: string;
 }
 
 const BaseForm = (props: BaseFormProps) => {
-  const { onSubmit, children, form, className, successText, showGdprConsent = true } = props;
+  const { onSubmit, children, form, className, successText, showGdprConsent = true, redirectUrl } = props;
 
+  const router = useRouter();
   const [isSending, setIsSending] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [, forceUpdate] = useState(0);
@@ -49,7 +54,11 @@ const BaseForm = (props: BaseFormProps) => {
     try {
       setIsSending(true);
       await onSubmit(values);
-      setIsSubmitted(true);
+      if (redirectUrl) {
+        router.push(redirectUrl as any);
+      } else {
+        setIsSubmitted(true);
+      }
     } catch (error) {
       console.error('Form submission error:', error);
     } finally {

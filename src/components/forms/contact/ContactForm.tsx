@@ -52,7 +52,7 @@ const ContactForm = (props: ContactFormProps) => {
           }}
           form={form}
           formName='contact-form'
-          successText='Děkujeme za zprávu! Ozveme se vám co nejdříve.'
+          redirectUrl='/thank-you'
         >
           <div className='flex flex-col gap-4'>
             {/* Name - Full Width */}

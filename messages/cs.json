@@ -61,7 +61,8 @@
     "consumer-information": "informace-pro-spotrebitele",
     "cookies": "informace-o-vyuziti-cookies",
     "ceremony-variants": "smutecni-obrady",
-    "funeral-essentials": "doplnkove-sluzby-a-produky"
+    "funeral-essentials": "doplnkove-sluzby-a-produky",
+    "thank-you": "dekujeme"
   },
 
   "header": {
@@ -259,8 +260,10 @@
     "farewell-title": "Vyřizujete rozloučení? Klikněte pro uvedení podrobností",
     "farewell-description": "Tuto část vyplňte jen pokud chcete – pomůže nám lépe se připravit.",
     "success": {
-      "title": "Děkujeme za zprávu!",
-      "description": "Vaši zprávu jsme přijali a brzy se vám ozveme."
+      "title": "Děkujeme.",
+      "description": "Vaši zprávu jsme přijali.",
+      "back_to_home_text": "Pokračovat na ",
+      "back_to_home_link": "hlavní stránku"
     },
     "fields": {
       "name": "Vaše jméno a příjmení*",
