@@ -263,7 +263,9 @@
       "title": "Děkujeme.",
       "description": "Vaši zprávu jsme přijali.",
       "back_to_home_text": "Pokračovat na ",
-      "back_to_home_link": "hlavní stránku"
+      "back_to_home_link": "hlavní stránku",
+      "meta_title": "Děkujeme | PEGAS",
+      "meta_description": "Vaši zprávu jsme přijali. Brzy se vám ozveme."
     },
     "fields": {
       "name": "Vaše jméno a příjmení*",

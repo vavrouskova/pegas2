@@ -1,12 +1,27 @@
+import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
-import Link from 'next/link';
 
 interface ThankYouPageProps {
   params: Promise<{ locale: string }>;
 }
+
+export const generateMetadata = async ({ params }: ThankYouPageProps): Promise<Metadata> => {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'forms' });
+
+  return {
+    title: t('success.meta_title'),
+    description: t('success.meta_description'),
+    robots: {
+      index: false,
+      follow: true,
+    },
+  };
+};
 
 const ThankYouPage = async ({ params }: ThankYouPageProps) => {
   const { locale } = await params;
@@ -29,7 +44,7 @@ const ThankYouPage = async ({ params }: ThankYouPageProps) => {
         <FormattedText
           text={t('success.title')}
           as='h1'
-          className='mb-12.5 text-5xl tracking-[0.37781rem]'
+          className='mb-12.5 text-5xl'
         />
 
         <div>
