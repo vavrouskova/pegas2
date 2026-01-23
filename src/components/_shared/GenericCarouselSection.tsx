@@ -5,7 +5,6 @@ import Image from 'next/image';
 import React, { ReactNode } from 'react';
 
 import { CarouselNavigation } from '@/components/_shared/CarouselNavigation';
-import FadeInOnScroll from '@/components/_shared/FadeInOnScroll';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { useCarouselAutoplay } from '@/hooks/useCarouselAutoplay';
 import { cn } from '@/lib/utils';
@@ -55,50 +54,48 @@ const GenericCarouselSection = <T extends CarouselItemData>({
 
   return (
     <section className={cn('pt-12.5 pb-20.5 lg:pt-35 lg:pb-43', sectionClassName)}>
-      <FadeInOnScroll>
-        <div
-          ref={carouselRef}
-          className='relative'
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
+      <div
+        ref={carouselRef}
+        className='relative'
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
+        <Carousel
+          opts={{ align: 'start', loop: true }}
+          className={cn('mx-auto', carouselMaxWidth)}
+          setApi={setApi}
         >
-          <Carousel
-            opts={{ align: 'start', loop: true }}
-            className={cn('mx-auto', carouselMaxWidth)}
-            setApi={setApi}
-          >
-            <CarouselContent className='-ml-0'>
-              {data.map((item) => (
-                <CarouselItem
-                  key={item.id}
-                  className='basis-full pl-0'
-                >
-                  <article className={cn('bg-primary group h-full overflow-hidden', articleClassName)}>
-                    {imageFirst ? (
-                      <>
-                        {renderImage ? renderImage(item) : defaultRenderImage(item)}
-                        {renderContent(item, t)}
-                      </>
-                    ) : (
-                      <>
-                        {renderContent(item, t)}
-                        {renderImage ? renderImage(item) : defaultRenderImage(item)}
-                      </>
-                    )}
-                  </article>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            {data.length > 1 && (
-              <CarouselNavigation
-                itemsCount={data.length}
-                currentIndex={currentIndex}
-                onDotClick={goToSlide}
-              />
-            )}
-          </Carousel>
-        </div>
-      </FadeInOnScroll>
+          <CarouselContent className='-ml-0'>
+            {data.map((item) => (
+              <CarouselItem
+                key={item.id}
+                className='basis-full pl-0'
+              >
+                <article className={cn('bg-primary group h-full overflow-hidden', articleClassName)}>
+                  {imageFirst ? (
+                    <>
+                      {renderImage ? renderImage(item) : defaultRenderImage(item)}
+                      {renderContent(item, t)}
+                    </>
+                  ) : (
+                    <>
+                      {renderContent(item, t)}
+                      {renderImage ? renderImage(item) : defaultRenderImage(item)}
+                    </>
+                  )}
+                </article>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          {data.length > 1 && (
+            <CarouselNavigation
+              itemsCount={data.length}
+              currentIndex={currentIndex}
+              onDotClick={goToSlide}
+            />
+          )}
+        </Carousel>
+      </div>
     </section>
   );
 };
