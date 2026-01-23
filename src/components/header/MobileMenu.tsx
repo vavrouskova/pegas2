@@ -11,7 +11,6 @@ import Logo from '@/components/header/Logo';
 import Hamburger from '@/components/icons/Hamburger';
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
 import { getMegamenuItemsFromData, MegamenuData } from '@/utils/data';
-import { Separator } from '@radix-ui/react-separator';
 
 const noopUnsubscribe = () => {};
 const emptySubscribe = () => noopUnsubscribe;
@@ -106,7 +105,6 @@ const MobileMenu = ({ headerLinks, megamenuData }: MobileMenuProps) => {
               </button>
             </DrawerClose>
           </DrawerTitle>
-          <Separator className='bg-primary h-px w-full' />
         </DrawerHeader>
 
         <div className='relative flex-1 overflow-hidden'>

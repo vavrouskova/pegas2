@@ -80,9 +80,9 @@ const StickyContact = () => {
 
   const animateTarget = useMemo(() => {
     if (!isActivated) {
-      return { x: 120, opacity: 0 };
+      return { opacity: 0 };
     }
-    return isFooterVisible ? { x: 120, opacity: 0 } : { x: 0, opacity: 1 };
+    return isFooterVisible ? { opacity: 0 } : { opacity: 1 };
   }, [isFooterVisible, isActivated]);
 
   if (pathname === '/o-nas' || pathname === '/cs/o-nas') {
@@ -91,13 +91,11 @@ const StickyContact = () => {
 
   return (
     <MotionDiv
-      initial={{ x: 120, opacity: 0 }}
+      initial={{ opacity: 0 }}
       animate={animateTarget}
       transition={{
-        type: 'spring',
-        stiffness: 180,
-        damping: 22,
-        opacity: { duration: isFirstVisit ? 0.9 : 0.4 },
+        duration: isFirstVisit ? 1.8 : 0.8,
+        ease: 'easeOut',
       }}
       className='bg-primary fixed right-0 bottom-5 z-30 flex gap-4 p-4 pr-12 shadow-lg will-change-transform lg:bottom-1/2'
     >

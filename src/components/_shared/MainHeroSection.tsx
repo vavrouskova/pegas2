@@ -83,7 +83,10 @@ const MainHeroSection = async ({
               />
             </FadeIn>
           </div>
-          <FadeInOnActivity delay={0.3}>
+          <FadeInOnActivity
+            delay={0.3}
+            duration={1.5}
+          >
             <div className='flex flex-col justify-between gap-7.5 text-lg md:flex-row lg:gap-4'>
               <div className='flex flex-col'>
                 <span className='leading-9'>{t('contact-us')}</span>

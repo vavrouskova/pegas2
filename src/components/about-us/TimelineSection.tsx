@@ -60,26 +60,28 @@ interface TimelineContentProps {
 
 const TimelineContent = ({ title, description, image, className = '' }: Readonly<TimelineContentProps>) => {
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className={cn('space-y-6', className)}>
       {image?.node && (
         <TimelineImage
           src={image.node.sourceUrl}
           alt={image.node.altText || title || 'Timeline image'}
         />
       )}
-      {title && (
-        <FormattedText
-          text={title}
-          as='h3'
-          className='font-heading text-2xl'
-        />
-      )}
-      {description && (
-        <FormattedText
-          text={description}
-          as='p'
-        />
-      )}
+      <div>
+        {title && (
+          <FormattedText
+            text={title}
+            as='h3'
+            className='font-heading text-2xl'
+          />
+        )}
+        {description && (
+          <FormattedText
+            text={description}
+            as='p'
+          />
+        )}
+      </div>
     </div>
   );
 };
@@ -102,7 +104,7 @@ const TimelineItemComponent = ({ item, isEven }: Readonly<TimelineItemComponentP
             className='w-full'
           />
         )}
-        {item.titulek && <h3 className='font-heading text-2xl'>{item.titulek}</h3>}
+        {item.titulek && <h3 className='font-heading -mb-4 text-2xl'>{item.titulek}</h3>}
         {item.description && <p>{item.description}</p>}
       </div>
 
