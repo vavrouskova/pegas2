@@ -94,7 +94,7 @@ const ContactForm = (props: ContactFormProps) => {
                 <FormattedText
                   text={t('farewell-title')}
                   as='h3'
-                  className='font-bold-cta text-lg'
+                  className='font-heading text-lg'
                 />
                 <MotionDiv
                   animate={{ rotate: isFarewellSectionOpen ? 180 : 0 }}

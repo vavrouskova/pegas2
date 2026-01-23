@@ -281,5 +281,5 @@ export const FormattedText = ({
     });
   };
 
-  return <Component {...(className && { className })}>{renderSegments(segments)}</Component>;
+  return <Component className={className}>{renderSegments(segments)}</Component>;
 };

@@ -3,10 +3,9 @@
 import Link from 'next/link';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
+import LinkWithArrow from '@/components/_shared/LinkWithArrow';
 import { cn } from '@/lib/utils';
 import { pushBranchSelectItem, pushContactClick } from '@/utils/datalayer';
-
-import LinkWithArrow from '../_shared/LinkWithArrow';
 
 interface BranchCardContentProps {
   city?: string;
@@ -36,7 +35,7 @@ const BranchCardContent = ({
   branchTitle,
   index,
 }: BranchCardContentProps) => {
-  const containerClasses = cn('flex flex-1 flex-col', layout === 'vertical' ? 'py-5 px-4' : 'py-1');
+  const containerClasses = cn('flex flex-1 justify-between flex-col', layout === 'vertical' ? 'py-5 px-4' : 'py-1');
 
   const handleDetailClick = () => {
     if (branchId && branchTitle) {
@@ -94,22 +93,23 @@ const BranchCardContent = ({
         />
       )}
 
-      {phoneNumber && (
-        <Link
-          href={`tel:${phoneNumber}`}
-          className='text-lg underline hover:no-underline'
-          onClick={handlePhoneClick}
-        >
-          {phoneNumber}
-        </Link>
-      )}
-
-      <LinkWithArrow
-        href={`/${slug}`}
-        title={detailButtonText}
-        onClick={handleDetailClick}
-        className='mt-4'
-      />
+      <div>
+        {phoneNumber && (
+          <Link
+            href={`tel:${phoneNumber}`}
+            className='text-lg underline hover:no-underline'
+            onClick={handlePhoneClick}
+          >
+            {phoneNumber}
+          </Link>
+        )}
+        <LinkWithArrow
+          href={`/${slug}`}
+          title={detailButtonText}
+          onClick={handleDetailClick}
+          className='mt-4'
+        />
+      </div>
     </div>
   );
 };

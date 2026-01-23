@@ -34,7 +34,7 @@ export const BranchLinks = ({ title, branches, filterNonstop = false, maxWidth }
             className='font-text text-base text-white transition-all duration-300 hover:opacity-70'
           >
             {pobocka.pobockyACF?.city && (
-              <span className='font-bold-cta mr-1 text-base text-white'>{pobocka.pobockyACF.city}</span>
+              <span className='font-heading mr-1 text-base text-white'>{pobocka.pobockyACF.city}</span>
             )}
             {pobocka.title}
           </Link>

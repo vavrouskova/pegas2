@@ -158,7 +158,12 @@ const Filter = ({ categories, config }: FilterProps) => {
             isAllActive ? 'bg-primary' : 'bg-white'
           )}
         >
-          <span className={cn('text-sm whitespace-pre', isAllActive ? 'text-white-smoke' : 'text-primary')}>
+          <span
+            className={cn(
+              'text-sm whitespace-pre',
+              isAllActive ? 'font-heading text-white-smoke' : 'font-text text-primary'
+            )}
+          >
             {t('all')}
           </span>
         </Link>
@@ -170,7 +175,12 @@ const Filter = ({ categories, config }: FilterProps) => {
             isAllActive ? 'bg-primary' : 'bg-white'
           )}
         >
-          <span className={cn('text-sm whitespace-pre', isAllActive ? 'text-white-smoke' : 'text-primary')}>
+          <span
+            className={cn(
+              'text-sm whitespace-pre',
+              isAllActive ? 'font-heading text-white-smoke' : 'font-text text-primary'
+            )}
+          >
             {t('all')}
           </span>
         </button>
@@ -192,7 +202,12 @@ const Filter = ({ categories, config }: FilterProps) => {
                 isActive ? 'bg-primary' : 'bg-white'
               )}
             >
-              <span className={cn('text-sm whitespace-pre', isActive ? 'text-white-smoke' : 'text-primary')}>
+              <span
+                className={cn(
+                  'text-sm whitespace-pre',
+                  isActive ? 'font-heading text-white-smoke' : 'font-text text-primary'
+                )}
+              >
                 {category.name}
               </span>
             </Link>
@@ -208,7 +223,12 @@ const Filter = ({ categories, config }: FilterProps) => {
               isActive ? 'bg-primary' : 'bg-white'
             )}
           >
-            <span className={cn('text-sm whitespace-pre', isActive ? 'text-white-smoke' : 'text-primary')}>
+            <span
+              className={cn(
+                'text-sm whitespace-pre',
+                isActive ? 'font-heading text-white-smoke' : 'font-text text-primary'
+              )}
+            >
               {category.name}
             </span>
           </button>

@@ -102,7 +102,7 @@ const BaseForm = (props: BaseFormProps) => {
           <Button
             buttonText={isSending ? 'Odesílám...' : t('button-text')}
             type='submit'
-            className='bg-primary text-white-smoke hover:bg-primary/90 font-bold-cta px-8 py-4 text-lg'
+            className='bg-primary text-white-smoke hover:bg-primary/90 font-heading px-8 py-4 text-lg'
             disabled={isSending}
             aria-label={t('button-text')}
           ></Button>

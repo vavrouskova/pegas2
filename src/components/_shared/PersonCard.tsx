@@ -52,14 +52,14 @@ const PersonCard = ({ person, className, showQuote = false, showEmail = false }:
           <FormattedText
             text={zamestnanciACF.positionDescription}
             as='p'
-            className='text-lg'
+            className='text-lg leading-[145%]'
           />
         )}
         {showQuote && quote && <p className='mt-7.5 text-sm tracking-[0.03125rem] italic'>&bdquo;{quote}&ldquo;</p>}
         {showEmail && email && (
           <Link
             href={`mailto:${email}`}
-            className='mt-5 text-sm break-all underline hover:no-underline'
+            className='mt-5 text-xs break-all underline hover:no-underline'
           >
             {email}
           </Link>
