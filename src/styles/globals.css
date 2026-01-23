@@ -13,6 +13,7 @@
   --color-blue-grey: oklch(var(--blue-grey));
   --color-white-smoke: oklch(var(--white-smoke));
   --color-black-rich: oklch(var(--black-rich));
+  --color-overlay: oklch(var(--overlay));
 }
 
 @theme {
@@ -67,6 +68,7 @@
     --blue-grey: 0.884 0.0454 254.51; /* Blue Grey */
     --white-smoke: 0.9682 0.0017 325.59; /* White Smoke */
     --black-rich: 0.1321 0.0048 345.11; /* Black Rich */
+    --overlay: 0.7247 0.0203 279.4 / 0.5; /* Overlay Background */
 
     /* Font Variation Settings */
     --font-text: 'slnt' 1, 'wdth' 80, 'wght' 20;

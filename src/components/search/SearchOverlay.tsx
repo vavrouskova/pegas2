@@ -20,7 +20,7 @@ export const SearchOverlay = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className='bg-white-smoke/80 fixed inset-0 z-9999 backdrop-blur-md'
+          className='bg-overlay fixed inset-0 z-9999 backdrop-blur-md'
           role='dialog'
           aria-modal='true'
           aria-label={t('label')}
