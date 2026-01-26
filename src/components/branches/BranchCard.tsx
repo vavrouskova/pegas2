@@ -91,13 +91,13 @@ const BranchCard = ({
           index={index}
         />
         {isClosed && (
-          <div className='bg-primary absolute bottom-0 left-0 z-10 min-h-[70px] w-full p-3 pr-[70px]'>
+          <div className='bg-primary pointer-events-none absolute bottom-0 left-0 z-10 min-h-[70px] w-full p-3 pr-[70px]'>
             <p className='text-white-smoke font-heading text-sm leading-[150%]'>{t.closed}</p>
             <p className='text-white-smoke font-heading text-sm leading-[150%]'>{formattedDateRange}</p>
           </div>
         )}
         {hasParking && (
-          <div className='absolute right-0 bottom-0 z-10'>
+          <div className='pointer-events-none absolute right-0 bottom-0 z-10'>
             <Parking />
           </div>
         )}
