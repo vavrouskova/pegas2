@@ -89,7 +89,7 @@ const GenericCarouselSection = <T extends CarouselItemData>({
                   const className = cn('bg-primary group h-full overflow-hidden', articleClassName);
 
                   return asLink ? (
-                    <Link href={item.link} className={cn(className, 'block')}>
+                    <Link href={item.link} className={className}>
                       {children}
                     </Link>
                   ) : (
