@@ -54,7 +54,7 @@ const BaseForm = (props: BaseFormProps) => {
   const handleSubmit = async (values: any) => {
     try {
       setIsSending(true);
-      await onSubmit(values);
+      await onSubmit({ ...values, pageUrl: window.location.href });
       if (redirectUrl) {
         storeFormLeadData(values.email || '', values.phone || '');
         router.push(redirectUrl as any);
