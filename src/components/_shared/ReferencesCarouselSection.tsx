@@ -6,7 +6,6 @@ import { useMemo } from 'react';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
 import ArrowRight from '@/components/icons/ArrowRight';
-import { formatFarewellDateTime } from '@/utils/helper';
 import type { ReferencePost } from '@/utils/wordpress-types';
 
 interface ReferencesCarouselItemData {
@@ -27,8 +26,8 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
     return referencePosts.map((post) => ({
       id: post.databaseId,
       title: post.title,
-      where: post.referenceACF?.farewellPlace,
-      when: formatFarewellDateTime(post.referenceACF?.farewellDate),
+      //where: post.referenceACF?.farewellPlace,
+      //when: formatFarewellDateTime(post.referenceACF?.farewellDate),
       image: post.featuredImage?.node?.sourceUrl || '/images/placeholder.webp',
       link: `/${post.slug}`,
     }));
@@ -63,7 +62,7 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
               as='h3'
               className='text-white-smoke mb-6 text-xl'
             />
-            {item.where && (
+            {/* {item.where && (
               <FormattedText
                 text={item.where}
                 as='span'
@@ -76,7 +75,7 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
                 as='span'
                 className='text-tertiary text-base'
               />
-            )}
+            )} */}
           </div>
           <div className='text-white-smoke flex items-center gap-3'>
             <span className='text-white-smoke font-heading text-lg'>{t('find-out-more')}</span>
