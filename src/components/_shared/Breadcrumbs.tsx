@@ -18,9 +18,6 @@ interface BreadcrumbsProps {
 const Breadcrumbs = async ({ pageTitle, items = [], className }: BreadcrumbsProps) => {
   const t = await getTranslations();
 
-  const hasMultipleItems = items.length > 0;
-  const secondItemHref = items[0]?.href;
-
   return (
     <div className={cn('relative z-10 flex flex-wrap items-center gap-2 pt-12', className)}>
       <Link
@@ -30,39 +27,22 @@ const Breadcrumbs = async ({ pageTitle, items = [], className }: BreadcrumbsProp
         {t('common.home')}
       </Link>
 
-      <div className='hidden items-center gap-2 lg:flex'>
-        {items.map((item, index) => (
-          <React.Fragment key={index}>
-            -
-            {item.href ? (
-              <Link
-                href={item.href}
-                className='font-text text-sm underline underline-offset-2 hover:no-underline'
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <span className='font-text text-sm'>{item.label}</span>
-            )}
-          </React.Fragment>
-        ))}
-        - <span className='font-text text-sm'>{pageTitle}</span>
-      </div>
-
-      <div className='flex flex-wrap items-center gap-2 lg:hidden'>
-        {hasMultipleItems && secondItemHref && (
-          <>
-            -
+      {items.map((item, index) => (
+        <React.Fragment key={index}>
+          -
+          {item.href ? (
             <Link
-              href={secondItemHref}
+              href={item.href}
               className='font-text text-sm underline underline-offset-2 hover:no-underline'
             >
-              ...
+              {item.label}
             </Link>
-          </>
-        )}
-        - <span className='font-text text-sm'>{pageTitle}</span>
-      </div>
+          ) : (
+            <span className='font-text text-sm'>{item.label}</span>
+          )}
+        </React.Fragment>
+      ))}
+      - <span className='font-text text-sm'>{pageTitle}</span>
     </div>
   );
 };
