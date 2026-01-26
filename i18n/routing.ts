@@ -22,9 +22,9 @@ export const pathnames = {
 
   '/services': { cs: '/sluzby' },
 
-  '/references': { cs: '/reference' },
+  '/references': { cs: '/organizovali-jsme' },
 
-  '/references/[category]': { cs: '/reference/[category]' },
+  '/references/[category]': { cs: '/organizovali-jsme/[category]' },
 
   '/contacts': { cs: '/kontakty' },
 

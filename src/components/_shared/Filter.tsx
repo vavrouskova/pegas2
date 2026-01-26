@@ -7,6 +7,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import Search from '@/components/icons/Search';
 import { cn } from '@/lib/utils';
+import { scrollControl } from '@/utils/scroll-control';
 
 interface Category {
   id: string;
@@ -93,7 +94,8 @@ const Filter = ({ categories, config }: FilterProps) => {
       });
 
       setSearchQuery('');
-      router.push(`?${updatedParameters.toString()}`);
+      scrollControl.skipNext = true;
+      router.push(`?${updatedParameters.toString()}`, { scroll: false });
     },
     [router, searchParameters, config.categoryParam, config.searchParam, resetPagination, updateSearchParameters]
   );
@@ -103,6 +105,7 @@ const Filter = ({ categories, config }: FilterProps) => {
       event.preventDefault();
       const trimmedQuery = searchQuery.trim();
 
+      scrollControl.skipNext = true;
       if (config.useUrlRouting && config.basePath) {
         const parameters = new URLSearchParams();
         if (trimmedQuery) {
@@ -110,14 +113,14 @@ const Filter = ({ categories, config }: FilterProps) => {
         }
         const queryString = parameters.toString();
         const url = queryString ? `${config.basePath}?${queryString}` : config.basePath;
-        router.push(url);
+        router.push(url, { scroll: false });
       } else {
         const parameters = resetPagination(searchParameters);
         const updatedParameters = updateSearchParameters(parameters, {
           [config.searchParam]: trimmedQuery || null,
           [config.categoryParam]: null,
         });
-        router.push(`?${updatedParameters.toString()}`);
+        router.push(`?${updatedParameters.toString()}`, { scroll: false });
       }
     },
     [
@@ -153,6 +156,8 @@ const Filter = ({ categories, config }: FilterProps) => {
       {config.useUrlRouting ? (
         <Link
           href={getAllUrl()}
+          scroll={false}
+          onClick={() => { scrollControl.skipNext = true; }}
           className={cn(
             'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
             isAllActive ? 'bg-primary' : 'bg-white'
@@ -197,6 +202,8 @@ const Filter = ({ categories, config }: FilterProps) => {
             <Link
               key={category.id}
               href={getCategoryUrl(category.slug)}
+              scroll={false}
+              onClick={() => { scrollControl.skipNext = true; }}
               className={cn(
                 'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
                 isActive ? 'bg-primary' : 'bg-white'

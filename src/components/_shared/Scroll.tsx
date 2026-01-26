@@ -4,6 +4,8 @@ import { useLenis } from 'lenis/react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
+import { scrollControl } from '@/utils/scroll-control';
+
 const LenisScrollEffect = () => {
   const pathname = usePathname();
   const searchParameters = useSearchParams();
@@ -18,6 +20,11 @@ const LenisScrollEffect = () => {
 
   // Reset scroll position on route change
   useEffect(() => {
+    if (scrollControl.skipNext) {
+      scrollControl.skipNext = false;
+      return;
+    }
+
     const hash = window.location.hash;
 
     if (hash) {
