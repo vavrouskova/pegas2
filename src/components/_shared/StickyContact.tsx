@@ -2,16 +2,16 @@
 
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { MotionDiv } from '@/components/animate-ui/MotionWrappers';
+import { usePathname } from '@/i18n/routing';
 import { PhoneNumber } from '@/lib/constants';
 
 const STORAGE_KEY = 'pegas_intro_seen';
 
 const StickyContact = () => {
-  const t = useTranslations('common');
+  const t = useTranslations();
   const pathname = usePathname();
 
   const [isFooterVisible, setIsFooterVisible] = useState(false);
@@ -85,7 +85,7 @@ const StickyContact = () => {
     return isFooterVisible ? { opacity: 0 } : { opacity: 1 };
   }, [isFooterVisible, isActivated]);
 
-  if (pathname === '/o-nas' || pathname === '/cs/o-nas') {
+  if (pathname === '/about-us' || pathname === '/blog') {
     return null;
   }
 
@@ -100,9 +100,9 @@ const StickyContact = () => {
       className='bg-primary fixed right-0 bottom-5 z-30 flex gap-4 p-4 pr-12 shadow-lg will-change-transform lg:bottom-1/2'
     >
       <div className='flex flex-col justify-between pr-2'>
-        <span className='text-base text-white'>{t('nonstop')}</span>
+        <span className='text-base text-white'>{t('common.nonstop')}</span>
         <Link
-          className='text-2xl !leading-none text-white transition-all duration-300 hover:opacity-70'
+          className='text-2xl leading-none! text-white transition-all duration-300 hover:opacity-70'
           href={`tel:${PhoneNumber}`}
         >
           {PhoneNumber}
