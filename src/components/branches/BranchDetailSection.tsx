@@ -91,6 +91,7 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
           externalImage={externalImage}
           mapImage={mapImage}
           navigateLink={pobockyACF?.navigateLink}
+          planRouteLabel={t('branches.plan-route')}
         />
 
         {/* Consultant - Order 3 on mobile */}

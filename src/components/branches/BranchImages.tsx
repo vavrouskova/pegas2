@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import ArrowRight from '@/components/icons/ArrowRight';
+
 interface ImageData {
   url: string;
   alt: string;
@@ -11,13 +13,20 @@ interface BranchImagesProps {
   externalImage?: ImageData;
   mapImage?: ImageData;
   navigateLink?: string;
+  planRouteLabel?: string;
 }
 
 const IMAGE_SIZE = 100;
 const IMAGE_CLASS = 'h-full w-full object-cover';
 const CONTAINER_CLASS = 'aspect-square overflow-hidden';
 
-export const BranchImages = ({ internalImage, externalImage, mapImage, navigateLink }: BranchImagesProps) => {
+export const BranchImages = ({
+  internalImage,
+  externalImage,
+  mapImage,
+  navigateLink,
+  planRouteLabel,
+}: BranchImagesProps) => {
   if (!internalImage && !externalImage) return null;
 
   return (
@@ -46,19 +55,31 @@ export const BranchImages = ({ internalImage, externalImage, mapImage, navigateL
           </div>
         )}
         {mapImage && (
-          <Link
-            href={navigateLink || '#'}
-            target='_blank'
-            className={CONTAINER_CLASS}
-          >
-            <Image
-              src={mapImage.url}
-              alt={mapImage.alt}
-              width={IMAGE_SIZE}
-              height={IMAGE_SIZE}
-              className={IMAGE_CLASS}
-            />
-          </Link>
+          <div className='flex flex-col gap-2'>
+            <Link
+              href={navigateLink || '#'}
+              target='_blank'
+              className={CONTAINER_CLASS}
+            >
+              <Image
+                src={mapImage.url}
+                alt={mapImage.alt}
+                width={IMAGE_SIZE}
+                height={IMAGE_SIZE}
+                className={IMAGE_CLASS}
+              />
+            </Link>
+            {navigateLink && planRouteLabel && (
+              <Link
+                href={navigateLink}
+                target='_blank'
+                className='text-primary flex items-center gap-2 text-sm transition-opacity duration-300 hover:opacity-70'
+              >
+                {planRouteLabel}
+                <ArrowRight className='size-4 shrink-0' />
+              </Link>
+            )}
+          </div>
         )}
       </div>
     </div>
