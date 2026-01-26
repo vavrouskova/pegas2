@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
-import LinkWithArrow from '@/components/_shared/LinkWithArrow';
+import ArrowRight from '@/components/icons/ArrowRight';
 import { formatFarewellDateTime } from '@/utils/helper';
 import type { ReferencePost } from '@/utils/wordpress-types';
 
@@ -43,6 +43,7 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
       data={carouselData}
       carouselMaxWidth='max-w-[23.125rem] lg:max-w-[59rem]'
       articleClassName='flex flex-col-reverse items-center lg:flex-row'
+      asLink
       renderImage={(item) => (
         <picture className='relative aspect-square h-auto max-h-92.5 w-full max-w-92.5 lg:col-span-2'>
           <Image
@@ -77,11 +78,10 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
               />
             )}
           </div>
-          <LinkWithArrow
-            variant='destructive'
-            href={item.link}
-            title={t('find-out-more')}
-          />
+          <div className='text-white-smoke flex items-center gap-3'>
+            <span className='text-white-smoke font-heading text-lg'>{t('find-out-more')}</span>
+            <ArrowRight className='size-5 shrink-0' />
+          </div>
         </div>
       )}
     />

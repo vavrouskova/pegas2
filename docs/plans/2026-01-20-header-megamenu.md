@@ -13,6 +13,7 @@
 ## Task 1: Extend HeaderLink Interface with ID and Children
 
 **Files:**
+
 - Modify: `src/components/header/HeaderContent.tsx:13-16`
 
 **Step 1: Update HeaderLink interface**
@@ -45,6 +46,7 @@ git commit -m "feat(header): extend HeaderLink interface for megamenu support"
 ## Task 2: Add IDs to Header Links Data
 
 **Files:**
+
 - Modify: `src/utils/data.ts:5-35`
 
 **Step 1: Add id field to each header link**
@@ -106,6 +108,7 @@ git commit -m "feat(header): add id field to header links"
 ## Task 3: Create Megamenu Dummy Data
 
 **Files:**
+
 - Modify: `src/utils/data.ts`
 
 **Step 1: Add dummy megamenu items for services and blog**
@@ -120,7 +123,7 @@ export const getMegamenuItems = (linkId: string): HeaderLink[] | undefined => {
       { id: 'all-services', label: 'Všechny služby', href: '/sluzby' },
       { id: 'prevoz', label: 'Převoz zesnulých', href: '/sluzby/prevoz-zesnulych' },
       { id: 'smutecni', label: 'Smuteční obřady', href: '/sluzby/smutecni-obrady' },
-      { id: 'doplnkove', label: 'Doplňkové služby a produky', href: '/sluzby/doplnkove-sluzby' },
+      { id: 'doplnkove', label: 'Doplňkové služby a produkty', href: '/sluzby/doplnkove-sluzby' },
       { id: 'vazby', label: 'Vazby květin', href: '/sluzby/vazby-kvetin' },
       { id: 'mista', label: 'Místa rozloučení', href: '/sluzby/mista-rozlouceni' },
     ],
@@ -160,6 +163,7 @@ git commit -m "feat(header): add dummy megamenu data for services and blog"
 ## Task 4: Create MegamenuOverlay Component (Backdrop Blur)
 
 **Files:**
+
 - Create: `src/components/header/MegamenuOverlay.tsx`
 
 **Step 1: Create the overlay component**
@@ -219,6 +223,7 @@ git commit -m "feat(header): add MegamenuOverlay component with backdrop blur"
 ## Task 5: Create MegamenuDropdown Component
 
 **Files:**
+
 - Create: `src/components/header/MegamenuDropdown.tsx`
 
 **Step 1: Create the dropdown component**
@@ -294,6 +299,7 @@ git commit -m "feat(header): add MegamenuDropdown component with animations"
 ## Task 6: Create NavItem Component with Megamenu Support
 
 **Files:**
+
 - Create: `src/components/header/NavItem.tsx`
 
 **Step 1: Create the NavItem component**
@@ -400,6 +406,7 @@ git commit -m "feat(header): add NavItem component with megamenu hover logic"
 ## Task 7: Integrate Megamenu into HeaderContent
 
 **Files:**
+
 - Modify: `src/components/header/HeaderContent.tsx`
 
 **Step 1: Update imports**
@@ -495,6 +502,7 @@ git commit -m "feat(header): integrate megamenu into HeaderContent"
 ## Task 8: Add CSS Variable for Header Height
 
 **Files:**
+
 - Modify: `src/components/header/Header.tsx` (check exact file name)
 
 **Step 1: Check Header component**
@@ -535,11 +543,13 @@ git commit -m "feat(header): add --header-height CSS variable for overlay positi
 ## Task 9: Visual Testing and Polish
 
 **Files:**
+
 - May require adjustments to multiple files
 
 **Step 1: Test megamenu on dev server**
 
 Verify:
+
 - Služby shows dropdown on hover with 6 items
 - Blog shows dropdown on hover with 3 items
 - Other nav items have no dropdown
@@ -551,6 +561,7 @@ Verify:
 **Step 2: Adjust styling if needed**
 
 Common adjustments:
+
 - Dropdown min-width
 - Padding values
 - Animation timing
@@ -575,17 +586,17 @@ git commit -m "feat(header): polish megamenu styling and animations"
 
 ## Summary
 
-| Task | Description | Files |
-|------|-------------|-------|
-| 1 | Extend HeaderLink interface | HeaderContent.tsx |
-| 2 | Add IDs to header links | data.ts |
-| 3 | Create megamenu dummy data | data.ts |
-| 4 | Create MegamenuOverlay component | MegamenuOverlay.tsx (new) |
-| 5 | Create MegamenuDropdown component | MegamenuDropdown.tsx (new) |
-| 6 | Create NavItem component | NavItem.tsx (new) |
-| 7 | Integrate into HeaderContent | HeaderContent.tsx |
-| 8 | Add CSS variable for header height | globals.css |
-| 9 | Visual testing and polish | various |
+| Task | Description                        | Files                      |
+| ---- | ---------------------------------- | -------------------------- |
+| 1    | Extend HeaderLink interface        | HeaderContent.tsx          |
+| 2    | Add IDs to header links            | data.ts                    |
+| 3    | Create megamenu dummy data         | data.ts                    |
+| 4    | Create MegamenuOverlay component   | MegamenuOverlay.tsx (new)  |
+| 5    | Create MegamenuDropdown component  | MegamenuDropdown.tsx (new) |
+| 6    | Create NavItem component           | NavItem.tsx (new)          |
+| 7    | Integrate into HeaderContent       | HeaderContent.tsx          |
+| 8    | Add CSS variable for header height | globals.css                |
+| 9    | Visual testing and polish          | various                    |
 
 ---
 

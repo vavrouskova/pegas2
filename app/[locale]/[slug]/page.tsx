@@ -228,7 +228,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
 
         <ServicesGridSection
           id='doplnkove-sluzby-a-produky'
-          title={funeralEssentials.taxonomy?.name || 'Doplňkové služby a produky'}
+          title={funeralEssentials.taxonomy?.name || 'Doplňkové služby a produkty'}
           description={funeralEssentials.taxonomy?.description || ''}
           services={funeralEssentials.posts}
         />

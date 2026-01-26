@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { ReactNode } from 'react';
 
 import { CarouselNavigation } from '@/components/_shared/CarouselNavigation';
@@ -26,6 +27,7 @@ interface GenericCarouselSectionProps<T extends CarouselItemData> {
   /* eslint-enable no-unused-vars */
   sectionClassName?: string;
   imageFirst?: boolean;
+  asLink?: boolean;
 }
 
 const GenericCarouselSection = <T extends CarouselItemData>({
@@ -36,6 +38,7 @@ const GenericCarouselSection = <T extends CarouselItemData>({
   renderImage,
   sectionClassName,
   imageFirst = false,
+  asLink = false,
 }: GenericCarouselSectionProps<T>) => {
   const t = useTranslations('common');
   const { currentIndex, setApi, carouselRef, setIsHovering, goToSlide } = useCarouselAutoplay();
@@ -71,8 +74,8 @@ const GenericCarouselSection = <T extends CarouselItemData>({
                 key={item.id}
                 className='basis-full pl-0'
               >
-                <article className={cn('bg-primary group h-full overflow-hidden', articleClassName)}>
-                  {imageFirst ? (
+                {(() => {
+                  const children = imageFirst ? (
                     <>
                       {renderImage ? renderImage(item) : defaultRenderImage(item)}
                       {renderContent(item, t)}
@@ -82,8 +85,19 @@ const GenericCarouselSection = <T extends CarouselItemData>({
                       {renderContent(item, t)}
                       {renderImage ? renderImage(item) : defaultRenderImage(item)}
                     </>
-                  )}
-                </article>
+                  );
+                  const className = cn('bg-primary group h-full overflow-hidden', articleClassName);
+
+                  return asLink ? (
+                    <Link href={item.link} className={cn(className, 'block')}>
+                      {children}
+                    </Link>
+                  ) : (
+                    <article className={className}>
+                      {children}
+                    </article>
+                  );
+                })()}
               </CarouselItem>
             ))}
           </CarouselContent>
