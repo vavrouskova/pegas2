@@ -10,6 +10,7 @@ import { HeaderLink } from '@/components/header/HeaderContent';
 import Logo from '@/components/header/Logo';
 import Hamburger from '@/components/icons/Hamburger';
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer';
+import { cn } from '@/lib/utils';
 import { getMegamenuItemsFromData, MegamenuData } from '@/utils/data';
 
 const noopUnsubscribe = () => {};
@@ -31,6 +32,16 @@ const MobileMenu = ({ headerLinks, megamenuData }: MobileMenuProps) => {
   const mounted = useSyncExternalStore(emptySubscribe, getSnapshotTrue, getSnapshotFalse);
 
   const submenuItems = activeSubmenu ? getMegamenuItemsFromData(activeSubmenu, megamenuData) : undefined;
+
+  const isActiveLink = (href: string) => {
+    const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, '') || '/';
+    const hrefWithoutLocale = href.replace(/^\/[a-z]{2}(?=\/|$)/, '') || '/';
+
+    if (hrefWithoutLocale === '/') {
+      return pathWithoutLocale === '/';
+    }
+    return pathWithoutLocale.startsWith(hrefWithoutLocale);
+  };
 
   // Close menu when pathname changes (navigation occurred)
   // eslint-disable-next-line react-hooks/refs
@@ -128,7 +139,10 @@ const MobileMenu = ({ headerLinks, megamenuData }: MobileMenuProps) => {
                   <Link
                     key={item.id || item.href}
                     href={item.href}
-                    className='font-heading block w-full text-left text-xl leading-none transition-all duration-300 hover:opacity-70'
+                    className={cn(
+                      'block w-full text-left text-xl leading-none transition-all duration-300 hover:opacity-70',
+                      isActiveLink(item.href) ? 'font-heading' : 'font-text'
+                    )}
                     onClick={() => setIsOpen(false)}
                   >
                     {item.label}
@@ -146,11 +160,15 @@ const MobileMenu = ({ headerLinks, megamenuData }: MobileMenuProps) => {
               >
                 {headerLinks.map((item) => {
                   const hasSubmenu = item.id && getMegamenuItemsFromData(item.id, megamenuData);
+                  const active = isActiveLink(item.href);
                   return hasSubmenu ? (
                     <button
                       key={item.id || item.href}
                       onClick={() => handleItemClick(item)}
-                      className='font-heading flex w-full items-center justify-between text-left text-xl leading-none transition-all duration-300 hover:opacity-70'
+                      className={cn(
+                        'flex w-full items-center justify-between text-left text-xl leading-none transition-all duration-300 hover:opacity-70',
+                        active ? 'font-heading' : 'font-text'
+                      )}
                     >
                       {item.label}
                       <ChevronRight className='h-5 w-5' />
@@ -159,7 +177,10 @@ const MobileMenu = ({ headerLinks, megamenuData }: MobileMenuProps) => {
                     <Link
                       key={item.id || item.href}
                       href={item.href}
-                      className='font-heading block w-full text-left text-xl leading-none transition-all duration-300 hover:opacity-70'
+                      className={cn(
+                        'block w-full text-left text-xl leading-none transition-all duration-300 hover:opacity-70',
+                        active ? 'font-heading' : 'font-text'
+                      )}
                       onClick={() => setIsOpen(false)}
                     >
                       {item.label}
