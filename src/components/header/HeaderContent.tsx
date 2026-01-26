@@ -84,7 +84,7 @@ const HeaderContent = ({ headerLinks, megamenuData, isVisible }: HeaderContentPr
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setOpenMenuId(null);
-    }, 150);
+    }, 250);
   };
 
   const handleClose = () => {
