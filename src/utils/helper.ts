@@ -371,6 +371,15 @@ export function formatDateRange(dateFromString?: string, dateToString?: string):
 }
 
 /**
+ * Detekuje mobilní zařízení na základě User-Agent stringu
+ * @param userAgent - User-Agent header string
+ * @returns true pokud je zařízení mobilní
+ */
+export function isMobileUserAgent(userAgent: string): boolean {
+  return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(userAgent);
+}
+
+/**
  * Filtruje zaměstnance podle typu pozice na vedení a tým
  * @param employees - pole zaměstnanců
  * @param managementType - typ pozice pro vedení (default: 'company_management')

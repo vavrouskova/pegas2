@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 
 import { getBranches, getContactPeople } from '@/api/wordpress-api';
@@ -10,6 +11,7 @@ import BranchesSection from '@/components/branches/BranchesSection';
 import ContactInfoSection from '@/components/contacts/ContactInfoSection';
 import ContactPeopleSection from '@/components/contacts/ContactPeopleSection';
 import ContactForm from '@/components/forms/contact/ContactForm';
+import { isMobileUserAgent } from '@/utils/helper';
 import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -19,6 +21,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const ContactsPage = async () => {
+  const headersList = await headers();
+  const userAgent = headersList.get('user-agent') || '';
+  const isMobile = isMobileUserAgent(userAgent);
+
   const [t, contactPeople, branches] = await Promise.all([getTranslations(), getContactPeople(), getBranches()]);
 
   return (
@@ -30,10 +36,12 @@ const ContactsPage = async () => {
         />
       </section>
 
-      <BranchesMapSection
-        branches={branches}
-        title={t('contacts.map-section-title')}
-      />
+      {!isMobile && (
+        <BranchesMapSection
+          branches={branches}
+          title={t('contacts.map-section-title')}
+        />
+      )}
 
       <BranchesSection
         branches={branches}

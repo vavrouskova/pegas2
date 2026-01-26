@@ -5,7 +5,7 @@ import React from 'react';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
-import LinkWithArrow from '@/components/_shared/LinkWithArrow';
+import ArrowRight from '@/components/icons/ArrowRight';
 import type { SliderSlide } from '@/utils/wordpress-types';
 
 interface SliderCarouselItemData {
@@ -47,6 +47,7 @@ const HomepageSliderSection = ({ slides }: HomepageSliderSectionProps) => {
       carouselMaxWidth='max-w-88 lg:max-w-[48.1875rem]'
       articleClassName='flex min-h-[10rem] mx-auto items-stretch max-lg:flex-col lg:max-h-[14.375rem]'
       imageFirst
+      asLink
       renderImage={(item) => (
         <picture className='relative aspect-square h-auto w-full lg:max-h-57.5 lg:max-w-57.5'>
           <Image
@@ -74,12 +75,10 @@ const HomepageSliderSection = ({ slides }: HomepageSliderSectionProps) => {
               />
             )}
           </div>
-          <LinkWithArrow
-            variant='destructive'
-            href={item.link}
-            target={item.linkTarget}
-            title={item.linkTitle || t('find-out-more')}
-          />
+          <div className='text-white-smoke flex items-center gap-3'>
+            <span className='text-white-smoke font-heading text-lg'>{t('find-out-more')}</span>
+            <ArrowRight className='size-5 shrink-0' />
+          </div>
         </div>
       )}
     />
