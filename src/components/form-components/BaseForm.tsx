@@ -8,6 +8,7 @@ import { UseFormReturn } from 'react-hook-form';
 import Button from '@/components/_shared/Button';
 import { Form } from '@/components/ui/form';
 import { useRouter } from '@/i18n/routing';
+import { storeFormLeadData } from '@/utils/datalayer';
 
 export interface BaseFormFieldProps {
   name: string;
@@ -55,6 +56,7 @@ const BaseForm = (props: BaseFormProps) => {
       setIsSending(true);
       await onSubmit(values);
       if (redirectUrl) {
+        storeFormLeadData(values.email || '', values.phone || '');
         router.push(redirectUrl as any);
       } else {
         setIsSubmitted(true);

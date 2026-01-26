@@ -1,3 +1,7 @@
+'use client';
+
+import { useEffect } from 'react';
+
 /**
  * DataLayer utility functions for GA4 ecommerce tracking
  */
@@ -78,4 +82,39 @@ export const pushContactClick = (contactValue: string, contactSection: string): 
     contact_value: contactValue,
     contact_section: contactSection,
   });
+};
+
+/**
+ * Form lead tracking - stores user data before redirect and pushes to dataLayer on thank-you page
+ */
+const FORM_LEAD_KEY = 'pegas_form_lead';
+
+export const storeFormLeadData = (email: string, phone: string): void => {
+  sessionStorage.setItem(FORM_LEAD_KEY, JSON.stringify({ email, phone }));
+};
+
+const pushFormLeadEvent = (): void => {
+  const raw = sessionStorage.getItem(FORM_LEAD_KEY);
+  if (!raw) return;
+
+  sessionStorage.removeItem(FORM_LEAD_KEY);
+
+  const { email, phone } = JSON.parse(raw) as { email: string; phone: string };
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'form_purchase_success',
+    user_data: {
+      ...(email && { email }),
+      ...(phone && { phone_number: phone }),
+    },
+  });
+};
+
+export const FormLeadTracker = () => {
+  useEffect(() => {
+    pushFormLeadEvent();
+  }, []);
+
+  return null;
 };
