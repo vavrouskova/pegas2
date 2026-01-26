@@ -248,7 +248,7 @@ const DynamicContentSection = async ({
         if (listItems.length > 0) {
           const ListTag = item.listType === 'ul' ? 'ul' : 'ol';
           const listStyleClass = item.listType === 'ul' ? 'list-none' : 'list-decimal';
-          const marginClass = isLastElement && isLastComponent ? '' : 'mb-12.5';
+          const marginClass = isLastElement && isLastComponent ? '' : 'mb-8';
           elements.push(
             <ListTag
               key={`${item.listType}-${key++}`}
@@ -347,7 +347,7 @@ const DynamicContentSection = async ({
           break;
         }
         case 'p': {
-          const marginClass = isLastElement && isLastComponent ? '' : 'mb-12.5';
+          const marginClass = isLastElement && isLastComponent ? '' : 'mb-8';
           elements.push(
             <FormattedText
               key={`p-${key++}`}
