@@ -92,6 +92,7 @@ const BranchCardContent = ({
           />
         )}
       </div>
+
       <div>
         {phoneNumber && (
           <Link
