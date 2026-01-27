@@ -99,14 +99,17 @@ const BaseForm = (props: BaseFormProps) => {
         }
         submitEvent();
       }
-    } catch {
+    } catch (error) {
+      console.error('Form submission error:', error);
       toast.error(t('flash.error'));
     } finally {
-      sendGTMEventFunction({
-        event: 'app_form_submit',
-        form_name: formName,
-        type: values.type || 'offer',
-      });
+      setTimeout(() => {
+        sendGTMEventFunction({
+          event: 'app_form_submit',
+          form_name: formName,
+          type: values.type || 'offer',
+        }).catch(() => {});
+      }, 0);
       setIsSending(false);
     }
   };

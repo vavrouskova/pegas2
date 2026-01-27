@@ -84,7 +84,7 @@ const ServicesPage = async () => {
       />
 
       <ServicesGridSection
-        id='doplnkove-sluzby-a-produky'
+        id='doplnkove-sluzby-a-produkty'
         title={funeralEssentials.taxonomy?.name || 'Náležitosti pohřbu'}
         description={funeralEssentials.taxonomy?.description || ''}
         services={funeralEssentials.posts}

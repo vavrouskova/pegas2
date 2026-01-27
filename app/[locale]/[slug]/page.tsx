@@ -203,7 +203,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
 
   if (slugType === 'pobockaPost') {
     const [funeralEssentials, branchData] = await Promise.all([
-      getServicesByTaxonomy('doplnkove-sluzby-a-produky'),
+      getServicesByTaxonomy('doplnkove-sluzby-a-produkty'),
       getBranchBySlug(slug),
     ]);
 
@@ -367,7 +367,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         itemName={title}
         itemCategory={typSluzby?.nodes?.[0]?.name || t('tracking.category-services')}
         itemCategory2={
-          typSluzby?.nodes?.[0]?.slug === 'doplnkove-sluzby-a-produky'
+          typSluzby?.nodes?.[0]?.slug === 'doplnkove-sluzby-a-produkty'
             ? t('tracking.category-products')
             : t('tracking.category-services')
         }
