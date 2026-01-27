@@ -23,7 +23,7 @@ x-healthcheck: &healthcheck
 
 services:
   frontend-production:
-    image: ${IMAGE_PRODUCTION:-registry.antstudio.cz/react/pegas:production}
+    image: ${IMAGE_PRODUCTION:-registry.antstudio.cz/react/pegas:main}
     pull_policy: always
     restart: unless-stopped
     networks:
