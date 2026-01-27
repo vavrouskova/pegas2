@@ -7,7 +7,6 @@
 #   DOKPLOY_API_URL      - Dokploy server URL (e.g., https://dokploy.example.com)
 #   DOKPLOY_API_TOKEN    - Dokploy API token (Settings → API → Generate Token)
 #   DOKPLOY_COMPOSE_ID   - Compose project ID (scope per environment: production/development)
-#   DOKPLOY_WEBHOOK_URL  - Deploy webhook URL (scope per environment)
 
 workflow:
   rules:
@@ -253,21 +252,33 @@ deploy:dokploy:
   needs: ['build:production']
   cache: []
   script:
-    - apk add --no-cache curl
+    - apk add --no-cache curl jq
     - |
-      echo "Triggering Dokploy deployment..."
+      echo "Triggering Dokploy deployment via API..."
       echo "Environment: ${DEPLOY_ENV}"
       echo "Image: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}"
 
-      if [ -n "$DOKPLOY_WEBHOOK_URL" ]; then
-        curl -X POST "$DOKPLOY_WEBHOOK_URL" \
-          -H "Content-Type: application/json" \
-          -H "X-Gitlab-Event: Push Hook" \
-          -d "{\"ref\": \"refs/heads/${CI_COMMIT_BRANCH}\", \"checkout_sha\": \"${CI_COMMIT_SHA}\", \"project\": {\"path_with_namespace\": \"${CI_PROJECT_PATH}\"}}" \
-          --fail --silent --show-error
-        echo "Dokploy webhook triggered successfully"
-      else
-        echo "DOKPLOY_WEBHOOK_URL not set - deploy manually via Dokploy UI"
+      if [ -z "$DOKPLOY_API_URL" ] || [ -z "$DOKPLOY_API_TOKEN" ] || [ -z "$DOKPLOY_COMPOSE_ID" ]; then
+        echo "ERROR: Dokploy variables not configured"
+        echo "Required: DOKPLOY_API_URL, DOKPLOY_API_TOKEN, DOKPLOY_COMPOSE_ID"
+        exit 1
       fi
+
+      echo "Calling Dokploy redeploy API..."
+      HTTP_CODE=$(curl -s -w "%{http_code}" -o /tmp/dokploy_response.json \
+        -X POST "${DOKPLOY_API_URL}/api/compose.redeploy" \
+        -H "x-api-key: ${DOKPLOY_API_TOKEN}" \
+        -H "Content-Type: application/json" \
+        -d "{\"composeId\": \"${DOKPLOY_COMPOSE_ID}\"}")
+
+      echo "HTTP response code: ${HTTP_CODE}"
+
+      if [ "$HTTP_CODE" != "200" ]; then
+        echo "ERROR: Dokploy API returned HTTP ${HTTP_CODE}"
+        cat /tmp/dokploy_response.json 2>/dev/null || echo "(no response body)"
+        exit 1
+      fi
+
+      echo "Dokploy redeploy triggered successfully"
   environment:
     name: $DEPLOY_ENV
