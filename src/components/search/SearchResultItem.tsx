@@ -26,7 +26,7 @@ export const SearchResultItem = ({ result }: SearchResultItemProps) => {
       <Link
         href={item.url}
         onClick={closeSearch}
-        className='hover:border-grey-cold block border border-transparent p-4 transition-all hover:bg-white hover:shadow-sm'
+        className='hover:border-grey-cold bg-white-smoke block border border-transparent p-4 transition-all hover:bg-white hover:shadow-sm'
       >
         <div className='flex items-start justify-between gap-4'>
           <div className='min-w-0 flex-1'>
