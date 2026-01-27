@@ -1,34 +1,36 @@
 # ============================================
 # Dokploy Deployment Configuration - Frontend
 # ============================================
-# Two services separated by environment/branch.
-# Each has its own DOKPLOY_COMPOSE_ID and DOKPLOY_WEBHOOK_URL in GitLab CI.
+# Used by Dokploy for production deployment.
+# Image is pulled from GitLab Container Registry.
 #
-# Production (main/master):
-#   - discomp.cz → frontend-production, port 3000
+# Domain (configure in Dokploy UI):
+#   - discomp.cz → frontend service, port 3000
 #
-# Development:
-#   - dev.discomp.cz → frontend-development, port 3000
-
-x-healthcheck: &healthcheck
-  test:
-    [
-      'CMD-SHELL',
-      'node -e "require(''http'').get(''http://localhost:3000/api/health'', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"',
-    ]
-  interval: 30s
-  timeout: 10s
-  retries: 3
-  start_period: 40s
+# Build-time args (set when building image in CI/CD):
+#   NEXT_PUBLIC_BACKEND_URL=https://api.discomp.cz
+#   NEXT_PUBLIC_FRONTEND_URL=https://discomp.cz
+#
+# Runtime environment variables (configure in Dokploy UI if needed):
+#   NODE_ENV, PORT, HOSTNAME, NEXT_TELEMETRY_DISABLED
 
 services:
-  frontend-production:
-    image: ${IMAGE_PRODUCTION:-registry.antstudio.cz/react/pegas:main}
+  frontend:
+    image: ${IMAGE:-registry.antstudio.cz/react/pegas:latest}
     pull_policy: always
     restart: unless-stopped
     networks:
       - dokploy-network
-    healthcheck: *healthcheck
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'node -e "require(''http'').get(''http://localhost:3000/api/health'', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"',
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     deploy:
       resources:
         limits:
@@ -37,24 +39,6 @@ services:
         reservations:
           memory: 512M
           cpus: '0.5'
-    labels:
-      - 'dokploy.enable=true'
-
-  frontend-development:
-    image: ${IMAGE_DEVELOPMENT:-registry.antstudio.cz/react/pegas:latest}
-    pull_policy: always
-    restart: unless-stopped
-    networks:
-      - dokploy-network
-    healthcheck: *healthcheck
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-          cpus: '0.5'
-        reservations:
-          memory: 256M
-          cpus: '0.25'
     labels:
       - 'dokploy.enable=true'
 
