@@ -150,6 +150,8 @@ build:fetch-env:
   stage: build
   image: alpine:latest
   <<: *rules_production
+  environment:
+    name: $DEPLOY_ENV
   script:
     - apk add --no-cache curl jq
     - |
@@ -213,6 +215,8 @@ build:production:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: ['']
   <<: *rules_production
+  environment:
+    name: $DEPLOY_ENV
   needs: ['build:fetch-env']
   script:
     - |
