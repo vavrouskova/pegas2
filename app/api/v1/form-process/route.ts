@@ -16,14 +16,22 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify(body),
     });
 
-    if (!response.ok) {
-      const contentType = response.headers.get('content-type') || '';
-      const isHtml = contentType.includes('text/html');
+    const contentType = response.headers.get('content-type') || '';
+    const isHtml = contentType.includes('text/html');
 
-      console.error(`Form proxy failed: ${response.status} ${response.statusText} (${url})`, isHtml ? '[HTML response - likely Cloudflare]' : await response.text());
-
+    if (isHtml) {
+      console.error(`Form proxy blocked by Cloudflare: ${response.status} (${url})`);
       return Response.json(
-        { error: isHtml ? 'Backend is currently unreachable (Cloudflare challenge)' : `Backend error: ${response.statusText}` },
+        { error: 'Backend is currently unreachable (Cloudflare challenge)' },
+        { status: 502 },
+      );
+    }
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Form proxy failed: ${response.status} ${response.statusText} (${url})`, errorText);
+      return Response.json(
+        { error: `Backend error: ${response.statusText}` },
         { status: 502 },
       );
     }
