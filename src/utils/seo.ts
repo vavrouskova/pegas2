@@ -269,6 +269,20 @@ async function fetchTaxonomySeoData(
 }
 
 /**
+ * Rewrites backend WordPress URLs to frontend URLs
+ */
+function rewriteToFrontendUrl(url?: string): string | undefined {
+  if (!url) return url;
+
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL?.replace(/\/+$/, '');
+  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/+$/, '');
+
+  if (!backendUrl || !frontendUrl) return url;
+
+  return url.replace(backendUrl, frontendUrl);
+}
+
+/**
  * Default metadata fallback
  */
 function getDefaultMetadata(): Metadata {
@@ -321,13 +335,13 @@ export async function getSeoData(options: GetSeoDataOptions): Promise<Metadata> 
       },
     ],
     alternates: {
-      canonical: seoData.canonical,
+      canonical: rewriteToFrontendUrl(seoData.canonical),
     },
     openGraph: {
       type: (seoData.opengraphType as any) || 'website',
       title: seoData.opengraphTitle,
       description: seoData.opengraphDescription,
-      url: seoData.opengraphUrl,
+      url: rewriteToFrontendUrl(seoData.opengraphUrl),
       siteName: seoData.opengraphSiteName,
       modifiedTime: seoData.opengraphModifiedTime,
       publishedTime: seoData.opengraphPublishedTime,
@@ -420,13 +434,13 @@ async function convertTaxonomySeoToMetadata(seoData: WordPressSeoData | null): P
       },
     ],
     alternates: {
-      canonical: seoData.canonical,
+      canonical: rewriteToFrontendUrl(seoData.canonical),
     },
     openGraph: {
       type: (seoData.opengraphType as any) || 'website',
       title: seoData.opengraphTitle,
       description: seoData.opengraphDescription,
-      url: seoData.opengraphUrl,
+      url: rewriteToFrontendUrl(seoData.opengraphUrl),
       siteName: seoData.opengraphSiteName,
       images: seoData.opengraphImage?.sourceUrl
         ? [
