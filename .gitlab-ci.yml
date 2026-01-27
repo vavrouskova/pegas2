@@ -6,7 +6,7 @@
 # Required CI/CD Variables (set in GitLab UI):
 #   DOKPLOY_API_URL      - Dokploy server URL (e.g., https://dokploy.example.com)
 #   DOKPLOY_API_TOKEN    - Dokploy API token (Settings → API → Generate Token)
-#   DOKPLOY_COMPOSE_ID   - Compose project ID (scope per environment: production/development)
+#   DOKPLOY_APPLICATION_ID   - Application ID (scope per environment: production/development)
 
 workflow:
   rules:
@@ -156,17 +156,17 @@ build:fetch-env:
     - |
       echo "=== Fetching environment from Dokploy ==="
       echo "Environment: ${DEPLOY_ENV}"
-      echo "Compose ID: ${DOKPLOY_COMPOSE_ID}"
+      echo "Application ID: ${DOKPLOY_APPLICATION_ID}"
       echo "API URL: ${DOKPLOY_API_URL}"
 
-      if [ -z "$DOKPLOY_API_URL" ] || [ -z "$DOKPLOY_API_TOKEN" ] || [ -z "$DOKPLOY_COMPOSE_ID" ]; then
+      if [ -z "$DOKPLOY_API_URL" ] || [ -z "$DOKPLOY_API_TOKEN" ] || [ -z "$DOKPLOY_APPLICATION_ID" ]; then
         echo "ERROR: Dokploy variables not configured"
         exit 1
       fi
 
       echo "Fetching env from Dokploy..."
       HTTP_CODE=$(curl -s -w "%{http_code}" -o /tmp/dokploy_response.json \
-        "${DOKPLOY_API_URL}/api/compose.one?composeId=${DOKPLOY_COMPOSE_ID}" \
+        "${DOKPLOY_API_URL}/api/application.one?applicationId=${DOKPLOY_APPLICATION_ID}" \
         -H "x-api-key: ${DOKPLOY_API_TOKEN}" \
         -H "Content-Type: application/json")
 
@@ -181,8 +181,8 @@ build:fetch-env:
       DOKPLOY_RESPONSE=$(cat /tmp/dokploy_response.json)
       echo "Response length: $(echo "$DOKPLOY_RESPONSE" | wc -c) bytes"
 
-      # Check for API error response (has "message" but not "composeId")
-      if echo "$DOKPLOY_RESPONSE" | jq -e 'select(.message != null and .composeId == null)' > /dev/null 2>&1; then
+      # Check for API error response (has "message" but not "applicationId")
+      if echo "$DOKPLOY_RESPONSE" | jq -e 'select(.message != null and .applicationId == null)' > /dev/null 2>&1; then
         echo "ERROR: Dokploy API error: $(echo "$DOKPLOY_RESPONSE" | jq -r '.message')"
         exit 1
       fi
@@ -258,18 +258,18 @@ deploy:dokploy:
       echo "Environment: ${DEPLOY_ENV}"
       echo "Image: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}"
 
-      if [ -z "$DOKPLOY_API_URL" ] || [ -z "$DOKPLOY_API_TOKEN" ] || [ -z "$DOKPLOY_COMPOSE_ID" ]; then
+      if [ -z "$DOKPLOY_API_URL" ] || [ -z "$DOKPLOY_API_TOKEN" ] || [ -z "$DOKPLOY_APPLICATION_ID" ]; then
         echo "ERROR: Dokploy variables not configured"
-        echo "Required: DOKPLOY_API_URL, DOKPLOY_API_TOKEN, DOKPLOY_COMPOSE_ID"
+        echo "Required: DOKPLOY_API_URL, DOKPLOY_API_TOKEN, DOKPLOY_APPLICATION_ID"
         exit 1
       fi
 
       echo "Calling Dokploy redeploy API..."
       HTTP_CODE=$(curl -s -w "%{http_code}" -o /tmp/dokploy_response.json \
-        -X POST "${DOKPLOY_API_URL}/api/compose.redeploy" \
+        -X POST "${DOKPLOY_API_URL}/api/application.redeploy" \
         -H "x-api-key: ${DOKPLOY_API_TOKEN}" \
         -H "Content-Type: application/json" \
-        -d "{\"composeId\": \"${DOKPLOY_COMPOSE_ID}\"}")
+        -d "{\"applicationId\": \"${DOKPLOY_APPLICATION_ID}\"}")
 
       echo "HTTP response code: ${HTTP_CODE}"
 
