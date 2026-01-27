@@ -3,16 +3,12 @@
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import React, { useEffect, useRef, useState } from 'react';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { UseFormReturn } from 'react-hook-form';
-import { toast } from 'sonner';
 
 import Button from '@/components/_shared/Button';
-import { sendGTMEventFunction } from '@/components/gtm/GoogleTagManagerComponent';
 import { Form } from '@/components/ui/form';
 import { useRouter } from '@/i18n/routing';
 import { storeFormLeadData } from '@/utils/datalayer';
-import { useEvents } from '@/utils/events';
 
 export interface BaseFormFieldProps {
   name: string;
@@ -37,11 +33,9 @@ interface BaseFormProps {
 }
 
 const BaseForm = (props: BaseFormProps) => {
-  const { onSubmit, children, form, className, successText, showGdprConsent = true, redirectUrl, formName } = props;
+  const { onSubmit, children, form, className, successText, showGdprConsent = true, redirectUrl } = props;
 
   const router = useRouter();
-  const { executeRecaptcha } = useGoogleReCaptcha();
-  const { submitEvent } = useEvents(formName);
   const [isSending, setIsSending] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [, forceUpdate] = useState(0);
@@ -58,58 +52,18 @@ const BaseForm = (props: BaseFormProps) => {
   }, [isSubmitted]);
 
   const handleSubmit = async (values: any) => {
-    if (!executeRecaptcha) {
-      console.log('ReCaptcha not ready');
-      return;
-    }
-
     try {
-      const gRecaptchaToken = await executeRecaptcha('inquirySubmit');
-      const recaptchaResponse = await fetch('/api/v1/recaptcha-submit', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ gRecaptchaToken }),
-      }).then((response) => response.json());
-
-      if (recaptchaResponse?.success === true) {
-        console.log(`ReCaptcha succeeded with score: ${recaptchaResponse?.score}`);
-      } else {
-        console.log(`ReCaptcha failed with score: ${recaptchaResponse?.score}`);
-        throw new Error('ReCaptcha validation failed');
-      }
-
-      if (values.website) {
-        toast.error(t('flash.bot_detected'));
-        return;
-      }
-
       setIsSending(true);
-      const response = await onSubmit({ ...values, pageUrl: window.location.href });
-
-      if (response?.errors) {
-        toast.warning(t('flash.form_error'));
+      await onSubmit({ ...values, pageUrl: window.location.href });
+      if (redirectUrl) {
+        storeFormLeadData(values.email || '', values.phone || '');
+        router.push(redirectUrl as any);
       } else {
-        if (redirectUrl) {
-          storeFormLeadData(values.email || '', values.phone || '');
-          router.push(redirectUrl as any);
-        } else {
-          setIsSubmitted(true);
-        }
-        submitEvent();
+        setIsSubmitted(true);
       }
     } catch (error) {
       console.error('Form submission error:', error);
-      toast.error(t('flash.error'));
     } finally {
-      setTimeout(() => {
-        sendGTMEventFunction({
-          event: 'app_form_submit',
-          form_name: formName,
-          type: values.type || 'offer',
-        }).catch(() => {});
-      }, 0);
       setIsSending(false);
     }
   };
