@@ -4,7 +4,7 @@ import { removeSitemapStylesheet, replaceWordpressUrl } from '@/utils/helper';
 
 export async function GET() {
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const frontendUrl = process.env.FRONTEND_URL;
+  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
 
   if (!backendUrl || !frontendUrl) {
     return new NextResponse('Missing environment variables', { status: 500 });

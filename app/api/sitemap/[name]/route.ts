@@ -9,7 +9,7 @@ type RouteParameters = {
 export async function GET(request: NextRequest, { params }: RouteParameters) {
   const { name } = await params;
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  const frontendUrl = process.env.FRONTEND_URL;
+  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
 
   if (!backendUrl || !frontendUrl) {
     return new NextResponse('Missing environment variables', { status: 500 });

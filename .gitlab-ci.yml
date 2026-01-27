@@ -1,78 +1,269 @@
-# ───────────────────────────────────────────────
-# GitLab CI — Clean Vercel Deployment Configuration
-# ───────────────────────────────────────────────
-# Requirements:
-# - Environment variable: VERCEL_TOKEN
-# ───────────────────────────────────────────────
+# ============================================
+# Discomp Frontend - GitLab CI/CD Pipeline
+# Production-grade pipeline with quality checks
+# ============================================
+#
+# Required CI/CD Variables (set in GitLab UI):
+#   DOKPLOY_API_URL      - Dokploy server URL (e.g., https://dokploy.example.com)
+#   DOKPLOY_API_TOKEN    - Dokploy API token (Settings → API → Generate Token)
+#   DOKPLOY_COMPOSE_ID   - Compose project ID (scope per environment: production/development)
+#   DOKPLOY_WEBHOOK_URL  - Deploy webhook URL (scope per environment)
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "development"
+    - if: $CI_COMMIT_BRANCH == "master"
+    - if: $CI_COMMIT_BRANCH == "main"
 
 stages:
+  - prepare
+  - test
+  - quality
+  - build
   - deploy
+
+# ============================================
+# Global Configuration
+# ============================================
 
 default:
   image:
-    name: node:20-alpine
-    entrypoint: ['/bin/sh', '-lc']
+    name: oven/bun:1-debian
+    entrypoint: ['']
+  cache:
+    key:
+      files:
+        - bun.lock
+    paths:
+      - node_modules/
+      - .bun/
+  interruptible: true
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
 
-# ───────────────────────────────────────────────
-# Shared deploy logic for all jobs
-# ───────────────────────────────────────────────
-.variables_template:
-  before_script:
-    - npm i -g vercel
-    - |
-      vercel pull \
-        --yes \
-        --environment=${VERCEL_ENV} \
-        --token=${VERCEL_TOKEN}
+# ============================================
+# Reusable Templates
+# ============================================
 
+.rules:mr_or_main: &rules_mr_or_main
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH =~ /^(development|master|main)$/
+
+.rules:production: &rules_production
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"
+      variables:
+        DEPLOY_ENV: production
+    - if: $CI_COMMIT_BRANCH == "development"
+      variables:
+        DEPLOY_ENV: development
+
+# ============================================
+# Prepare Stage - Install Dependencies
+# ============================================
+
+prepare:dependencies:
+  stage: prepare
+  <<: *rules_mr_or_main
   script:
-    - vercel deploy ${VERCEL_DEPLOY_FLAGS} --token=${VERCEL_TOKEN} --yes --confirm
+    - bun install --frozen-lockfile
+  # node_modules is cached, not uploaded as artifact (too large)
 
-# ───────────────────────────────────────────────
-# PREVIEW — only for Merge Requests
-# (not for regular pushes, and not for main/development)
-# ───────────────────────────────────────────────
-deploy_preview:
-  stage: deploy
-  extends: .variables_template
-  variables:
-    VERCEL_ENV: 'preview'
-    VERCEL_DEPLOY_FLAGS: ''
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: never
-    - if: '$CI_COMMIT_BRANCH == "development"'
-      when: never
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      when: on_success
-    - when: never
+# ============================================
+# Test Stage - Automated Tests
+# ============================================
 
-# ───────────────────────────────────────────────
-# STAGING — for the development branch
-# (runs a preview-style deploy to staging environment)
-# ───────────────────────────────────────────────
-deploy_staging:
-  stage: deploy
-  extends: .variables_template
-  variables:
-    VERCEL_ENV: 'staging'
-    VERCEL_DEPLOY_FLAGS: '--target=staging'
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "development"'
-      when: on_success
-    - when: never
+test:unit:
+  stage: test
+  <<: *rules_mr_or_main
+  script:
+    - bun install --frozen-lockfile
+    - bun test
+  allow_failure: true
 
-# ───────────────────────────────────────────────
-# PRODUCTION — for the main branch
-# (production deploy using --prod)
-# ───────────────────────────────────────────────
-deploy_production:
+test:e2e:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.50.1-noble
+  <<: *rules_mr_or_main
+  before_script:
+    - corepack enable
+    - corepack prepare bun@latest --activate
+  script:
+    - bun install --frozen-lockfile
+    - bun test:e2e
+  artifacts:
+    when: always
+    paths:
+      - playwright-report/
+    expire_in: 1 week
+  allow_failure: true
+  when: manual
+
+# ============================================
+# Quality Stage - Code Quality Checks
+# ============================================
+
+quality:lint:
+  stage: quality
+  <<: *rules_mr_or_main
+  script:
+    - bun install --frozen-lockfile
+    - bun lint
+  allow_failure: true
+
+quality:typecheck:
+  stage: quality
+  <<: *rules_mr_or_main
+  script:
+    - bun install --frozen-lockfile
+    - bun run type-check
+  allow_failure: true
+
+quality:format:
+  stage: quality
+  <<: *rules_mr_or_main
+  script:
+    - bun install --frozen-lockfile
+    - bun format:check
+  allow_failure: true
+
+quality:security:
+  stage: quality
+  <<: *rules_mr_or_main
+  script:
+    - bun install --frozen-lockfile
+    - bun pm audit || true
+  allow_failure: true
+
+# ============================================
+# Build Stage - Production Docker Image
+# ============================================
+# Environment variables are fetched from Dokploy API in a separate job
+# because kaniko image doesn't have curl/wget with header support
+
+build:fetch-env:
+  stage: build
+  image: alpine:latest
+  <<: *rules_production
+  script:
+    - apk add --no-cache curl jq
+    - |
+      echo "=== Fetching environment from Dokploy ==="
+      echo "Environment: ${DEPLOY_ENV}"
+      echo "Compose ID: ${DOKPLOY_COMPOSE_ID}"
+      echo "API URL: ${DOKPLOY_API_URL}"
+
+      if [ -z "$DOKPLOY_API_URL" ] || [ -z "$DOKPLOY_API_TOKEN" ] || [ -z "$DOKPLOY_COMPOSE_ID" ]; then
+        echo "ERROR: Dokploy variables not configured"
+        exit 1
+      fi
+
+      echo "Fetching env from Dokploy..."
+      HTTP_CODE=$(curl -s -w "%{http_code}" -o /tmp/dokploy_response.json \
+        "${DOKPLOY_API_URL}/api/compose.one?composeId=${DOKPLOY_COMPOSE_ID}" \
+        -H "x-api-key: ${DOKPLOY_API_TOKEN}" \
+        -H "Content-Type: application/json")
+
+      echo "HTTP response code: ${HTTP_CODE}"
+
+      if [ "$HTTP_CODE" != "200" ]; then
+        echo "ERROR: Dokploy API returned HTTP ${HTTP_CODE}"
+        cat /tmp/dokploy_response.json 2>/dev/null || echo "(no response body)"
+        exit 1
+      fi
+
+      DOKPLOY_RESPONSE=$(cat /tmp/dokploy_response.json)
+      echo "Response length: $(echo "$DOKPLOY_RESPONSE" | wc -c) bytes"
+
+      # Check for API error response (has "message" but not "composeId")
+      if echo "$DOKPLOY_RESPONSE" | jq -e 'select(.message != null and .composeId == null)' > /dev/null 2>&1; then
+        echo "ERROR: Dokploy API error: $(echo "$DOKPLOY_RESPONSE" | jq -r '.message')"
+        exit 1
+      fi
+
+      # Extract env string and parse variables
+      DOKPLOY_ENV=$(echo "$DOKPLOY_RESPONSE" | jq -r '.env // ""' | sed 's/\\n/\n/g')
+      echo "Env field: $(echo "$DOKPLOY_RESPONSE" | jq -r '.env | type')"
+
+      NEXT_PUBLIC_BACKEND_URL=$(echo "$DOKPLOY_ENV" | grep "^NEXT_PUBLIC_BACKEND_URL=" | cut -d= -f2- | tr -d '\r' || true)
+      NEXT_PUBLIC_FRONTEND_URL=$(echo "$DOKPLOY_ENV" | grep "^NEXT_PUBLIC_FRONTEND_URL=" | cut -d= -f2- | tr -d '\r' || true)
+
+      echo "  NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL:-(not set)}"
+      echo "  NEXT_PUBLIC_FRONTEND_URL: ${NEXT_PUBLIC_FRONTEND_URL:-(not set)}"
+
+      # Save to artifact file for build job (even if empty - build will use defaults)
+      echo "NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}" > build.env
+      echo "NEXT_PUBLIC_FRONTEND_URL=${NEXT_PUBLIC_FRONTEND_URL}" >> build.env
+      echo "Created build.env:"
+      cat build.env
+  artifacts:
+    reports:
+      dotenv: build.env
+    expire_in: 1 hour
+  cache: []
+
+build:production:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: ['']
+  <<: *rules_production
+  needs: ['build:fetch-env']
+  script:
+    - |
+      echo "=== Building Docker image ==="
+      echo "  NEXT_PUBLIC_BACKEND_URL: ${NEXT_PUBLIC_BACKEND_URL:-(not set)}"
+      echo "  NEXT_PUBLIC_FRONTEND_URL: ${NEXT_PUBLIC_FRONTEND_URL:-(not set)}"
+
+      mkdir -p /kaniko/.docker
+      echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+
+      /kaniko/executor \
+        --context "${CI_PROJECT_DIR}" \
+        --dockerfile "${CI_PROJECT_DIR}/Dockerfile" \
+        --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}" \
+        --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}" \
+        --destination "${CI_REGISTRY_IMAGE}:latest" \
+        --build-arg "NODE_ENV=production" \
+        --build-arg "NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL:-}" \
+        --build-arg "NEXT_PUBLIC_FRONTEND_URL=${NEXT_PUBLIC_FRONTEND_URL:-}" \
+        --cache=true \
+        --cache-repo="${CI_REGISTRY_IMAGE}/cache" \
+        --single-snapshot
+  cache: []
+  timeout: 20 minutes
+
+# ============================================
+# Deploy Stage - Dokploy Deployment
+# ============================================
+
+deploy:dokploy:
   stage: deploy
-  extends: .variables_template
-  variables:
-    VERCEL_ENV: 'production'
-    VERCEL_DEPLOY_FLAGS: '--prod'
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: on_success
-    - when: never
+  image: alpine:latest
+  <<: *rules_production
+  needs: ['build:production']
+  cache: []
+  script:
+    - apk add --no-cache curl
+    - |
+      echo "Triggering Dokploy deployment..."
+      echo "Environment: ${DEPLOY_ENV}"
+      echo "Image: ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA}"
+
+      if [ -n "$DOKPLOY_WEBHOOK_URL" ]; then
+        curl -X POST "$DOKPLOY_WEBHOOK_URL" \
+          -H "Content-Type: application/json" \
+          -H "X-Gitlab-Event: Push Hook" \
+          -d "{\"ref\": \"refs/heads/${CI_COMMIT_BRANCH}\", \"checkout_sha\": \"${CI_COMMIT_SHA}\", \"project\": {\"path_with_namespace\": \"${CI_PROJECT_PATH}\"}}" \
+          --fail --silent --show-error
+        echo "Dokploy webhook triggered successfully"
+      else
+        echo "DOKPLOY_WEBHOOK_URL not set - deploy manually via Dokploy UI"
+      fi
+  environment:
+    name: $DEPLOY_ENV

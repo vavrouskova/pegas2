@@ -49,6 +49,7 @@ bun install
 ### Path Aliases
 
 The project uses TypeScript path aliases (defined in `tsconfig.json`):
+
 - `@/*` → `./src/*`
 - `@/app*` → `./app/*`
 - `@/public/*` → `./public/*`
@@ -126,6 +127,7 @@ public/              # Static assets
 ### ESLint Configuration
 
 Key rules enforced:
+
 - **Import organization**: Enforced by `import-helpers/order-imports` with specific grouping (module → @/ → relative)
 - **No relative imports**: Using `no-restricted-imports` to prevent `../` and `./` patterns - use path aliases instead
 - **Component definition**: Arrow functions only for named components
@@ -144,6 +146,7 @@ Key rules enforced:
 5. Fetch SEO data using `fetchSEOData()` from `src/utils/seo.ts`
 
 Example:
+
 ```typescript
 import { setRequestLocale } from 'next-intl/server';
 import { BasePageProps } from '../layout';
@@ -158,6 +161,7 @@ const Page = async ({ params }: BasePageProps) => {
 ### Importing Components
 
 Always use path aliases, never relative imports:
+
 ```typescript
 // ✅ Correct
 import { Button } from '@/components/ui/button';
@@ -170,9 +174,10 @@ import { Button } from '../../components/ui/button';
 ### Environment Variables
 
 Required environment variables (see `.env.local`):
+
 - `APP_ENV` - Environment (local, development, production)
 - `APP_NAME` - Application name
-- `FRONTEND_URL` - Frontend URL
+- `NEXT_PUBLIC_FRONTEND_URL` - Frontend URL
 - `NEXT_PUBLIC_BACKEND_URL` - WordPress backend URL
 - `NEXT_PUBLIC_GRAPHQL_URL` - WordPress GraphQL endpoint
 - `GTM_ID` - Google Tag Manager ID (optional)
@@ -181,6 +186,7 @@ Required environment variables (see `.env.local`):
 ### Layout Structure
 
 All pages render within this layout hierarchy:
+
 1. `BaseProvider` - React Query client
 2. `NextIntlClientProvider` - i18n context
 3. `SmoothScrollProvider` - Lenis smooth scrolling
