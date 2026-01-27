@@ -71,7 +71,7 @@ const HomepageSliderSection = ({ slides }: HomepageSliderSectionProps) => {
               <FormattedText
                 text={item.description}
                 as='p'
-                className='text-lg text-white'
+                className='font-text text-lg text-white'
               />
             )}
           </div>
