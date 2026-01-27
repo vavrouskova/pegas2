@@ -282,6 +282,11 @@
       "email_required": "Prosím, vyplňte svůj e-mail",
       "invalid_email": "Prosím, zadejte platnou e-mailovou adresu",
       "invalid_phone": "Prosím, zadejte platné telefonní číslo"
+    },
+    "flash": {
+      "bot_detected": "Byl detekován automatický odesílač",
+      "form_error": "Při odesílání formuláře došlo k chybě",
+      "error": "Nastala neočekávaná chyba. Zkuste to prosím znovu."
     }
   },
 
