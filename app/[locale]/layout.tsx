@@ -6,7 +6,6 @@ import React from 'react';
 import { Toaster } from 'sonner';
 
 import FadeIn from '@/components/_shared/FadeIn';
-import GoogleCaptchaWrapper from '@/components/_shared/GoogleCaptchaWrapper';
 import IntroSplashScreen from '@/components/_shared/IntroSplashScreen';
 import StickyContact from '@/components/_shared/StickyContact';
 import CookieConsent from '@/components/cookie/CookieConsent';
@@ -81,7 +80,7 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
                   <Header />
                 </FadeIn>
                 <StickyHeaderWrapper />
-                <GoogleCaptchaWrapper>{children}</GoogleCaptchaWrapper>
+                {children}
                 <Footer />
                 <StickyContact />
                 <Toaster />
