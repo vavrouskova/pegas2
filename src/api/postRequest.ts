@@ -8,8 +8,8 @@ export const sendContactForm = async (body?: ParametersType) => {
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(errorText);
+    const data = await response.json().catch(() => null);
+    throw new Error(data?.error || `Form submission failed (${response.status})`);
   }
 
   return response.json();
