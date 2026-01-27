@@ -9,7 +9,8 @@ const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
-/** @type {import('next').NextConfig} */
+import type { NextConfig } from 'next';
+
 const nextConfig = {
   output: 'standalone',
   trailingSlash: true,
@@ -62,7 +63,7 @@ const nextConfig = {
       },
     ];
   },
-};
+} satisfies NextConfig;
 
 // TEMP: Skip Sentry in development for performance testing
 const configWithPlugins = withBundleAnalyzer(withNextIntl(nextConfig));
