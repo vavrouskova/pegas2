@@ -1,7 +1,7 @@
 # GraphQL API Introspection - Pegas
 
 Tento dokument obsahuje přehled dostupných GraphQL queries a mutations na endpointu:
-**https://pegas.antstudio.dev/cz/graphql**
+**https://wp.pohrebpegas.cz/cz/graphql**
 
 ## 📁 Vygenerované soubory
 
@@ -613,7 +613,7 @@ interface ACF_Fields {
 ```typescript
 // src/api/wordpress-api.ts
 export async function getReferencePosts(first = 10, after?: string) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetReferencePosts($first: Int!, $after: String) {
@@ -813,14 +813,14 @@ query GetMenu($location: MenuLocationEnum!) {
 
 ```bash
 # Získání reference postů
-curl -X POST https://pegas.antstudio.dev/cz/graphql \
+curl -X POST https://wp.pohrebpegas.cz/cz/graphql \
   -H "Content-Type: application/json" \
   -d '{
     "query": "query GetReferencePosts { referencePosts(first: 5) { nodes { id title slug } } }"
   }' | jq '.'
 
 # Získání stránky
-curl -X POST https://pegas.antstudio.dev/cz/graphql \
+curl -X POST https://wp.pohrebpegas.cz/cz/graphql \
   -H "Content-Type: application/json" \
   -d '{
     "query": "query GetPage { page(id: \"5\", idType: DATABASE_ID) { id title } }"

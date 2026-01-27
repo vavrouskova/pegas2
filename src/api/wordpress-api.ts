@@ -26,7 +26,7 @@ export interface WordPressRedirect {
  * @returns Promise s počtem poboček
  */
 export async function getBranchesCount(): Promise<number> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetBranchesCount {
@@ -74,7 +74,7 @@ export async function getBranchesCount(): Promise<number> {
  * @returns Promise se seznamem poboček
  */
 export async function getPobockyPosts(first = 100) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetPobockyPosts($first: Int!) {
@@ -129,7 +129,7 @@ export async function getPobockyPosts(first = 100) {
  * @returns Promise s homepage daty
  */
 export async function getHomepageData() {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetHomepage {
@@ -249,7 +249,7 @@ export async function getHomepageData() {
  * @returns Promise s timeline daty
  */
 export async function getAboutUsTimeline() {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query Page {
@@ -310,7 +310,7 @@ export async function getAboutUsTimeline() {
  * @returns Promise se seznamem zaměstnanců
  */
 export async function getZamestnanciPosts(first = 100): Promise<ZamestnanciPost[]> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query ZamestnanciPosts($first: Int!) {
@@ -372,7 +372,7 @@ export async function getZamestnanciPosts(first = 100): Promise<ZamestnanciPost[
  * @returns Promise s daty všech taxonomií a služeb
  */
 export async function getAllServicesData(first = 100) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetAllServicesData($first: Int!) {
@@ -506,7 +506,7 @@ export async function getAllServicesData(first = 100) {
  * @deprecated Použij getAllServicesData() pro lepší výkon
  */
 export async function getUncategorizedServices(first = 100) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetUncategorizedServices($first: Int!) {
@@ -568,7 +568,7 @@ export async function getUncategorizedServices(first = 100) {
  * @returns Promise s detailem služby
  */
 export async function getServiceBySlug(slug: string) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetServiceBySlug($slug: ID!) {
@@ -692,7 +692,7 @@ export async function getServiceBySlug(slug: string) {
  * @returns Promise s daty taxonomie a seznamem služeb
  */
 export async function getServicesByTaxonomy(taxonomySlug: string, first = 100) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetServicesByTaxonomy($slug: ID!, $first: Int!) {
@@ -770,7 +770,7 @@ export async function getServicesByTaxonomy(taxonomySlug: string, first = 100) {
  * @returns Promise se seznamem kategorií
  */
 export async function getBlogCategories(first = 100) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetBlogCategories($first: Int!) {
@@ -823,7 +823,7 @@ export async function getBlogCategories(first = 100) {
  * @returns Promise s detailem kategorie nebo null
  */
 export async function getBlogCategoryBySlug(slug: string): Promise<BlogCategory | null> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetCategoryBySlug($slug: ID!) {
@@ -869,7 +869,7 @@ export async function getBlogCategoryBySlug(slug: string): Promise<BlogCategory 
 export async function checkSlugType(
   slug: string
 ): Promise<'post' | 'sluzbyPost' | 'referencePost' | 'pobockaPost' | 'postupPost' | null> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   // Jeden GraphQL dotaz, který zkontroluje všechny typy najednou
   const query = `
@@ -949,7 +949,7 @@ export async function checkSlugType(
  * @returns Promise s detailem blog postu
  */
 export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | null> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetBlogPostBySlug($slug: ID!) {
@@ -1077,7 +1077,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPostDetail | 
  * @returns Promise se seznamem taxonomií
  */
 export async function getReferenceTaxonomies(first = 100): Promise<ReferenceCategory[]> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetReferenceTaxonomies($first: Int!) {
@@ -1131,7 +1131,7 @@ export async function getReferenceTaxonomies(first = 100): Promise<ReferenceCate
  * @returns Promise s detailem kategorie nebo null
  */
 export async function getReferenceCategoryBySlug(slug: string): Promise<ReferenceCategory | null> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetReferenceCategoryBySlug($slug: ID!) {
@@ -1179,7 +1179,7 @@ export async function getReferenceCategoryBySlug(slug: string): Promise<Referenc
  * @returns Promise s daty referencí včetně paginace
  */
 export async function getReferencePosts(referencesPerPage = 9, page = 1, categoryId?: string, search?: string) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   // Získáme větší množství postů (max 1000) pro výpočet paginace
   const query = `
@@ -1321,7 +1321,7 @@ export async function getReferencePostsByCategorySlug(
   categorySlug?: string,
   search?: string
 ) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetReferencePostsByCategorySlug($first: Int!) {
@@ -1428,7 +1428,7 @@ export async function getReferencePostsByCategorySlug(
  * @returns Promise s detailem referenčního postu
  */
 export async function getReferenceBySlug(slug: string) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetReferenceBySlug($slug: ID!) {
@@ -1565,7 +1565,7 @@ export async function getReferenceBySlug(slug: string) {
  * @returns Promise se seznamem blog postů pro carousel
  */
 export async function getBlogPostsForCarousel(first = 6): Promise<BlogPost[]> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetBlogPostsForCarousel($first: Int!) {
@@ -1631,7 +1631,7 @@ export async function getBlogPostsForCarousel(first = 6): Promise<BlogPost[]> {
  * @returns Promise s daty blog postů včetně paginace
  */
 export async function getBlogPosts(postsPerPage = POSTS_PER_PAGE, page = 1, categoryId?: string, search?: string) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const whereClause: Record<string, unknown> = {};
   if (categoryId) {
@@ -1772,7 +1772,7 @@ export async function getBlogPostsByCategorySlug(
   categorySlug?: string,
   search?: string
 ) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const whereClause: Record<string, unknown> = {};
   if (categorySlug) {
@@ -1881,7 +1881,7 @@ export async function getBlogPostsByCategorySlug(
  * @returns Promise se seznamem kontaktních osob
  */
 export async function getContactPeople(): Promise<ZamestnanciPost[]> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query Page {
@@ -1947,7 +1947,7 @@ export async function getContactPeople(): Promise<ZamestnanciPost[]> {
  * @returns Promise se seznamem poboček
  */
 export async function getBranches(first = 100): Promise<PobockaPost[]> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query PobockaPosts($first: Int!) {
@@ -2019,7 +2019,7 @@ export async function getBranches(first = 100): Promise<PobockaPost[]> {
  * @returns Promise se seznamem FAQ postupů
  */
 export async function getPostupPosts(first = 100): Promise<PostupPost[]> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetPostupPosts($first: Int!) {
@@ -2071,7 +2071,7 @@ export async function getPostupPosts(first = 100): Promise<PostupPost[]> {
  * @returns Promise s detailem postupu
  */
 export async function getPostupBySlug(slug: string): Promise<PostupPost | null> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetPostupBySlug($slug: ID!) {
@@ -2185,7 +2185,7 @@ export async function getPostupBySlug(slug: string): Promise<PostupPost | null> 
  * @returns Promise s detailem pobočky
  */
 export async function getBranchBySlug(slug: string): Promise<PobockaPost | null> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetBranchBySlug($slug: ID!) {
@@ -2293,7 +2293,7 @@ export async function getBranchBySlug(slug: string): Promise<PobockaPost | null>
  * @returns Promise with page data including title and components
  */
 export async function getPageByUri(uri: string) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetPageByUri($id: ID!) {
@@ -2407,7 +2407,7 @@ export interface SearchIndexItem {
  * @returns Promise se seznamem položek pro vyhledávání
  */
 export async function fetchSearchIndex(): Promise<SearchIndexItem[]> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const componentsFragment = `
     components {
@@ -2713,7 +2713,7 @@ export async function fetchSearchIndex(): Promise<SearchIndexItem[]> {
 }
 
 export const fetchRedirects = async (): Promise<WordPressRedirect[]> => {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetRedirects {
@@ -2763,7 +2763,7 @@ export const fetchRedirects = async (): Promise<WordPressRedirect[]> => {
  * @returns Promise s daty pro megamenu (services a blog submenu)
  */
 export async function getHeaderMegamenuData(): Promise<GlobalData | null> {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetHeaderMegamenu {

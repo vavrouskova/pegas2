@@ -11,7 +11,7 @@ const intlMiddleware = createMiddleware(routing);
 
 // Fetch redirects from WordPress GraphQL
 const fetchRedirectsForMiddleware = async () => {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetRedirects {

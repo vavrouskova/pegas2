@@ -32,7 +32,7 @@ Tento dokument obsahuje přehled integrace WordPress GraphQL API v projektu Pega
                        ▼
         ┌──────────────────────────────┐
         │  WordPress GraphQL API       │
-        │  pegas.antstudio.dev/cz/     │
+        │  wp.pohrebpegas.cz/cz/     │
         │  /graphql                    │
         └──────────────────────────────┘
 ```
@@ -127,7 +127,7 @@ Learning curve:  Nízká vs Střední
 
 ```env
 # .env
-NEXT_PUBLIC_GRAPHQL_URL=https://pegas.antstudio.dev/cz/graphql
+NEXT_PUBLIC_GRAPHQL_URL=https://wp.pohrebpegas.cz/cz/graphql
 ```
 
 **Poznámka:** Po změně `.env` vždy restartujte dev server!
@@ -172,7 +172,7 @@ export async function getMenu(location: string) {
 
 ```bash
 # Test reference postů
-curl -X POST https://pegas.antstudio.dev/cz/graphql \
+curl -X POST https://wp.pohrebpegas.cz/cz/graphql \
   -H "Content-Type: application/json" \
   -d '{"query":"{ referencePosts(first: 5) { nodes { id title } } }"}' \
   | jq '.'
@@ -182,7 +182,7 @@ curl -X POST https://pegas.antstudio.dev/cz/graphql \
 
 ```bash
 # Zjistit dostupná pole
-curl -X POST https://pegas.antstudio.dev/cz/graphql \
+curl -X POST https://wp.pohrebpegas.cz/cz/graphql \
   -H "Content-Type: application/json" \
   -d '{"query":"{ __type(name: \"ReferencePost\") { fields { name } } }"}' \
   | jq '.'

@@ -4,7 +4,7 @@ Tento projekt používá WordPress GraphQL API s nativním `fetch()` API pro dat
 
 ## 🔗 Endpoint
 
-GraphQL endpoint: `https://pegas.antstudio.dev/cz/graphql`
+GraphQL endpoint: `https://wp.pohrebpegas.cz/cz/graphql`
 
 **Poznámka:** Endpoint obsahuje `/cz/` pro českou lokalizaci.
 
@@ -61,7 +61,7 @@ export default Homepage;
 // src/api/wordpress-api.ts
 
 export async function getPages(first = 10) {
-  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://pegas.antstudio.dev/cz/graphql';
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
 
   const query = `
     query GetPages($first: Int!) {
@@ -149,7 +149,7 @@ V `.env` souboru:
 
 ```env
 # WordPress GraphQL API Configuration
-NEXT_PUBLIC_GRAPHQL_URL=https://pegas.antstudio.dev/cz/graphql
+NEXT_PUBLIC_GRAPHQL_URL=https://wp.pohrebpegas.cz/cz/graphql
 ```
 
 **DŮLEŽITÉ:** Po změně `.env` souboru restartujte dev server!
@@ -159,7 +159,7 @@ NEXT_PUBLIC_GRAPHQL_URL=https://pegas.antstudio.dev/cz/graphql
 ### 1. Pomocí curl
 
 ```bash
-curl -X POST https://pegas.antstudio.dev/cz/graphql \
+curl -X POST https://wp.pohrebpegas.cz/cz/graphql \
   -H "Content-Type: application/json" \
   -d '{
     "query": "query { referencePosts(first: 5) { nodes { id title } } }"
@@ -170,14 +170,14 @@ curl -X POST https://pegas.antstudio.dev/cz/graphql \
 
 WPGraphQL poskytuje GraphiQL rozhraní v WordPress adminu:
 
-- URL: `https://pegas.antstudio.dev/wp-admin` → GraphQL IDE
+- URL: `https://wp.pohrebpegas.cz/wp-admin` → GraphQL IDE
 
 ### 3. GraphQL Introspection
 
 Pro zjištění dostupných polí:
 
 ```bash
-curl -X POST https://pegas.antstudio.dev/cz/graphql \
+curl -X POST https://wp.pohrebpegas.cz/cz/graphql \
   -H "Content-Type: application/json" \
   -d '{"query":"{ __type(name: \"ReferencePost\") { fields { name type { name } } } }"}' \
   | jq '.'
