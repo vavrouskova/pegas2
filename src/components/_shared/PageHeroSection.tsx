@@ -7,9 +7,16 @@ interface PageHeroSectionProps {
   description: string;
   classNameSection?: string;
   classNameContent?: string;
+  noMaxDescriptionWidth?: boolean;
 }
 
-const PageHeroSection = ({ title, description, classNameSection, classNameContent }: PageHeroSectionProps) => {
+const PageHeroSection = ({
+  title,
+  description,
+  classNameSection,
+  classNameContent,
+  noMaxDescriptionWidth = false,
+}: PageHeroSectionProps) => {
   return (
     <section className={cn('lg:px-30', classNameSection)}>
       <div className={cn('flex flex-col gap-2.5', classNameContent)}>
@@ -20,7 +27,7 @@ const PageHeroSection = ({ title, description, classNameSection, classNameConten
         <FormattedText
           text={description}
           as='p'
-          className='max-w-content'
+          className={cn(!noMaxDescriptionWidth && 'max-w-content')}
         />
         <LeavesImage />
       </div>

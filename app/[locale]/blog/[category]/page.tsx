@@ -12,6 +12,7 @@ import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PageHeroSection from '@/components/_shared/PageHeroSection';
 import { POSTS_PER_PAGE } from '@/constants/blog';
+import { htmlToFormattedMarkers } from '@/utils/helper';
 import { parsePageNumber } from '@/utils/pagination-helpers';
 import { getBlogCategorySeoBySlug } from '@/utils/seo';
 
@@ -55,8 +56,11 @@ const BlogCategoryPage = async ({ params, searchParams }: BlogCategoryPageProps)
           pageTitle={t('blog.page-title')}
         />
         <PageHeroSection
-          title={t('blog.hero.title')}
-          description={t('blog.hero.description')}
+          title={categoryData.taxonomie?.taxonomyH1 || t('blog.hero.title')}
+          description={
+            categoryData.description ? htmlToFormattedMarkers(categoryData.description) : t('blog.hero.description')
+          }
+          noMaxDescriptionWidth={!!categoryData.description}
         />
       </section>
 

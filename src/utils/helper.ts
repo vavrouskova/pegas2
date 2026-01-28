@@ -435,3 +435,58 @@ export function filterEmployeesByPosition<T extends { zamestnanciACF?: { positon
 
   return { management, team };
 }
+
+/**
+ * Převede HTML na markery pro FormattedText komponentu
+ * Zachová linky, bold, italic a odřádkování, ostatní HTML tagy odstraní
+ *
+ * Podporované konverze:
+ * - <a href="url">text</a> → {{link:url|text}}
+ * - <a href="url" target="_blank">text</a> → {{link:url|text|_blank}}
+ * - <strong>text</strong> nebo <b>text</b> → {{bold:text}}
+ * - <em>text</em> nebo <i>text</i> → {{italic:text}}
+ * - <br> nebo \n → {{br}}
+ *
+ * @param html - HTML string k převedení
+ * @returns string s markery pro FormattedText
+ */
+export function htmlToFormattedMarkers(html: string): string {
+  if (!html) return '';
+
+  return (
+    html
+      // Převod <br> tagů
+      .replace(/<br\s*\/?>/gi, '{{br}}')
+      // Převod <a> tagů - nejdřív zpracovat linky, aby se zachoval obsah uvnitř
+      // eslint-disable-next-line sonarjs/slow-regex
+      .replace(/<a\s+([^>]*)>([\s\S]*?)<\/a>/gi, (_, attributes, text) => {
+        // Extrahovat href a target z atributů
+        const hrefMatch = /href=["']([^"']*)["']/i.exec(attributes);
+        const targetMatch = /target=["']([^"']*)["']/i.exec(attributes);
+        const href = hrefMatch ? hrefMatch[1] : '';
+        const target = targetMatch ? targetMatch[1] : undefined;
+        // Rekurzivně zpracovat obsah linku (může obsahovat bold/italic)
+        const processedText = htmlToFormattedMarkers(text);
+        return target ? `{{link:${href}|${processedText}|${target}}}` : `{{link:${href}|${processedText}}}`;
+      })
+      // Převod <strong> a <b> tagů
+      .replace(/<(?:strong|b)>([\s\S]*?)<\/(?:strong|b)>/gi, '{{bold:$1}}')
+      // Převod <em> a <i> tagů
+      .replace(/<(?:em|i)>([\s\S]*?)<\/(?:em|i)>/gi, '{{italic:$1}}')
+      // Odstranění ostatních HTML tagů
+      // eslint-disable-next-line sonarjs/slow-regex
+      .replace(/<[^>]*>/g, '')
+      // Dekódování HTML entit
+      .replace(/&nbsp;/g, '\u00A0')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number.parseInt(code, 10)))
+      .replace(/&#x([0-9a-fA-F]+);/g, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)))
+      // Převod nových řádků (\n) na {{br}} - WordPress ukládá nové řádky z textarea jako \n
+      .replace(/\n/g, '{{br}}')
+      .trim()
+  );
+}

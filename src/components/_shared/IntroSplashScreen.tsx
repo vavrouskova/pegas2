@@ -12,8 +12,24 @@ const STORAGE_KEY = 'pegas_intro_seen';
 // Module-level variable persists across HMR - prevents white flash on hot reload
 let hasEverMounted = false;
 
+const getStorageValue = (): string | null => {
+  try {
+    return localStorage.getItem(STORAGE_KEY);
+  } catch {
+    return null;
+  }
+};
+
+const setStorageValue = (): void => {
+  try {
+    localStorage.setItem(STORAGE_KEY, 'true');
+  } catch {
+    // localStorage unavailable (private browsing, etc.)
+  }
+};
+
 const handleAnimationComplete = () => {
-  sessionStorage.setItem(STORAGE_KEY, 'true');
+  setStorageValue();
 };
 
 const IntroSplashScreen = () => {
@@ -26,7 +42,7 @@ const IntroSplashScreen = () => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- Intentional: hydration detection pattern
     setIsMounted(true);
     hasEverMounted = true;
-    const hasSeen = sessionStorage.getItem(STORAGE_KEY);
+    const hasSeen = getStorageValue();
     if (hasSeen === 'true') {
       setIsVisible(false);
     } else {

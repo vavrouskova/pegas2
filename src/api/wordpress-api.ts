@@ -832,6 +832,10 @@ export async function getBlogCategoryBySlug(slug: string): Promise<BlogCategory 
         databaseId
         name
         slug
+        description
+        taxonomie {
+          taxonomyH1
+        }
       }
     }
   `;
@@ -1141,6 +1145,9 @@ export async function getReferenceCategoryBySlug(slug: string): Promise<Referenc
         name
         slug
         description
+        taxonomie {
+          taxonomyH1
+        }
       }
     }
   `;

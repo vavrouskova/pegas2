@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import { getBranchBySlug } from '@/api/wordpress-api';
+import { isClosurePeriodActive } from '@/utils/helper';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import { BranchClosureAnnouncement } from '@/components/branches/BranchClosureAnnouncement';
 import { BranchConsultant } from '@/components/branches/BranchConsultant';
@@ -69,7 +70,7 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
             city={city}
             branchTitle={branchTitle}
           />
-          {pobockyACF?.dateCloseFrom && (
+          {pobockyACF?.dateCloseFrom && isClosurePeriodActive(pobockyACF?.dateCloseTo) && (
             <BranchClosureAnnouncement
               closeAnnouncement={pobockyACF?.closeAccouncment}
               announcementButton={pobockyACF?.announcementButton}

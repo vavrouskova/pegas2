@@ -33,6 +33,11 @@ export interface ReferenceACF {
   };
 }
 
+// Taxonomy ACF Types (shared between Blog and Reference categories)
+export interface CategoryTaxonomie {
+  taxonomyH1?: string;
+}
+
 // Reference Taxonomy Types
 export interface ReferenceCategory {
   id: string;
@@ -41,6 +46,7 @@ export interface ReferenceCategory {
   slug: string;
   description?: string;
   count?: number;
+  taxonomie?: CategoryTaxonomie;
 }
 
 // Reference Posts Types
@@ -219,6 +225,8 @@ export interface BlogCategory {
   name: string;
   slug: string;
   count?: number;
+  description?: string;
+  taxonomie?: CategoryTaxonomie;
 }
 
 // Blog Post Component Types (ACF)

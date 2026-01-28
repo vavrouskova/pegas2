@@ -8,6 +8,7 @@ import {
   getReferencePostsByCategorySlug,
   getReferenceTaxonomies,
 } from '@/api/wordpress-api';
+import { htmlToFormattedMarkers } from '@/utils/helper';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
@@ -61,8 +62,13 @@ const ReferencesCategoryPage = async ({ params, searchParams }: ReferencesCatego
           pageTitle={t('references.page-title')}
         />
         <PageHeroSection
-          title={t('references.hero.title')}
-          description={t('references.hero.description')}
+          title={categoryData.taxonomie?.taxonomyH1 || t('references.hero.title')}
+          description={
+            categoryData.description
+              ? htmlToFormattedMarkers(categoryData.description)
+              : t('references.hero.description')
+          }
+          noMaxDescriptionWidth={!!categoryData.description}
         />
       </section>
 
