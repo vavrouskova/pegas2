@@ -283,6 +283,22 @@ function rewriteToFrontendUrl(url?: string): string | undefined {
 }
 
 /**
+ * Content types served directly under /[slug]/ on the frontend.
+ * WordPress uses CPT prefixes (e.g. /sluzba/, /reference/) that don't exist on the frontend.
+ */
+const SLUG_BASED_CONTENT_TYPES: ContentType[] = ['post', 'referencePost', 'sluzbyPost', 'pobockaPost', 'postupPost'];
+
+/**
+ * Builds a canonical URL for content served under /[slug]/ on the frontend.
+ * This bypasses the WordPress canonical which includes CPT path prefixes.
+ */
+function buildSlugCanonical(slug: string): string | undefined {
+  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/+$/, '');
+  if (!frontendUrl) return undefined;
+  return `${frontendUrl}/${slug}/`;
+}
+
+/**
  * Default metadata fallback
  */
 function getDefaultMetadata(): Metadata {
@@ -319,6 +335,9 @@ export async function getSeoData(options: GetSeoDataOptions): Promise<Metadata> 
   const isNoIndex = seoData.metaRobotsNoindex === 'noindex';
   const isNoFollow = seoData.metaRobotsNofollow === 'nofollow';
 
+  const isSlugBased = SLUG_BASED_CONTENT_TYPES.includes(options.contentType) && options.idType === 'SLUG';
+  const frontendUrl = isSlugBased ? buildSlugCanonical(String(options.id)) : rewriteToFrontendUrl(seoData.canonical);
+
   return {
     applicationName: process.env.NEXT_PUBLIC_APP_NAME || 'Pegas',
     icons: '/favicon.ico',
@@ -335,13 +354,13 @@ export async function getSeoData(options: GetSeoDataOptions): Promise<Metadata> 
       },
     ],
     alternates: {
-      canonical: rewriteToFrontendUrl(seoData.canonical),
+      canonical: frontendUrl,
     },
     openGraph: {
       type: (seoData.opengraphType as any) || 'website',
       title: seoData.opengraphTitle,
       description: seoData.opengraphDescription,
-      url: rewriteToFrontendUrl(seoData.opengraphUrl),
+      url: isSlugBased ? frontendUrl : rewriteToFrontendUrl(seoData.opengraphUrl),
       siteName: seoData.opengraphSiteName,
       modifiedTime: seoData.opengraphModifiedTime,
       publishedTime: seoData.opengraphPublishedTime,
