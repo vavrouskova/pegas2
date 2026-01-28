@@ -341,6 +341,11 @@ export function formatDateRange(dateFromString?: string, dateToString?: string):
     const dateFrom = new Date(dateFromWithoutTZ);
     const dateTo = new Date(dateToWithoutTZ);
 
+    // Pokud jsou datumy stejné, zobraz jen jeden datum
+    if (dateFrom.toDateString() === dateTo.toDateString()) {
+      return formatSimpleDate(dateFromString);
+    }
+
     const yearFrom = dateFrom.getFullYear();
     const yearTo = dateTo.getFullYear();
 
@@ -367,6 +372,30 @@ export function formatDateRange(dateFromString?: string, dateToString?: string):
     return `${fromFormatted} – ${toFormatted}`;
   } catch {
     return `${dateFromString} – ${dateToString}`;
+  }
+}
+
+/**
+ * Kontroluje, zda je aktuální datum v období uzavření pobočky
+ * Vrací true pokud je dnes <= dateCloseTo
+ * @param dateCloseTo - koncové datum uzavření (např. "2025-01-31T00:00:00+00:00")
+ * @returns true pokud je období uzavření stále aktivní
+ */
+export function isClosurePeriodActive(dateCloseTo?: string): boolean {
+  if (!dateCloseTo) return false;
+
+  try {
+    const dateWithoutTZ = dateCloseTo.replace(/([+-]\d{2}:\d{2}|Z)$/, '');
+    const closeTo = new Date(dateWithoutTZ);
+
+    // Nastavíme čas na konec dne pro dateCloseTo
+    closeTo.setHours(23, 59, 59, 999);
+
+    const today = new Date();
+
+    return today <= closeTo;
+  } catch {
+    return false;
   }
 }
 

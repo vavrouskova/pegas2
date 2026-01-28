@@ -2,7 +2,7 @@ import BranchCardContent from '@/components/branches/BranchCardContent';
 import BranchCardImage from '@/components/branches/BranchCardImage';
 import Parking from '@/components/icons/Parking';
 import { cn } from '@/lib/utils';
-import { formatDateRange } from '@/utils/helper';
+import { formatDateRange, isClosurePeriodActive } from '@/utils/helper';
 import type { PobockaPost } from '@/utils/wordpress-types';
 
 interface BranchCardProps {
@@ -40,8 +40,8 @@ const BranchCard = ({
   const dateCloseTo = pobockyACF?.dateCloseTo;
   const parking = pobockyACF?.parking;
 
-  // Check if branch is currently closed
-  const isClosed = showClosedInfo && dateCloseFrom && dateCloseTo;
+  // Check if branch is currently closed (only show if dateCloseTo is today or in the future)
+  const isClosed = showClosedInfo && dateCloseFrom && dateCloseTo && isClosurePeriodActive(dateCloseTo);
   // Check if branch has parking
   const hasParking = showParking && parking && parking.trim() !== '';
 
