@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { FormattedText } from '@/components/_shared/FormattedText';
@@ -34,13 +33,14 @@ const ThankYouPage = async ({ params }: ThankYouPageProps) => {
     <main className='bg-white-smoke relative z-10 flex min-h-[85vh] flex-col items-center justify-center px-4 py-20'>
       <FormLeadTracker />
       <div className='flex flex-col items-center text-center'>
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src='/images/leaf.webp'
           alt=''
           width={300}
           height={300}
           className='w-[300px]'
-          priority
+          fetchPriority='high'
         />
 
         <FormattedText

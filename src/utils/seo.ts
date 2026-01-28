@@ -427,15 +427,25 @@ export async function getSeoDataBySlug(contentType: ContentType, slug: string, r
 }
 
 /**
+ * Builds a canonical URL for a taxonomy category page on the frontend.
+ */
+function buildCategoryCanonical(pathPrefix: string, slug: string): string | undefined {
+  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/+$/, '');
+  if (!frontendUrl) return undefined;
+  return `${frontendUrl}/${pathPrefix}/${slug}/`;
+}
+
+/**
  * Converts WordPress taxonomy SEO data to Next.js Metadata format
  */
-async function convertTaxonomySeoToMetadata(seoData: WordPressSeoData | null): Promise<Metadata> {
+function convertTaxonomySeoToMetadata(seoData: WordPressSeoData | null, canonicalUrl?: string): Metadata {
   if (!seoData) {
-    return getDefaultMetadata();
+    return {
+      ...getDefaultMetadata(),
+      robots: { index: true, follow: true },
+      alternates: { canonical: canonicalUrl },
+    };
   }
-
-  const isNoIndex = seoData.metaRobotsNoindex === 'noindex';
-  const isNoFollow = seoData.metaRobotsNofollow === 'nofollow';
 
   return {
     applicationName: process.env.NEXT_PUBLIC_APP_NAME || 'Pegas',
@@ -443,8 +453,8 @@ async function convertTaxonomySeoToMetadata(seoData: WordPressSeoData | null): P
     title: seoData.title || seoData.opengraphTitle,
     description: seoData.metaDesc,
     robots: {
-      index: !isNoIndex,
-      follow: !isNoFollow,
+      index: true,
+      follow: true,
     },
     authors: [
       {
@@ -453,13 +463,13 @@ async function convertTaxonomySeoToMetadata(seoData: WordPressSeoData | null): P
       },
     ],
     alternates: {
-      canonical: rewriteToFrontendUrl(seoData.canonical),
+      canonical: canonicalUrl ?? rewriteToFrontendUrl(seoData.canonical),
     },
     openGraph: {
       type: (seoData.opengraphType as any) || 'website',
       title: seoData.opengraphTitle,
       description: seoData.opengraphDescription,
-      url: rewriteToFrontendUrl(seoData.opengraphUrl),
+      url: canonicalUrl ?? rewriteToFrontendUrl(seoData.opengraphUrl),
       siteName: seoData.opengraphSiteName,
       images: seoData.opengraphImage?.sourceUrl
         ? [
@@ -489,10 +499,12 @@ async function convertTaxonomySeoToMetadata(seoData: WordPressSeoData | null): P
 
 export async function getBlogCategorySeoBySlug(slug: string, revalidate?: number): Promise<Metadata> {
   const seoData = await fetchTaxonomySeoData('category', slug, revalidate);
-  return convertTaxonomySeoToMetadata(seoData);
+  const canonicalUrl = buildCategoryCanonical('blog', slug);
+  return convertTaxonomySeoToMetadata(seoData, canonicalUrl);
 }
 
 export async function getReferenceCategorySeoBySlug(slug: string, revalidate?: number): Promise<Metadata> {
   const seoData = await fetchTaxonomySeoData('typReference', slug, revalidate);
-  return convertTaxonomySeoToMetadata(seoData);
+  const canonicalUrl = buildCategoryCanonical('reference', slug);
+  return convertTaxonomySeoToMetadata(seoData, canonicalUrl);
 }
