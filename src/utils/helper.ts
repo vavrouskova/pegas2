@@ -377,9 +377,9 @@ export function formatDateRange(dateFromString?: string, dateToString?: string):
 
 /**
  * Kontroluje, zda je aktuální datum v období uzavření pobočky
- * Vrací true pokud je dnes <= dateCloseTo
+ * Porovnává pouze datumy (bez času) v českém časovém pásmu
  * @param dateCloseTo - koncové datum uzavření (např. "2025-01-31T00:00:00+00:00")
- * @returns true pokud je období uzavření stále aktivní
+ * @returns true pokud je období uzavření stále aktivní (dnes <= dateCloseTo)
  */
 export function isClosurePeriodActive(dateCloseTo?: string): boolean {
   if (!dateCloseTo) return false;
@@ -388,12 +388,17 @@ export function isClosurePeriodActive(dateCloseTo?: string): boolean {
     const dateWithoutTZ = dateCloseTo.replace(/([+-]\d{2}:\d{2}|Z)$/, '');
     const closeTo = new Date(dateWithoutTZ);
 
-    // Nastavíme čas na konec dne pro dateCloseTo
-    closeTo.setHours(23, 59, 59, 999);
+    // Získáme dnešní datum v českém časovém pásmu
+    const now = new Date();
+    const czechDateString = now.toLocaleDateString('cs-CZ', { timeZone: 'Europe/Prague' });
+    // Parsujeme český formát "D. M. YYYY" zpět na Date
+    const [day, month, year] = czechDateString.split('. ').map((s) => Number.parseInt(s, 10));
+    const todayInCzech = new Date(year, month - 1, day);
 
-    const today = new Date();
+    // Porovnáme pouze datumy (bez času)
+    const closeToDateOnly = new Date(closeTo.getFullYear(), closeTo.getMonth(), closeTo.getDate());
 
-    return today <= closeTo;
+    return todayInCzech <= closeToDateOnly;
   } catch {
     return false;
   }
