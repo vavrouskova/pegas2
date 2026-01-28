@@ -24,9 +24,9 @@ const Homepage = async () => {
     getTranslations('home'),
   ]);
 
-  const slides = homepageData?.homepageACF?.slider || [];
-  const referencePosts = homepageData?.homepageACF?.selectedReference?.nodes || [];
-  const services = homepageData?.homepageACF?.selectedSluzby?.nodes || [];
+  const slides = homepageData?.homepageACF?.slider ?? [];
+  const referencePosts = homepageData?.homepageACF?.selectedReference?.nodes ?? [];
+  const services = homepageData?.homepageACF?.selectedSluzby?.nodes ?? [];
 
   return (
     <main className='max-w-container mx-auto'>

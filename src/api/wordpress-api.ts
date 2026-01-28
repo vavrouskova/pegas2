@@ -240,7 +240,7 @@ export async function getHomepageData() {
     return result.data.page;
   } catch (error) {
     console.error('Error fetching homepage data:', error);
-    throw error;
+    return null;
   }
 }
 

@@ -16,4 +16,20 @@ Sentry.init({
   // Enable sending user PII (Personally Identifiable Information)
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#sendDefaultPii
   sendDefaultPii: true,
+
+  beforeSend(event) {
+    const message = event.exception?.values?.[0]?.value ?? '';
+
+    // Node.js v22 internal webstreams bug (not fixable in application code)
+    if (message.includes('transformAlgorithm is not a function')) {
+      return null;
+    }
+
+    // Sentry SDK internal error with certain runtimes (util.getSystemErrorMap)
+    if (message.includes('getSystemErrorMap is not a function')) {
+      return null;
+    }
+
+    return event;
+  },
 });
