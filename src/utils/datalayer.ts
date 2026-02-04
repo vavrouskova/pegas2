@@ -103,7 +103,7 @@ const pushFormLeadEvent = (): void => {
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
-    event: 'form_purchase_success',
+    event: 'form_lead_success',
     user_data: {
       ...(email && { email }),
       ...(phone && { phone_number: phone }),
