@@ -264,9 +264,9 @@ deploy:dokploy:
         exit 1
       fi
 
-      echo "Calling Dokploy redeploy API..."
+      echo "Calling Dokploy deploy API..."
       HTTP_CODE=$(curl -s -w "%{http_code}" -o /tmp/dokploy_response.json \
-        -X POST "${DOKPLOY_API_URL}/api/application.redeploy" \
+        -X POST "${DOKPLOY_API_URL}/api/application.deploy" \
         -H "x-api-key: ${DOKPLOY_API_TOKEN}" \
         -H "Content-Type: application/json" \
         -d "{\"applicationId\": \"${DOKPLOY_APPLICATION_ID}\"}")
@@ -279,6 +279,6 @@ deploy:dokploy:
         exit 1
       fi
 
-      echo "Dokploy redeploy triggered successfully"
+      echo "Dokploy deploy triggered successfully"
   environment:
     name: $DEPLOY_ENV
