@@ -61,6 +61,6 @@ export const PARTNERS = [
     imageSrc: '/images/pmu.webp',
     width: 132,
     height: 132,
-    url: 'https://praha.eu/',
+    url: '',
   },
 ] as const;
