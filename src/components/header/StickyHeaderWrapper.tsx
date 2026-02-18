@@ -9,17 +9,21 @@ const StickyHeaderWrapper = async () => {
   // Transform GraphQL data to HeaderLink format
   const megamenuData: MegamenuData = {
     services:
-      megamenuRawData?.globalACF?.headerSection?.submenuSluzby?.map((item) => ({
-        id: item.sluzbyLink.url,
-        label: item.sluzbyLink.title,
-        href: item.sluzbyLink.url,
-      })) || [],
+      megamenuRawData?.globalACF?.headerSection?.submenuSluzby
+        ?.filter((item) => item.sluzbyLink?.url)
+        .map((item) => ({
+          id: item.sluzbyLink.url,
+          label: item.sluzbyLink.title,
+          href: item.sluzbyLink.url,
+        })) || [],
     blog:
-      megamenuRawData?.globalACF?.headerSection?.submenuBlog?.map((item) => ({
-        id: item.sluzbyLink.url,
-        label: item.sluzbyLink.title,
-        href: item.sluzbyLink.url,
-      })) || [],
+      megamenuRawData?.globalACF?.headerSection?.submenuBlog
+        ?.filter((item) => item.sluzbyLink?.url)
+        .map((item) => ({
+          id: item.sluzbyLink.url,
+          label: item.sluzbyLink.title,
+          href: item.sluzbyLink.url,
+        })) || [],
   };
 
   return (
