@@ -7,7 +7,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 
 import Search from '@/components/icons/Search';
 import { cn } from '@/lib/utils';
-import { scrollControl } from '@/utils/scroll-control';
+import { skipNextScroll } from '@/utils/scroll-control';
 
 interface Category {
   id: string;
@@ -94,7 +94,7 @@ const Filter = ({ categories, config }: FilterProps) => {
       });
 
       setSearchQuery('');
-      scrollControl.skipNext = true;
+      skipNextScroll();
       router.push(`?${updatedParameters.toString()}`, { scroll: false });
     },
     [router, searchParameters, config.categoryParam, config.searchParam, resetPagination, updateSearchParameters]
@@ -105,7 +105,7 @@ const Filter = ({ categories, config }: FilterProps) => {
       event.preventDefault();
       const trimmedQuery = searchQuery.trim();
 
-      scrollControl.skipNext = true;
+      skipNextScroll();
       if (config.useUrlRouting && config.basePath) {
         const parameters = new URLSearchParams();
         if (trimmedQuery) {
@@ -157,7 +157,9 @@ const Filter = ({ categories, config }: FilterProps) => {
         <Link
           href={getAllUrl()}
           scroll={false}
-          onClick={() => { scrollControl.skipNext = true; }}
+          onClick={() => {
+            skipNextScroll();
+          }}
           className={cn(
             'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
             isAllActive ? 'bg-primary' : 'bg-white'
@@ -203,7 +205,9 @@ const Filter = ({ categories, config }: FilterProps) => {
               key={category.id}
               href={getCategoryUrl(category.slug)}
               scroll={false}
-              onClick={() => { scrollControl.skipNext = true; }}
+              onClick={() => {
+                skipNextScroll();
+              }}
               className={cn(
                 'box-border flex max-h-[40px] shrink-0 items-center justify-center gap-[10px] px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
                 isActive ? 'bg-primary' : 'bg-white'

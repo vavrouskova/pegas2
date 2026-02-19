@@ -26,7 +26,6 @@ const Breadcrumbs = async ({ pageTitle, items = [], className }: BreadcrumbsProp
       >
         {t('common.home')}
       </Link>
-
       {items.map((item, index) => (
         <React.Fragment key={index}>
           -

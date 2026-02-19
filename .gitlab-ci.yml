@@ -82,7 +82,12 @@ test:unit:
   <<: *rules_mr_or_main
   script:
     - bun install --frozen-lockfile
-    - bun test
+    - |
+      if find . -path ./node_modules -prune -o \( -name "*.test.*" -o -name "*.spec.*" \) -print -quit | grep -q .; then
+        bun test
+      else
+        echo "No test files found, skipping"
+      fi
   allow_failure: true
 
 test:e2e:

@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+build
+coverage
+bun.lock
+public
+.claude
+docs
+wordpress
+*.yml
+*.yaml
+*.json
+src/components/ui

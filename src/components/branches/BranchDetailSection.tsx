@@ -2,7 +2,6 @@ import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import { getBranchBySlug } from '@/api/wordpress-api';
-import { isClosurePeriodActive } from '@/utils/helper';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import { BranchClosureAnnouncement } from '@/components/branches/BranchClosureAnnouncement';
 import { BranchConsultant } from '@/components/branches/BranchConsultant';
@@ -12,6 +11,7 @@ import { BranchHeader } from '@/components/branches/BranchHeader';
 import { BranchImages } from '@/components/branches/BranchImages';
 import { BranchLocation } from '@/components/branches/BranchLocation';
 import { BranchOpeningHours } from '@/components/branches/BranchOpeningHours';
+import { isClosurePeriodActive } from '@/utils/helper';
 
 interface BranchDetailSectionProps {
   slug: string;

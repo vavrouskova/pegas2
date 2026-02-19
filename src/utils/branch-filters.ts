@@ -46,7 +46,7 @@ export const composeFiltersOr = (...filters: BranchFilterFunction[]): BranchFilt
  * and by title within the same city
  */
 export const sortBranches = (branches: PobockaPost[]): PobockaPost[] => {
-  return [...branches].sort((a, b) => {
+  return branches.toSorted((a, b) => {
     const cityA = a.pobockyACF?.city ?? '';
     const cityB = b.pobockyACF?.city ?? '';
 
@@ -62,9 +62,9 @@ export const sortBranches = (branches: PobockaPost[]): PobockaPost[] => {
 
     // Both are Praha - sort by district number
     if (isPrahaA && isPrahaB) {
-      const numA = parseInt(prahaMatchA[1], 10);
-      const numB = parseInt(prahaMatchB[1], 10);
-      if (numA !== numB) return numA - numB;
+      const numberA = Number.parseInt(prahaMatchA[1], 10);
+      const numberB = Number.parseInt(prahaMatchB[1], 10);
+      if (numberA !== numberB) return numberA - numberB;
     }
 
     // Both are non-Praha or same Praha district - sort by city name then title

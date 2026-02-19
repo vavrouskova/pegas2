@@ -21,19 +21,13 @@ export async function POST(request: NextRequest) {
 
     if (isHtml) {
       console.error(`Form proxy blocked by Cloudflare: ${response.status} (${url})`);
-      return Response.json(
-        { error: 'Backend is currently unreachable (Cloudflare challenge)' },
-        { status: 502 },
-      );
+      return Response.json({ error: 'Backend is currently unreachable (Cloudflare challenge)' }, { status: 502 });
     }
 
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`Form proxy failed: ${response.status} ${response.statusText} (${url})`, errorText);
-      return Response.json(
-        { error: `Backend error: ${response.statusText}` },
-        { status: 502 },
-      );
+      return Response.json({ error: `Backend error: ${response.statusText}` }, { status: 502 });
     }
 
     const data = await response.json();

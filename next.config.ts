@@ -1,3 +1,4 @@
+import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 import bundleAnalyzer from '@next/bundle-analyzer';
@@ -8,8 +9,6 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
-
-import type { NextConfig } from 'next';
 
 const nextConfig = {
   output: 'standalone',
@@ -51,7 +50,7 @@ const nextConfig = {
     ],
   },
   async headers() {
-    const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/+$/, '') || '';
+    const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/$/, '') || '';
 
     const securityHeaders = [
       {

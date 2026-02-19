@@ -274,8 +274,8 @@ async function fetchTaxonomySeoData(
 function rewriteToFrontendUrl(url?: string): string | undefined {
   if (!url) return url;
 
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL?.replace(/\/+$/, '');
-  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/+$/, '');
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL?.replace(/\/$/, '');
+  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/$/, '');
 
   if (!backendUrl || !frontendUrl) return url;
 
@@ -286,14 +286,20 @@ function rewriteToFrontendUrl(url?: string): string | undefined {
  * Content types served directly under /[slug]/ on the frontend.
  * WordPress uses CPT prefixes (e.g. /sluzba/, /reference/) that don't exist on the frontend.
  */
-const SLUG_BASED_CONTENT_TYPES: ContentType[] = ['post', 'referencePost', 'sluzbyPost', 'pobockaPost', 'postupPost'];
+const SLUG_BASED_CONTENT_TYPES = new Set<ContentType>([
+  'post',
+  'referencePost',
+  'sluzbyPost',
+  'pobockaPost',
+  'postupPost',
+]);
 
 /**
  * Builds a canonical URL for content served under /[slug]/ on the frontend.
  * This bypasses the WordPress canonical which includes CPT path prefixes.
  */
 function buildSlugCanonical(slug: string): string | undefined {
-  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/+$/, '');
+  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/$/, '');
   if (!frontendUrl) return undefined;
   return `${frontendUrl}/${slug}/`;
 }
@@ -335,7 +341,7 @@ export async function getSeoData(options: GetSeoDataOptions): Promise<Metadata> 
   const isNoIndex = seoData.metaRobotsNoindex === 'noindex';
   const isNoFollow = seoData.metaRobotsNofollow === 'nofollow';
 
-  const isSlugBased = SLUG_BASED_CONTENT_TYPES.includes(options.contentType) && options.idType === 'SLUG';
+  const isSlugBased = SLUG_BASED_CONTENT_TYPES.has(options.contentType) && options.idType === 'SLUG';
   const frontendUrl = isSlugBased ? buildSlugCanonical(String(options.id)) : rewriteToFrontendUrl(seoData.canonical);
 
   return {
@@ -430,7 +436,7 @@ export async function getSeoDataBySlug(contentType: ContentType, slug: string, r
  * Builds a canonical URL for a taxonomy category page on the frontend.
  */
 function buildCategoryCanonical(pathPrefix: string, slug: string): string | undefined {
-  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/+$/, '');
+  const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/$/, '');
   if (!frontendUrl) return undefined;
   return `${frontendUrl}/${pathPrefix}/${slug}/`;
 }

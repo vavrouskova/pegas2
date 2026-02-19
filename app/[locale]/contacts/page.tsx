@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
+import { headers } from 'next/headers';
 
 import { getBranches, getContactPeople } from '@/api/wordpress-api';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';

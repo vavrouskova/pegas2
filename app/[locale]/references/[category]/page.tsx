@@ -8,7 +8,6 @@ import {
   getReferencePostsByCategorySlug,
   getReferenceTaxonomies,
 } from '@/api/wordpress-api';
-import { htmlToFormattedMarkers } from '@/utils/helper';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
@@ -17,6 +16,7 @@ import ReferencesFilter from '@/components/_shared/ReferencesFilter';
 import ReferencesGridSection from '@/components/_shared/ReferencesGridSection';
 import ReferencesPagination from '@/components/_shared/ReferencesPagination';
 import { REFERENCES_PER_PAGE } from '@/constants/references';
+import { htmlToFormattedMarkers } from '@/utils/helper';
 import { parsePageNumber } from '@/utils/pagination-helpers';
 import { getReferenceCategorySeoBySlug } from '@/utils/seo';
 

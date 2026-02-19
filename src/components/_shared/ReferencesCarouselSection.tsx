@@ -62,20 +62,6 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
               as='h3'
               className='text-white-smoke mb-6 text-xl'
             />
-            {/* {item.where && (
-              <FormattedText
-                text={item.where}
-                as='span'
-                className='text-tertiary text-base'
-              />
-            )}
-            {item.when && (
-              <FormattedText
-                text={item.when}
-                as='span'
-                className='text-tertiary text-base'
-              />
-            )} */}
           </div>
           <div className='text-white-smoke flex items-center gap-3'>
             <span className='text-white-smoke font-heading text-lg'>{t('find-out-more')}</span>
