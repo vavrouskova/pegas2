@@ -63,8 +63,8 @@ const TimelineContent = ({ title, description, image, className = '' }: Readonly
     <div className={cn('space-y-6', className)}>
       {image?.node && (
         <TimelineImage
-          src={image.node.sourceUrl}
-          alt={image.node.altText || title || 'Timeline image'}
+          src={image.node?.sourceUrl || ''}
+          alt={image.node?.altText || title || 'Timeline image'}
         />
       )}
       <div>
@@ -99,8 +99,8 @@ const TimelineItemComponent = ({ item, isEven }: Readonly<TimelineItemComponentP
         <TimelineYear year={item.year} />
         {item.image?.node && (
           <TimelineImage
-            src={item.image.node.sourceUrl}
-            alt={item.image.node.altText || item.titulek || 'Timeline image'}
+            src={item.image.node?.sourceUrl || ''}
+            alt={item.image.node?.altText || item.titulek || 'Timeline image'}
             className='w-full'
           />
         )}

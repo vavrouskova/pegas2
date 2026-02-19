@@ -29,22 +29,24 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
 
   // Extract data with fallbacks
   const city = pobockyACF?.city || '';
-  const branchTitle = `${t('branches.branch')} ${title}`;
+  const branchTitle = `${t('branches.branch')} ${title || ''}`;
   const consultant = pobockyACF?.consultant?.nodes?.[0];
 
   // Prepare image data
   const internalImageNode = pobockyACF?.internalImage?.node;
   const externalImageNode = featuredImage?.node;
   const mapImageNode = pobockyACF?.mapImage?.node;
-  const internalImage = internalImageNode
-    ? { url: internalImageNode.sourceUrl, alt: internalImageNode.altText }
+  const internalImage = internalImageNode?.sourceUrl
+    ? { url: internalImageNode.sourceUrl, alt: internalImageNode.altText || '' }
     : undefined;
 
-  const externalImage = externalImageNode
-    ? { url: externalImageNode.sourceUrl, alt: externalImageNode.altText }
+  const externalImage = externalImageNode?.sourceUrl
+    ? { url: externalImageNode.sourceUrl, alt: externalImageNode.altText || '' }
     : undefined;
 
-  const mapImage = mapImageNode ? { url: mapImageNode.sourceUrl, alt: mapImageNode.altText } : undefined;
+  const mapImage = mapImageNode?.sourceUrl
+    ? { url: mapImageNode.sourceUrl, alt: mapImageNode.altText || '' }
+    : undefined;
 
   return (
     <>

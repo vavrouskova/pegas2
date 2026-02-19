@@ -36,8 +36,8 @@ export const BranchConsultant = ({ consultant }: BranchConsultantProps) => {
         <div className='grid grid-cols-2 gap-4 md:grid-cols-1'>
           <div className='relative aspect-square h-auto w-full md:h-[120px] md:shrink-0'>
             <Image
-              src={profileImage.sourceUrl}
-              alt={profileImage.altText}
+              src={profileImage?.sourceUrl || ''}
+              alt={profileImage?.altText || ''}
               fill
               className='aspect-square object-cover'
             />

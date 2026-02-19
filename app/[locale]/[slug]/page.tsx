@@ -76,7 +76,8 @@ const SlugPage = async ({ params }: SlugPageProps) => {
     if (!blogData) {
       notFound();
     }
-    const { title, excerpt, featuredImage, categories, components, date } = blogData;
+    const { title: rawTitle, excerpt, featuredImage, categories, components, date } = blogData;
+    const title = rawTitle || '';
     const introText = excerpt ? decodeHtmlEntitiesServer(stripHtmlTags(excerpt)) : '';
     const image = featuredImage?.node?.sourceUrl;
     const imageAlt = featuredImage?.node?.altText || title || '';
@@ -142,7 +143,8 @@ const SlugPage = async ({ params }: SlugPageProps) => {
       notFound();
     }
 
-    const { title, referenceACF, featuredImage, typReference, components } = referenceData;
+    const { title: rawTitle, referenceACF, featuredImage, typReference, components } = referenceData;
+    const title = rawTitle || '';
     const farewellDate = referenceACF?.farewellDate || '';
     const farewellPlace = referenceACF?.farewellPlace || '';
     const image = referenceACF?.introImage?.node?.sourceUrl || featuredImage?.node?.sourceUrl;
@@ -245,7 +247,8 @@ const SlugPage = async ({ params }: SlugPageProps) => {
       notFound();
     }
 
-    const { title, jakPostupovatAcf, components } = postupData;
+    const { title: rawTitle, jakPostupovatAcf, components } = postupData;
+    const title = rawTitle || '';
     const topSubtitle = jakPostupovatAcf?.topSubtitle || '';
     const shortDescription = jakPostupovatAcf?.shortDescription || '';
     const bottomSubtitle = jakPostupovatAcf?.bottomSubtitle || '';
@@ -340,7 +343,8 @@ const SlugPage = async ({ params }: SlugPageProps) => {
     notFound();
   }
 
-  const { title, sluzbyAcf, components, typSluzby } = serviceData;
+  const { title: rawTitle, sluzbyAcf, components, typSluzby } = serviceData;
+  const title = rawTitle || '';
   const introText = sluzbyAcf?.introText || '';
   const image = sluzbyAcf?.introImageSluzby?.node?.sourceUrl;
   const imageAlt = sluzbyAcf?.introImageSluzby?.node?.altText || title;

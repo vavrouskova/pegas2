@@ -1260,7 +1260,7 @@ export async function getReferencePosts(referencesPerPage = 9, page = 1, categor
     // Aplikujeme category filtr
     if (categoryId) {
       allNodes = allNodes.filter((reference: ReferencePost) =>
-        reference.typReference?.nodes?.some((cat) => cat.databaseId.toString() === categoryId)
+        reference.typReference?.nodes?.some((cat) => cat.databaseId?.toString() === categoryId)
       );
     }
 
@@ -1269,7 +1269,7 @@ export async function getReferencePosts(referencesPerPage = 9, page = 1, categor
       const searchLower = search.toLowerCase();
       allNodes = allNodes.filter(
         (reference: ReferencePost) =>
-          reference.title.toLowerCase().includes(searchLower) ||
+          (reference.title ?? '').toLowerCase().includes(searchLower) ||
           reference.referenceACF?.description?.toLowerCase().includes(searchLower)
       );
     }
@@ -1402,7 +1402,7 @@ export async function getReferencePostsByCategorySlug(
     // Apply search filter if provided
     if (search && search.trim()) {
       const searchLower = search.toLowerCase().trim();
-      allPosts = allPosts.filter((post: ReferencePost) => post.title.toLowerCase().includes(searchLower));
+      allPosts = allPosts.filter((post: ReferencePost) => (post.title ?? '').toLowerCase().includes(searchLower));
     }
 
     // Calculate pagination
@@ -1721,7 +1721,7 @@ export async function getBlogPosts(postsPerPage = POSTS_PER_PAGE, page = 1, cate
       const searchLower = search.toLowerCase();
       allNodes = allNodes.filter(
         (post: BlogPost) =>
-          post.title.toLowerCase().includes(searchLower) || post.excerpt?.toLowerCase().includes(searchLower)
+          (post.title ?? '').toLowerCase().includes(searchLower) || post.excerpt?.toLowerCase().includes(searchLower)
       );
     }
 
@@ -1854,7 +1854,7 @@ export async function getBlogPostsByCategorySlug(
       const searchLower = search.toLowerCase().trim();
       allPosts = allPosts.filter(
         (post: BlogPost) =>
-          post.title.toLowerCase().includes(searchLower) ||
+          (post.title ?? '').toLowerCase().includes(searchLower) ||
           (post.excerpt && post.excerpt.toLowerCase().includes(searchLower))
       );
     }
@@ -2533,6 +2533,7 @@ export async function fetchSearchIndex(): Promise<SearchIndexItem[]> {
     }
 
     const data = json.data;
+    if (!data) return [];
     const items: SearchIndexItem[] = [];
 
     interface ComponentItem {

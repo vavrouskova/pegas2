@@ -27,7 +27,7 @@ function convertToCarouselData(slides: SliderSlide[]): SliderCarouselItemData[] 
     id: index,
     title: slide.slideTitle || '',
     description: slide.slideDescription,
-    image: slide.slideImage?.node.sourceUrl || '/images/placeholder.webp',
+    image: slide.slideImage?.node?.sourceUrl || '/images/placeholder.webp',
     link: slide.slideLink?.url || '#',
     linkTarget: slide.slideLink?.target,
     linkTitle: slide.slideLink?.title,

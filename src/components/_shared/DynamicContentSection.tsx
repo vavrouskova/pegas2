@@ -472,25 +472,25 @@ const DynamicContentSection = async ({
 
               <div className='hidden lg:flex lg:gap-4'>
                 <GalleryImageWrapper
-                  src={images[0].sourceUrl || ''}
-                  alt={images[0].altText || ''}
+                  src={images[0]?.sourceUrl || ''}
+                  alt={images[0]?.altText || ''}
                   className='relative aspect-auto h-[239px] w-[239px] shrink-0'
                 />
                 <GalleryImageWrapper
-                  src={images[1].sourceUrl || ''}
-                  alt={images[1].altText || ''}
+                  src={images[1]?.sourceUrl || ''}
+                  alt={images[1]?.altText || ''}
                   className='relative aspect-auto h-[239px] flex-1'
                 />
               </div>
               <div className='hidden lg:flex lg:gap-4'>
                 <GalleryImageWrapper
-                  src={images[2].sourceUrl || ''}
-                  alt={images[2].altText || ''}
+                  src={images[2]?.sourceUrl || ''}
+                  alt={images[2]?.altText || ''}
                   className='relative aspect-auto h-[239px] flex-1'
                 />
                 <GalleryImageWrapper
-                  src={images[3].sourceUrl || ''}
-                  alt={images[3].altText || ''}
+                  src={images[3]?.sourceUrl || ''}
+                  alt={images[3]?.altText || ''}
                   className='relative aspect-auto h-[239px] w-[239px] shrink-0'
                 />
               </div>
