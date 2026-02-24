@@ -86,38 +86,43 @@ const LenisScrollEffect = () => {
 
     // Check if this history entry was visited before (has saved scroll position)
     const saved = existingId ? getSavedScrollPosition(existingId) : null;
+    let cancelled = false;
 
-    if (saved !== null && saved > 0) {
-      // Back/forward navigation — restore saved scroll position
+    if (saved !== null) {
+      // Back/forward navigation — restore saved scroll position (or stay at top if saved === 0)
       handledEntryRef.current = existingId!;
       scrollIdRef.current = existingId!;
 
-      if (lenis) {
-        lenis.scrollTo(saved, { immediate: true, force: true });
-      } else {
-        window.scrollTo({ top: saved, left: 0, behavior: 'auto' });
-      }
+      if (saved > 0) {
+        if (lenis) {
+          lenis.scrollTo(saved, { immediate: true, force: true });
+        } else {
+          window.scrollTo({ top: saved, left: 0, behavior: 'auto' });
+        }
 
-      // Verify and retry if page wasn't tall enough yet
-      const verifyRestore = (attempt: number) => {
-        rafIdRef.current = requestAnimationFrame(() => {
-          const actual = lenis?.scroll ?? window.scrollY;
+        // Verify and retry if page wasn't tall enough yet
+        const verifyRestore = (attempt: number) => {
+          rafIdRef.current = requestAnimationFrame(() => {
+            if (cancelled) return;
 
-          if (Math.abs(actual - saved) > 10 && attempt < 5) {
-            if (lenis) {
-              lenis.scrollTo(saved, { immediate: true, force: true });
-            } else {
+            const actual = lenis?.scroll ?? window.scrollY;
+
+            if (Math.abs(actual - saved) > 10 && attempt < 5) {
+              if (lenis) {
+                lenis.scrollTo(saved, { immediate: true, force: true });
+              } else {
+                window.scrollTo({ top: saved, left: 0, behavior: 'auto' });
+              }
+              verifyRestore(attempt + 1);
+            } else if (Math.abs(actual - saved) > 10 && !lenis) {
+              // Final fallback only when Lenis is unavailable — avoid desync
               window.scrollTo({ top: saved, left: 0, behavior: 'auto' });
             }
-            verifyRestore(attempt + 1);
-          } else if (Math.abs(actual - saved) > 10 && !lenis) {
-            // Final fallback only when Lenis is unavailable — avoid desync
-            window.scrollTo({ top: saved, left: 0, behavior: 'auto' });
-          }
-        });
-      };
+          });
+        };
 
-      verifyRestore(0);
+        verifyRestore(0);
+      }
     } else {
       // New entry (forward navigation) — save outgoing page position, then scroll to top
       if (scrollIdRef.current) {
@@ -141,6 +146,7 @@ const LenisScrollEffect = () => {
     }
 
     return () => {
+      cancelled = true;
       cancelAnimationFrame(rafIdRef.current);
     };
   }, [pathname, searchParameters, lenis]);
