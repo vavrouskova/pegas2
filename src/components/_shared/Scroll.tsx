@@ -1,5 +1,6 @@
 'use client';
 
+import type Lenis from 'lenis';
 import { useLenis } from 'lenis/react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, useRef } from 'react';
@@ -17,8 +18,7 @@ const HEADER_OFFSET = 100;
 
 const scrollToElement = (
   element: HTMLElement,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  lenisInstance: any,
+  lenisInstance: Lenis | undefined,
 ) => {
   const elementTop = element.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
 
