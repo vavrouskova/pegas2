@@ -58,6 +58,24 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
           href='/favicon.ico'
         />
         <link
+          rel='dns-prefetch'
+          href='https://use.typekit.net'
+        />
+        <link
+          rel='preconnect'
+          href='https://use.typekit.net'
+        />
+        <link
+          rel='preconnect'
+          href='https://p.typekit.net'
+          crossOrigin='anonymous'
+        />
+        <link
+          rel='preload'
+          href='https://use.typekit.net/dnw8jfr.css'
+          as='style'
+        />
+        <link
           rel='stylesheet'
           href='https://use.typekit.net/dnw8jfr.css'
         />
