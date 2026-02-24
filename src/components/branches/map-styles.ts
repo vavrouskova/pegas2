@@ -32,10 +32,6 @@ export const MAP_STYLES = {
     .leaflet-container a {
       color: oklch(var(--primary)) !important;
     }
-    .leaflet-pane,
-    .leaflet-control {
-      z-index: auto !important;
-    }
   `,
 
   POPUP: `
