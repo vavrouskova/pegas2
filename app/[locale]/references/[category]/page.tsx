@@ -59,7 +59,8 @@ const ReferencesCategoryPage = async ({ params, searchParams }: ReferencesCatego
       <section className='px-4 sm:px-14'>
         <Breadcrumbs
           className='pb-18 lg:pb-43'
-          pageTitle={t('references.page-title')}
+          pageTitle={categoryData.name}
+          items={[{ label: t('references.page-title'), href: `/${t('routes.references')}` }]}
         />
         <PageHeroSection
           title={categoryData.taxonomie?.taxonomyH1 || t('references.hero.title')}

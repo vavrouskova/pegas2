@@ -53,7 +53,8 @@ const BlogCategoryPage = async ({ params, searchParams }: BlogCategoryPageProps)
       <section className='px-4 sm:px-14'>
         <Breadcrumbs
           className='pb-18 lg:pb-43'
-          pageTitle={t('blog.page-title')}
+          pageTitle={categoryData.name}
+          items={[{ label: t('blog.page-title'), href: `/${t('routes.blog')}` }]}
         />
         <PageHeroSection
           title={categoryData.taxonomie?.taxonomyH1 || t('blog.hero.title')}
