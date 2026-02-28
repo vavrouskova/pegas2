@@ -12,7 +12,7 @@ import { getSeoDataByUri } from '@/utils/seo';
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('routes');
 
-  return getSeoDataByUri('page', t('contacts'));
+  return getSeoDataByUri('page', t('faq'));
 }
 
 const FaqPage = async () => {
