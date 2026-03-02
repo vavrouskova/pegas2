@@ -90,6 +90,7 @@ interface DynamicContentSectionProps {
   backLinkText?: string;
   className?: string;
   wider?: boolean;
+  imageBoxesDescriptionLineGap?: string;
 }
 
 // Helper to transform bold/italic tags to markers
@@ -158,6 +159,7 @@ const DynamicContentSection = async ({
   backLinkText: customBackLinkText,
   className,
   wider = false,
+  imageBoxesDescriptionLineGap,
 }: DynamicContentSectionProps) => {
   if (!components?.components || components.components.length === 0) {
     return null;
@@ -531,7 +533,7 @@ const DynamicContentSection = async ({
             key={index}
             className='mb-25 w-full'
           >
-            <ImageBoxesSection imageBoxes={component.imageBoxes} />
+            <ImageBoxesSection imageBoxes={component.imageBoxes} descriptionLineGap={imageBoxesDescriptionLineGap} />
           </div>
         );
       }

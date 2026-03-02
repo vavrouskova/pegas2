@@ -391,6 +391,7 @@ const SlugPage = async ({ params }: SlugPageProps) => {
         components={components}
         categorySlug={typSluzby?.nodes?.[0]?.slug}
         className='lg:pt-12.5!'
+        imageBoxesDescriptionLineGap={slug === 'kytice-na-rakev' ? 'gap-1.5' : undefined}
       />
 
       <ContentSection

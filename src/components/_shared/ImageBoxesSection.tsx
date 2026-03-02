@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 import { ArticleGalleryWrapper } from '@/components/_shared/ArticleGalleryWrapper';
 import { FormattedText } from '@/components/_shared/FormattedText';
+import { cn } from '@/lib/utils';
 import { htmlToMarkers } from '@/utils/htmlToMarkers';
 
 interface ImageBox {
@@ -19,9 +20,10 @@ interface ImageBox {
 
 interface ImageBoxesSectionProps {
   imageBoxes: ImageBox[];
+  descriptionLineGap?: string;
 }
 
-export const ImageBoxesSection = ({ imageBoxes }: ImageBoxesSectionProps) => {
+export const ImageBoxesSection = ({ imageBoxes, descriptionLineGap }: ImageBoxesSectionProps) => {
   if (!imageBoxes || imageBoxes.length === 0) return null;
 
   return (
@@ -31,6 +33,11 @@ export const ImageBoxesSection = ({ imageBoxes }: ImageBoxesSectionProps) => {
         const imageAlt = box.imageBox?.node?.altText || box.boxHeadline || '';
 
         if (!imageUrl) return null;
+
+        const descriptionMarkers = box.boxDescription ? htmlToMarkers(box.boxDescription) : '';
+        const descriptionLines = descriptionLineGap
+          ? descriptionMarkers.split('{{br}}').filter((line) => line.trim())
+          : [];
 
         return (
           <div
@@ -61,12 +68,25 @@ export const ImageBoxesSection = ({ imageBoxes }: ImageBoxesSectionProps) => {
                   className='text-sm leading-[144%]'
                 />
               )}
-              {box.boxDescription && (
-                <FormattedText
-                  text={htmlToMarkers(box.boxDescription)}
-                  as='p'
-                  className='text-sm leading-[144%]'
-                />
+              {descriptionLineGap && descriptionLines.length > 0 ? (
+                <div className={cn('flex flex-col', descriptionLineGap)}>
+                  {descriptionLines.map((line, lineIndex) => (
+                    <FormattedText
+                      key={lineIndex}
+                      text={line.trim()}
+                      as='span'
+                      className='text-sm leading-[144%]'
+                    />
+                  ))}
+                </div>
+              ) : (
+                box.boxDescription && (
+                  <FormattedText
+                    text={descriptionMarkers}
+                    as='p'
+                    className='text-sm leading-[144%]'
+                  />
+                )
               )}
             </div>
           </div>
