@@ -4,15 +4,21 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import React, { useEffect, useMemo, useState } from 'react';
 
+import { useParams } from 'next/navigation';
 import { MotionDiv } from '@/components/animate-ui/MotionWrappers';
 import { usePathname } from '@/i18n/routing';
 import { PhoneNumber } from '@/lib/constants';
 
 const STORAGE_KEY = 'pegas_intro_seen';
 
+// Slug prefixes identifying branch pages per locale (CS = pobocka-, EN = office-)
+// Extend this array when adding new locales with different branch URL conventions.
+const BRANCH_PAGE_PREFIXES = ['pobocka-', 'office-'];
+
 const StickyContact = () => {
   const t = useTranslations();
   const pathname = usePathname();
+  const { slug } = useParams<{ slug?: string }>();
 
   const [isFooterVisible, setIsFooterVisible] = useState(false);
   const [isActivated, setIsActivated] = useState(false);
@@ -20,7 +26,13 @@ const StickyContact = () => {
 
   // Check if first visit and setup mouse activity listener
   useEffect(() => {
-    const hasSeen = sessionStorage.getItem(STORAGE_KEY);
+    const hasSeen = (() => {
+      try {
+        return sessionStorage.getItem(STORAGE_KEY);
+      } catch {
+        return null;
+      }
+    })();
     const firstVisit = hasSeen !== 'true';
     // eslint-disable-next-line react-hooks/set-state-in-effect -- Intentional: session check on mount
     setIsFirstVisit(firstVisit);
@@ -85,7 +97,12 @@ const StickyContact = () => {
     return isFooterVisible ? { opacity: 0 } : { opacity: 1 };
   }, [isFooterVisible, isActivated]);
 
-  if (pathname === '/about-us' || pathname === '/blog') {
+  if (
+    pathname === '/about-us' ||
+    pathname === '/blog' ||
+    pathname === '/contacts' ||
+    (typeof slug === 'string' && BRANCH_PAGE_PREFIXES.some(prefix => slug.toLowerCase().startsWith(prefix)))
+  ) {
     return null;
   }
 
