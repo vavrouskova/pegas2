@@ -7,6 +7,10 @@ type RouteParameters = {
 };
 
 export async function GET(request: NextRequest, { params }: RouteParameters) {
+  if (process.env.APP_ENV !== 'production') {
+    return new NextResponse('Sitemap not available', { status: 404 });
+  }
+
   const { name } = await params;
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;

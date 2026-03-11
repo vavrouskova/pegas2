@@ -36,6 +36,8 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+const isProduction = process.env.APP_ENV === 'production';
+
 const RootLayout = async ({ children, params }: RootLayoutProps) => {
   const { locale } = await params;
 
@@ -83,9 +85,15 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
           name='color-scheme'
           content='light'
         />
+        {!isProduction && (
+          <meta
+            name='robots'
+            content='noindex, nofollow'
+          />
+        )}
       </head>
 
-      <GoogleTagManagerComponent gtmId={process.env.GTM_ID as string} />
+      {isProduction && process.env.GTM_ID && <GoogleTagManagerComponent gtmId={process.env.GTM_ID} />}
 
       <body>
         <BaseProvider>

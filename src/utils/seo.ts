@@ -338,8 +338,9 @@ export async function getSeoData(options: GetSeoDataOptions): Promise<Metadata> 
   }
 
   // Parse robots directives
-  const isNoIndex = seoData.metaRobotsNoindex === 'noindex';
-  const isNoFollow = seoData.metaRobotsNofollow === 'nofollow';
+  const isProduction = process.env.APP_ENV === 'production';
+  const isNoIndex = !isProduction || seoData.metaRobotsNoindex === 'noindex';
+  const isNoFollow = !isProduction || seoData.metaRobotsNofollow === 'nofollow';
 
   const isSlugBased = SLUG_BASED_CONTENT_TYPES.has(options.contentType) && options.idType === 'SLUG';
   const frontendUrl = isSlugBased ? buildSlugCanonical(String(options.id)) : rewriteToFrontendUrl(seoData.canonical);
@@ -445,10 +446,12 @@ function buildCategoryCanonical(pathPrefix: string, slug: string): string | unde
  * Converts WordPress taxonomy SEO data to Next.js Metadata format
  */
 function convertTaxonomySeoToMetadata(seoData: WordPressSeoData | null, canonicalUrl?: string): Metadata {
+  const isProduction = process.env.APP_ENV === 'production';
+
   if (!seoData) {
     return {
       ...getDefaultMetadata(),
-      robots: { index: true, follow: true },
+      robots: { index: isProduction, follow: isProduction },
       alternates: { canonical: canonicalUrl },
     };
   }
@@ -459,8 +462,8 @@ function convertTaxonomySeoToMetadata(seoData: WordPressSeoData | null, canonica
     title: seoData.title || seoData.opengraphTitle,
     description: seoData.metaDesc,
     robots: {
-      index: true,
-      follow: true,
+      index: isProduction,
+      follow: isProduction,
     },
     authors: [
       {
