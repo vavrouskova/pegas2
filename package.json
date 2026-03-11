@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "bun --bun next dev --turbopack",
     "build": "bun --bun next build --turbopack",
-    "start": "bun --bun next start",
+    "start": "next start",
     "lint": "bun eslint",
     "type-check": "tsc --noEmit",
     "format:check": "prettier --check .",
