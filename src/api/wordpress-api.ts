@@ -379,7 +379,7 @@ export async function getAllServicesData(first = 100) {
       funeralCeremonies: typSluzby(id: "smutecni-obrady", idType: SLUG) {
         name
         description
-        sluzbyPosts(first: $first) {
+        sluzbyPosts(first: $first, where: {orderby: {field: MENU_ORDER, order: ASC}}) {
           nodes {
             id
             title
@@ -400,7 +400,7 @@ export async function getAllServicesData(first = 100) {
       funeralEssentials: typSluzby(id: "doplnkove-sluzby-a-produkty", idType: SLUG) {
         name
         description
-        sluzbyPosts(first: $first) {
+        sluzbyPosts(first: $first, where: {orderby: {field: MENU_ORDER, order: ASC}}) {
           nodes {
             id
             title
@@ -418,7 +418,7 @@ export async function getAllServicesData(first = 100) {
           }
         }
       }
-      allServices: sluzbyPosts(first: $first) {
+      allServices: sluzbyPosts(first: $first, where: {orderby: {field: MENU_ORDER, order: ASC}}) {
         nodes {
           id
           title
@@ -510,7 +510,7 @@ export async function getUncategorizedServices(first = 100) {
 
   const query = `
     query GetUncategorizedServices($first: Int!) {
-      sluzbyPosts(first: $first) {
+      sluzbyPosts(first: $first, where: {orderby: {field: MENU_ORDER, order: ASC}}) {
         nodes {
           id
           title
@@ -699,7 +699,7 @@ export async function getServicesByTaxonomy(taxonomySlug: string, first = 100) {
       typSluzby(id: $slug, idType: SLUG) {
         name
         description
-        sluzbyPosts(first: $first) {
+        sluzbyPosts(first: $first, where: {orderby: {field: MENU_ORDER, order: ASC}}) {
           nodes {
             id
             title
@@ -2446,7 +2446,7 @@ export async function fetchSearchIndex(): Promise<SearchIndexItem[]> {
           ${componentsFragment}
         }
       }
-      sluzbyPosts(first: 100) {
+      sluzbyPosts(first: 100, where: {orderby: {field: MENU_ORDER, order: ASC}}) {
         nodes {
           id
           title
