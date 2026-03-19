@@ -1,4 +1,5 @@
 import '@/styles/globals.css';
+import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -20,6 +21,17 @@ import SmoothScrollProvider from '@/providers/SmoothScrollProvider';
 
 // eslint-disable-next-line no-restricted-imports
 import { routing } from '../../i18n/routing';
+
+export const metadata: Metadata = {
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
+};
 
 interface RootLayoutProps extends BasePageProps {
   children: React.ReactNode;
@@ -55,10 +67,6 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
       className='light scroll-pt-px'
     >
       <head>
-        <link
-          rel='icon'
-          href='/favicon.ico'
-        />
         <link
           rel='dns-prefetch'
           href='https://use.typekit.net'
