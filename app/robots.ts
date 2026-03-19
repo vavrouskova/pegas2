@@ -18,6 +18,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/*?osoba=*'],
     },
-    sitemap: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/sitemap.xml`,
+    sitemap: `${process.env.NEXT_PUBLIC_FRONTEND_URL?.replace(/\/$/, '')}/sitemap.xml`,
   };
 }
