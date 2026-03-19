@@ -46,10 +46,12 @@ COPY . .
 # Build-time configuration (passed via --build-arg)
 # Only vars used in next.config.ts are required at build time
 ARG NODE_ENV=production
+ARG APP_ENV=production
 ARG NEXT_PUBLIC_BACKEND_URL
 ARG NEXT_PUBLIC_FRONTEND_URL
 
 ENV NODE_ENV=${NODE_ENV}
+ENV APP_ENV=${APP_ENV}
 ENV NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
 ENV NEXT_PUBLIC_FRONTEND_URL=${NEXT_PUBLIC_FRONTEND_URL}
 
@@ -65,6 +67,7 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV APP_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 nodejs && \
