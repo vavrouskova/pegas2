@@ -317,8 +317,20 @@ export interface HeaderSection {
   submenuSluzby: HeaderSubmenu[];
 }
 
+export interface InfoBarLink {
+  url?: string | null;
+  title?: string | null;
+  target?: string | null;
+}
+
+export interface InfoBarItem {
+  infoText?: string | null;
+  infoButtonUrl?: InfoBarLink | null;
+}
+
 export interface GlobalACF {
   headerSection: HeaderSection;
+  infoBarItems?: InfoBarItem[] | null;
 }
 
 export interface GlobalData {

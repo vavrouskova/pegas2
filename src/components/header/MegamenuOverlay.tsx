@@ -6,6 +6,7 @@ import { createPortal } from 'react-dom';
 
 interface MegamenuOverlayProps {
   isVisible: boolean;
+  headerHeight?: number;
 }
 
 const emptyUnsubscribe = () => {};
@@ -13,7 +14,7 @@ const subscribe = () => emptyUnsubscribe;
 const getSnapshot = () => true;
 const getServerSnapshot = () => false;
 
-export const MegamenuOverlay = ({ isVisible }: MegamenuOverlayProps) => {
+export const MegamenuOverlay = ({ isVisible, headerHeight }: MegamenuOverlayProps) => {
   const isMounted = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   if (!isMounted) return null;
@@ -28,7 +29,8 @@ export const MegamenuOverlay = ({ isVisible }: MegamenuOverlayProps) => {
           transition={{
             duration: 0.4,
           }}
-          className='blend-multiply bg-overlay fixed inset-0 top-[var(--header-height,80px)] z-40 backdrop-blur-[10px]'
+          className='blend-multiply bg-overlay fixed inset-0 z-40 backdrop-blur-[10px]'
+          style={{ top: headerHeight ?? 'var(--header-height, 80px)' }}
           aria-hidden='true'
         />
       )}

@@ -12,14 +12,16 @@ import { BranchImages } from '@/components/branches/BranchImages';
 import { BranchLocation } from '@/components/branches/BranchLocation';
 import { BranchOpeningHours } from '@/components/branches/BranchOpeningHours';
 import { isClosurePeriodActive } from '@/utils/helper';
+import type { PobockaPost } from '@/utils/wordpress-types';
 
 interface BranchDetailSectionProps {
   slug: string;
+  preloadedData?: PobockaPost;
 }
 
-const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
+const BranchDetailSection = async ({ slug, preloadedData }: BranchDetailSectionProps) => {
   const t = await getTranslations();
-  const branchData = await getBranchBySlug(slug);
+  const branchData = preloadedData ?? (await getBranchBySlug(slug));
 
   if (!branchData) {
     notFound();
@@ -50,10 +52,12 @@ const BranchDetailSection = async ({ slug }: BranchDetailSectionProps) => {
 
   return (
     <>
-      <BranchDetailTracker
-        branchId={branchData.id}
-        branchTitle={title || ''}
-      />
+      {!preloadedData && (
+        <BranchDetailTracker
+          branchId={branchData.id}
+          branchTitle={title || ''}
+        />
+      )}
       <Breadcrumbs
         className='px-4 pb-23 md:px-14'
         items={[

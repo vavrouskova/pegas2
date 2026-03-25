@@ -6,6 +6,7 @@ import type {
   BlogPost,
   BlogPostDetail,
   GlobalData,
+  InfoBarItem,
   PobockaPost,
   PostupPost,
   ReferenceCategory,
@@ -2765,6 +2766,59 @@ export const fetchRedirects = async (): Promise<WordPressRedirect[]> => {
     return [];
   }
 };
+
+/**
+ * Získá data pro info lištu z Global ACF
+ * @returns Promise s polem položek info lišty
+ */
+export async function getInfoBarData(): Promise<InfoBarItem[] | null> {
+  const graphqlUrl = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'https://wp.pohrebpegas.cz/cz/graphql';
+
+  const query = `
+    query GetInfoBar {
+      global {
+        globalACF {
+          infoBarItems {
+            infoText
+            infoButtonUrl {
+              url
+              title
+              target
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+      next: { tags: ['wordpress'], revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.errors) {
+      console.error('GraphQL errors for getInfoBarData:', JSON.stringify(result.errors, null, 2));
+      throw new Error('GraphQL query failed');
+    }
+
+    const items: InfoBarItem[] | undefined = result.data?.global?.globalACF?.infoBarItems;
+    return items?.filter((item) => item.infoText?.trim()) || null;
+  } catch (error) {
+    console.error('Error fetching info bar data:', error);
+    return null;
+  }
+}
 
 /**
  * Získá megamenu data z Global ACF

@@ -22,10 +22,9 @@ export interface HeaderLink {
 interface HeaderContentProps {
   headerLinks: HeaderLink[];
   megamenuData: MegamenuData;
-  isVisible?: boolean;
 }
 
-const HeaderContent = ({ headerLinks, megamenuData, isVisible }: HeaderContentProps) => {
+const HeaderContent = ({ headerLinks, megamenuData }: HeaderContentProps) => {
   const pathname = usePathname();
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [navLeftOffset, setNavLeftOffset] = useState(0);
@@ -48,14 +47,6 @@ const HeaderContent = ({ headerLinks, megamenuData, isVisible }: HeaderContentPr
     window.addEventListener('resize', updateNavOffset);
     return () => window.removeEventListener('resize', updateNavOffset);
   }, []);
-
-  // Recalculate offset when sticky header becomes visible
-  useEffect(() => {
-    if (isVisible) {
-      // Small delay to ensure layout is complete after visibility change
-      requestAnimationFrame(updateNavOffset);
-    }
-  }, [isVisible]);
 
   const isActiveLink = (href: string) => {
     const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, '') || '/';
@@ -131,7 +122,7 @@ const HeaderContent = ({ headerLinks, megamenuData, isVisible }: HeaderContentPr
           megamenuData={megamenuData}
         />
       </div>
-      <MegamenuOverlay isVisible={!!openMenuId} />
+      <MegamenuOverlay isVisible={!!openMenuId} headerHeight={navBottomOffset} />
       <MegamenuDropdown
         items={currentMenuItems || lastMenuItems}
         isOpen={!!openMenuId}
