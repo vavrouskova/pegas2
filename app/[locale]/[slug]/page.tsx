@@ -1,8 +1,17 @@
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { cookies, draftMode } from 'next/headers';
+import { notFound, redirect } from 'next/navigation';
 
+import {
+  getPreviewBlogPost,
+  getPreviewBranch,
+  getPreviewPostup,
+  getPreviewReference,
+  getPreviewSeoById,
+  getPreviewService,
+  isValidPreviewType,
+} from '@/api/preview';
 import {
   checkSlugType,
   getBlogPostBySlug,
@@ -13,20 +22,13 @@ import {
   getServiceBySlug,
   getServicesByTaxonomy,
 } from '@/api/wordpress-api';
-import BasicHeroSection from '@/components/_shared/BasicHeroSection';
-import Button from '@/components/_shared/Button';
-import ContentSection from '@/components/_shared/ContentSection';
-import DetailHeroSection from '@/components/_shared/DetailHeroSection';
-import DynamicContentSection from '@/components/_shared/DynamicContentSection';
-import FooterClaim from '@/components/_shared/FooterClaim';
-import { FormattedText } from '@/components/_shared/FormattedText';
-import LeavesImage from '@/components/_shared/LeavesImage';
-import MainHeroSection from '@/components/_shared/MainHeroSection';
-import ViewItemTracker from '@/components/_shared/ViewItemTracker';
-import BranchDetailSection from '@/components/branches/BranchDetailSection';
-import ContactForm from '@/components/forms/contact/ContactForm';
-import ServicesGridSection from '@/components/services/ServicesGridSection';
-import { decodeHtmlEntitiesServer, stripHtmlTags } from '@/utils/helper';
+import {
+  renderBlogPost,
+  renderBranch,
+  renderPostup,
+  renderReference,
+  renderService,
+} from '@/lib/preview/renderers';
 import { getSeoDataBySlug } from '@/utils/seo';
 
 interface SlugPageProps {
@@ -34,9 +36,43 @@ interface SlugPageProps {
     slug: string;
     locale: string;
   }>;
+  searchParams: Promise<{
+    previewId?: string;
+    previewType?: string;
+  }>;
 }
 
-export async function generateMetadata({ params }: SlugPageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: SlugPageProps): Promise<Metadata> {
+  const { isEnabled } = await draftMode();
+  const { previewId, previewType } = await searchParams;
+
+  // Preview SEO — only when Draft Mode is active AND preview params are valid
+  const previewIdNum = previewId ? Number(previewId) : NaN;
+  if (isEnabled && previewId && previewType && isValidPreviewType(previewType) && Number.isInteger(previewIdNum) && previewIdNum > 0) {
+    const seo = await getPreviewSeoById(previewIdNum, previewType);
+
+    return {
+      title: seo?.title || seo?.opengraphTitle || 'Preview',
+      description: seo?.metaDesc || seo?.opengraphDescription || '',
+      robots: { index: false, follow: false },
+      openGraph: {
+        title: seo?.opengraphTitle || seo?.title,
+        description: seo?.opengraphDescription || seo?.metaDesc,
+        images: seo?.opengraphImage?.sourceUrl
+          ? [
+              {
+                url: seo.opengraphImage.sourceUrl,
+                width: seo.opengraphImage.mediaDetails?.width,
+                height: seo.opengraphImage.mediaDetails?.height,
+                alt: seo.opengraphImage.altText,
+              },
+            ]
+          : undefined,
+      },
+    };
+  }
+
+  // Normal SEO flow (published pages — also when Draft Mode cookie lingers)
   const { slug } = await params;
 
   const slugType = await checkSlugType(slug);
@@ -59,11 +95,80 @@ export async function generateMetadata({ params }: SlugPageProps): Promise<Metad
   return getSeoDataBySlug('sluzbyPost', slug);
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
-const SlugPage = async ({ params }: SlugPageProps) => {
-  const { slug } = await params;
+const SlugPage = async ({ params, searchParams }: SlugPageProps) => {
+  const { slug, locale } = await params;
   const t = await getTranslations();
+  const { isEnabled: isPreview } = await draftMode();
+  const { previewId, previewType } = await searchParams;
 
+  // ---------------------------------------------------------------------------
+  // Preview flow (Draft Mode active + searchParams present)
+  // ---------------------------------------------------------------------------
+  if (isPreview && previewId && previewType && isValidPreviewType(previewType)) {
+    const id = Number(previewId);
+    if (!Number.isInteger(id) || id <= 0) notFound();
+    const previewOptions = { isPreview: true, slug } as const;
+
+    if (previewType === 'post') {
+      const blogData = await getPreviewBlogPost(id);
+      if (!blogData) notFound();
+      return renderBlogPost(blogData, t, previewOptions);
+    }
+
+    if (previewType === 'referencePost') {
+      const referenceData = await getPreviewReference(id);
+      if (!referenceData) notFound();
+      return renderReference(referenceData, t, previewOptions);
+    }
+
+    if (previewType === 'pobockaPost') {
+      const [branchData, funeralEssentials] = await Promise.all([
+        getPreviewBranch(id),
+        getServicesByTaxonomy('doplnkove-sluzby-a-produkty'),
+      ]);
+      if (!branchData) notFound();
+      return renderBranch({ branch: branchData, funeralEssentials }, t, previewOptions);
+    }
+
+    if (previewType === 'postupPost') {
+      const [postupData, branchesCount] = await Promise.all([getPreviewPostup(id), getBranchesCount()]);
+      if (!postupData) notFound();
+      return renderPostup({ postup: postupData, branchesCount }, t, previewOptions);
+    }
+
+    if (previewType === 'sluzbyPost') {
+      const serviceData = await getPreviewService(id);
+      if (!serviceData) notFound();
+      return renderService(serviceData, t, previewOptions);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Expired/missing Draft Mode — re-enable by redirecting through /api/preview
+  // Uses a short-lived cookie to prevent infinite redirect loops
+  // ---------------------------------------------------------------------------
+  if (previewId && previewType) {
+    const cookieStore = await cookies();
+    const alreadyAttempted = cookieStore.get('__preview_attempted');
+
+    if (!alreadyAttempted) {
+      const secret = process.env.NEXT_PREVIEW_KEY;
+
+      if (secret) {
+        const params = new URLSearchParams({
+          secret,
+          id: previewId,
+          type: previewType,
+          locale,
+        });
+        redirect(`/api/preview?${params.toString()}`);
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Normal flow
+  // ---------------------------------------------------------------------------
   const slugType = await checkSlugType(slug);
 
   if (!slugType) {
@@ -72,135 +177,14 @@ const SlugPage = async ({ params }: SlugPageProps) => {
 
   if (slugType === 'post') {
     const blogData = await getBlogPostBySlug(slug);
-
-    if (!blogData) {
-      notFound();
-    }
-    const { title: rawTitle, excerpt, featuredImage, categories, components, date } = blogData;
-    const title = rawTitle || '';
-    const introText = excerpt ? decodeHtmlEntitiesServer(stripHtmlTags(excerpt)) : '';
-    const image = featuredImage?.node?.sourceUrl;
-    const imageAlt = featuredImage?.node?.altText || title || '';
-
-    const breadcrumbItems = [
-      {
-        label: t('blog.page-title'),
-        href: `/${t('routes.blog')}`,
-      },
-    ];
-
-    const validCategories = categories?.nodes?.filter((cat) => cat.databaseId !== 1) || [];
-    if (validCategories.length > 0) {
-      const category = validCategories[0];
-      breadcrumbItems.push({
-        label: category.name,
-        href: `/${t('routes.blog')}/${category.slug}`,
-      });
-    }
-
-    const hasComponents = components?.components && components.components.length > 0;
-
-    return (
-      <main className='max-w-container mx-auto'>
-        <DetailHeroSection
-          title={title}
-          date={date}
-          image={image}
-          imageAlt={imageAlt}
-          description={introText}
-          pageTitle={title}
-          breadcrumbItems={breadcrumbItems}
-        />
-
-        {hasComponents && (
-          <DynamicContentSection
-            components={components}
-            categorySlug={categories?.nodes?.[0]?.slug}
-            backLink={`/${t('routes.blog')}`}
-            backLinkText={t('blog.back-to-blog')}
-            className='lg:pt-12.5!'
-          />
-        )}
-
-        <ContentSection
-          title={t('home.organized-by-us.title')}
-          description={t('home.organized-by-us.description')}
-          buttonText={t('home.organized-by-us.button-text')}
-          link={t('home.organized-by-us.link')}
-          image={{ src: '/images/detail-service.webp', alt: t('home.about-us.alt') }}
-          imagePosition='left'
-        />
-
-        <FooterClaim />
-      </main>
-    );
+    if (!blogData) notFound();
+    return renderBlogPost(blogData, t);
   }
 
   if (slugType === 'referencePost') {
     const referenceData = await getReferenceBySlug(slug);
-
-    if (!referenceData) {
-      notFound();
-    }
-
-    const { title: rawTitle, referenceACF, featuredImage, typReference, components } = referenceData;
-    const title = rawTitle || '';
-    const farewellDate = referenceACF?.farewellDate || '';
-    const farewellPlace = referenceACF?.farewellPlace || '';
-    const image = referenceACF?.introImage?.node?.sourceUrl || featuredImage?.node?.sourceUrl;
-    const imageAlt = referenceACF?.introImage?.node?.altText || featuredImage?.node?.altText || title || '';
-
-    const breadcrumbItems = [
-      {
-        label: t('references.page-title'),
-        href: `/${t('routes.references')}`,
-      },
-    ];
-
-    if (typReference?.nodes && typReference.nodes.length > 0) {
-      const category = typReference.nodes[0];
-      breadcrumbItems.push({
-        label: category.name,
-        href: `/${t('routes.references')}/${category.slug}`,
-      });
-    }
-
-    const hasComponents = components?.components && components.components.length > 0;
-
-    return (
-      <main className='max-w-container mx-auto'>
-        <DetailHeroSection
-          title={title}
-          farewellDate={farewellDate}
-          farewellPlace={farewellPlace}
-          image={image}
-          imageAlt={imageAlt}
-          pageTitle={title}
-          breadcrumbItems={breadcrumbItems}
-        />
-
-        {hasComponents && (
-          <DynamicContentSection
-            components={components}
-            categorySlug={typReference?.nodes?.[0]?.slug}
-            backLink={`/${t('routes.references')}`}
-            backLinkText={t('references.back-to-references')}
-            className='lg:pt-12.5!'
-          />
-        )}
-
-        <ContentSection
-          title={t('home.about-us.title')}
-          description={t('home.about-us.description')}
-          buttonText={t('home.about-us.button-text')}
-          link={t('home.about-us.link')}
-          imagePosition='left'
-          image={{ src: '/images/about-us.webp', alt: t('home.about-us.alt') }}
-        />
-
-        <FooterClaim />
-      </main>
-    );
+    if (!referenceData) notFound();
+    return renderReference(referenceData, t);
   }
 
   if (slugType === 'pobockaPost') {
@@ -208,211 +192,20 @@ const SlugPage = async ({ params }: SlugPageProps) => {
       getServicesByTaxonomy('doplnkove-sluzby-a-produkty'),
       getBranchBySlug(slug),
     ]);
-
-    const branchTitle = branchData?.title || slug;
-    const branchCity = branchData?.pobockyACF?.city || '';
-
-    return (
-      <main className='max-w-container mx-auto'>
-        <ViewItemTracker
-          itemId={slug}
-          itemName={
-            branchCity
-              ? `${branchCity}, ${t('branches.branch')} ${branchTitle}`
-              : `${t('branches.branch')} ${branchTitle}`
-          }
-          itemCategory={t('tracking.category-branches')}
-          itemCategory2={t('tracking.category-services')}
-        />
-        <BranchDetailSection slug={slug} />
-
-        <ContactForm />
-
-        <ServicesGridSection
-          id='doplnkove-sluzby-a-produky'
-          title={funeralEssentials.taxonomy?.name || 'Doplňkové služby a produkty'}
-          description={funeralEssentials.taxonomy?.description || ''}
-          services={funeralEssentials.posts}
-        />
-
-        <FooterClaim />
-      </main>
-    );
+    if (!branchData) notFound();
+    return renderBranch({ branch: branchData, funeralEssentials }, t, { slug });
   }
 
   if (slugType === 'postupPost') {
     const [postupData, branchesCount] = await Promise.all([getPostupBySlug(slug), getBranchesCount()]);
-
-    if (!postupData) {
-      notFound();
-    }
-
-    const { title: rawTitle, jakPostupovatAcf, components } = postupData;
-    const title = rawTitle || '';
-    const topSubtitle = jakPostupovatAcf?.topSubtitle || '';
-    const shortDescription = jakPostupovatAcf?.shortDescription || '';
-    const bottomSubtitle = jakPostupovatAcf?.bottomSubtitle || '';
-
-    const breadcrumbItems = [
-      {
-        label: t('faq.page-title'),
-        href: `/${t('routes.faq')}`,
-      },
-    ];
-
-    const hasComponents = components?.components && components.components.length > 0;
-
-    return (
-      <main className='max-w-container relative mx-auto'>
-        <LeavesImage />
-
-        <MainHeroSection
-          breadcrumbItems={breadcrumbItems}
-          title={[title, topSubtitle]}
-          description={shortDescription}
-          branchesCount={branchesCount}
-          pageTitle={title}
-          noImage
-          contentClassName='mt-18 lg:mt-[15.25rem] lg:ml-30 pb-25'
-        />
-
-        {hasComponents && (
-          <DynamicContentSection
-            components={components}
-            showBackLink={false}
-            className='lg:pt-12.5!'
-          />
-        )}
-
-        <section className='section-container pt-0! lg:pt-0!'>
-          <div className='max-w-dynamic-content mx-auto'>
-            <FormattedText
-              text={bottomSubtitle}
-              as='h2'
-              className='mb-2.5'
-            />
-            <FormattedText
-              text={t('faq.branches-desc')}
-              as='p'
-              className='mb-12.5'
-            />
-            <Link
-              href={`/${t('routes.contacts')}`}
-              className='link'
-            >
-              <Button buttonText={t('faq.branches-button')} />
-            </Link>
-          </div>
-        </section>
-
-        {/* <section className='section-container relative'>
-          <div className='max-w-dynamic-content mx-auto flex flex-col gap-11'>
-            <Logo className='text-primary w-30' />
-            <FormattedText
-              text={t('faq.other-services-desc')}
-              as='p'
-              className='font-heading max-w-90 text-[1.375rem] text-balance'
-            />
-          </div>
-          <Image
-            src='/images/wing.webp'
-            alt='Background Image'
-            width={2000}
-            height={2000}
-            className='absolute top-1/2 right-0 z-[-1] w-180 min-w-140 translate-x-88 -translate-y-1/2 lg:w-200 xl:top-40 xl:w-232'
-          />
-        </section> */}
-
-        <ContentSection
-          title={t('home.organized-by-us.title')}
-          description={t('home.organized-by-us.description')}
-          buttonText={t('home.organized-by-us.button-text')}
-          link={t('home.organized-by-us.link')}
-          image={{ src: '/images/detail-service.webp', alt: t('home.about-us.alt') }}
-          imagePosition='left'
-        />
-
-        <FooterClaim />
-      </main>
-    );
+    if (!postupData) notFound();
+    return renderPostup({ postup: postupData, branchesCount }, t);
   }
 
+  // Default: sluzbyPost
   const serviceData = await getServiceBySlug(slug);
-
-  if (!serviceData) {
-    notFound();
-  }
-
-  const { title: rawTitle, sluzbyAcf, components, typSluzby } = serviceData;
-  const title = rawTitle || '';
-  const introText = sluzbyAcf?.introText || '';
-  const image = sluzbyAcf?.introImageSluzby?.node?.sourceUrl;
-  const imageAlt = sluzbyAcf?.introImageSluzby?.node?.altText || title;
-
-  const breadcrumbItems = [
-    {
-      label: t('header.services'),
-      href: `/${t('routes.services')}`,
-    },
-  ];
-
-  if (typSluzby?.nodes && typSluzby.nodes.length > 0) {
-    const category = typSluzby.nodes[0];
-    breadcrumbItems.push({
-      label: category.name,
-      href: `/${t('routes.services')}#${category.slug}`,
-    });
-  }
-
-  return (
-    <main className='max-w-container mx-auto'>
-      <ViewItemTracker
-        itemId={serviceData.id}
-        itemName={title}
-        itemCategory={typSluzby?.nodes?.[0]?.name || t('tracking.category-services')}
-        itemCategory2={
-          typSluzby?.nodes?.[0]?.slug === 'doplnkove-sluzby-a-produkty'
-            ? t('tracking.category-products')
-            : t('tracking.category-services')
-        }
-      />
-      <BasicHeroSection
-        title={title}
-        description={introText}
-        image={image}
-        imageAlt={imageAlt}
-        pageTitle={title}
-        breadcrumbItems={breadcrumbItems}
-        contentClassName='max-w-dynamic-content'
-        decorativeImage='flowers'
-      />
-
-      <DynamicContentSection
-        components={components}
-        categorySlug={typSluzby?.nodes?.[0]?.slug}
-        className='lg:pt-12.5!'
-        imageBoxesDescriptionLineGap={slug === 'kytice-na-rakev' ? 'gap-1.5' : undefined}
-      />
-
-      <ContentSection
-        title={t('services.service-detail.contact-us.title')}
-        description={t('services.service-detail.contact-us.description')}
-        buttonText={t('services.service-detail.contact-us.button-text')}
-        link={t('routes.contacts')}
-      />
-
-      <ContentSection
-        title={t('home.organized-by-us.title')}
-        description={t('home.organized-by-us.description')}
-        buttonText={t('home.organized-by-us.button-text')}
-        link={t('home.organized-by-us.link')}
-        image={{ src: '/images/detail-service.webp', alt: t('home.about-us.alt') }}
-        imagePosition='left'
-      />
-
-      <FooterClaim />
-    </main>
-  );
+  if (!serviceData) notFound();
+  return renderService(serviceData, t, { slug });
 };
 
 export default SlugPage;

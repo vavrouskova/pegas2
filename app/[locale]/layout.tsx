@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import React from 'react';
 import { Toaster } from 'sonner';
 
+import { getInfoBarData } from '@/api/wordpress-api';
 import FadeIn from '@/components/_shared/FadeIn';
 import IntroSplashScreen from '@/components/_shared/IntroSplashScreen';
 import StickyContact from '@/components/_shared/StickyContact';
@@ -13,7 +14,8 @@ import CookieConsent from '@/components/cookie/CookieConsent';
 import Footer from '@/components/footer/Footer';
 import GoogleTagManagerComponent from '@/components/gtm/GoogleTagManagerComponent';
 import Header from '@/components/header/Header';
-import StickyHeaderWrapper from '@/components/header/StickyHeaderWrapper';
+import InfoBar from '@/components/header/InfoBar';
+import StickyNav from '@/components/header/StickyNav';
 import { SearchOverlay } from '@/components/search';
 import BaseProvider from '@/providers/BaseProvider';
 import { SearchProvider } from '@/providers/SearchProvider';
@@ -59,7 +61,7 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
 
   setRequestLocale(locale);
 
-  const messages = await getMessages();
+  const [messages, infoBarItems] = await Promise.all([getMessages(), getInfoBarData()]);
 
   return (
     <html
@@ -110,10 +112,16 @@ const RootLayout = async ({ children, params }: RootLayoutProps) => {
               <SmoothScrollProvider>
                 <IntroSplashScreen />
                 <CookieConsent />
-                <FadeIn delay={1}>
-                  <Header />
-                </FadeIn>
-                <StickyHeaderWrapper />
+                {infoBarItems && infoBarItems.length > 0 && (
+                  <FadeIn delay={1} className='bg-white-smoke'>
+                    <InfoBar items={infoBarItems} />
+                  </FadeIn>
+                )}
+                <StickyNav>
+                  <FadeIn delay={1}>
+                    <Header />
+                  </FadeIn>
+                </StickyNav>
                 {children}
                 <Footer />
                 <StickyContact />

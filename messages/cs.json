@@ -71,7 +71,11 @@
     "references": "Organizovali jsme",
     "blog": "Články",
     "about-us": "O nás",
-    "contacts": "Kontakty"
+    "contacts": "Kontakty",
+    "infoBarMore": "Více",
+    "infoBarPrev": "Předchozí informace",
+    "infoBarNext": "Další informace",
+    "closeMenu": "Zavřít menu"
   },
 
   "footer": {
@@ -382,5 +386,9 @@
     "hero": {
       "description": "Důležité informace pro spotřebitele o našich službách."
     }
+  },
+
+  "preview": {
+    "banner-text": "Náhled — tato stránka ještě není publikována."
   }
 }

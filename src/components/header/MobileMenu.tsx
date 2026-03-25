@@ -1,10 +1,12 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useRef, useSyncExternalStore, useState } from 'react';
+
+import { useTranslations } from 'next-intl';
 
 import { HeaderLink } from '@/components/header/HeaderContent';
 import Logo from '@/components/header/Logo';
@@ -24,6 +26,7 @@ interface MobileMenuProps {
 }
 
 const MobileMenu = ({ headerLinks, megamenuData }: MobileMenuProps) => {
+  const t = useTranslations('header');
   const pathname = usePathname();
   const previousPathnameReference = useRef(pathname);
 
@@ -109,10 +112,10 @@ const MobileMenu = ({ headerLinks, megamenuData }: MobileMenuProps) => {
             <Logo />
             <DrawerClose asChild>
               <button
-                aria-label='Close menu'
-                className='text-primary text-2xl'
+                aria-label={t('closeMenu')}
+                className='text-secondary hover:text-primary transition-colors'
               >
-                ✕
+                <X className='h-6 w-6' />
               </button>
             </DrawerClose>
           </DrawerTitle>

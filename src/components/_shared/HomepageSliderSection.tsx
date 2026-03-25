@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React from 'react';
 
+import FadeIn from '@/components/_shared/FadeIn';
 import { FormattedText } from '@/components/_shared/FormattedText';
 import GenericCarouselSection from '@/components/_shared/GenericCarouselSection';
 import ArrowRight from '@/components/icons/ArrowRight';
@@ -42,7 +43,8 @@ const HomepageSliderSection = ({ slides }: HomepageSliderSectionProps) => {
   const data = convertToCarouselData(slides);
 
   return (
-    <GenericCarouselSection
+    <FadeIn delay={2} duration={0.6}>
+      <GenericCarouselSection
       data={data}
       carouselMaxWidth='max-w-88 lg:max-w-[48.1875rem]'
       articleClassName='flex min-h-[10rem] mx-auto items-stretch max-lg:flex-col lg:max-h-[14.375rem]'
@@ -81,7 +83,8 @@ const HomepageSliderSection = ({ slides }: HomepageSliderSectionProps) => {
           </div>
         </div>
       )}
-    />
+      />
+    </FadeIn>
   );
 };
 
