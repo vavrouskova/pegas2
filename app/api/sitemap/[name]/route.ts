@@ -42,6 +42,9 @@ export async function GET(request: NextRequest, { params }: RouteParameters) {
     // Replace backend URLs with frontend URLs
     xml = replaceWordpressUrl(xml, frontendUrl);
 
+    // Normalize double slashes in paths (preserve https://)
+    xml = xml.replace(/([^:])\/\/+/g, '$1/');
+
     return new NextResponse(xml, {
       headers: {
         'Content-Type': 'application/xml',

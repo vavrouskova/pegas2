@@ -31,6 +31,9 @@ export async function GET() {
     // Replace backend URLs with frontend URLs
     xml = replaceWordpressUrl(xml, frontendUrl);
 
+    // Normalize double slashes in paths (preserve https://)
+    xml = xml.replace(/([^:])\/\/+/g, '$1/');
+
     // Transform sitemap URLs from /post-sitemap.xml to /sitemap/post-sitemap.xml
     // Only transform if /sitemap/ is not already in the path (idempotent)
     xml = xml.replace(/(<loc>[^<]*?)\/(?!sitemap\/)([\w-]+-sitemap\.xml<\/loc>)/g, '$1/sitemap/$2');
