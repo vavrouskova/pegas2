@@ -292,3 +292,24 @@ deploy:dokploy:
       echo "Dokploy deploy triggered successfully"
   environment:
     name: $DEPLOY_ENV
+
+deploy:purge-cache:
+  stage: deploy
+  image: alpine:latest
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"
+  needs: ['deploy:dokploy']
+  cache: []
+  environment:
+    name: production
+  script:
+    - apk add --no-cache wget
+    - |
+      echo "Purging Cloudflare cache..."
+      wget -qO- \
+        --header="Authorization: Bearer ${CF_API_TOKEN}" \
+        --header='Content-Type: application/json' \
+        --post-data="{\"hosts\":[\"${CF_PURGE_HOST}\"]}" \
+        "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache"
+      echo ""
+      echo "Cloudflare cache purged successfully"
