@@ -1,21 +1,14 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
-import { Suspense } from 'react';
+import Link from 'next/link';
 
-import { getReferencePosts, getReferenceTaxonomies } from '@/api/wordpress-api';
 import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PageHeroSection from '@/components/_shared/PageHeroSection';
-import ReferencesFilter from '@/components/_shared/ReferencesFilter';
-import ReferencesGridSection from '@/components/_shared/ReferencesGridSection';
-import ReferencesPagination from '@/components/_shared/ReferencesPagination';
-import { REFERENCES_PER_PAGE } from '@/constants/references';
-import { parsePageNumber } from '@/utils/pagination-helpers';
+import ArrowRight from '@/components/icons/ArrowRight';
 import { getSeoDataByUri } from '@/utils/seo';
-
-// References page needs to be dynamic because it uses searchParams for filtering
-export const dynamic = 'force-dynamic';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('routes');
@@ -23,52 +16,76 @@ export async function generateMetadata(): Promise<Metadata> {
   return getSeoDataByUri('page', t('references'));
 }
 
-interface ReferencesPageProps {
-  searchParams: Promise<{
-    category?: string;
-    page?: string;
-    search?: string;
-  }>;
-}
+const ReferencesHubPage = async () => {
+  const t = await getTranslations();
 
-const ReferencesPage = async ({ searchParams }: ReferencesPageProps) => {
-  const parameters = await searchParams;
-  const categoryId = parameters.category;
-  const page = parsePageNumber(parameters.page);
-  const search = parameters.search;
-
-  const [t, referencesData, categories] = await Promise.all([
-    getTranslations(),
-    getReferencePosts(REFERENCES_PER_PAGE, page, categoryId, search),
-    getReferenceTaxonomies(),
-  ]);
+  const cards = [
+    {
+      title: t('references.hub.wrote-about-us-title'),
+      description: t('references.hub.wrote-about-us-description'),
+      href: `/${t('routes.references-wrote-about-us')}`,
+      image: '/images/rose.webp',
+      imageAlt: 'Napsali o nás',
+    },
+    {
+      title: t('references.hub.organized-title'),
+      description: t('references.hub.organized-description'),
+      href: `/${t('routes.references-organized')}`,
+      image: 'https://wp.pohrebpegas.cz/cz/wp-content/uploads/sites/2/2025/10/pegas-smutecni-kvetiny12.webp',
+      imageAlt: 'Smuteční květiny a svíčky',
+    },
+  ];
 
   return (
     <main className='max-w-container relative mx-auto'>
-      <section className='px-4 sm:px-14'>
-        <Breadcrumbs
-          className='pb-18 lg:pb-43'
-          pageTitle={t('references.page-title')}
-        />
-        <PageHeroSection
-          title={t('references.hero.title')}
-          description={t('references.hero.description')}
-        />
-      </section>
+      <Breadcrumbs
+        className='px-4 pb-18 md:px-14 lg:pb-43'
+        pageTitle={t('references.page-title')}
+      />
 
-      <section className='section-container relative'>
-        <div className='mb-8 lg:mb-16'>
-          <Suspense fallback={<div className='h-[40px]' />}>
-            <ReferencesFilter categories={categories} />
-          </Suspense>
+      <PageHeroSection
+        title={t('references.hero.title')}
+        description={t('references.hero.description')}
+        classNameSection='px-4 md:px-14 pb-25 lg:px-14'
+        classNameContent='max-w-dynamic-content mx-auto'
+      />
+
+      <section className='px-4 pb-12.5 md:px-14 lg:pb-35'>
+        <div className='max-w-dynamic-content mx-auto flex flex-col gap-6 lg:gap-8'>
+          {cards.map((card) => (
+            <Link
+              key={card.href}
+              href={card.href}
+              className='bg-primary group flex items-stretch overflow-hidden transition-opacity duration-300 hover:opacity-90 max-lg:flex-col lg:min-h-57.5 lg:flex-row'
+            >
+              <picture className='relative w-full shrink-0 max-lg:aspect-video lg:w-57.5'>
+                <Image
+                  src={card.image}
+                  alt={card.imageAlt}
+                  fill
+                  sizes='(max-width: 1024px) 100vw, 230px'
+                  className='object-cover'
+                />
+              </picture>
+              <div className='flex flex-1 flex-col justify-between gap-4 px-6 py-8 lg:px-12 lg:py-10'>
+                <div className='flex flex-col gap-2.5'>
+                  <h2 className='text-white-smoke font-heading text-xl lg:text-2xl'>
+                    {card.title}
+                  </h2>
+                  <p className='text-white-smoke/70 font-text text-sm leading-relaxed lg:text-base'>
+                    {card.description}
+                  </p>
+                </div>
+                <div className='text-white-smoke flex items-center gap-3'>
+                  <span className='text-white-smoke font-heading text-lg'>
+                    {t('common.find-out-more')}
+                  </span>
+                  <ArrowRight className='size-5 shrink-0 transition-transform duration-200 group-hover:translate-x-1' />
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
-        <ReferencesGridSection referencePosts={referencesData.nodes} />
-        <Suspense fallback={null}>
-          <ReferencesPagination
-            totalPages={referencesData.totalPages}
-            currentPage={referencesData.currentPage}
-          />
-        </Suspense>
       </section>
 
       <ContentSection
@@ -85,4 +102,4 @@ const ReferencesPage = async ({ searchParams }: ReferencesPageProps) => {
   );
 };
 
-export default ReferencesPage;
+export default ReferencesHubPage;

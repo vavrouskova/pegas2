@@ -26,6 +26,8 @@ export const pathnames = {
 
   '/references/wrote-about-us': { cs: '/reference/napsali-o-nas' },
 
+  '/references/organized': { cs: '/reference/organizovali-jsme' },
+
   '/references/[category]': { cs: '/reference/[category]' },
 
   '/contacts': { cs: '/kontakty' },

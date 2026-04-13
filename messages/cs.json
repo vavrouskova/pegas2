@@ -54,6 +54,7 @@
     "services": "sluzby",
     "references": "reference",
     "references-wrote-about-us": "reference/napsali-o-nas",
+    "references-organized": "reference/organizovali-jsme",
     "blog": "blog",
     "about-us": "o-nas",
     "contacts": "kontakty",
@@ -255,8 +256,22 @@
   },
 
   "references": {
+    "page-title": "Reference",
+    "back-to-references": "Zpět na reference",
+    "hero": {
+      "title": "Reference",
+      "description": "Přečtěte si, co o nás napsali naši klienti, nebo se podívejte na rozloučení, která jsme organizovali."
+    },
+    "hub": {
+      "wrote-about-us-title": "Napsali o nás",
+      "wrote-about-us-description": "Slova, která nás motivují pokračovat. Děkujeme všem, kteří si našli čas podělit se o svou zkušenost.",
+      "organized-title": "Organizovali jsme",
+      "organized-description": "Každý příběh je jiný. Rozloučení může být přesně takové, jaké si přejete Vy."
+    }
+  },
+
+  "references-organized": {
     "page-title": "Organizovali jsme",
-    "back-to-references": "Zpět na přehled referencí",
     "hero": {
       "title": "Organizovali jsme",
       "description": "Každý příběh je jiný. Rozloučení může být přesně takové, jaké si přejete Vy."

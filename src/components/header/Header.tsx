@@ -37,7 +37,7 @@ const Header = async () => {
       {
         id: 'organized',
         label: tHeader('references-organized'),
-        href: `/${tRoutes('references')}`,
+        href: `/${tRoutes('references-organized')}`,
       },
     ],
   };

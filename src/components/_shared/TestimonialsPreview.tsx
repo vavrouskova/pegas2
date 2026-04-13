@@ -7,7 +7,6 @@ import { CarouselNavigation } from '@/components/_shared/CarouselNavigation';
 import { Testimonial } from '@/components/_shared/TestimonialCard';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { useCarouselAutoplay } from '@/hooks/useCarouselAutoplay';
-import ArrowRight from '@/components/icons/ArrowRight';
 import { cn, czechTypography } from '@/lib/utils';
 
 // TODO: Replace with WordPress API call when napsaliPost type is available
@@ -118,12 +117,9 @@ const TestimonialsPreview = () => {
                 href={`/${t('routes.references-wrote-about-us')}`}
                 className='bg-primary group flex min-h-[14rem] items-center justify-center overflow-hidden max-lg:flex-col'
               >
-                <div className='text-white-smoke flex items-center gap-3'>
-                  <span className='text-white-smoke font-heading text-lg'>
-                    {t('home.testimonials.cta-read-more')}
-                  </span>
-                  <ArrowRight className='size-5 shrink-0' />
-                </div>
+                <span className='text-white-smoke font-heading text-lg text-center'>
+                  {t('home.testimonials.cta-read-more')}
+                </span>
               </Link>
             </CarouselItem>
           </CarouselContent>
