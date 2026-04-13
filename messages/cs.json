@@ -53,6 +53,7 @@
     "faq": "jak-postupovat",
     "services": "sluzby",
     "references": "reference",
+    "references-wrote-about-us": "reference/napsali-o-nas",
     "blog": "blog",
     "about-us": "o-nas",
     "contacts": "kontakty",
@@ -68,7 +69,9 @@
   "header": {
     "faq": "Jak postupovat",
     "services": "Služby",
-    "references": "Organizovali jsme",
+    "references": "Reference",
+    "references-wrote-about-us": "Napsali o nás",
+    "references-organized": "Organizovali jsme",
     "blog": "Články",
     "about-us": "O nás",
     "contacts": "Kontakty",
@@ -252,6 +255,26 @@
     "hero": {
       "title": "Organizovali jsme",
       "description": "Každý příběh je jiný. Rozloučení může být přesně takové, jaké si přejete Vy."
+    }
+  },
+
+  "wrote-about-us": {
+    "page-title": "Napsali o nás",
+    "hero": {
+      "title": "Napsali o nás",
+      "description": "Slova, která nás motivují pokračovat. Děkujeme všem, kteří si našli čas podělit se o svou zkušenost."
+    },
+    "load-more": "Více do historie",
+    "back-to-top": "Zpět na začátek",
+    "form": {
+      "title": "Napište nám",
+      "description": "Chcete se s námi podělit o svou zkušenost? Budeme rádi za každé slovo.",
+      "fields": {
+        "message": "Vaše zkušenost nebo vzkaz*"
+      },
+      "errors": {
+        "message_required": "Prosím, napište svůj vzkaz"
+      }
     }
   },
 

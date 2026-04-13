@@ -58,6 +58,7 @@ export const getFooterLinks = async () => {
 export interface MegamenuData {
   services: HeaderLink[];
   blog: HeaderLink[];
+  references: HeaderLink[];
 }
 
 // Helper to get megamenu items by linkId from pre-fetched data
@@ -72,6 +73,9 @@ export const getMegamenuItemsFromData = (
   }
   if (linkId === 'blog') {
     return megamenuData.blog.length > 0 ? megamenuData.blog : undefined;
+  }
+  if (linkId === 'references') {
+    return megamenuData.references.length > 0 ? megamenuData.references : undefined;
   }
 
   return undefined;
