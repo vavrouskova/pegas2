@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
-import { getAllServicesData, getBranchesCount } from '@/api/wordpress-api';
+import { getAllServicesData, getBranchesCount, getServiceBySlug } from '@/api/wordpress-api';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
@@ -18,13 +18,29 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const ServicesPage = async () => {
-  const [branchesCount, t, servicesData] = await Promise.all([
+  const [branchesCount, t, servicesData, repatriaceData, vozovyParkData] = await Promise.all([
     getBranchesCount(),
     getTranslations(),
     getAllServicesData(),
+    getServiceBySlug('repatriace'),
+    getServiceBySlug('vozovy-park'),
   ]);
 
   const { funeralCeremonies, funeralEssentials, otherServices } = servicesData;
+
+  // Vyfiltrovat repatriaci a vozový park z gridů — přesunou se do TransportSection
+  const transportSlugs = ['repatriace', 'vozovy-park'];
+  const filteredCeremonies = {
+    ...funeralCeremonies,
+    posts: funeralCeremonies.posts.filter((p: { slug: string }) => !transportSlugs.includes(p.slug)),
+  };
+  const filteredEssentials = {
+    ...funeralEssentials,
+    posts: funeralEssentials.posts.filter((p: { slug: string }) => !transportSlugs.includes(p.slug)),
+  };
+
+  const repatriaceImage = repatriaceData?.featuredImage?.node?.sourceUrl || '/images/car.webp';
+  const vozovyParkImage = vozovyParkData?.featuredImage?.node?.sourceUrl || '/images/car.webp';
 
   return (
     <main className='max-w-container mx-auto'>
@@ -44,22 +60,19 @@ const ServicesPage = async () => {
         cards={[
           {
             title: t('services.transport.cards.transport.title'),
-            description: t('services.transport.cards.transport.description'),
-            image: '/images/car.webp',
+            image: 'https://wp.pohrebpegas.cz/cz/wp-content/uploads/sites/2/2025/10/pegas-smutecni-kvetiny12.webp',
             imageAlt: t('services.transport.cards.transport.title'),
             href: '/prevoz-zesnulych',
           },
           {
             title: t('services.transport.cards.repatriation.title'),
-            description: t('services.transport.cards.repatriation.description'),
-            image: '/images/rose.webp',
+            image: repatriaceImage,
             imageAlt: t('services.transport.cards.repatriation.title'),
             href: '/repatriace',
           },
           {
             title: t('services.transport.cards.fleet.title'),
-            description: t('services.transport.cards.fleet.description'),
-            image: '/images/room.webp',
+            image: vozovyParkImage,
             imageAlt: t('services.transport.cards.fleet.title'),
             href: '/vozovy-park',
           },
@@ -68,9 +81,9 @@ const ServicesPage = async () => {
 
       <ServicesGridSection
         id='smutecni-obrady'
-        title={funeralCeremonies.taxonomy?.name || 'Smuteční obřady'}
-        description={funeralCeremonies.taxonomy?.description || ''}
-        services={funeralCeremonies.posts}
+        title={filteredCeremonies.taxonomy?.name || 'Smuteční obřady'}
+        description={filteredCeremonies.taxonomy?.description || ''}
+        services={filteredCeremonies.posts}
         type='service'
         itemCategory2={t('tracking.category-services')}
       />
@@ -86,9 +99,9 @@ const ServicesPage = async () => {
 
       <ServicesGridSection
         id='doplnkove-sluzby-a-produkty'
-        title={funeralEssentials.taxonomy?.name || 'Náležitosti pohřbu'}
-        description={funeralEssentials.taxonomy?.description || ''}
-        services={funeralEssentials.posts}
+        title={filteredEssentials.taxonomy?.name || 'Náležitosti pohřbu'}
+        description={filteredEssentials.taxonomy?.description || ''}
+        services={filteredEssentials.posts}
         type='product'
         itemCategory2={t('tracking.category-products')}
       />
