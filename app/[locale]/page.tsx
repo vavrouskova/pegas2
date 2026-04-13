@@ -75,8 +75,6 @@ const Homepage = async () => {
 
       <ReferencesCarouselSection referencePosts={referencePosts} />
 
-      <TestimonialsPreview />
-
       <ContentSection
         title={t('about-us.title')}
         description={t('about-us.description')}
@@ -85,6 +83,8 @@ const Homepage = async () => {
         imagePosition='left'
         image={{ src: '/images/about-us.webp', alt: t('about-us.alt') }}
       />
+
+      <TestimonialsPreview />
 
       <ServicesSection services={services} />
 
