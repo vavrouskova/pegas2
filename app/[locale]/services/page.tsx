@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
-import { getAllServicesData, getBranchesCount, getServiceBySlug } from '@/api/wordpress-api';
+import { getAllServicesData, getBranchesCount } from '@/api/wordpress-api';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
@@ -18,12 +18,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const ServicesPage = async () => {
-  const [branchesCount, t, servicesData, repatriaceData, vozovyParkData] = await Promise.all([
+  const [branchesCount, t, servicesData] = await Promise.all([
     getBranchesCount(),
     getTranslations(),
     getAllServicesData(),
-    getServiceBySlug('repatriace'),
-    getServiceBySlug('vozovy-park'),
   ]);
 
   const { funeralCeremonies, funeralEssentials, otherServices } = servicesData;
@@ -38,9 +36,6 @@ const ServicesPage = async () => {
     ...funeralEssentials,
     posts: funeralEssentials.posts.filter((p: { slug: string }) => !transportSlugs.includes(p.slug)),
   };
-
-  const repatriaceImage = repatriaceData?.featuredImage?.node?.sourceUrl || '/images/car.webp';
-  const vozovyParkImage = vozovyParkData?.featuredImage?.node?.sourceUrl || '/images/car.webp';
 
   return (
     <main className='max-w-container mx-auto'>
@@ -60,19 +55,19 @@ const ServicesPage = async () => {
         cards={[
           {
             title: t('services.transport.cards.transport.title'),
-            image: 'https://wp.pohrebpegas.cz/cz/wp-content/uploads/sites/2/2025/10/pegas-smutecni-kvetiny12.webp',
+            image: '/images/car.webp',
             imageAlt: t('services.transport.cards.transport.title'),
             href: '/prevoz-zesnulych',
           },
           {
             title: t('services.transport.cards.repatriation.title'),
-            image: repatriaceImage,
+            image: '/images/pegas-repatriace.png',
             imageAlt: t('services.transport.cards.repatriation.title'),
             href: '/repatriace',
           },
           {
             title: t('services.transport.cards.fleet.title'),
-            image: vozovyParkImage,
+            image: '/images/pegas-vozovy-park3.png',
             imageAlt: t('services.transport.cards.fleet.title'),
             href: '/vozovy-park',
           },
