@@ -50,7 +50,7 @@ const TestimonialsPreview = () => {
   const totalSlides = previewTestimonials.length + 1;
 
   return (
-    <section className='pt-12.5 pb-20.5 lg:pt-16 lg:pb-43'>
+    <section className='pt-6 pb-20.5 lg:pt-8 lg:pb-43'>
       <div className='section-container mb-3 lg:mb-4'>
         <h2 className='font-heading text-primary mb-2.5 text-2xl lg:text-3xl'>
           {t('wrote-about-us.page-title')}
@@ -68,7 +68,7 @@ const TestimonialsPreview = () => {
       >
         <Carousel
           opts={{ align: 'start', loop: true }}
-          className='mx-auto max-w-[23.125rem] lg:max-w-[59rem]'
+          className='mx-auto max-w-88 lg:max-w-[48.1875rem]'
           setApi={setApi}
         >
           <CarouselContent className='-ml-0'>
