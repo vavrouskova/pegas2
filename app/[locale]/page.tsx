@@ -8,6 +8,7 @@ import FooterClaim from '@/components/_shared/FooterClaim';
 import HomepageSliderSection from '@/components/_shared/HomepageSliderSection';
 import MainHeroSection from '@/components/_shared/MainHeroSection';
 import ReferencesCarouselSection from '@/components/_shared/ReferencesCarouselSection';
+import TestimonialsPreview from '@/components/_shared/TestimonialsPreview';
 import ServicesSection from '@/components/_shared/ServicesSection';
 import { getSeoDataByUri } from '@/utils/seo';
 
@@ -73,6 +74,8 @@ const Homepage = async () => {
       />
 
       <ReferencesCarouselSection referencePosts={referencePosts} />
+
+      <TestimonialsPreview />
 
       <ContentSection
         title={t('about-us.title')}

@@ -143,6 +143,10 @@
     "footer-bg": {
       "claim": "V tichu jsme.",
       "alt": "Pírko v pozadí"
+    },
+    "testimonials": {
+      "cta-title": "Přečtěte si další zkušenosti našich klientů",
+      "cta-link": "Zobrazit všechny"
     }
   },
 
