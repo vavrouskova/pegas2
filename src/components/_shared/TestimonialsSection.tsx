@@ -1,8 +1,10 @@
 'use client';
 
+import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
 import TestimonialCard, { Testimonial } from '@/components/_shared/TestimonialCard';
+import { MotionDiv } from '@/components/animate-ui/MotionWrappers';
 
 interface TestimonialsSectionProps {
   testimonials: Testimonial[];
@@ -47,12 +49,23 @@ const TestimonialsSection = ({
             key={colIndex}
             className='flex flex-col gap-6 lg:gap-8'
           >
-            {column.map((testimonial) => (
-              <TestimonialCard
-                key={testimonial.id}
-                testimonial={testimonial}
-              />
-            ))}
+            <AnimatePresence initial={false}>
+              {column.map((testimonial, index) => (
+                <MotionDiv
+                  key={testimonial.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: index * 0.08,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  }}
+                >
+                  <TestimonialCard testimonial={testimonial} />
+                </MotionDiv>
+              ))}
+            </AnimatePresence>
           </div>
         ))}
       </div>
