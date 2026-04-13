@@ -50,12 +50,12 @@ const TestimonialsPreview = () => {
   const totalSlides = previewTestimonials.length + 1;
 
   return (
-    <section className='pt-12.5 pb-20.5 lg:pt-35 lg:pb-43'>
+    <section className='pt-12.5 pb-20.5 lg:pt-16 lg:pb-43'>
       <div className='section-container mb-10 lg:mb-16'>
         <h2 className='font-heading text-primary mb-2.5 text-2xl lg:text-3xl'>
           {t('wrote-about-us.page-title')}
         </h2>
-        <p className='font-text text-primary/70 text-base leading-relaxed lg:text-lg'>
+        <p className='font-text text-primary/70 whitespace-pre-line text-base leading-relaxed lg:text-lg'>
           {t('wrote-about-us.hero.description')}
         </p>
       </div>
@@ -82,7 +82,7 @@ const TestimonialsPreview = () => {
                 >
                   <article
                     className={cn(
-                      'flex min-h-[10rem] items-stretch overflow-hidden max-lg:flex-col lg:max-h-[14.375rem]',
+                      'flex min-h-[20rem] items-stretch overflow-hidden max-lg:flex-col',
                       isDark ? 'bg-primary' : 'bg-white'
                     )}
                   >
@@ -96,7 +96,7 @@ const TestimonialsPreview = () => {
                         </p>
                         <p
                           className={cn(
-                            'font-italic line-clamp-4 text-sm leading-relaxed',
+                            'font-italic text-sm leading-relaxed',
                             isDark ? 'text-white/80' : 'text-primary/70'
                           )}
                         >
@@ -116,7 +116,7 @@ const TestimonialsPreview = () => {
             <CarouselItem className='basis-full pl-0'>
               <Link
                 href={`/${t('routes.references-wrote-about-us')}`}
-                className='bg-primary group flex min-h-[10rem] items-center justify-center overflow-hidden max-lg:flex-col lg:max-h-[14.375rem]'
+                className='bg-primary group flex min-h-[20rem] items-center justify-center overflow-hidden max-lg:flex-col'
               >
                 <div className='text-white-smoke flex items-center gap-3'>
                   <span className='text-white-smoke font-heading text-lg'>
