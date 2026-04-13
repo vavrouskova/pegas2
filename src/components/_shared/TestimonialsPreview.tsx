@@ -82,7 +82,7 @@ const TestimonialsPreview = () => {
                 >
                   <article
                     className={cn(
-                      'flex min-h-[20rem] items-stretch overflow-hidden max-lg:flex-col',
+                      'flex min-h-[14rem] items-stretch overflow-hidden max-lg:flex-col',
                       isDark ? 'bg-primary' : 'bg-white'
                     )}
                   >
@@ -116,7 +116,7 @@ const TestimonialsPreview = () => {
             <CarouselItem className='basis-full pl-0'>
               <Link
                 href={`/${t('routes.references-wrote-about-us')}`}
-                className='bg-primary group flex min-h-[20rem] items-center justify-center overflow-hidden max-lg:flex-col'
+                className='bg-primary group flex min-h-[14rem] items-center justify-center overflow-hidden max-lg:flex-col'
               >
                 <div className='text-white-smoke flex items-center gap-3'>
                   <span className='text-white-smoke font-heading text-lg'>
