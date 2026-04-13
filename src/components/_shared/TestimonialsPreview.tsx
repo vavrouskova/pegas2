@@ -116,15 +116,12 @@ const TestimonialsPreview = () => {
             <CarouselItem className='basis-full pl-0'>
               <Link
                 href={`/${t('routes.references-wrote-about-us')}`}
-                className='bg-primary group flex min-h-[10rem] items-center overflow-hidden max-lg:flex-col lg:max-h-[14.375rem]'
+                className='bg-primary group flex min-h-[10rem] items-stretch overflow-hidden max-lg:flex-col lg:max-h-[14.375rem]'
               >
-                <div className='flex flex-1 flex-col space-y-2 px-6 py-8 max-md:h-full max-md:justify-between lg:px-12'>
-                  <h3 className='text-white-smoke font-heading mb-4 text-xl'>
+                <div className='flex flex-1 flex-col justify-center space-y-4 px-6 py-6 lg:px-12 lg:py-8'>
+                  <h3 className='text-white-smoke font-heading text-xl'>
                     {t('wrote-about-us.page-title')}
                   </h3>
-                  <p className='text-white-smoke/70 font-text mb-6 text-sm'>
-                    {t('wrote-about-us.hero.description')}
-                  </p>
                   <div className='text-white-smoke flex items-center gap-3'>
                     <span className='text-white-smoke font-heading text-lg'>
                       {t('home.testimonials.cta-link')}
