@@ -51,11 +51,11 @@ const TestimonialsPreview = () => {
 
   return (
     <section className='pt-12.5 pb-20.5 lg:pt-35 lg:pb-43'>
-      <div className='bg-primary mx-auto mb-10 max-w-[23.125rem] px-6 py-8 lg:mb-16 lg:max-w-[59rem] lg:px-12 lg:py-10'>
-        <h2 className='font-heading text-white-smoke mb-2 text-2xl lg:text-3xl'>
+      <div className='section-container mb-10 lg:mb-16'>
+        <h2 className='font-heading text-primary mb-2.5 text-2xl lg:text-3xl'>
           {t('wrote-about-us.page-title')}
         </h2>
-        <p className='font-text text-white-smoke/70 text-sm lg:text-base'>
+        <p className='font-text text-primary/70 text-base leading-relaxed lg:text-lg'>
           {t('wrote-about-us.hero.description')}
         </p>
       </div>
