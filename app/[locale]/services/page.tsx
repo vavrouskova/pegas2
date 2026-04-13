@@ -41,28 +41,29 @@ const ServicesPage = async () => {
         id='prevoz-zesnulych'
         title={t('services.transport.title')}
         description={t('services.transport.description')}
-        features={[
+        cards={[
           {
-            title: t('services.transport.features.dignified-transport.title'),
-            description: t('services.transport.features.dignified-transport.description'),
+            title: t('services.transport.cards.transport.title'),
+            description: t('services.transport.cards.transport.description'),
+            image: '/images/car.webp',
+            imageAlt: t('services.transport.cards.transport.title'),
+            href: '/prevoz-zesnulych',
           },
           {
-            title: t('services.transport.features.empathetic-approach.title'),
-            description: t('services.transport.features.empathetic-approach.description'),
+            title: t('services.transport.cards.repatriation.title'),
+            description: t('services.transport.cards.repatriation.description'),
+            image: '/images/rose.webp',
+            imageAlt: t('services.transport.cards.repatriation.title'),
+            href: '/repatriace',
           },
           {
-            title: t('services.transport.features.modern-facilities.title'),
-            description: t('services.transport.features.modern-facilities.description'),
+            title: t('services.transport.cards.fleet.title'),
+            description: t('services.transport.cards.fleet.description'),
+            image: '/images/room.webp',
+            imageAlt: t('services.transport.cards.fleet.title'),
+            href: '/vozovy-park',
           },
         ]}
-        primaryButton={{
-          text: t('services.transport.primary-button'),
-          link: 'kontakty',
-        }}
-        secondaryButton={{
-          text: t('services.transport.secondary-button'),
-          link: 'repatriace',
-        }}
       />
 
       <ServicesGridSection

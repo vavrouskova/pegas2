@@ -209,23 +209,21 @@
     },
     "transport": {
       "title": "Převoz zesnulých",
-      "description": "Z místa posledního odchodu se stává začátek rozloučení.\nPřevozy zajišťujeme tiše a s respektem – s využitím převozových rakví, špičkového technického zázemí a zkušeného týmu, který jedná citlivě, s empatií a důstojností.",
-      "features": {
-        "dignified-transport": {
-          "title": "Důstojný převoz v rakvi",
-          "description": "Každý převoz realizujeme v převozové rakvi s maximální péčí a úctou k zesnulému."
+      "description": "Převozy zajišťujeme tiše a s respektem – s využitím převozových rakví, špičkového technického zázemí a zkušeného týmu.",
+      "cards": {
+        "transport": {
+          "title": "Převoz zesnulých",
+          "description": "Důstojný převoz v rakvi s maximální péčí a úctou."
         },
-        "empathetic-approach": {
-          "title": "Empatický přístup",
-          "description": "Náš tým jedná citlivě a s pochopením pro situaci pozůstalých."
+        "repatriation": {
+          "title": "Repatriace ze zahraničí",
+          "description": "Zajistíme převoz zesnulého ze zahraničí zpět do České republiky."
         },
-        "modern-facilities": {
-          "title": "Moderní technické zázemí",
-          "description": "Využíváme špičkové vybavení a zázemí pro zajištění kvalitních převozů."
+        "fleet": {
+          "title": "Vozový park",
+          "description": "Moderní technické zázemí a špičkově vybavená vozidla."
         }
-      },
-      "primary-button": "Chci zajistit převoz",
-      "secondary-button": "Repatriace ze zahraničí"
+      }
     },
     "contact-us": {
       "title": "Vaše představa je začátek,'{{br}}' zbytek je na nás.",

@@ -1,93 +1,74 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
-import Button from '@/components/_shared/Button';
 import { FormattedText } from '@/components/_shared/FormattedText';
+import ArrowRight from '@/components/icons/ArrowRight';
 
-interface TransportFeature {
+interface TransportCard {
   title: string;
   description: string;
+  image: string;
+  imageAlt: string;
+  href: string;
 }
 
 interface TransportSectionProps {
   id: string;
   title: string;
   description: string;
-  features: TransportFeature[];
-  primaryButton: {
-    text: string;
-    link: string;
-  };
-  secondaryButton: {
-    text: string;
-    link: string;
-  };
+  cards: TransportCard[];
 }
 
-const TransportSection = ({
-  id,
-  title,
-  description,
-  features,
-  primaryButton,
-  secondaryButton,
-}: TransportSectionProps) => {
+const TransportSection = ({ id, title, description, cards }: TransportSectionProps) => {
   return (
     <section
       id={id}
       className='section-container'
     >
-      <div className='max-w-lg-content lg:ml-30'>
-        {/* Hlavní nadpis a popis */}
-        <div className='mb-9 flex flex-col gap-2.5'>
-          <FormattedText
-            text={title}
-            as='h2'
-          />
-          <FormattedText
-            text={description}
-            as='p'
-            className='text-lg leading-relaxed'
-          />
-        </div>
-
-        {/* Výhody/Features */}
-        <div className='mb-9 flex flex-col gap-6'>
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className='flex flex-col gap-2.5'
-            >
-              <FormattedText
-                text={feature.title}
-                as='h4'
-                className='text-xl'
-              />
-              <FormattedText
-                text={feature.description}
-                as='p'
-                className='text-lg leading-relaxed'
-              />
-            </div>
-          ))}
-        </div>
+      <div className='max-w-lg-content mb-16 flex flex-col gap-2.5 lg:ml-30'>
+        <FormattedText
+          text={title}
+          as='h2'
+        />
+        <FormattedText
+          text={description}
+          as='p'
+          className='text-lg leading-relaxed'
+        />
       </div>
-      {/* CTA tlačítka */}
-      <div className='flex flex-col flex-wrap items-start gap-6 sm:flex-row sm:items-center lg:ml-30'>
-        <Link
-          className='w-fit'
-          href={`/${primaryButton.link}`}
-        >
-          <Button buttonText={primaryButton.text} />
-        </Link>
-        <Link
-          href={`/${secondaryButton.link}`}
-          className='w-fit'
-        >
-          <Button
-            variant='white'
-            buttonText={secondaryButton.text}
-          />
-        </Link>
+
+      <div className='grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-3'>
+        {cards.map((card) => (
+          <Link
+            key={card.href}
+            href={card.href}
+            className='group flex flex-col overflow-hidden'
+          >
+            <picture className='relative aspect-[4/3] w-full overflow-hidden'>
+              <Image
+                src={card.image}
+                alt={card.imageAlt}
+                fill
+                sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+                className='object-cover transition-transform duration-300 group-hover:scale-105'
+              />
+            </picture>
+            <div className='bg-primary flex flex-1 flex-col justify-between gap-4 p-6'>
+              <div className='flex flex-col gap-1.5'>
+                <h3 className='text-white-smoke font-heading text-lg'>
+                  {card.title}
+                </h3>
+                <p className='text-white-smoke/70 font-text text-sm leading-relaxed'>
+                  {card.description}
+                </p>
+              </div>
+              <div className='text-white-smoke flex items-center gap-2'>
+                <span className='text-white-smoke font-heading text-base'>Zjistěte podrobnosti</span>
+                <ArrowRight className='size-4 shrink-0 transition-transform duration-200 group-hover:translate-x-1' />
+              </div>
+            </div>
+          </Link>
+        ))}
       </div>
     </section>
   );
