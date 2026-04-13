@@ -55,7 +55,7 @@ const ServicesPage = async () => {
         cards={[
           {
             title: t('services.transport.cards.transport.title'),
-            image: '/images/car.webp',
+            image: '/images/pegas-vozovy-park3.png',
             imageAlt: t('services.transport.cards.transport.title'),
             href: '/prevoz-zesnulych',
           },
@@ -67,7 +67,7 @@ const ServicesPage = async () => {
           },
           {
             title: t('services.transport.cards.fleet.title'),
-            image: '/images/pegas-vozovy-park3.png',
+            image: 'https://wp.pohrebpegas.cz/cz/wp-content/uploads/sites/2/2025/10/pegas-vozovy-park2-1.webp',
             imageAlt: t('services.transport.cards.fleet.title'),
             href: '/vozovy-park',
           },

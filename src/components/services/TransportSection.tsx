@@ -5,7 +5,6 @@ import { FormattedText } from '@/components/_shared/FormattedText';
 
 interface TransportCard {
   title: string;
-  description?: string;
   image: string;
   imageAlt: string;
   href: string;
