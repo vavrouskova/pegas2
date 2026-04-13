@@ -47,7 +47,7 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
         <div className='bg-primary flex flex-col gap-2 p-6 lg:p-8'>
           <p className='font-heading text-lg text-white lg:text-xl'>{czechTypography(testimonial.greeting)}</p>
           <p className='font-text text-sm leading-relaxed text-white/80'>{czechTypography(testimonial.content)}</p>
-          <span className='font-heading mt-2 inline-flex items-center gap-1.5 text-sm text-white underline underline-offset-4 transition-colors group-hover:text-white/70'>
+          <span className='font-heading mt-2 inline-flex items-center gap-1.5 text-sm text-white transition-colors group-hover:text-white/70'>
             {testimonial.promoLink?.label || 'Zobrazit více'}
             <svg
               width='14'

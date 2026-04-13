@@ -5,8 +5,7 @@ import Breadcrumbs from '@/components/_shared/Breadcrumbs';
 import ContentSection from '@/components/_shared/ContentSection';
 import FooterClaim from '@/components/_shared/FooterClaim';
 import PageHeroSection from '@/components/_shared/PageHeroSection';
-import ScrollToTopButton from '@/components/_shared/ScrollToTopButton';
-import TestimonialsGrid from '@/components/_shared/TestimonialsGrid';
+import TestimonialsSection from '@/components/_shared/TestimonialsSection';
 import { Testimonial } from '@/components/_shared/TestimonialCard';
 import TestimonialForm from '@/components/forms/testimonial/TestimonialForm';
 
@@ -215,11 +214,13 @@ const WroteAboutUsPage = async () => {
       </section>
 
       <section className='section-container relative'>
-        <TestimonialsGrid testimonials={testimonials} />
-
-        <div className='mt-12 flex justify-center lg:mt-20'>
-          <ScrollToTopButton label={t('wrote-about-us.back-to-top')} />
-        </div>
+        <TestimonialsSection
+          testimonials={testimonials}
+          initialCount={6}
+          batchSize={6}
+          expandLabel={t('wrote-about-us.load-more')}
+          collapseLabel={t('wrote-about-us.back-to-top')}
+        />
       </section>
 
       <TestimonialForm />
