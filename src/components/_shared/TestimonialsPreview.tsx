@@ -51,7 +51,7 @@ const TestimonialsPreview = () => {
 
   return (
     <section className='pt-12.5 pb-20.5 lg:pt-16 lg:pb-43'>
-      <div className='section-container mb-10 lg:mb-16'>
+      <div className='section-container mb-6 lg:mb-8'>
         <h2 className='font-heading text-primary mb-2.5 text-2xl lg:text-3xl'>
           {t('wrote-about-us.page-title')}
         </h2>
