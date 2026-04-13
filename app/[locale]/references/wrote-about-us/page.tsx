@@ -21,28 +21,28 @@ export async function generateMetadata(): Promise<Metadata> {
 const getDemoTestimonials = (): Testimonial[] => [
   {
     id: '1',
-    date: '25. května 2026',
+    date: '12. dubna 2026',
     greeting: 'Dobrý den,',
     content:
       'Poslední rozloučení s paní Hanou Novotnou se konalo v obřadní síni ve Strašnicích. Obřad byl laděn do světlých tónů, které odrážely radostné vzpomínky rodiny a přátel. Prostor zdobily jemné květiny v bílé a růžové barvě, zvolené tak, aby doplnily klidnou atmosféru.\n\nHosté přicházeli ve světlém oblečení, jak si rodina přála, a přinášeli drobné kytice či jednotlivé květy. Celé setkání proběhlo v tichosti a s úctou, s důrazem na zachování vzpomínek, které rodina i přátelé nesou ve svých srdcích.',
-    signature: 'S úctou a pozdravem, M. C.',
+    signature: 'S úctou, A. N.',
     variant: 'light',
   },
   {
     id: '2',
-    date: '25. května 2026',
+    date: '5. dubna 2026',
     greeting: 'Vážený pane Hamane,',
     content:
       'rád bych Vám touto cestou poděkoval a zároveň se s Vámi podělil o svou osobní zkušenost.\n\nZnáme se z VIP A. C. v Č., a protože jsem se zúčastnil Vaší prezentace, rozhodl jsem se v těžké rodinné situaci obrátit právě na Vaší pohřební službu Pegas.',
-    signature: 'S úctou a pozdravem, M. C.',
+    signature: 'S pozdravem, R. K.',
     variant: 'dark',
   },
   {
     id: '3',
-    date: '25. května 2026',
+    date: '29. března 2026',
     greeting: 'Dobrý den,',
-    content: '...',
-    signature: '',
+    content: 'moc děkujeme za vše, co jste pro nás udělali. Nemáme slov.',
+    signature: 'Rodina Šťastných',
     variant: 'light',
   },
   {
@@ -63,11 +63,11 @@ const getDemoTestimonials = (): Testimonial[] => [
   },
   {
     id: '4',
-    date: '25. května 2026',
-    greeting: 'Dobrý den,',
+    date: '22. března 2026',
+    greeting: 'Dobrá paní Kovářová,',
     content:
-      'Poslední rozloučení s paní Hanou Novotnou se konalo v obřadní síni ve Strašnicích. Obřad byl laděn do světlých tónů, které odrážely radostné vzpomínky rodiny a přátel. Prostor zdobily jemné květiny v bílé a růžové barvě, zvolené tak, aby doplnily klidnou atmosféru.\n\nHosté přicházeli ve světlém oblečení, jak si rodina přála, a přinášeli drobné kytice či jednotlivé květy. Celé setkání proběhlo v tichosti a s úctou, s důrazem na zachování vzpomínek, které rodina i přátelé nesou ve svých srdcích.',
-    signature: 'S úctou a pozdravem, M. C.',
+      'Poslední rozloučení s naší maminkou se konalo v obřadní síni ve Strašnicích. Obřad byl laděn do světlých tónů, které odrážely radostné vzpomínky rodiny a přátel. Prostor zdobily jemné květiny v bílé a růžové barvě, zvolené tak, aby doplnily klidnou atmosféru.\n\nHosté přicházeli ve světlém oblečení, jak si rodina přála, a přinášeli drobné kytice či jednotlivé květy. Celé setkání proběhlo v tichosti a s úctou.',
+    signature: 'Se srdečným pozdravem, E. V.',
     variant: 'light',
     image: {
       src: '/images/placeholder.webp',
@@ -76,46 +76,46 @@ const getDemoTestimonials = (): Testimonial[] => [
   },
   {
     id: '5',
-    date: '25. května 2026',
+    date: '14. března 2026',
     greeting: 'Vážený pane Hamane,',
     content:
-      'rád bych Vám touto cestou poděkoval a zároveň se s Vámi podělil o svou osobní zkušenost.\n\nZnáme se z VIP A. C. v Č., a protože jsem se zúčastnil Vaší prezentace, rozhodl jsem se v těžké rodinné situaci obrátit právě na Vaší pohřební službu Pegas.\n\nNavštívili jsme pobočku U Vinohradské nemocnice, kde se nám věnovala paní Barbora Kovářová. Rád bych vyjádřil své upřímné uznání za její mimořádně profesionální, lidský a vstřícný přístup. Paní Kovářová s námi zůstala i po své pracovní době, aby s námi vše důležité dojednala, a celou situaci nás velmi citlivě provedla.\n\nJeště jednou děkuji a vážím si kvality služeb, které poskytujete.\n\nTěším se brzy na viděnou.',
-    signature: 'S úctou a pozdravem, M. C.',
+      'rád bych Vám touto cestou poděkoval a zároveň se s Vámi podělil o svou osobní zkušenost.\n\nNavštívili jsme pobočku U Vinohradské nemocnice, kde se nám věnovala paní Barbora Kovářová. Rád bych vyjádřil své upřímné uznání za její mimořádně profesionální, lidský a vstřícný přístup. Paní Kovářová s námi zůstala i po své pracovní době, aby s námi vše důležité dojednala, a celou situaci nás velmi citlivě provedla.\n\nJeště jednou děkuji a vážím si kvality služeb, které poskytujete.\n\nTěším se brzy na viděnou.',
+    signature: 'S úctou, M. C.',
     variant: 'light',
   },
   {
     id: '6',
-    date: '25. května 2026',
+    date: '7. března 2026',
     greeting: 'Dobrý den,',
     content:
-      'Poslední rozloučení s paní Hanou Novotnou se konalo v obřadní síni ve Strašnicích. Obřad byl laděn do světlých tónů, které odrážely radostné vzpomínky rodiny a přátel. Prostor zdobily jemné květiny v bílé a růžové barvě, zvolené tak, aby doplnily klidnou atmosféru.',
-    signature: 'S úctou a pozdravem, M. C.',
+      'chtěla bych Vám poděkovat za citlivý přístup při zajištění rozloučení s mým dědečkem. Prostor zdobily jemné květiny v bílé a růžové barvě, zvolené tak, aby doplnily klidnou atmosféru.',
+    signature: 'H. P.',
     variant: 'light',
   },
   {
     id: '7',
-    date: '25. května 2026',
-    greeting: 'Vážený pane Hamane,',
+    date: '28. února 2026',
+    greeting: 'Vážení,',
     content:
-      'rád bych Vám touto cestou poděkoval a zároveň se s Vámi podělil o svou osobní zkušenost.\n\nZnáme se z VIP A. C. v Č., a protože jsem se zúčastnil Vaší prezentace, rozhodl jsem se v těžké rodinné situaci obrátit právě na Vaší pohřební službu Pegas.',
-    signature: 'S úctou a pozdravem, M. C.',
+      'chtěli bychom vyjádřit hluboké poděkování za důstojné rozloučení s naším tatínkem.\n\nZnáme se z VIP A. C. v Č., a protože jsem se zúčastnil Vaší prezentace, rozhodl jsem se v těžké rodinné situaci obrátit právě na Vaší pohřební službu Pegas.',
+    signature: 'Rodina Benešových',
     variant: 'dark',
   },
   {
     id: '8',
-    date: '25. května 2026',
+    date: '19. února 2026',
     greeting: 'Dobrý den,',
-    content: '...',
-    signature: '',
+    content: 'za celou rodinu děkujeme. Bylo to přesně tak, jak jsme si přáli.',
+    signature: 'J. a M. Tomanovi',
     variant: 'light',
   },
   {
     id: '9',
-    date: '25. května 2026',
-    greeting: 'Vážený pane Hamane,',
+    date: '10. února 2026',
+    greeting: 'Milá paní Nováková,',
     content:
-      'rád bych Vám touto cestou poděkoval a zároveň se s Vámi podělil o svou osobní zkušenost.\n\nZnáme se z VIP A. C. v Č., a protože jsem se zúčastnil Vaší prezentace, rozhodl jsem se v těžké rodinné situaci obrátit právě na Vaší pohřební službu Pegas.',
-    signature: 'S úctou a pozdravem, M. C.',
+      'píši Vám s velkým zpožděním, ale chtěla jsem Vám ještě jednou poděkovat za Váš přístup. Pomohla jste nám v nejtěžší chvíli a my na to nikdy nezapomeneme.',
+    signature: 'S vděčností, K. R.',
     variant: 'light',
   },
   {
