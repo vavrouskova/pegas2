@@ -4,9 +4,11 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 
 import { CarouselNavigation } from '@/components/_shared/CarouselNavigation';
-import TestimonialCard, { Testimonial } from '@/components/_shared/TestimonialCard';
+import { Testimonial } from '@/components/_shared/TestimonialCard';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { useCarouselAutoplay } from '@/hooks/useCarouselAutoplay';
+import ArrowRight from '@/components/icons/ArrowRight';
+import { cn, czechTypography } from '@/lib/utils';
 
 // TODO: Replace with WordPress API call when napsaliPost type is available
 const previewTestimonials: Testimonial[] = [
@@ -24,7 +26,7 @@ const previewTestimonials: Testimonial[] = [
     date: '5. dubna 2026',
     greeting: 'Vážený pane Hamane,',
     content:
-      'rád bych Vám touto cestou poděkoval a zároveň se s Vámi podělil o svou osobní zkušenost.\n\nNavštívili jsme pobočku U Vinohradské nemocnice, kde se nám věnovala paní Barbora Kovářová. Rád bych vyjádřil své upřímné uznání za její mimořádně profesionální, lidský a vstřícný přístup.',
+      'rád bych Vám touto cestou poděkoval a zároveň se s Vámi podělil o svou osobní zkušenost. Navštívili jsme pobočku U Vinohradské nemocnice, kde se nám věnovala paní Barbora Kovářová. Rád bych vyjádřil své upřímné uznání za její mimořádně profesionální přístup.',
     signature: 'S pozdravem, R. K.',
     variant: 'dark',
   },
@@ -45,20 +47,10 @@ const TestimonialsPreview = () => {
     autoplayInterval: 5000,
   });
 
-  // All slides = testimonials + CTA
   const totalSlides = previewTestimonials.length + 1;
 
   return (
     <section className='pt-12.5 pb-20.5 lg:pt-35 lg:pb-43'>
-      <div className='section-container mb-10 flex flex-col gap-2.5 lg:mb-16'>
-        <h2 className='font-heading text-primary text-2xl lg:text-3xl'>
-          {t('wrote-about-us.page-title')}
-        </h2>
-        <p className='font-text text-primary/70 max-w-content'>
-          {t('wrote-about-us.hero.description')}
-        </p>
-      </div>
-
       <div
         ref={carouselRef}
         className='relative'
@@ -67,51 +59,71 @@ const TestimonialsPreview = () => {
       >
         <Carousel
           opts={{ align: 'start', loop: true }}
-          className='mx-auto max-w-[28rem] lg:max-w-[32rem]'
+          className='mx-auto max-w-[23.125rem] lg:max-w-[59rem]'
           setApi={setApi}
         >
           <CarouselContent className='-ml-0'>
-            {previewTestimonials.map((testimonial) => (
-              <CarouselItem
-                key={testimonial.id}
-                className='basis-full pl-0'
-              >
-                <div className='px-4'>
-                  <TestimonialCard testimonial={testimonial} />
-                </div>
-              </CarouselItem>
-            ))}
+            {previewTestimonials.map((testimonial) => {
+              const isDark = testimonial.variant === 'dark';
+
+              return (
+                <CarouselItem
+                  key={testimonial.id}
+                  className='basis-full pl-0'
+                >
+                  <article
+                    className={cn(
+                      'flex min-h-[10rem] items-stretch overflow-hidden max-lg:flex-col lg:max-h-[14.375rem]',
+                      isDark ? 'bg-primary' : 'bg-white'
+                    )}
+                  >
+                    <div className='flex flex-1 flex-col justify-between px-6 py-6 lg:px-12 lg:py-8'>
+                      <div className='flex flex-col gap-2'>
+                        <span className={cn('font-text text-xs', isDark ? 'text-white/50' : 'text-primary/40')}>
+                          {testimonial.date}
+                        </span>
+                        <p className={cn('font-heading text-lg', isDark ? 'text-white' : 'text-primary')}>
+                          {czechTypography(testimonial.greeting)}
+                        </p>
+                        <p
+                          className={cn(
+                            'font-italic line-clamp-4 text-sm leading-relaxed',
+                            isDark ? 'text-white/80' : 'text-primary/70'
+                          )}
+                        >
+                          {czechTypography(testimonial.content)}
+                        </p>
+                      </div>
+                      <p className={cn('font-text mt-3 text-right text-xs', isDark ? 'text-white/50' : 'text-primary/40')}>
+                        {czechTypography(testimonial.signature)}
+                      </p>
+                    </div>
+                  </article>
+                </CarouselItem>
+              );
+            })}
 
             {/* CTA slide */}
             <CarouselItem className='basis-full pl-0'>
-              <div className='px-4'>
-                <Link
-                  href={`/${t('routes.references-wrote-about-us')}`}
-                  className='border-primary/15 hover:bg-primary/5 group flex min-h-[280px] flex-col items-center justify-center gap-4 border border-dashed p-8 transition-colors lg:p-12'
-                >
-                  <p className='font-heading text-primary text-center text-lg'>
-                    {t('home.testimonials.cta-title')}
+              <Link
+                href={`/${t('routes.references-wrote-about-us')}`}
+                className='bg-primary group flex min-h-[10rem] items-center overflow-hidden max-lg:flex-col lg:max-h-[14.375rem]'
+              >
+                <div className='flex flex-1 flex-col space-y-2 px-6 py-8 max-md:h-full max-md:justify-between lg:px-12'>
+                  <h3 className='text-white-smoke font-heading mb-4 text-xl'>
+                    {t('wrote-about-us.page-title')}
+                  </h3>
+                  <p className='text-white-smoke/70 font-text mb-6 text-sm'>
+                    {t('wrote-about-us.hero.description')}
                   </p>
-                  <span className='font-heading text-primary flex items-center gap-2 text-sm transition-colors group-hover:opacity-70'>
-                    {t('home.testimonials.cta-link')}
-                    <svg
-                      width='14'
-                      height='14'
-                      viewBox='0 0 14 14'
-                      fill='none'
-                      className='transition-transform group-hover:translate-x-0.5'
-                    >
-                      <path
-                        d='M5 3L9 7L5 11'
-                        stroke='currentColor'
-                        strokeWidth='1.5'
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                      />
-                    </svg>
-                  </span>
-                </Link>
-              </div>
+                  <div className='text-white-smoke flex items-center gap-3'>
+                    <span className='text-white-smoke font-heading text-lg'>
+                      {t('home.testimonials.cta-link')}
+                    </span>
+                    <ArrowRight className='size-5 shrink-0' />
+                  </div>
+                </div>
+              </Link>
             </CarouselItem>
           </CarouselContent>
 
