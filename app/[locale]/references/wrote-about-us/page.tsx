@@ -70,8 +70,8 @@ const getDemoTestimonials = (): Testimonial[] => [
     signature: 'Se srdečným pozdravem, E. V.',
     variant: 'light',
     image: {
-      src: '/images/placeholder.webp',
-      alt: 'Vzpomínka',
+      src: 'https://wp.pohrebpegas.cz/cz/wp-content/uploads/sites/2/2025/12/pegas-fialova-kvetina2.webp',
+      alt: 'Smuteční květiny',
     },
   },
   {
@@ -145,8 +145,8 @@ const getDemoTestimonials = (): Testimonial[] => [
     signature: 'S úctou, P. M.',
     variant: 'light',
     image: {
-      src: '/images/placeholder.webp',
-      alt: 'Květiny',
+      src: 'https://wp.pohrebpegas.cz/cz/wp-content/uploads/sites/2/2025/10/pegas-smutecni-kvetiny12.webp',
+      alt: 'Smuteční květinová výzdoba',
     },
   },
   {
