@@ -74,14 +74,16 @@ const ServicesPage = async () => {
         ]}
       />
 
-      <ServicesGridSection
-        id='smutecni-obrady'
-        title={filteredCeremonies.taxonomy?.name || 'Smuteční obřady'}
-        description={filteredCeremonies.taxonomy?.description || ''}
-        services={filteredCeremonies.posts}
-        type='service'
-        itemCategory2={t('tracking.category-services')}
-      />
+      <div data-hide-sticky="">
+        <ServicesGridSection
+          id='smutecni-obrady'
+          title={filteredCeremonies.taxonomy?.name || 'Smuteční obřady'}
+          description={filteredCeremonies.taxonomy?.description || ''}
+          services={filteredCeremonies.posts}
+          type='service'
+          itemCategory2={t('tracking.category-services')}
+        />
+      </div>
 
       <ContentSection
         title={t('home.organized-by-us.title')}

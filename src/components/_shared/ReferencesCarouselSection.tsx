@@ -38,6 +38,7 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
   }
 
   return (
+    <div data-hide-sticky>
     <GenericCarouselSection
       data={carouselData}
       carouselMaxWidth='max-w-[23.125rem] lg:max-w-[59rem]'
@@ -70,6 +71,7 @@ const ReferencesCarouselSection = ({ referencePosts = [] }: ReferencesCarouselSe
         </div>
       )}
     />
+    </div>
   );
 };
 

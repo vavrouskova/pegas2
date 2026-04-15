@@ -43,48 +43,50 @@ const HomepageSliderSection = ({ slides }: HomepageSliderSectionProps) => {
   const data = convertToCarouselData(slides);
 
   return (
-    <FadeIn delay={2} duration={0.6}>
-      <GenericCarouselSection
-      data={data}
-      carouselMaxWidth='max-w-88 lg:max-w-[48.1875rem]'
-      articleClassName='flex min-h-[10rem] mx-auto items-stretch max-lg:flex-col lg:max-h-[14.375rem]'
-      imageFirst
-      asLink
-      renderImage={(item) => (
-        <picture className='relative aspect-square h-auto w-full lg:max-h-57.5 lg:max-w-57.5'>
-          <Image
-            src={item.image}
-            alt={item.title}
-            fill
-            sizes='(max-width: 768px) 160px, 256px'
-            className='object-cover'
-          />
-        </picture>
-      )}
-      renderContent={(item, t) => (
-        <div className='flex flex-1 flex-col justify-between space-y-2 px-4 py-5 max-lg:h-full lg:px-17.5 lg:py-7.5'>
-          <div className='flex flex-col'>
-            <FormattedText
-              text={item.title}
-              as='h3'
-              className='text-white-smoke mb-2.5 text-xl'
-            />
-            {item.description && (
-              <FormattedText
-                text={item.description}
-                as='p'
-                className='font-text text-lg text-white'
+    <div data-hide-sticky="">
+      <FadeIn delay={2} duration={0.6}>
+        <GenericCarouselSection
+          data={data}
+          carouselMaxWidth='max-w-88 lg:max-w-[48.1875rem]'
+          articleClassName='flex min-h-[10rem] mx-auto items-stretch max-lg:flex-col lg:max-h-[14.375rem]'
+          imageFirst
+          asLink
+          renderImage={(item) => (
+            <picture className='relative aspect-square h-auto w-full lg:max-h-57.5 lg:max-w-57.5'>
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                sizes='(max-width: 768px) 160px, 256px'
+                className='object-cover'
               />
-            )}
-          </div>
-          <div className='text-white-smoke flex items-center gap-3'>
-            <span className='text-white-smoke font-heading text-lg'>{t('find-out-more')}</span>
-            <ArrowRight className='size-5 shrink-0' />
-          </div>
-        </div>
-      )}
-      />
-    </FadeIn>
+            </picture>
+          )}
+          renderContent={(item, t) => (
+            <div className='flex flex-1 flex-col justify-between space-y-2 px-4 py-5 max-lg:h-full lg:px-17.5 lg:py-7.5'>
+              <div className='flex flex-col'>
+                <FormattedText
+                  text={item.title}
+                  as='h3'
+                  className='text-white-smoke mb-2.5 text-xl'
+                />
+                {item.description && (
+                  <FormattedText
+                    text={item.description}
+                    as='p'
+                    className='font-text text-lg text-white'
+                  />
+                )}
+              </div>
+              <div className='text-white-smoke flex items-center gap-3'>
+                <span className='text-white-smoke font-heading text-lg'>{t('find-out-more')}</span>
+                <ArrowRight className='size-5 shrink-0' />
+              </div>
+            </div>
+          )}
+        />
+      </FadeIn>
+    </div>
   );
 };
 

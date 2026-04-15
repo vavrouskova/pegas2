@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useParams } from 'next/navigation';
 import { MotionDiv } from '@/components/animate-ui/MotionWrappers';
@@ -20,7 +20,7 @@ const StickyContact = () => {
   const pathname = usePathname();
   const { slug } = useParams<{ slug?: string }>();
 
-  const [isFooterVisible, setIsFooterVisible] = useState(false);
+  const [shouldHide, setShouldHide] = useState(false);
   const [isActivated, setIsActivated] = useState(false);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
 
@@ -66,36 +66,54 @@ const StickyContact = () => {
     };
   }, []);
 
-  useEffect(() => {
+  // Sledování viditelnosti – na HP: zobrazit jen v hero oblasti, schovat od slideru dolů
+  // Na ostatních stránkách: schovat u footeru
+  const checkVisibility = useCallback(() => {
+    if (!isActivated) return;
+
+    const windowHeight = window.innerHeight;
+
+    // Kontrola footeru (platí pro všechny stránky)
     const footer = document.querySelector('#main-footer');
-    if (!footer) return;
-
-    const checkFooterVisibility = () => {
+    if (footer) {
       const footerRect = footer.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+      if (footerRect.top < windowHeight - 100) {
+        setShouldHide(true);
+        return;
+      }
+    }
 
-      // Footer je viditelný když jeho top je v dolní části obrazovky (méně než 300px od spodu)
-      const isVisible = footerRect.top < windowHeight - 100;
+    // Na HP: najít první [data-hide-sticky] sekci (slider) a schovat lištu od ní dolů
+    const firstTrigger = document.querySelector('[data-hide-sticky]');
+    if (firstTrigger) {
+      const rect = firstTrigger.getBoundingClientRect();
+      // Jakmile sekce vstoupí do horní poloviny viewportu, schovat lištu
+      if (rect.top < windowHeight * 0.4) {
+        setShouldHide(true);
+        return;
+      }
+    }
 
-      setIsFooterVisible(isVisible);
-    };
+    setShouldHide(false);
+  }, [isActivated]);
 
-    // Kontrola při scrollu
-    window.addEventListener('scroll', checkFooterVisibility, { passive: true });
-    // Počáteční kontrola
-    checkFooterVisibility();
+  useEffect(() => {
+    window.addEventListener('scroll', checkVisibility, { passive: true });
+    // Zpožděná počáteční kontrola – čeká na plné vykreslení stránky
+    const timer = setTimeout(checkVisibility, 500);
 
     return () => {
-      window.removeEventListener('scroll', checkFooterVisibility);
+      clearTimeout(timer);
+      window.removeEventListener('scroll', checkVisibility);
     };
-  }, []);
+  }, [checkVisibility]);
 
   const animateTarget = useMemo(() => {
     if (!isActivated) {
       return { opacity: 0 };
     }
-    return isFooterVisible ? { opacity: 0 } : { opacity: 1 };
-  }, [isFooterVisible, isActivated]);
+    return shouldHide ? { opacity: 0 } : { opacity: 1 };
+  }, [shouldHide, isActivated]);
 
   if (
     pathname === '/about-us' ||
@@ -114,12 +132,12 @@ const StickyContact = () => {
         duration: isFirstVisit ? 1.8 : 0.8,
         ease: 'easeOut',
       }}
-      className='bg-primary fixed right-0 bottom-5 z-30 flex gap-4 p-4 pr-12 shadow-lg will-change-transform lg:bottom-1/2'
+      className='bg-primary fixed right-0 bottom-5 z-30 flex gap-3 p-3.5 pr-10 shadow-lg will-change-transform lg:bottom-auto lg:top-36'
     >
-      <div className='flex flex-col justify-between pr-2'>
-        <span className='text-base text-white'>{t('common.nonstop')}</span>
+      <div className='flex flex-col justify-between pr-1.5'>
+        <span className='text-sm text-white'>{t('common.nonstop')}</span>
         <Link
-          className='text-2xl leading-none! text-white transition-all duration-300 hover:opacity-70'
+          className='text-xl leading-none! text-white transition-all duration-300 hover:opacity-70'
           href={`tel:${PhoneNumber}`}
         >
           {PhoneNumber}
