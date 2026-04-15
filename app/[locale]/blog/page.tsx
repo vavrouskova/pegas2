@@ -56,20 +56,22 @@ const BlogPage = async ({ searchParams }: BlogPageProps) => {
         />
       </section>
 
-      <section className='section-container relative'>
-        <div className='mb-8 lg:mb-16'>
-          <Suspense fallback={<div className='h-[40px]' />}>
-            <BlogFilter categories={categories} />
+      <div data-hide-sticky="">
+        <section className='section-container relative'>
+          <div className='mb-8 lg:mb-16'>
+            <Suspense fallback={<div className='h-[40px]' />}>
+              <BlogFilter categories={categories} />
+            </Suspense>
+          </div>
+          <BlogGridSection posts={blogData.nodes} />
+          <Suspense fallback={null}>
+            <BlogPagination
+              totalPages={blogData.totalPages}
+              currentPage={blogData.currentPage}
+            />
           </Suspense>
-        </div>
-        <BlogGridSection posts={blogData.nodes} />
-        <Suspense fallback={null}>
-          <BlogPagination
-            totalPages={blogData.totalPages}
-            currentPage={blogData.currentPage}
-          />
-        </Suspense>
-      </section>
+        </section>
+      </div>
 
       <ContentSection
         title={t('home.faq.title')}

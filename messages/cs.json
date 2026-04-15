@@ -286,7 +286,7 @@
     "back-to-top": "Zpět na začátek",
     "form": {
       "title": "Napište nám",
-      "description": "Chcete se s námi podělit o svou zkušenost? Budeme rádi za každé slovo.",
+      "description": "Chcete se s námi podělit o svou zkušenost? Budeme rádi za každé slovo.\nPošlete nám ji a my ji rádi přidáme.",
       "fields": {
         "message": "Vaše zkušenost nebo vzkaz*"
       },

@@ -57,20 +57,22 @@ const OrganizedReferencesPage = async ({ searchParams }: OrganizedReferencesPage
         />
       </section>
 
-      <section className='section-container relative'>
-        <div className='mb-8 lg:mb-16'>
-          <Suspense fallback={<div className='h-[40px]' />}>
-            <ReferencesFilter categories={categories} />
+      <div data-hide-sticky="">
+        <section className='section-container relative'>
+          <div className='mb-8 lg:mb-16'>
+            <Suspense fallback={<div className='h-[40px]' />}>
+              <ReferencesFilter categories={categories} />
+            </Suspense>
+          </div>
+          <ReferencesGridSection referencePosts={referencesData.nodes} />
+          <Suspense fallback={null}>
+            <ReferencesPagination
+              totalPages={referencesData.totalPages}
+              currentPage={referencesData.currentPage}
+            />
           </Suspense>
-        </div>
-        <ReferencesGridSection referencePosts={referencesData.nodes} />
-        <Suspense fallback={null}>
-          <ReferencesPagination
-            totalPages={referencesData.totalPages}
-            currentPage={referencesData.currentPage}
-          />
-        </Suspense>
-      </section>
+        </section>
+      </div>
 
       <ContentSection
         title={t('home.about-us.title')}

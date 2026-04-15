@@ -213,6 +213,7 @@ const WroteAboutUsPage = async () => {
         />
       </section>
 
+      <div data-hide-sticky="">
       <section className='section-container relative'>
         <TestimonialsSection
           testimonials={testimonials}
@@ -224,6 +225,7 @@ const WroteAboutUsPage = async () => {
       </section>
 
       <TestimonialForm />
+      </div>
 
       <ContentSection
         title={t('home.about-us.title')}
