@@ -209,7 +209,7 @@
     },
     "transport": {
       "title": "Převoz zesnulých",
-      "description": "Převozy zajišťujeme tiše a s respektem – s využitím převozových rakví, špičkového technického zázemí a zkušeného týmu.",
+      "description": "Převozy zajišťujeme tiše a s respektem – s využitím převozových rakví, špičkového technického zázemí'{{br}}'a zkušeného týmu.",
       "cards": {
         "transport": {
           "title": "Převoz zesnulých",
