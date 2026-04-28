@@ -64,7 +64,312 @@
     "cookies": "informace-o-vyuziti-cookies",
     "ceremony-variants": "smutecni-obrady",
     "funeral-essentials": "doplnkove-sluzby-a-produkty",
-    "thank-you": "dekujeme"
+    "thank-you": "dekujeme",
+    "parte": "parte",
+    "ceremonies": "kalendar-obradu"
+  },
+
+  "ceremonies": {
+    "page-title": "Kalendář obřadů",
+    "back-to-list": "Kalendář obřadů",
+    "hero": {
+      "title": "V tichu jsme.",
+      "description": "Zajímá vás, kde a kdy se koná rozloučení, co si přeje rodina, nebo jak můžete darovat květinu a říct své poslední sbohem? Všechny informace o námi plánovaných obřadech naleznete zde."
+    },
+    "filters": {
+      "all": "Vše",
+      "this-week": "Tento týden",
+      "upcoming": "Bude se konat",
+      "past": "Rozloučili jsme se",
+      "search-placeholder": "Vyhledat podle jména",
+      "date-placeholder": "Datum",
+      "venue-placeholder": "Všechny obřadní síně",
+      "today": "Dnes",
+      "tomorrow": "Zítra",
+      "day-after-tomorrow": "Pozítří",
+      "sort-label": "Seřadit",
+      "sort-date": "Podle data",
+      "sort-venue": "Podle obřadní síně",
+      "sort-name": "Podle jména"
+    },
+    "pagination": {
+      "showing": "Zobrazeno {from}–{to} z {total}",
+      "total": "{total, plural, =1 {# obřad} few {# obřady} other {# obřadů}}",
+      "prev": "Předchozí",
+      "next": "Další",
+      "page": "Strana {current} / {total}"
+    },
+    "status": {
+      "upcoming": "Bude se konat",
+      "ongoing": "Probíhá právě teď",
+      "past": "Rozloučili jsme se",
+      "past-card-prefix": "Rozloučeno"
+    },
+    "empty": "Žádné obřady neodpovídají vašemu výběru.",
+    "card-cta": "Zobrazit detail",
+    "detail": {
+      "show-on-map": "Ukázat na mapě",
+      "save-to-calendar": "Uložit do kalendáře",
+      "copy-link": "Kopírovat odkaz",
+      "link-copied": "Odkaz byl zkopírován do schránky.",
+      "share": "Sdílet",
+      "share-whatsapp": "WhatsApp",
+      "share-sms": "SMS",
+      "share-email": "E-mail",
+      "donors-title": "Květinu věnovali:",
+      "gallery-title": "Galerie",
+      "download-all": "Stáhnout vše",
+      "flower-cta": {
+        "title": "Pošlete květinu na rozloučenou",
+        "description": "Vyjádřete svou vděčnost a účast smuteční kyticí, kterou vaším jménem doručíme na místo obřadu. Na poslední sbohem, na pár kliknutí.",
+        "button": "Poslat květinu"
+      }
+    },
+    "homepage": {
+      "title": "V tichu jsme.",
+      "description": "Zajímá vás, kde a kdy se koná rozloučení, co si přeje rodina, nebo jak můžete darovat květinu a říct své poslední sbohem? Všechny informace o námi plánovaných obřadech naleznete zde.",
+      "cta": "Kalendář obřadů"
+    },
+    "flower-form": {
+      "page-title": "Poslat květinu",
+      "title": "Pošlete květinu na rozloučenou",
+      "description": "Vyplňte několik údajů a my vaším jménem doručíme květinu přímo na místo obřadu.",
+      "ceremony-label": "Obřad",
+      "deadline-label": "Objednejte do",
+      "fields": {
+        "name": "Vaše jméno a příjmení*",
+        "email": "E-mail*",
+        "phone": "Telefon*",
+        "bouquet": "Vyberte kytici*",
+        "ribbon": "Text na stuze",
+        "ribbon-placeholder": "Např. Nikdy nezapomeneme – rodina Novákova",
+        "message": "Vzkaz pro rodinu (nepovinné)"
+      },
+      "bouquets": {
+        "small": "Malá kytice (od 750 Kč)",
+        "medium": "Střední kytice (od 1 500 Kč)",
+        "large": "Velká kytice (od 2 800 Kč)",
+        "wreath": "Smuteční věnec (od 3 500 Kč)"
+      },
+      "errors": {
+        "name-required": "Prosím, vyplňte své jméno a příjmení",
+        "email-required": "Prosím, vyplňte svůj e-mail",
+        "invalid-email": "Prosím, zadejte platnou e-mailovou adresu",
+        "phone-required": "Prosím, vyplňte telefonní číslo",
+        "invalid-phone": "Prosím, zadejte platné telefonní číslo",
+        "bouquet-required": "Prosím, vyberte kytici"
+      }
+    }
+  },
+
+  "parte": {
+    "hero": {
+      "title": "Vytvořte si parte,'{{br}}'v klidu, sami nebo spolu.",
+      "description": "Vyberte si z nabízených šablon, doplňte jméno, fotografii i vlastní slova rozloučení. Parte si stáhnete jako PDF, pošlete e-mailem nebo sdílíte odkazem – tak, jak to pro vás bude nejjednodušší.",
+      "cta": "Vybrat šablonu",
+      "cta-wizard": "Vytvořit parte"
+    },
+    "wizard": {
+      "intro": {
+        "title": "Vytvoříme parte společně",
+        "description": "Odpovězte na pár otázek a my pro vás připravíme deset návrhů s již doplněnými údaji. Vyberete si ten, který se vám líbí, a případně ještě upravíte v editoru.",
+        "start": "Začít",
+        "back-to-gallery": "Vybrat ze šablon"
+      },
+      "progress": "Krok {step} z {total}",
+      "next": "Pokračovat",
+      "back": "Zpět",
+      "finish": "Zobrazit návrhy",
+      "steps": {
+        "gender": {
+          "title": "Pro koho je parte?",
+          "male": "Muž",
+          "female": "Žena",
+          "roles-hint": "Čím vám byl/a (volitelné, lze vybrat víc)",
+          "roles": {
+            "father": "tatínek",
+            "husband": "manžel",
+            "son": "syn",
+            "grandfather": "dědeček",
+            "brother": "bratr",
+            "uncle": "strýc",
+            "friend-male": "přítel",
+            "mother": "maminka",
+            "wife": "manželka",
+            "daughter": "dcera",
+            "grandmother": "babička",
+            "sister": "sestra",
+            "aunt": "teta",
+            "friend-female": "přítelkyně"
+          }
+        },
+        "identity": {
+          "title": "Jméno a data",
+          "description": "Tyto údaje se vepíšou do parte. Můžete je kdykoliv změnit.",
+          "first-name": "Jméno",
+          "first-name-placeholder": "Marie",
+          "last-name": "Příjmení",
+          "last-name-placeholder": "Svobodová",
+          "birth": "Datum narození",
+          "death": "Datum úmrtí"
+        },
+        "photo": {
+          "title": "Chcete přidat portrétní fotografii?",
+          "description": "Můžete fotografii nahrát teď, nebo ji doplnit později v editoru.",
+          "yes": "Ano, s portrétem",
+          "no": "Bez portrétu",
+          "upload": "Nahrát portrét",
+          "replace": "Nahrát jiný",
+          "remove": "Odebrat"
+        },
+        "character": {
+          "title": "Jaký charakter má parte mít?",
+          "description": "Vyberte ladění, které vám nejlépe vyhovuje.",
+          "options": {
+            "classic": {
+              "title": "Klasické a důstojné",
+              "description": "Tradiční rámeček, serifové písmo."
+            },
+            "soft": {
+              "title": "Jemné a světlé",
+              "description": "Krémové a teplé tóny, decentní detaily."
+            },
+            "dark": {
+              "title": "Tmavé a slavnostní",
+              "description": "Tmavé pozadí se světlým písmem."
+            },
+            "minimal": {
+              "title": "Minimalistické",
+              "description": "Čisté linie, bezpatkové písmo."
+            },
+            "modern": {
+              "title": "Moderní s akcentem",
+              "description": "Decentní barevný akcent v duchu Pegasu."
+            }
+          },
+          "motifs": {
+            "title": "Motiv (volitelně)",
+            "description": "Doplňkový motiv navázaný na zájmy zesnulého. Můžete nechat bez motivu.",
+            "options": {
+              "none": { "title": "Bez motivu" },
+              "garden": { "title": "Zahradní" },
+              "architecture": { "title": "Architektura" },
+              "flowers": { "title": "Květiny" },
+              "cookbook": { "title": "Kuchařka" }
+            }
+          }
+        },
+        "verse": {
+          "title": "Verš nebo citát",
+          "description": "Vyberte žánr veršů nebo zvolte vlastní text. Můžete také pokračovat bez veršů.",
+          "religious": "Církevní verš",
+          "secular": "Nenáboženský citát",
+          "custom": "Vlastní text",
+          "none": "Bez veršů",
+          "pick": "Vybrat z nabídky",
+          "placeholder": "Napište vlastní verše…"
+        },
+        "ceremony": {
+          "title": "Poslední rozloučení",
+          "description": "Údaje, které se vepíšou do textu rozloučení. Není povinné.",
+          "scope": {
+            "title": "Forma rozloučení",
+            "options": {
+              "public": {
+                "title": "Veřejné rozloučení",
+                "description": "Místo a čas obřadu uvedeme v parte."
+              },
+              "family": {
+                "title": "V úzkém rodinném kruhu",
+                "description": "Pohřeb se koná soukromě, bez veřejného oznámení místa."
+              },
+              "private": {
+                "title": "Bez veřejného rozloučení",
+                "description": "Rodina se rozloučila v soukromí."
+              }
+            }
+          },
+          "place": "Místo obřadu",
+          "place-placeholder": "obřadní síň v Pardubicích",
+          "date": "Datum obřadu",
+          "time": "Čas obřadu",
+          "signature": "Podpis",
+          "signature-placeholder": "S láskou vzpomíná rodina"
+        }
+      },
+      "results": {
+        "title": "Vybrali jsme deset návrhů pro vás",
+        "description": "Klikněte na návrh, který se vám nejvíc líbí. Otevře se v editoru s vašimi údaji – ještě v něm můžete cokoliv upravit.",
+        "use": "Použít návrh",
+        "back-to-form": "Upravit odpovědi",
+        "empty": "Pro vaše odpovědi se nepodařilo najít žádný návrh."
+      }
+    },
+    "gallery": {
+      "title": "Vyberte šablonu",
+      "description": "Každou šablonu lze dále upravit – texty, barvy i fotografie.",
+      "use-template": "Použít šablonu"
+    },
+    "editor": {
+      "back": "Zpět na výběr šablon",
+      "undo": "Zpět",
+      "redo": "Dopředu",
+      "download-pdf": "Stáhnout PDF",
+      "download-cmyk": "Stáhnout pro tisk (CMYK)",
+      "share": "Sdílet odkazem",
+      "send-email": "Poslat e-mailem",
+      "save-draft": "Uložit rozpracované",
+      "properties": {
+        "title": "Úprava",
+        "select-element": "Klikněte na text nebo fotografii v parte pro její úpravu.",
+        "text-content": "Text",
+        "font-size": "Velikost písma",
+        "text-align": "Zarovnání",
+        "text-color": "Barva textu",
+        "upload-photo": "Nahrát vlastní fotografii",
+        "choose-from-library": "Vybrat z knihovny",
+        "remove-photo": "Odstranit fotografii"
+      },
+      "library": {
+        "title": "Knihovna fotografií",
+        "backgrounds": "Pozadí",
+        "symbols": "Symboly",
+        "close": "Zavřít"
+      },
+      "toast": {
+        "pdf-ready": "PDF připraveno ke stažení.",
+        "pdf-cmyk-note": "CMYK verze pro tisk bude dostupná v produkční verzi. Nyní stahujeme RGB variantu.",
+        "copied": "Odkaz byl zkopírován do schránky.",
+        "email-sent": "E-mail byl odeslán.",
+        "draft-saved": "Rozpracované parte uloženo ve vašem prohlížeči."
+      }
+    },
+    "share": {
+      "title": "Sdílet parte",
+      "description": "Pošlete odkaz blízkým nebo jim odešlete parte rovnou e-mailem.",
+      "link-label": "Odkaz ke sdílení",
+      "copy": "Kopírovat",
+      "email-tab": "E-mail",
+      "link-tab": "Odkaz",
+      "email-form": {
+        "recipients": "Adresáti (oddělte čárkou)",
+        "recipients-placeholder": "jan@priklad.cz, marie@priklad.cz",
+        "subject": "Předmět",
+        "subject-placeholder": "Smuteční oznámení",
+        "message": "Zpráva",
+        "message-placeholder": "S lítostí vám oznamujeme…",
+        "send": "Odeslat",
+        "validation": {
+          "recipients-required": "Zadejte alespoň jednoho adresáta.",
+          "recipients-invalid": "Některá z e-mailových adres není platná."
+        }
+      },
+      "preview": {
+        "title": "Smuteční oznámení",
+        "download": "Stáhnout jako PDF",
+        "create-own": "Vytvořit vlastní parte"
+      }
+    }
   },
 
   "header": {
@@ -76,6 +381,8 @@
     "blog": "Články",
     "about-us": "O nás",
     "contacts": "Kontakty",
+    "parte": "Parte",
+    "ceremonies": "Kalendář obřadů",
     "infoBarMore": "Více",
     "infoBarPrev": "Předchozí informace",
     "infoBarNext": "Další informace",

@@ -119,6 +119,7 @@ const StickyContact = () => {
     pathname === '/about-us' ||
     pathname === '/blog' ||
     pathname === '/contacts' ||
+    pathname.startsWith('/parte') ||
     (typeof slug === 'string' && BRANCH_PAGE_PREFIXES.some(prefix => slug.toLowerCase().startsWith(prefix)))
   ) {
     return null;

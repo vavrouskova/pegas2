@@ -47,6 +47,11 @@ const nextConfig = {
         hostname: 'wp.antstudio.cz',
         pathname: '/wp-content/uploads/**',
       },
+      {
+        protocol: 'https' as const,
+        hostname: 'randomuser.me',
+        pathname: '/api/portraits/**',
+      },
     ],
   },
   async headers() {

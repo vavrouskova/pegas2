@@ -10,6 +10,7 @@ import MainHeroSection from '@/components/_shared/MainHeroSection';
 import ReferencesCarouselSection from '@/components/_shared/ReferencesCarouselSection';
 import TestimonialsPreview from '@/components/_shared/TestimonialsPreview';
 import ServicesSection from '@/components/_shared/ServicesSection';
+import HomepageCeremoniesSection from '@/components/ceremonies/HomepageCeremoniesSection';
 import { getSeoDataByUri } from '@/utils/seo';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -74,6 +75,8 @@ const Homepage = async () => {
       />
 
       <ReferencesCarouselSection referencePosts={referencePosts} />
+
+      <HomepageCeremoniesSection />
 
       <ContentSection
         title={t('about-us.title')}

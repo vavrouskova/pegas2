@@ -17,6 +17,7 @@ export interface HeaderLink {
   href: string;
   label: string;
   children?: HeaderLink[];
+  column?: number;
 }
 
 interface HeaderContentProps {

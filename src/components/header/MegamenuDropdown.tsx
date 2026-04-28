@@ -36,6 +36,14 @@ export const MegamenuDropdown = ({
 
   if (!isMounted) return null;
 
+  const columns = items.reduce<HeaderLink[][]>((acc, item) => {
+    const colIndex = item.column ?? 0;
+    if (!acc[colIndex]) acc[colIndex] = [];
+    acc[colIndex].push(item);
+    return acc;
+  }, []);
+  const renderedColumns = columns.filter((col) => col && col.length > 0);
+
   return createPortal(
     <AnimatePresence>
       {isOpen && (
@@ -49,27 +57,34 @@ export const MegamenuDropdown = ({
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
         >
-          <ul
-            className='flex flex-col gap-1'
+          <div
+            className='flex gap-24'
             style={{ paddingLeft: navLeftOffset }}
           >
-            {items.map((item, index) => (
-              <motion.li
-                key={item.id || item.href}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: index * 0.03 }}
+            {renderedColumns.map((columnItems, colIndex) => (
+              <ul
+                key={colIndex}
+                className='flex flex-col gap-1'
               >
-                <Link
-                  href={item.href}
-                  onClick={onClose}
-                  className='font-text text-secondary hover:text-primary inline-block py-1 text-sm transition-colors duration-200 hover:underline'
-                >
-                  {item.label}
-                </Link>
-              </motion.li>
+                {columnItems.map((item, index) => (
+                  <motion.li
+                    key={item.id || item.href}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: index * 0.03 }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={onClose}
+                      className='font-text text-secondary hover:text-primary inline-block py-1 text-sm transition-colors duration-200 hover:underline'
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
             ))}
-          </ul>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>,

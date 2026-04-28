@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" width="200" height="100">
+  <rect width="200" height="100" fill="#ffffff"/>
+  <g fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.5">
+    <path d="M 16 70 Q 28 60 28 50 Q 30 50 32 60 Q 34 50 36 60 Q 38 50 42 60 Z"/>
+    <line x1="22" y1="74" x2="170" y2="40" stroke-width="1.5"/>
+    <line x1="24" y1="78" x2="172" y2="44" stroke-width="1" opacity="0.6"/>
+    <g transform="translate(40 66) rotate(-12)">
+      <path d="M 0 0 Q 8 -10 16 -8 L 14 -2 Q 6 -2 0 0 Z"/>
+    </g>
+    <g transform="translate(58 60) rotate(-14)">
+      <path d="M 0 0 Q 10 -12 20 -10 L 18 -2 Q 8 -2 0 0 Z"/>
+    </g>
+    <g transform="translate(80 54) rotate(-16)">
+      <path d="M 0 0 Q 12 -14 24 -12 L 22 -2 Q 10 -2 0 0 Z"/>
+    </g>
+    <g transform="translate(106 46) rotate(-18)">
+      <path d="M 0 0 Q 14 -16 28 -14 L 26 -2 Q 12 -2 0 0 Z"/>
+    </g>
+    <g transform="translate(134 38) rotate(-20)">
+      <path d="M 0 0 Q 14 -16 28 -14 L 26 -2 Q 12 -2 0 0 Z"/>
+    </g>
+    <g transform="translate(40 70) rotate(12)">
+      <path d="M 0 0 Q 8 10 16 8 L 14 2 Q 6 2 0 0 Z"/>
+    </g>
+    <g transform="translate(58 64) rotate(14)">
+      <path d="M 0 0 Q 10 12 20 10 L 18 2 Q 8 2 0 0 Z"/>
+    </g>
+    <g transform="translate(80 58) rotate(16)">
+      <path d="M 0 0 Q 12 14 24 12 L 22 2 Q 10 2 0 0 Z"/>
+    </g>
+    <g transform="translate(106 50) rotate(18)">
+      <path d="M 0 0 Q 14 16 28 14 L 26 2 Q 12 2 0 0 Z"/>
+    </g>
+    <g transform="translate(134 42) rotate(20)">
+      <path d="M 0 0 Q 14 16 28 14 L 26 2 Q 12 2 0 0 Z"/>
+    </g>
+  </g>
+</svg>

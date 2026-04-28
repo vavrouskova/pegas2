@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 
 import { getHeaderMegamenuData } from '@/api/wordpress-api';
-import HeaderContent from '@/components/header/HeaderContent';
+import HeaderContent, { HeaderLink } from '@/components/header/HeaderContent';
 import { getHeaderLinks, MegamenuData } from '@/utils/data';
 
 const Header = async () => {
@@ -10,16 +10,32 @@ const Header = async () => {
   const tHeader = await getTranslations('header');
   const tRoutes = await getTranslations('routes');
 
-  // Transform GraphQL data to HeaderLink format
+  const wpServiceItems: HeaderLink[] =
+    megamenuRawData?.globalACF?.headerSection?.submenuSluzby
+      ?.filter((item) => item.sluzbyLink?.url)
+      .map((item) => ({
+        id: item.sluzbyLink.url,
+        label: item.sluzbyLink.title,
+        href: item.sluzbyLink.url,
+      })) || [];
+
+  const staticServiceItems: HeaderLink[] = [
+    {
+      id: 'parte',
+      label: tHeader('parte'),
+      href: `/${tRoutes('parte')}`,
+      column: 1,
+    },
+    {
+      id: 'ceremonies',
+      label: tHeader('ceremonies'),
+      href: `/${tRoutes('ceremonies')}`,
+      column: 1,
+    },
+  ];
+
   const megamenuData: MegamenuData = {
-    services:
-      megamenuRawData?.globalACF?.headerSection?.submenuSluzby
-        ?.filter((item) => item.sluzbyLink?.url)
-        .map((item) => ({
-          id: item.sluzbyLink.url,
-          label: item.sluzbyLink.title,
-          href: item.sluzbyLink.url,
-        })) || [],
+    services: [...wpServiceItems, ...staticServiceItems],
     blog:
       megamenuRawData?.globalACF?.headerSection?.submenuBlog
         ?.filter((item) => item.sluzbyLink?.url)

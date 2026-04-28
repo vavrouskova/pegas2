@@ -40,6 +40,20 @@ export const pathnames = {
 
   '/thank-you': { cs: '/dekujeme' },
 
+  '/parte': { cs: '/parte' },
+
+  '/parte/vytvorit': { cs: '/parte/vytvorit' },
+
+  '/parte/editor/[templateId]': { cs: '/parte/editor/[templateId]' },
+
+  '/parte/share/[token]': { cs: '/parte/sdileni/[token]' },
+
+  '/ceremonies': { cs: '/kalendar-obradu' },
+
+  '/ceremonies/[slug]': { cs: '/kalendar-obradu/[slug]' },
+
+  '/ceremonies/[slug]/send-flower': { cs: '/kalendar-obradu/[slug]/poslat-kvetinu' },
+
   '/[slug]': { cs: '/[slug]' },
 } satisfies Pathnames<typeof locales>;
 

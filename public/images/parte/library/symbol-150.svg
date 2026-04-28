@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" width="200" height="160">
+  <rect width="200" height="160" fill="#ffffff"/>
+  <g fill="#1a1a1a">
+    <rect x="78" y="14" width="14" height="120"/>
+    <rect x="50" y="46" width="70" height="14"/>
+  </g>
+  <g fill="none" stroke="#1a1a1a" stroke-width="1.5">
+    <line x1="84" y1="80" x2="190" y2="40"/>
+    <g transform="translate(160 56) rotate(-22)">
+      <g transform="translate(0 -2) rotate(-12)"><path d="M 0 0 Q 8 -10 18 -8 L 16 0 Q 6 0 0 0 Z" fill="#1a1a1a"/></g>
+      <g transform="translate(-20 4) rotate(-14)"><path d="M 0 0 Q 10 -10 20 -8 L 18 0 Q 8 0 0 0 Z" fill="#1a1a1a"/></g>
+      <g transform="translate(-44 12) rotate(-16)"><path d="M 0 0 Q 12 -12 22 -10 L 20 0 Q 10 0 0 0 Z" fill="#1a1a1a"/></g>
+      <g transform="translate(-66 22) rotate(-18)"><path d="M 0 0 Q 12 -12 22 -10 L 20 0 Q 10 0 0 0 Z" fill="#1a1a1a"/></g>
+      <g transform="translate(0 4) rotate(12)"><path d="M 0 0 Q 8 10 18 8 L 16 0 Q 6 0 0 0 Z" fill="#1a1a1a"/></g>
+      <g transform="translate(-20 10) rotate(14)"><path d="M 0 0 Q 10 10 20 8 L 18 0 Q 8 0 0 0 Z" fill="#1a1a1a"/></g>
+      <g transform="translate(-44 18) rotate(16)"><path d="M 0 0 Q 12 12 22 10 L 20 0 Q 10 0 0 0 Z" fill="#1a1a1a"/></g>
+      <g transform="translate(-66 28) rotate(18)"><path d="M 0 0 Q 12 12 22 10 L 20 0 Q 10 0 0 0 Z" fill="#1a1a1a"/></g>
+    </g>
+  </g>
+</svg>
