@@ -38,10 +38,10 @@ const joinRoles = (roles: ParteFamilyRole[]): string => {
 };
 
 const buildIntroduction = (
-  gender: ParteGender,
+  gender: ParteGender | undefined,
   roles: ParteFamilyRole[]
 ): string => {
-  const verb = genderVerb[gender];
+  const verb = genderVerb[gender ?? 'female'];
   const subject = joinRoles(roles);
   if (!subject) {
     return `S hlubokým zármutkem oznamujeme,\nže nás navždy ${verb}`;

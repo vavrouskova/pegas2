@@ -1,15 +1,26 @@
 'use client';
 
+import { LayoutGrid, List } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 
 import CeremonyCard from '@/components/ceremonies/CeremonyCard';
 import Search from '@/components/icons/Search';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Link } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 import { Ceremony } from '@/types/ceremony';
+import { formatCeremonyDate } from '@/utils/ceremonies/format';
 import { getCeremonyStatus } from '@/utils/ceremonies/status';
 
 type FilterKey = 'all' | 'past';
+type ViewMode = 'grid' | 'list';
 
 const PAGE_SIZE = 10;
 
@@ -24,6 +35,8 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedVenue, setSelectedVenue] = useState('');
   const [page, setPage] = useState(1);
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const tRoutes = useTranslations('routes');
 
   const handleFilterClick = (key: FilterKey) => {
     setActiveFilter(key);
@@ -122,84 +135,153 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
     <section className='section-container pt-0! lg:pt-0!'>
       <div
         data-hide-sticky
-        className='mb-10 flex flex-col gap-3'
+        className='mb-10 flex flex-wrap items-center gap-2'
       >
-        <div className='flex flex-wrap items-center gap-2'>
-          {renderFilterButton('all', t('filters.all'))}
-          {dateShortcuts.map((shortcut) => {
-            const isActive = selectedDate === shortcut.value;
-            return (
-              <button
-                key={shortcut.key}
-                type='button'
-                onClick={() => setSelectedDate(isActive ? '' : shortcut.value)}
+        {renderFilterButton('all', t('filters.all'))}
+        {dateShortcuts.map((shortcut) => {
+          const isActive = selectedDate === shortcut.value;
+          return (
+            <button
+              key={shortcut.key}
+              type='button'
+              onClick={() => setSelectedDate(isActive ? '' : shortcut.value)}
+              className={cn(
+                'box-border flex max-h-[40px] shrink-0 items-center justify-center px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
+                isActive ? 'bg-primary' : 'bg-white'
+              )}
+            >
+              <span
                 className={cn(
-                  'box-border flex max-h-[40px] shrink-0 items-center justify-center px-3 py-[10px] transition-opacity duration-300 hover:opacity-70',
-                  isActive ? 'bg-primary' : 'bg-white'
+                  'text-sm whitespace-pre',
+                  isActive ? 'font-heading text-white-smoke' : 'font-text text-primary'
                 )}
               >
-                <span
-                  className={cn(
-                    'text-sm whitespace-pre',
-                    isActive ? 'font-heading text-white-smoke' : 'font-text text-primary'
-                  )}
-                >
-                  {shortcut.label}
-                </span>
-              </button>
-            );
-          })}
-          <input
-            type='date'
-            value={selectedDate}
-            onChange={(event) => setSelectedDate(event.target.value)}
-            placeholder={t('filters.date-placeholder')}
-            className='text-primary h-[40px] border-none bg-white px-3 text-sm outline-none lg:max-w-[220px]'
-          />
-          <label className='relative flex h-[40px] min-w-[200px] flex-1 items-center gap-2 bg-white px-3 lg:max-w-md'>
-            <Search className='text-primary size-[19px] shrink-0' />
-            <input
-              type='text'
-              value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
-              placeholder={t('filters.search-placeholder')}
-              className='text-primary placeholder:text-primary/60 min-w-0 flex-1 border-none bg-transparent text-sm outline-none'
-            />
-          </label>
-          {renderFilterButton('past', t('filters.past'))}
-        </div>
-
-        <div className='flex flex-wrap items-center gap-2'>
-          <select
-            value={selectedVenue}
-            onChange={(event) => setSelectedVenue(event.target.value)}
-            className='text-primary h-[40px] border-none bg-white px-3 text-sm outline-none lg:max-w-[260px]'
-          >
-            <option value=''>{t('filters.venue-placeholder')}</option>
+                {shortcut.label}
+              </span>
+            </button>
+          );
+        })}
+        <input
+          type='date'
+          value={selectedDate}
+          onChange={(event) => setSelectedDate(event.target.value)}
+          placeholder={t('filters.date-placeholder')}
+          className='text-primary h-[40px] border-none bg-white px-3 text-sm outline-none lg:max-w-[220px]'
+        />
+        <Select
+          value={selectedVenue || 'all'}
+          onValueChange={(value) => setSelectedVenue(value === 'all' ? '' : value)}
+        >
+          <SelectTrigger className='lg:min-w-[220px]'>
+            <SelectValue placeholder={t('filters.venue-placeholder')} />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='all'>{t('filters.venue-placeholder')}</SelectItem>
             {venues.map((venue) => (
-              <option
+              <SelectItem
                 key={venue}
                 value={venue}
               >
                 {venue}
-              </option>
+              </SelectItem>
             ))}
-          </select>
-        </div>
+          </SelectContent>
+        </Select>
+        <label className='relative flex h-[40px] min-w-[200px] flex-1 items-center gap-2 bg-white px-3 lg:max-w-md'>
+          <Search className='text-primary size-[19px] shrink-0' />
+          <input
+            type='text'
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder={t('filters.search-placeholder')}
+            className='text-primary placeholder:text-primary/60 min-w-0 flex-1 border-none bg-transparent text-sm outline-none'
+          />
+        </label>
+        {renderFilterButton('past', t('filters.past'))}
+      </div>
+
+      <div className='mb-6 flex items-center justify-end gap-1'>
+        <button
+          type='button'
+          onClick={() => setViewMode('grid')}
+          aria-label={t('view.grid')}
+          aria-pressed={viewMode === 'grid'}
+          className={cn(
+            'flex h-[36px] w-[36px] items-center justify-center transition-opacity duration-300 hover:opacity-70',
+            viewMode === 'grid' ? 'bg-primary text-white-smoke' : 'bg-white text-primary'
+          )}
+        >
+          <LayoutGrid className='size-4' />
+        </button>
+        <button
+          type='button'
+          onClick={() => setViewMode('list')}
+          aria-label={t('view.list')}
+          aria-pressed={viewMode === 'list'}
+          className={cn(
+            'flex h-[36px] w-[36px] items-center justify-center transition-opacity duration-300 hover:opacity-70',
+            viewMode === 'list' ? 'bg-primary text-white-smoke' : 'bg-white text-primary'
+          )}
+        >
+          <List className='size-4' />
+        </button>
       </div>
 
       {filtered.length === 0 ? (
         <p className='font-text text-primary py-12 text-center'>{t('empty')}</p>
       ) : (
         <>
-          <div className='grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-5 lg:gap-x-8 lg:gap-y-14'>
-            {pagedItems.map((ceremony) => (
-              <CeremonyCard
-                key={ceremony.slug}
-                ceremony={ceremony}
-              />
-            ))}
-          </div>
+          {viewMode === 'grid' ? (
+            <div className='grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-5 lg:gap-x-8 lg:gap-y-14'>
+              {pagedItems.map((ceremony) => (
+                <CeremonyCard
+                  key={ceremony.slug}
+                  ceremony={ceremony}
+                />
+              ))}
+            </div>
+          ) : (
+            <ul className='border-primary/10 flex flex-col border-t'>
+              {pagedItems.map((ceremony) => {
+                const start = new Date(ceremony.startAt);
+                const time = `${start.getHours()}:${String(start.getMinutes()).padStart(2, '0')}`;
+                const date = formatCeremonyDate(ceremony.startAt);
+                const status = getCeremonyStatus(ceremony);
+                const isPast = status === 'past';
+                const fullName = `${ceremony.person.firstName} ${ceremony.person.lastName}`;
+                return (
+                  <li
+                    key={ceremony.slug}
+                    className='border-primary/10 border-b'
+                  >
+                    <Link
+                      href={`/${tRoutes('ceremonies')}/${ceremony.slug}` as never}
+                      className='hover:bg-primary/[0.03] flex flex-col gap-1 px-3 py-2.5 transition-colors lg:flex-row lg:items-center lg:gap-6 lg:px-4'
+                    >
+                      <span className='font-text text-primary w-full text-sm lg:w-56 lg:shrink-0 lg:whitespace-nowrap'>
+                        {isPast ? (
+                          <>
+                            <span className='font-heading'>
+                              {t('status.past-card-prefix')}
+                            </span>{' '}
+                            {date}
+                          </>
+                        ) : (
+                          `${date} · ${time}`
+                        )}
+                      </span>
+                      <span className='font-heading text-primary flex-1 text-base'>
+                        {fullName}
+                      </span>
+                      <span className='font-text text-primary text-sm lg:w-64 lg:shrink-0 lg:whitespace-nowrap'>
+                        {ceremony.venue.name}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
 
           {totalPages > 1 && (
             <div className='mt-10 flex flex-wrap items-center justify-between gap-4 lg:mt-14'>

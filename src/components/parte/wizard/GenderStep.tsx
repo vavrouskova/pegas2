@@ -34,7 +34,7 @@ const FEMALE_ROLES: ParteFamilyRole[] = [
 
 /* eslint-disable no-unused-vars */
 interface GenderStepProps {
-  gender: ParteGender;
+  gender: ParteGender | undefined;
   familyRoles: ParteFamilyRole[];
   onGenderChange: (gender: ParteGender) => void;
   onFamilyRolesChange: (roles: ParteFamilyRole[]) => void;
@@ -49,7 +49,7 @@ const GenderStep = ({
 }: GenderStepProps) => {
   const t = useTranslations('parte.wizard.steps.gender');
 
-  const visibleRoles = gender === 'male' ? MALE_ROLES : FEMALE_ROLES;
+  const visibleRoles = gender === 'male' ? MALE_ROLES : gender === 'female' ? FEMALE_ROLES : null;
 
   const toggleRole = (role: ParteFamilyRole) => {
     if (familyRoles.includes(role)) {
@@ -82,34 +82,36 @@ const GenderStep = ({
         })}
       </div>
 
-      <div className='flex flex-col gap-3'>
-        <p className='text-primary/55 text-[11px] tracking-[0.1em] uppercase'>
-          {t('roles-hint')}
-        </p>
-        <div className='grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4'>
-          {visibleRoles.map((role) => {
-            const checked = familyRoles.includes(role);
-            return (
-              <button
-                key={role}
-                type='button'
-                onClick={() => toggleRole(role)}
-                className='text-primary hover:text-primary/80 flex h-10 items-center justify-start gap-2.5 text-[14px] transition'
-              >
-                <span
-                  className={cn(
-                    'flex h-4 w-4 items-center justify-center transition',
-                    checked ? 'bg-primary' : 'bg-white'
-                  )}
+      {visibleRoles && (
+        <div className='flex flex-col gap-3'>
+          <p className='text-primary/55 text-[11px] tracking-[0.1em] uppercase'>
+            {t('roles-hint')}
+          </p>
+          <div className='grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4'>
+            {visibleRoles.map((role) => {
+              const checked = familyRoles.includes(role);
+              return (
+                <button
+                  key={role}
+                  type='button'
+                  onClick={() => toggleRole(role)}
+                  className='text-primary hover:text-primary/80 flex h-10 items-center justify-start gap-2.5 text-[14px] transition'
                 >
-                  {checked && <Check className='text-white-smoke h-3 w-3' />}
-                </span>
-                <span>{t(`roles.${role}`)}</span>
-              </button>
-            );
-          })}
+                  <span
+                    className={cn(
+                      'flex h-4 w-4 items-center justify-center transition',
+                      checked ? 'bg-primary' : 'bg-white'
+                    )}
+                  >
+                    {checked && <Check className='text-white-smoke h-3 w-3' />}
+                  </span>
+                  <span>{t(`roles.${role}`)}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

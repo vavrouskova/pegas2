@@ -29,6 +29,9 @@ const IdentityStep = ({
 }: IdentityStepProps) => {
   const t = useTranslations('parte.wizard.steps.identity');
   const today = new Date().toISOString().slice(0, 10);
+  const birthMax = deathDate && deathDate < today ? deathDate : today;
+  const deathMin = birthDate || '1900-01-01';
+  const datesInvalid = Boolean(birthDate && deathDate && deathDate < birthDate);
 
   return (
     <div className='flex flex-col gap-6'>
@@ -61,7 +64,7 @@ const IdentityStep = ({
             type='date'
             value={birthDate}
             min='1900-01-01'
-            max={today}
+            max={birthMax}
             onChange={(event) => onChange({ birthDate: event.target.value })}
             className={cn(TEXT_INPUT, 'w-full')}
           />
@@ -71,13 +74,22 @@ const IdentityStep = ({
           <input
             type='date'
             value={deathDate}
-            min='1900-01-01'
+            min={deathMin}
             max={today}
+            aria-invalid={datesInvalid}
             onChange={(event) => onChange({ deathDate: event.target.value })}
-            className={cn(TEXT_INPUT, 'w-full')}
+            className={cn(
+              TEXT_INPUT,
+              'w-full',
+              datesInvalid && 'ring-2 ring-red-500 focus:ring-red-500'
+            )}
           />
         </label>
       </div>
+
+      {datesInvalid && (
+        <p className='font-text text-sm text-red-600'>{t('date-order-error')}</p>
+      )}
     </div>
   );
 };

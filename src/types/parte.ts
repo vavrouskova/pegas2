@@ -77,7 +77,7 @@ export type ParteVerseChoice = 'religious' | 'secular' | 'custom' | 'none';
 export type ParteCeremonyScope = 'public' | 'family' | 'private';
 
 export interface ParteWizardAnswers {
-  gender: ParteGender;
+  gender?: ParteGender;
   familyRoles: ParteFamilyRole[];
   firstName: string;
   lastName: string;

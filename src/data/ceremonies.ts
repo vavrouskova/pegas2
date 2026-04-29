@@ -320,5 +320,68 @@ export const CEREMONIES: Ceremony[] = [
   },
 ];
 
+const VENUE_CYCLE = [STRASNICE, MOTOL, OLSANY];
+
+const EXTRA_PEOPLE: Array<{
+  slug: string;
+  firstName: string;
+  lastName: string;
+  birthYear: number;
+  dayDelta: number;
+  hour: number;
+  minute: number;
+}> = [
+  { slug: 'vladimir-cernoch', firstName: 'Vladimír', lastName: 'Černoch', birthYear: 1942, dayDelta: 9, hour: 10, minute: 0 },
+  { slug: 'marta-dvorakova', firstName: 'Marta', lastName: 'Dvořáková', birthYear: 1937, dayDelta: 10, hour: 11, minute: 30 },
+  { slug: 'stanislav-benes', firstName: 'Stanislav', lastName: 'Beneš', birthYear: 1945, dayDelta: 11, hour: 9, minute: 0 },
+  { slug: 'ruzena-hajkova', firstName: 'Růžena', lastName: 'Hájková', birthYear: 1933, dayDelta: 12, hour: 13, minute: 0 },
+  { slug: 'miloslav-pokorny', firstName: 'Miloslav', lastName: 'Pokorný', birthYear: 1940, dayDelta: 13, hour: 14, minute: 30 },
+  { slug: 'alzbeta-kratka', firstName: 'Alžběta', lastName: 'Krátká', birthYear: 1948, dayDelta: 14, hour: 10, minute: 0 },
+  { slug: 'tomas-barta', firstName: 'Tomáš', lastName: 'Bárta', birthYear: 1952, dayDelta: 15, hour: 11, minute: 0 },
+  { slug: 'ludmila-vankova', firstName: 'Ludmila', lastName: 'Vaňková', birthYear: 1936, dayDelta: 16, hour: 12, minute: 30 },
+  { slug: 'miroslav-hruska', firstName: 'Miroslav', lastName: 'Hruška', birthYear: 1941, dayDelta: 17, hour: 9, minute: 30 },
+  { slug: 'drahomira-prochazkova', firstName: 'Drahomíra', lastName: 'Procházková', birthYear: 1939, dayDelta: 18, hour: 14, minute: 0 },
+  { slug: 'vaclav-soukup', firstName: 'Václav', lastName: 'Soukup', birthYear: 1944, dayDelta: 19, hour: 10, minute: 30 },
+  { slug: 'emilie-rihova', firstName: 'Emilie', lastName: 'Říhová', birthYear: 1932, dayDelta: 20, hour: 11, minute: 0 },
+  { slug: 'pavel-klima', firstName: 'Pavel', lastName: 'Klíma', birthYear: 1949, dayDelta: 22, hour: 13, minute: 30 },
+  { slug: 'jindriska-bartonova', firstName: 'Jindřiška', lastName: 'Bartoňová', birthYear: 1935, dayDelta: -16, hour: 10, minute: 0 },
+  { slug: 'bohumil-kucera', firstName: 'Bohumil', lastName: 'Kučera', birthYear: 1938, dayDelta: -18, hour: 11, minute: 30 },
+  { slug: 'jaroslava-tomkova', firstName: 'Jaroslava', lastName: 'Tomková', birthYear: 1943, dayDelta: -20, hour: 9, minute: 0 },
+  { slug: 'zdenek-kraus', firstName: 'Zdeněk', lastName: 'Kraus', birthYear: 1946, dayDelta: -22, hour: 13, minute: 0 },
+  { slug: 'marcela-kovarova', firstName: 'Marcela', lastName: 'Kovářová', birthYear: 1950, dayDelta: -25, hour: 10, minute: 30 },
+  { slug: 'oldrich-sedivy', firstName: 'Oldřich', lastName: 'Šedivý', birthYear: 1934, dayDelta: -27, hour: 14, minute: 30 },
+  { slug: 'vlasta-adamcova', firstName: 'Vlasta', lastName: 'Adamcová', birthYear: 1940, dayDelta: -30, hour: 11, minute: 0 },
+  { slug: 'karel-dolezal', firstName: 'Karel', lastName: 'Doležal', birthYear: 1937, dayDelta: -33, hour: 9, minute: 30 },
+  { slug: 'hedvika-vankova', firstName: 'Hedvika', lastName: 'Vaňková', birthYear: 1942, dayDelta: -36, hour: 12, minute: 0 },
+  { slug: 'lubomir-zednik', firstName: 'Lubomír', lastName: 'Zedník', birthYear: 1944, dayDelta: -39, hour: 13, minute: 30 },
+  { slug: 'kveta-slamova', firstName: 'Květa', lastName: 'Slámová', birthYear: 1936, dayDelta: -42, hour: 10, minute: 0 },
+  { slug: 'jiri-holecek', firstName: 'Jiří', lastName: 'Holeček', birthYear: 1948, dayDelta: -45, hour: 11, minute: 30 },
+  { slug: 'libuse-sedlakova', firstName: 'Libuše', lastName: 'Sedláková', birthYear: 1933, dayDelta: -48, hour: 14, minute: 0 },
+];
+
+EXTRA_PEOPLE.forEach((person, index) => {
+  const start = dayOffset(person.dayDelta, person.hour, person.minute);
+  const isUpcoming = person.dayDelta >= 0;
+  CEREMONIES.push({
+    slug: person.slug,
+    visibility: 'public',
+    person: {
+      firstName: person.firstName,
+      lastName: person.lastName,
+      birthYear: person.birthYear,
+      deathYear: 2026,
+      photo: index % 4 === 3 ? undefined : `/images/ceremonies/portrait-${(index % 9) + 1}.png`,
+    },
+    startAt: start,
+    endAt: ceremonyEnd(start, 60),
+    venue: VENUE_CYCLE[index % VENUE_CYCLE.length],
+    announcement: DEFAULT_ANNOUNCEMENT,
+    donors: COMMON_DONORS.slice(0, (index % 5) + 1),
+    gallery: [],
+    allowFlowers: isUpcoming,
+    ...(isUpcoming ? { flowerOrderDeadline: dayOffset(person.dayDelta, 8) } : {}),
+  });
+});
+
 export const getCeremonyBySlug = (slug: string): Ceremony | undefined =>
   CEREMONIES.find((ceremony) => ceremony.slug === slug);

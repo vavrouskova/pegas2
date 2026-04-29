@@ -18,7 +18,6 @@ import { ParteWizardAnswers } from '@/types/parte';
 const TOTAL_STEPS = 6;
 
 const initialAnswers: ParteWizardAnswers = {
-  gender: 'female',
   familyRoles: [],
   firstName: '',
   lastName: '',
@@ -49,8 +48,13 @@ const ParteWizard = () => {
     switch (step) {
       case 0:
         return Boolean(answers.gender);
-      case 1:
-        return answers.firstName.trim().length > 0 && answers.lastName.trim().length > 0;
+      case 1: {
+        const namesOk =
+          answers.firstName.trim().length > 0 && answers.lastName.trim().length > 0;
+        const datesOk =
+          !answers.birthDate || !answers.deathDate || answers.deathDate >= answers.birthDate;
+        return namesOk && datesOk;
+      }
       case 2:
         return !answers.hasPhoto || Boolean(answers.photoDataUrl);
       case 3:

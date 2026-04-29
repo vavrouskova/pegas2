@@ -92,6 +92,10 @@
       "sort-venue": "Podle obřadní síně",
       "sort-name": "Podle jména"
     },
+    "view": {
+      "grid": "Zobrazit jako mřížku",
+      "list": "Zobrazit jako seznam"
+    },
     "pagination": {
       "showing": "Zobrazeno {from}–{to} z {total}",
       "total": "{total, plural, =1 {# obřad} few {# obřady} other {# obřadů}}",
@@ -211,7 +215,8 @@
           "last-name": "Příjmení",
           "last-name-placeholder": "Svobodová",
           "birth": "Datum narození",
-          "death": "Datum úmrtí"
+          "death": "Datum úmrtí",
+          "date-order-error": "Datum úmrtí nemůže být dříve než datum narození."
         },
         "photo": {
           "title": "Chcete přidat portrétní fotografii?",

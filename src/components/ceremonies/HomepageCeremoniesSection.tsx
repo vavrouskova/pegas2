@@ -16,7 +16,7 @@ const HomepageCeremoniesSection = async () => {
       if (order[a.status] !== order[b.status]) return order[a.status] - order[b.status];
       return new Date(a.ceremony.startAt).getTime() - new Date(b.ceremony.startAt).getTime();
     })
-    .slice(0, 12)
+    .slice(0, 10)
     .map(({ ceremony }) => ceremony);
 
   return (
