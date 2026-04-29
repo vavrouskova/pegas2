@@ -148,7 +148,7 @@ const ParteWizard = () => {
             onMotifChange={(motif) => updateAnswers({ motif })}
           />
         )}
-        {step === 4 && (
+        {step === 4 && answers.gender && (
           <VerseStep
             gender={answers.gender}
             verseChoice={answers.verseChoice}
