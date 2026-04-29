@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { cn } from '@/lib/utils';
 import { Ceremony } from '@/types/ceremony';
-import { formatCeremonyDate } from '@/utils/ceremonies/format';
+import { formatCeremonyDate, formatPersonYears } from '@/utils/ceremonies/format';
 import { getCeremonyStatus } from '@/utils/ceremonies/status';
 
 interface CeremonyCardProps {
@@ -20,15 +20,14 @@ const CeremonyCard = ({ ceremony }: CeremonyCardProps) => {
   const time = `${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}`;
   const formattedDate = formatCeremonyDate(ceremony.startAt);
   const isPast = status === 'past';
+  const isPrivate = ceremony.visibility === 'private';
+  const years = formatPersonYears(ceremony.person.birthYear, ceremony.person.deathYear);
   const href = `/${t('ceremonies')}/${ceremony.slug}`;
 
-  return (
-    <Link
-      href={href}
-      className='group flex flex-col gap-3 transition-opacity duration-300 hover:opacity-80'
-    >
+  const inner = (
+    <>
       <div className='bg-grey-warm relative aspect-square overflow-hidden p-[20%]'>
-        {ceremony.person.photo ? (
+        {!isPrivate && ceremony.person.photo ? (
           <div className='relative h-full w-full'>
             <Image
               src={ceremony.person.photo}
@@ -40,38 +39,74 @@ const CeremonyCard = ({ ceremony }: CeremonyCardProps) => {
           </div>
         ) : (
           <div className='flex h-full w-full items-center justify-center'>
-            <span className='font-heading text-primary text-3xl tracking-tight lg:text-4xl'>
+            <span
+              className={cn(
+                'font-heading text-3xl tracking-tight lg:text-4xl',
+                isPrivate ? 'text-primary/40' : 'text-primary'
+              )}
+            >
               {ceremony.person.firstName[0]}
               {ceremony.person.lastName[0]}
             </span>
           </div>
         )}
 
-        <div
-          aria-hidden='true'
-          className='bg-primary pointer-events-none absolute top-[13%] left-[13%] h-[6.4%] w-[48%] -translate-x-1/2 -translate-y-1/2 rotate-[-45deg]'
-        />
+        {ceremony.allowFlowers && !isPast && !isPrivate && (
+          <div
+            aria-hidden='true'
+            className='bg-primary pointer-events-none absolute top-[13%] left-[13%] h-[6.4%] w-[48%] -translate-x-1/2 -translate-y-1/2 rotate-[-45deg]'
+          />
+        )}
       </div>
 
-      <span className='font-heading text-primary text-base leading-tight'>{fullName}</span>
-      <div className='flex flex-col'>
-        <span className='font-text text-sm leading-tight'>
-          {isPast ? (
-            <>
-              <span
-                className='font-heading block lg:inline'
-                style={{ fontSize: 'inherit' }}
-              >
-                {tCeremonies('status.past-card-prefix')}
-              </span>{' '}
-              {formattedDate}
-            </>
-          ) : (
-            `${formattedDate} · ${time}`
-          )}
-        </span>
-        <span className='font-text text-sm leading-tight mt-1'>{ceremony.venue.name}</span>
+      <div className='flex flex-col gap-0.5'>
+        <span className='font-heading text-primary text-base leading-tight'>{fullName}</span>
+        {years && <span className='font-text text-primary text-sm leading-tight'>{years}</span>}
       </div>
+      <div className='flex flex-col'>
+        {isPrivate ? (
+          <>
+            <span className='font-heading text-primary text-sm leading-tight'>
+              {tCeremonies('status.private-card-prefix')}
+            </span>
+            <span className='font-text text-primary/70 text-sm leading-tight mt-1'>
+              {tCeremonies('status.private-card-note')}
+            </span>
+          </>
+        ) : (
+          <>
+            <span className='font-text text-sm leading-tight'>
+              {isPast ? (
+                <>
+                  <span
+                    className='font-heading block lg:inline'
+                    style={{ fontSize: 'inherit' }}
+                  >
+                    {tCeremonies('status.past-card-prefix')}
+                  </span>{' '}
+                  {formattedDate}
+                </>
+              ) : (
+                `${formattedDate} · ${time}`
+              )}
+            </span>
+            <span className='font-text text-sm leading-tight mt-1'>{ceremony.venue.name}</span>
+          </>
+        )}
+      </div>
+    </>
+  );
+
+  if (isPrivate) {
+    return <div className='flex flex-col gap-3'>{inner}</div>;
+  }
+
+  return (
+    <Link
+      href={href}
+      className='group flex flex-col gap-3 transition-opacity duration-300 hover:opacity-80'
+    >
+      {inner}
     </Link>
   );
 };

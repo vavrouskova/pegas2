@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useState } from 'react';
 
 import CeremonyCard from '@/components/ceremonies/CeremonyCard';
+import CeremonyListRow from '@/components/ceremonies/CeremonyListRow';
 import Search from '@/components/icons/Search';
 import {
   Select,
@@ -13,14 +14,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Link } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 import { Ceremony } from '@/types/ceremony';
-import { formatCeremonyDate } from '@/utils/ceremonies/format';
 import { getCeremonyStatus } from '@/utils/ceremonies/status';
 
 type FilterKey = 'all' | 'past';
 type ViewMode = 'grid' | 'list';
+type SortMode = 'date' | 'venue' | 'name';
 
 const PAGE_SIZE = 25;
 
@@ -36,7 +36,7 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
   const [selectedVenue, setSelectedVenue] = useState('');
   const [page, setPage] = useState(1);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
-  const tRoutes = useTranslations('routes');
+  const [sortMode, setSortMode] = useState<SortMode>('date');
 
   const handleFilterClick = (key: FilterKey) => {
     if (key === activeFilter && key !== 'all') {
@@ -77,7 +77,9 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
 
   const venues = useMemo(() => {
     const set = new Set<string>();
-    ceremonies.forEach((ceremony) => set.add(ceremony.venue.name));
+    ceremonies.forEach((ceremony) => {
+      if (ceremony.visibility !== 'private') set.add(ceremony.venue.name);
+    });
     return Array.from(set).sort((a, b) => a.localeCompare(b, 'cs'));
   }, [ceremonies]);
 
@@ -101,12 +103,17 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
 
     const list = ceremonies.filter((ceremony) => {
       const status = getCeremonyStatus(ceremony, now);
+      const isPrivate = ceremony.visibility === 'private';
 
       if (activeFilter === 'past' && status !== 'past') return false;
 
-      if (selectedVenue && ceremony.venue.name !== selectedVenue) return false;
+      if (selectedVenue) {
+        if (isPrivate) return false;
+        if (ceremony.venue.name !== selectedVenue) return false;
+      }
 
       if (selectedDate) {
+        if (isPrivate) return false;
         const ceremonyDate = new Date(ceremony.startAt);
         const ymd = `${ceremonyDate.getFullYear()}-${String(ceremonyDate.getMonth() + 1).padStart(2, '0')}-${String(ceremonyDate.getDate()).padStart(2, '0')}`;
         if (ymd !== selectedDate) return false;
@@ -121,7 +128,7 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
     });
 
     const nowTime = now.getTime();
-    return [...list].sort((a, b) => {
+    const byDate = (a: Ceremony, b: Ceremony) => {
       const aTime = new Date(a.startAt).getTime();
       const bTime = new Date(b.startAt).getTime();
       const aPast = aTime < nowTime;
@@ -130,8 +137,26 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
       if (!aPast && bPast) return -1;
       if (aPast && bPast) return bTime - aTime;
       return aTime - bTime;
-    });
-  }, [ceremonies, activeFilter, searchQuery, selectedDate, selectedVenue]);
+    };
+
+    const byName = (a: Ceremony, b: Ceremony) => {
+      const nameCmp = a.person.lastName.localeCompare(b.person.lastName, 'cs');
+      if (nameCmp !== 0) return nameCmp;
+      return a.person.firstName.localeCompare(b.person.firstName, 'cs');
+    };
+    const byVenue = (a: Ceremony, b: Ceremony) => {
+      const venueCmp = a.venue.name.localeCompare(b.venue.name, 'cs');
+      if (venueCmp !== 0) return venueCmp;
+      return byDate(a, b);
+    };
+    const comparator = sortMode === 'name' ? byName : sortMode === 'venue' ? byVenue : byDate;
+
+    const publicList = list.filter((c) => c.visibility !== 'private');
+    const privateList = list.filter((c) => c.visibility === 'private');
+    publicList.sort(comparator);
+    privateList.sort(byName);
+    return [...publicList, ...privateList];
+  }, [ceremonies, activeFilter, searchQuery, selectedDate, selectedVenue, sortMode]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
@@ -141,7 +166,7 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
 
   useEffect(() => {
     setPage(1);
-  }, [activeFilter, searchQuery, selectedDate, selectedVenue]);
+  }, [activeFilter, searchQuery, selectedDate, selectedVenue, sortMode]);
 
   return (
     <section className='section-container pt-0! lg:pt-0!'>
@@ -212,7 +237,23 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
         {renderFilterButton('past', t('filters.past'))}
       </div>
 
-      <div className='mb-6 flex items-center justify-end gap-1'>
+      <div className='mb-6 flex items-center justify-end gap-2'>
+        <Select
+          value={sortMode}
+          onValueChange={(value) => setSortMode(value as SortMode)}
+        >
+          <SelectTrigger
+            aria-label={t('filters.sort-label')}
+            className='bg-transparent lg:min-w-[180px]'
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='date'>{t('filters.sort-date')}</SelectItem>
+            <SelectItem value='venue'>{t('filters.sort-venue')}</SelectItem>
+            <SelectItem value='name'>{t('filters.sort-name')}</SelectItem>
+          </SelectContent>
+        </Select>
         <button
           type='button'
           onClick={() => setViewMode('grid')}
@@ -254,43 +295,14 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
             </div>
           ) : (
             <ul className='border-primary/10 flex flex-col border-t'>
-              {pagedItems.map((ceremony) => {
-                const start = new Date(ceremony.startAt);
-                const time = `${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}`;
-                const date = formatCeremonyDate(ceremony.startAt);
-                const status = getCeremonyStatus(ceremony);
-                const isPast = status === 'past';
-                const fullName = `${ceremony.person.firstName} ${ceremony.person.lastName}`;
-                return (
-                  <li
-                    key={ceremony.slug}
-                    className='border-primary/10 border-b'
-                  >
-                    <Link
-                      href={`/${tRoutes('ceremonies')}/${ceremony.slug}` as never}
-                      className='hover:bg-primary/[0.03] flex flex-col gap-1 px-3 py-2.5 transition-colors lg:flex-row lg:items-center lg:gap-6 lg:px-4'
-                    >
-                      <span className='font-text text-primary order-2 w-full text-sm lg:order-1 lg:w-56 lg:shrink-0 lg:whitespace-nowrap'>
-                        {date} · {time}
-                      </span>
-                      <span className='font-heading text-primary order-1 flex-1 text-base lg:order-2'>
-                        {fullName}
-                      </span>
-                      <span className='font-text text-primary order-3 text-sm lg:w-56 lg:shrink-0 lg:whitespace-nowrap'>
-                        {ceremony.venue.name}
-                      </span>
-                      <span
-                        className={cn(
-                          'font-heading text-primary order-4 text-sm lg:w-32 lg:shrink-0 lg:whitespace-nowrap',
-                          !isPast && 'max-lg:hidden'
-                        )}
-                      >
-                        {isPast ? t('status.past-card-prefix') : ''}
-                      </span>
-                    </Link>
-                  </li>
-                );
-              })}
+              {pagedItems.map((ceremony) => (
+                <li
+                  key={ceremony.slug}
+                  className='border-primary/10 border-b'
+                >
+                  <CeremonyListRow ceremony={ceremony} />
+                </li>
+              ))}
             </ul>
           )}
 

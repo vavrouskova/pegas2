@@ -52,8 +52,6 @@ export const pathnames = {
 
   '/ceremonies/[slug]': { cs: '/kalendar-obradu/[slug]' },
 
-  '/ceremonies/[slug]/send-flower': { cs: '/kalendar-obradu/[slug]/poslat-kvetinu' },
-
   '/[slug]': { cs: '/[slug]' },
 } satisfies Pathnames<typeof locales>;
 

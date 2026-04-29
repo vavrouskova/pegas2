@@ -13,9 +13,12 @@ const MONTHS_GENITIVE = [
   'prosince',
 ];
 
+const WEEKDAYS_SHORT = ['NE', 'PO', 'ÚT', 'ST', 'ČT', 'PÁ', 'SO'];
+
 export const formatCeremonyDate = (iso: string): string => {
   const date = new Date(iso);
-  return `${date.getDate()}. ${date.getMonth() + 1}. ${date.getFullYear()}`;
+  const day = WEEKDAYS_SHORT[date.getDay()];
+  return `${day} ${date.getDate()}. ${date.getMonth() + 1}. ${date.getFullYear()}`;
 };
 
 export const formatCeremonyDateLong = (iso: string): string => {
@@ -31,7 +34,7 @@ export const formatCeremonyTime = (iso: string): string => {
 };
 
 export const formatPersonYears = (birthYear?: number, deathYear?: number): string => {
-  if (birthYear && deathYear) return `(${birthYear}–${deathYear})`;
-  if (birthYear) return `(${birthYear})`;
+  if (birthYear && deathYear) return `${birthYear}–${deathYear}`;
+  if (birthYear) return `${birthYear}`;
   return '';
 };

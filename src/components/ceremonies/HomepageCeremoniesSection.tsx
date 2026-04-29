@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 
 import Button from '@/components/_shared/Button';
-import CeremonyCard from '@/components/ceremonies/CeremonyCard';
+import HomepageCeremoniesGrid from '@/components/ceremonies/HomepageCeremoniesGrid';
 import { Link } from '@/i18n/routing';
 import { CEREMONIES } from '@/data/ceremonies';
 import { getCeremonyStatus } from '@/utils/ceremonies/status';
@@ -9,31 +9,34 @@ import { getCeremonyStatus } from '@/utils/ceremonies/status';
 const HomepageCeremoniesSection = async () => {
   const t = await getTranslations('ceremonies.homepage');
 
-  const sorted = [...CEREMONIES]
-    .map((ceremony) => ({ ceremony, status: getCeremonyStatus(ceremony) }))
+  const withStatus = CEREMONIES.map((ceremony) => ({
+    ceremony,
+    status: getCeremonyStatus(ceremony),
+  }));
+  const publicSorted = withStatus
+    .filter(({ ceremony }) => ceremony.visibility !== 'private')
     .sort((a, b) => {
       const order = { upcoming: 0, ongoing: 0, past: 1 };
       if (order[a.status] !== order[b.status]) return order[a.status] - order[b.status];
       return new Date(a.ceremony.startAt).getTime() - new Date(b.ceremony.startAt).getTime();
     })
-    .slice(0, 10)
+    .slice(0, 23)
     .map(({ ceremony }) => ceremony);
+  const privateSorted = withStatus
+    .filter(({ ceremony }) => ceremony.visibility === 'private')
+    .sort((a, b) => a.ceremony.person.lastName.localeCompare(b.ceremony.person.lastName, 'cs'))
+    .slice(0, 2)
+    .map(({ ceremony }) => ceremony);
+  const sorted = [...publicSorted, ...privateSorted];
 
   return (
     <section className='section-container'>
-      <div className='mb-12 flex flex-col gap-2.5 lg:mb-16'>
+      <div className='mb-6 flex flex-col gap-2.5 lg:mb-8'>
         <h2 className='font-heading text-primary text-3xl lg:text-4xl'>{t('title')}</h2>
         <p className='font-text max-w-content text-base'>{t('description')}</p>
       </div>
 
-      <div className='grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-5 lg:gap-x-8 lg:gap-y-14'>
-        {sorted.map((ceremony) => (
-          <CeremonyCard
-            key={ceremony.slug}
-            ceremony={ceremony}
-          />
-        ))}
-      </div>
+      <HomepageCeremoniesGrid ceremonies={sorted} />
 
       <div className='mt-12 flex justify-end'>
         <Link href='/ceremonies'>

@@ -562,6 +562,41 @@ const EXTRA_PEOPLE: Array<{
   { slug: 'libuse-sedlakova', firstName: 'Libuše', lastName: 'Sedláková', birthYear: 1933, dayDelta: -48, hour: 14, minute: 0 },
 ];
 
+const PRIVATE_PEOPLE: Array<{
+  slug: string;
+  firstName: string;
+  lastName: string;
+  birthYear: number;
+  dayDelta: number;
+}> = [
+  { slug: 'milos-brazda', firstName: 'Miloš', lastName: 'Brázda', birthYear: 1947, dayDelta: 4 },
+  { slug: 'jaromira-fialova', firstName: 'Jaromíra', lastName: 'Fialová', birthYear: 1939, dayDelta: 6 },
+  { slug: 'rostislav-kratochvil', firstName: 'Rostislav', lastName: 'Kratochvíl', birthYear: 1944, dayDelta: 12 },
+  { slug: 'dagmar-suchankova', firstName: 'Dagmar', lastName: 'Suchánková', birthYear: 1951, dayDelta: -8 },
+  { slug: 'bedrich-machacek', firstName: 'Bedřich', lastName: 'Macháček', birthYear: 1935, dayDelta: -24 },
+];
+
+PRIVATE_PEOPLE.forEach((person) => {
+  const start = dayOffset(person.dayDelta, 10);
+  CEREMONIES.push({
+    slug: person.slug,
+    visibility: 'private',
+    person: {
+      firstName: person.firstName,
+      lastName: person.lastName,
+      birthYear: person.birthYear,
+      deathYear: 2026,
+    },
+    startAt: start,
+    endAt: ceremonyEnd(start, 60),
+    venue: STRASNICE,
+    announcement: '',
+    donors: [],
+    gallery: [],
+    allowFlowers: false,
+  });
+});
+
 EXTRA_PEOPLE.forEach((person, index) => {
   const start = dayOffset(person.dayDelta, person.hour, person.minute);
   const isUpcoming = person.dayDelta >= 0;

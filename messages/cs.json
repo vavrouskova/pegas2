@@ -107,7 +107,9 @@
       "upcoming": "Bude se konat",
       "ongoing": "Probíhá právě teď",
       "past": "Rozloučili jsme se",
-      "past-card-prefix": "Rozloučeno"
+      "past-card-prefix": "Rozloučeno",
+      "private-card-prefix": "Neveřejné rozloučení",
+      "private-card-note": "V úzkém kruhu rodiny"
     },
     "empty": "Žádné obřady neodpovídají vašemu výběru.",
     "card-cta": "Zobrazit detail",
@@ -134,35 +136,96 @@
       "description": "Zajímá vás, kde a kdy se koná rozloučení, co si přeje rodina, nebo jak můžete darovat květinu a říct své poslední sbohem? Všechny informace o námi plánovaných obřadech naleznete zde.",
       "cta": "Kalendář obřadů"
     },
-    "flower-form": {
-      "page-title": "Poslat květinu",
-      "title": "Pošlete květinu na rozloučenou",
-      "description": "Vyplňte několik údajů a my vaším jménem doručíme květinu přímo na místo obřadu.",
-      "ceremony-label": "Obřad",
-      "deadline-label": "Objednejte do",
-      "fields": {
-        "name": "Vaše jméno a příjmení*",
-        "email": "E-mail*",
-        "phone": "Telefon*",
-        "bouquet": "Vyberte kytici*",
-        "ribbon": "Text na stuze",
-        "ribbon-placeholder": "Např. Nikdy nezapomeneme – rodina Novákova",
-        "message": "Vzkaz pro rodinu (nepovinné)"
+    "flower-wizard": {
+      "for-label": "KVĚTINA PRO",
+      "step-progress": "Krok {current} z {total}",
+      "back": "Zpět",
+      "continue": "Pokračovat",
+      "submit": "Odeslat objednávku",
+      "total": "cena celkem",
+      "close": "Zavřít",
+      "step1": {
+        "title": "Vyberte květinu",
+        "description": "Doručíme vaším jménem na místo obřadu.",
+        "special-prefix": "Něco speciálního?",
+        "special-link": "vazbykvetin.cz",
+        "preview": "Náhled"
       },
-      "bouquets": {
-        "small": "Malá kytice (od 750 Kč)",
-        "medium": "Střední kytice (od 1 500 Kč)",
-        "large": "Velká kytice (od 2 800 Kč)",
-        "wreath": "Smuteční věnec (od 3 500 Kč)"
+      "step2": {
+        "title": "Stuha",
+        "ribbon-color-label": "Barva stuhy",
+        "ribbon-text-label": "Text na stuhu",
+        "custom-placeholder": "Vlastní text na stuhu",
+        "message-title": "Vzkaz pro rodinu",
+        "message-help": "Vzkaz je o velikosti vizitky a je ve fialové obálce připevněn ke květině.",
+        "message-placeholder": "Vaše jméno a krátká věta, např. „Rodina Nováková – s úctou.\"",
+        "message-counter": "{count}/300 znaků"
+      },
+      "step3": {
+        "title": "Vaše údaje",
+        "description": "Na e-mail vám pošleme potvrzení, telefon použijeme jen pokud bychom potřebovali něco upřesnit.",
+        "name-label": "Jméno a příjmení",
+        "name-placeholder": "Jan Novák",
+        "email-label": "E-mail",
+        "email-placeholder": "vas@email.cz",
+        "phone-label": "Telefon",
+        "phone-placeholder": "+420 777 123 456",
+        "consent": "Souhlasím se zpracováním osobních údajů pro účely vyřízení objednávky."
+      },
+      "step4": {
+        "title": "Rekapitulace",
+        "description": "Ještě jednou zkontrolujte objednávku a vyberte způsob platby.",
+        "for-prefix": "pro",
+        "ribbon-section": "STUHA",
+        "ribbon-empty": "Bez textu",
+        "message-section": "VZKAZ",
+        "contact-section": "KONTAKT",
+        "payment-title": "Způsob platby",
+        "payment-card": "Platební karta",
+        "payment-transfer": "Bankovní převod"
+      },
+      "ribbon-text": {
+        "none": "Bez textu",
+        "love-family": "S láskou rodina",
+        "never-forget": "Nikdy nezapomeneme",
+        "custom": "Vlastní text…"
       },
       "errors": {
-        "name-required": "Prosím, vyplňte své jméno a příjmení",
-        "email-required": "Prosím, vyplňte svůj e-mail",
-        "invalid-email": "Prosím, zadejte platnou e-mailovou adresu",
-        "phone-required": "Prosím, vyplňte telefonní číslo",
-        "invalid-phone": "Prosím, zadejte platné telefonní číslo",
-        "bouquet-required": "Prosím, vyberte kytici"
+        "bouquet-required": "Vyberte prosím kytici",
+        "name-required": "Vyplňte jméno a příjmení",
+        "email-required": "Vyplňte e-mail",
+        "email-invalid": "Zadejte platný e-mail",
+        "phone-required": "Vyplňte telefon",
+        "consent-required": "Pro pokračování potvrďte souhlas"
       }
+    },
+    "bouquets": {
+      "white-roses": {
+        "name": "Bílé růže",
+        "desc": "Bílé růže s gypsofilou a eukalyptem"
+      },
+      "pastel": {
+        "name": "Pastelová kytice",
+        "desc": "Krémové a růžové růže s lisianthusem"
+      },
+      "white-lilies": {
+        "name": "Bílé lilie",
+        "desc": "Lilie a frézie s kapradím"
+      },
+      "hortenzie": {
+        "name": "Hortenzie s pivoňkami",
+        "desc": "Fialové hortenzie a krémové pivoňky"
+      },
+      "anturie": {
+        "name": "Kompozice s anturiemi",
+        "desc": "Bílá anturia a tropická zeleň"
+      }
+    },
+    "ribbon-colors": {
+      "purple": "Fialová",
+      "cream": "Krémová",
+      "gray": "Šedá",
+      "black": "Černá"
     }
   },
 

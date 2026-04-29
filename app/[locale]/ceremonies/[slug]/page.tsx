@@ -36,6 +36,10 @@ export const generateMetadata = async ({
 
   const fullName = `${ceremony.person.firstName} ${ceremony.person.lastName}`;
 
+  if (ceremony.visibility === 'private') {
+    return { title: `Neveřejné rozloučení – ${fullName} | Pegas` };
+  }
+
   return {
     title: `Poslední rozloučení – ${fullName} | Pegas`,
     description: `${formatCeremonyDateLong(ceremony.startAt)}, ${ceremony.venue.name}, ${ceremony.venue.city}`,
@@ -56,6 +60,7 @@ const CeremonyDetailPage = async ({ params }: CeremonyDetailPageProps) => {
   const ceremoniesListTitle = tCeremonies('page-title');
 
   const fullName = `${ceremony.person.firstName} ${ceremony.person.lastName}`;
+  const isPrivate = ceremony.visibility === 'private';
   const announcementParagraphs = ceremony.announcement.split('\n').filter(Boolean);
 
   const halfDonors = Math.ceil(ceremony.donors.length / 2);
@@ -107,51 +112,72 @@ const CeremonyDetailPage = async ({ params }: CeremonyDetailPageProps) => {
 
           <div className='flex w-full flex-col gap-6'>
             <div className='flex flex-col gap-1'>
-              <span className='font-text text-primary/70 text-sm tracking-[0.12em] uppercase'>
-                Poslední rozloučení
-              </span>
               <h1 className='font-heading text-primary text-3xl lg:text-4xl'>{fullName}</h1>
-            </div>
-            <div className='flex flex-col gap-1'>
-              <p className='font-text text-primary text-lg'>
-                {formatCeremonyDateLong(ceremony.startAt)}, {formatCeremonyTime(ceremony.startAt)}
-              </p>
-              <p className='font-text text-primary text-lg'>
-                {ceremony.venue.name}, {ceremony.venue.city}
-              </p>
-            </div>
-
-            <CeremonyActions ceremony={ceremony} />
-
-            <div className='font-text text-primary mt-8 flex flex-col gap-4 text-base'>
-              {announcementParagraphs.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
+              {(ceremony.person.birthYear || ceremony.person.deathYear) && (
+                <span className='font-text text-primary text-base'>
+                  {ceremony.person.birthYear && ceremony.person.deathYear
+                    ? `${ceremony.person.birthYear}–${ceremony.person.deathYear}`
+                    : ceremony.person.birthYear || ceremony.person.deathYear}
+                </span>
+              )}
             </div>
 
-            {ceremony.donors.length > 0 && (
-              <div className='mt-10 flex flex-col gap-4'>
-                <h2 className='font-heading text-primary text-base'>{tDetail('donors-title')}</h2>
-                <div className='grid grid-cols-1 gap-x-12 gap-y-2 lg:grid-cols-2'>
-                  <ul className='font-text text-primary flex flex-col gap-1 text-base'>
-                    {donorsLeft.map((donor) => (
-                      <li key={donor.name}>· {donor.name}</li>
-                    ))}
-                  </ul>
-                  <ul className='font-text text-primary flex flex-col gap-1 text-base'>
-                    {donorsRight.map((donor) => (
-                      <li key={donor.name}>· {donor.name}</li>
-                    ))}
-                  </ul>
-                </div>
+            {isPrivate ? (
+              <div className='border-primary/20 mt-4 flex flex-col gap-2 border-l-2 pl-4'>
+                <p className='font-heading text-primary text-lg'>
+                  {tCeremonies('status.private-card-prefix')}
+                </p>
+                <p className='font-text text-primary/80 text-base'>
+                  {tCeremonies('status.private-card-note')}
+                </p>
               </div>
-            )}
+            ) : (
+              <>
+                <div className='flex flex-col gap-1'>
+                  <p className='font-text text-primary text-lg'>
+                    {formatCeremonyDateLong(ceremony.startAt)},{' '}
+                    {formatCeremonyTime(ceremony.startAt)}
+                  </p>
+                  <p className='font-text text-primary text-lg'>
+                    {ceremony.venue.name}, {ceremony.venue.city}
+                  </p>
+                </div>
 
-            {ceremony.gallery.length > 0 && (
-              <CeremonyGallery
-                items={ceremony.gallery}
-                ceremonySlug={ceremony.slug}
-              />
+                <CeremonyActions ceremony={ceremony} />
+
+                <div className='font-text text-primary mt-8 flex flex-col gap-4 text-base'>
+                  {announcementParagraphs.map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                  ))}
+                </div>
+
+                {ceremony.donors.length > 0 && (
+                  <div className='mt-10 flex flex-col gap-4'>
+                    <h2 className='font-heading text-primary text-base'>
+                      {tDetail('donors-title')}
+                    </h2>
+                    <div className='grid grid-cols-1 gap-x-12 gap-y-2 lg:grid-cols-2'>
+                      <ul className='font-text text-primary flex flex-col gap-1 text-base'>
+                        {donorsLeft.map((donor) => (
+                          <li key={donor.name}>· {donor.name}</li>
+                        ))}
+                      </ul>
+                      <ul className='font-text text-primary flex flex-col gap-1 text-base'>
+                        {donorsRight.map((donor) => (
+                          <li key={donor.name}>· {donor.name}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+
+                {ceremony.gallery.length > 0 && (
+                  <CeremonyGallery
+                    items={ceremony.gallery}
+                    ceremonySlug={ceremony.slug}
+                  />
+                )}
+              </>
             )}
           </div>
         </div>
