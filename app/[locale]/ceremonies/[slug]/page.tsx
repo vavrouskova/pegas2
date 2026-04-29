@@ -84,9 +84,9 @@ const CeremonyDetailPage = async ({ params }: CeremonyDetailPageProps) => {
         </div>
 
         <div className='max-w-dynamic-content mx-auto flex flex-col items-start gap-10 pt-12 lg:pt-20'>
-          <div className='bg-grey-warm aspect-square w-3/5 max-w-[17rem] p-[20%]'>
-            {ceremony.person.photo ? (
-              <div className='relative h-full w-full'>
+          <div className='bg-grey-warm flex aspect-square w-3/5 max-w-[17rem] items-center justify-center'>
+            <div className='relative aspect-square w-3/5'>
+              {ceremony.person.photo ? (
                 <Image
                   src={ceremony.person.photo}
                   alt={fullName}
@@ -94,15 +94,15 @@ const CeremonyDetailPage = async ({ params }: CeremonyDetailPageProps) => {
                   sizes='(max-width: 1024px) 100vw, 400px'
                   className='object-cover'
                 />
-              </div>
-            ) : (
-              <div className='bg-primary/10 flex h-full w-full items-center justify-center'>
-                <span className='font-heading text-primary/40 text-3xl'>
-                  {ceremony.person.firstName[0]}
-                  {ceremony.person.lastName[0]}
-                </span>
-              </div>
-            )}
+              ) : (
+                <div className='bg-primary/10 absolute inset-0 flex items-center justify-center'>
+                  <span className='font-heading text-primary/40 text-3xl'>
+                    {ceremony.person.firstName[0]}
+                    {ceremony.person.lastName[0]}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className='flex w-full flex-col gap-6'>
