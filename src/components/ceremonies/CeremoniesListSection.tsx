@@ -258,17 +258,13 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
                       href={`/${tRoutes('ceremonies')}/${ceremony.slug}` as never}
                       className='hover:bg-primary/[0.03] flex flex-col gap-1 px-3 py-2.5 transition-colors lg:flex-row lg:items-center lg:gap-6 lg:px-4'
                     >
-                      <span className='font-text text-primary w-full text-sm lg:w-56 lg:shrink-0 lg:whitespace-nowrap'>
-                        {isPast ? (
-                          <>
-                            <span className='font-heading'>
-                              {t('status.past-card-prefix')}
-                            </span>{' '}
-                            {date}
-                          </>
-                        ) : (
-                          `${date} · ${time}`
+                      <span className='font-text text-primary w-full text-sm lg:w-72 lg:shrink-0 lg:whitespace-nowrap'>
+                        {isPast && (
+                          <span className='font-heading mr-1'>
+                            {t('status.past-card-prefix')}
+                          </span>
                         )}
+                        {date} · {time}
                       </span>
                       <span className='font-heading text-primary flex-1 text-base'>
                         {fullName}
