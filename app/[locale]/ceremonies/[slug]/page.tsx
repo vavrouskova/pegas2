@@ -1,3 +1,4 @@
+import { ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -10,6 +11,7 @@ import CeremonyActions from '@/components/ceremonies/CeremonyActions';
 import CeremonyFlowerCTA from '@/components/ceremonies/CeremonyFlowerCTA';
 import CeremonyGallery from '@/components/ceremonies/CeremonyGallery';
 import { CEREMONIES, getCeremonyBySlug } from '@/data/ceremonies';
+import { Link } from '@/i18n/routing';
 import { formatCeremonyDateLong, formatCeremonyTime } from '@/utils/ceremonies/format';
 
 interface CeremonyDetailParams {
@@ -47,10 +49,9 @@ const CeremonyDetailPage = async ({ params }: CeremonyDetailPageProps) => {
   const ceremony = getCeremonyBySlug(slug);
   if (!ceremony) notFound();
 
-  const [tDetail, tCeremonies, tRoutes] = await Promise.all([
+  const [tDetail, tCeremonies] = await Promise.all([
     getTranslations('ceremonies.detail'),
     getTranslations('ceremonies'),
-    getTranslations('routes'),
   ]);
 
   const fullName = `${ceremony.person.firstName} ${ceremony.person.lastName}`;
