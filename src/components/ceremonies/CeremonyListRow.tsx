@@ -35,7 +35,7 @@ const CeremonyListRow = ({ ceremony }: CeremonyListRowProps) => {
       </span>
       <span className='order-1 flex flex-1 flex-wrap items-baseline gap-x-2 lg:order-2'>
         <span className='font-heading text-primary text-base'>{fullName}</span>
-        {years && <span className='font-text text-primary text-sm'>{years}</span>}
+        {years && <span className='font-text text-primary text-xs'>{years}</span>}
       </span>
       <span
         className={cn(

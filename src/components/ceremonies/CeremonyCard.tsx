@@ -61,7 +61,7 @@ const CeremonyCard = ({ ceremony }: CeremonyCardProps) => {
 
       <div className='flex flex-col gap-0.5'>
         <span className='font-heading text-primary text-base leading-tight'>{fullName}</span>
-        {years && <span className='font-text text-primary text-sm leading-tight'>{years}</span>}
+        {years && <span className='font-text text-primary text-xs leading-tight'>{years}</span>}
       </div>
       <div className='flex flex-col'>
         {isPrivate ? (
