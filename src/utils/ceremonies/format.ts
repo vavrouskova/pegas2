@@ -25,9 +25,9 @@ export const formatCeremonyDateLong = (iso: string): string => {
 
 export const formatCeremonyTime = (iso: string): string => {
   const date = new Date(iso);
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  return `${hours}:${String(minutes).padStart(2, '0')} hod.`;
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes} hod.`;
 };
 
 export const formatPersonYears = (birthYear?: number, deathYear?: number): string => {

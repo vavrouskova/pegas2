@@ -1,7 +1,7 @@
+import { ShoppingBasket } from 'lucide-react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
-import Button from '@/components/_shared/Button';
 import { Link } from '@/i18n/routing';
 import { Ceremony } from '@/types/ceremony';
 
@@ -14,9 +14,9 @@ const CeremonyFlowerCTA = ({ ceremony }: CeremonyFlowerCTAProps) => {
 
   return (
     <section className='bg-primary section-container my-20 flex flex-col overflow-hidden p-0 lg:my-32 lg:flex-row lg:items-stretch'>
-      <picture className='relative aspect-[4/3] w-full lg:aspect-auto lg:w-1/2 lg:min-h-[28rem]'>
+      <picture className='relative aspect-[4/3] w-full lg:w-1/2'>
         <Image
-          src='/images/flowers.webp'
+          src='/images/ceremonies/posli-kvetinu.png'
           alt='Smuteční kytice'
           fill
           sizes='(max-width: 1024px) 100vw, 50vw'
@@ -28,14 +28,10 @@ const CeremonyFlowerCTA = ({ ceremony }: CeremonyFlowerCTAProps) => {
         <p className='font-text text-white-smoke/90 max-w-prose text-base'>{t('description')}</p>
         <Link
           href={{ pathname: '/ceremonies/[slug]/send-flower', params: { slug: ceremony.slug } }}
-          className='self-start'
+          className='text-primary inline-flex items-center gap-3 self-start bg-white px-8 py-3 text-lg transition-opacity duration-300 hover:opacity-90 lg:px-16'
         >
-          <Button
-            buttonText={t('button')}
-            variant='white'
-            arrowPosition='right'
-            reverseArrow
-          />
+          {t('button')}
+          <ShoppingBasket className='size-5' />
         </Link>
       </div>
     </section>

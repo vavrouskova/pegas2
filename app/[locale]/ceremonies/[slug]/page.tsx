@@ -53,6 +53,7 @@ const CeremonyDetailPage = async ({ params }: CeremonyDetailPageProps) => {
     getTranslations('ceremonies.detail'),
     getTranslations('ceremonies'),
   ]);
+  const ceremoniesListTitle = tCeremonies('page-title');
 
   const fullName = `${ceremony.person.firstName} ${ceremony.person.lastName}`;
   const announcementParagraphs = ceremony.announcement.split('\n').filter(Boolean);
@@ -63,10 +64,16 @@ const CeremonyDetailPage = async ({ params }: CeremonyDetailPageProps) => {
 
   return (
     <main className='max-w-container relative mx-auto'>
+      <Breadcrumbs
+        className='px-4 md:px-14'
+        pageTitle={fullName}
+        items={[{ label: ceremoniesListTitle, href: '/ceremonies' }]}
+      />
+
       <section className='section-container relative pt-12'>
         <Link
           href='/ceremonies'
-          className='bg-white-smoke font-text text-primary inline-flex items-center gap-2 px-4 py-3 text-sm shadow-sm transition-opacity hover:opacity-80'
+          className='font-text text-primary inline-flex items-center gap-2 text-sm underline underline-offset-4 hover:no-underline'
         >
           <ArrowRight className='size-4 rotate-180' />
           {tCeremonies('back-to-list')}
@@ -77,7 +84,7 @@ const CeremonyDetailPage = async ({ params }: CeremonyDetailPageProps) => {
         </div>
 
         <div className='max-w-dynamic-content mx-auto flex flex-col items-start gap-10 pt-12 lg:pt-20'>
-          <div className='bg-grey-warm aspect-square w-3/5 max-w-[17rem] p-[12%]'>
+          <div className='bg-grey-warm aspect-square w-3/5 max-w-[17rem] p-[20%]'>
             {ceremony.person.photo ? (
               <div className='relative h-full w-full'>
                 <Image

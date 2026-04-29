@@ -17,7 +17,7 @@ const CeremonyCard = ({ ceremony }: CeremonyCardProps) => {
   const status = getCeremonyStatus(ceremony);
   const fullName = `${ceremony.person.firstName} ${ceremony.person.lastName}`;
   const start = new Date(ceremony.startAt);
-  const time = `${start.getHours()}:${String(start.getMinutes()).padStart(2, '0')}`;
+  const time = `${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}`;
   const formattedDate = formatCeremonyDate(ceremony.startAt);
   const isPast = status === 'past';
   const href = `/${t('ceremonies')}/${ceremony.slug}`;
@@ -59,7 +59,7 @@ const CeremonyCard = ({ ceremony }: CeremonyCardProps) => {
           {isPast ? (
             <>
               <span
-                className='font-heading'
+                className='font-heading block lg:inline'
                 style={{ fontSize: 'inherit' }}
               >
                 {tCeremonies('status.past-card-prefix')}

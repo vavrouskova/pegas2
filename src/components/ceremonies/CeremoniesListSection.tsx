@@ -22,7 +22,7 @@ import { getCeremonyStatus } from '@/utils/ceremonies/status';
 type FilterKey = 'all' | 'past';
 type ViewMode = 'grid' | 'list';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 25;
 
 interface CeremoniesListSectionProps {
   ceremonies: Ceremony[];
@@ -39,6 +39,10 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
   const tRoutes = useTranslations('routes');
 
   const handleFilterClick = (key: FilterKey) => {
+    if (key === activeFilter && key !== 'all') {
+      setActiveFilter('all');
+      return;
+    }
     setActiveFilter(key);
     if (key === 'all') {
       setSearchQuery('');
@@ -116,9 +120,17 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
       return true;
     });
 
-    return [...list].sort(
-      (a, b) => new Date(a.startAt).getTime() - new Date(b.startAt).getTime()
-    );
+    const nowTime = now.getTime();
+    return [...list].sort((a, b) => {
+      const aTime = new Date(a.startAt).getTime();
+      const bTime = new Date(b.startAt).getTime();
+      const aPast = aTime < nowTime;
+      const bPast = bTime < nowTime;
+      if (aPast && !bPast) return 1;
+      if (!aPast && bPast) return -1;
+      if (aPast && bPast) return bTime - aTime;
+      return aTime - bTime;
+    });
   }, [ceremonies, activeFilter, searchQuery, selectedDate, selectedVenue]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
@@ -244,7 +256,7 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
             <ul className='border-primary/10 flex flex-col border-t'>
               {pagedItems.map((ceremony) => {
                 const start = new Date(ceremony.startAt);
-                const time = `${start.getHours()}:${String(start.getMinutes()).padStart(2, '0')}`;
+                const time = `${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}`;
                 const date = formatCeremonyDate(ceremony.startAt);
                 const status = getCeremonyStatus(ceremony);
                 const isPast = status === 'past';
@@ -258,19 +270,22 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
                       href={`/${tRoutes('ceremonies')}/${ceremony.slug}` as never}
                       className='hover:bg-primary/[0.03] flex flex-col gap-1 px-3 py-2.5 transition-colors lg:flex-row lg:items-center lg:gap-6 lg:px-4'
                     >
-                      <span className='font-text text-primary w-full text-sm lg:w-72 lg:shrink-0 lg:whitespace-nowrap'>
-                        {isPast && (
-                          <span className='font-heading mr-1'>
-                            {t('status.past-card-prefix')}
-                          </span>
-                        )}
+                      <span className='font-text text-primary order-2 w-full text-sm lg:order-1 lg:w-56 lg:shrink-0 lg:whitespace-nowrap'>
                         {date} · {time}
                       </span>
-                      <span className='font-heading text-primary flex-1 text-base'>
+                      <span className='font-heading text-primary order-1 flex-1 text-base lg:order-2'>
                         {fullName}
                       </span>
-                      <span className='font-text text-primary text-sm lg:w-64 lg:shrink-0 lg:whitespace-nowrap'>
+                      <span className='font-text text-primary order-3 text-sm lg:w-56 lg:shrink-0 lg:whitespace-nowrap'>
                         {ceremony.venue.name}
+                      </span>
+                      <span
+                        className={cn(
+                          'font-heading text-primary order-4 text-sm lg:w-32 lg:shrink-0 lg:whitespace-nowrap',
+                          !isPast && 'max-lg:hidden'
+                        )}
+                      >
+                        {isPast ? t('status.past-card-prefix') : ''}
                       </span>
                     </Link>
                   </li>
