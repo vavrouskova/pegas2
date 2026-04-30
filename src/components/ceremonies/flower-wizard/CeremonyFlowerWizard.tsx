@@ -141,7 +141,10 @@ const CeremonyFlowerWizard = ({ ceremony, open, onOpenChange }: CeremonyFlowerWi
           </div>
         </div>
 
-        <main className='overflow-y-auto px-6 py-8 lg:px-12 lg:py-10'>
+        <main
+          data-lenis-prevent
+          className='overflow-y-auto px-6 py-8 lg:px-12 lg:py-10'
+        >
           {step === 1 && (
             <Step1
               selectedId={bouquet?.id ?? null}

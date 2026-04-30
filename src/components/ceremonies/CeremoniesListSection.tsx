@@ -52,7 +52,10 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
   };
 
   const renderFilterButton = (key: FilterKey, label: string) => {
-    const isActive = activeFilter === key;
+    const isActive =
+      key === 'all'
+        ? activeFilter === 'all' && !searchQuery && !selectedDate && !selectedVenue
+        : activeFilter === key;
     return (
       <button
         key={key}
@@ -244,7 +247,7 @@ const CeremoniesListSection = ({ ceremonies }: CeremoniesListSectionProps) => {
         >
           <SelectTrigger
             aria-label={t('filters.sort-label')}
-            className='bg-transparent lg:min-w-[180px]'
+            className='justify-end bg-transparent lg:min-w-[180px]'
           >
             <SelectValue />
           </SelectTrigger>
