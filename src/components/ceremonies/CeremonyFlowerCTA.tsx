@@ -4,8 +4,9 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
+import { ShoppingBasket } from 'lucide-react';
+
 import CeremonyFlowerWizard from '@/components/ceremonies/flower-wizard/CeremonyFlowerWizard';
-import ArrowRight from '@/components/icons/ArrowRight';
 import { Ceremony } from '@/types/ceremony';
 
 interface CeremonyFlowerCTAProps {
@@ -17,27 +18,30 @@ const CeremonyFlowerCTA = ({ ceremony }: CeremonyFlowerCTAProps) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className='my-20 px-4 md:px-14 lg:my-32'>
+    <section className='-mt-8 mb-20 px-4 md:px-14 lg:-mt-24 lg:mb-32'>
       <button
         type='button'
         onClick={() => setOpen(true)}
-        className='bg-primary mx-auto flex min-h-[10rem] w-full max-w-88 items-stretch overflow-hidden text-left transition-opacity duration-300 hover:opacity-95 max-lg:flex-col lg:max-h-[14.375rem] lg:max-w-[48.1875rem] lg:flex-row'
+        className='bg-primary mx-auto flex w-full max-w-3xl items-stretch overflow-hidden text-left transition-opacity duration-300 hover:opacity-95 max-lg:flex-col lg:h-72 lg:flex-row'
       >
-        <picture className='relative aspect-square h-auto w-full lg:max-h-57.5 lg:max-w-57.5'>
+        <picture className='relative aspect-square w-full shrink-0 lg:size-72'>
           <Image
             src='/images/ceremonies/posli-kvetinu.png'
             alt='Smuteční kytice'
             fill
-            sizes='(max-width: 768px) 160px, 256px'
+            sizes='(max-width: 1024px) 100vw, 288px'
             className='object-cover'
           />
         </picture>
-        <div className='flex flex-1 flex-col justify-between gap-2 px-4 py-5 lg:px-17.5 lg:py-7.5'>
-          <h2 className='text-white-smoke font-heading mb-2.5 text-xl'>{t('title')}</h2>
-          <div className='text-white-smoke flex items-center gap-3'>
-            <span className='text-white-smoke font-heading text-lg'>{t('button')}</span>
-            <ArrowRight className='size-5 shrink-0' />
+        <div className='flex flex-1 flex-col justify-between gap-4 px-4 py-5 lg:px-17.5 lg:py-7.5'>
+          <div className='flex flex-col gap-2.5'>
+            <h2 className='text-white-smoke font-heading text-xl'>{t('title')}</h2>
+            <p className='text-white-smoke font-text text-sm'>{t('description')}</p>
           </div>
+          <span className='bg-white-smoke text-primary font-heading inline-flex w-fit items-center gap-3 px-6 py-3 text-base'>
+            {t('button')}
+            <ShoppingBasket className='size-5 shrink-0' />
+          </span>
         </div>
       </button>
 

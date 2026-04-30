@@ -94,6 +94,20 @@ const StickyContact = () => {
       }
     }
 
+    // Schovat když se s lištou vertikálně překrývá element [data-hide-sticky-overlap]
+    const stickyEl = document.querySelector<HTMLElement>('[data-sticky-contact]');
+    if (stickyEl) {
+      const stickyRect = stickyEl.getBoundingClientRect();
+      const overlapTargets = document.querySelectorAll('[data-hide-sticky-overlap]');
+      for (const target of overlapTargets) {
+        const targetRect = target.getBoundingClientRect();
+        if (targetRect.bottom > stickyRect.top && targetRect.top < stickyRect.bottom) {
+          setShouldHide(true);
+          return;
+        }
+      }
+    }
+
     setShouldHide(false);
   }, [isActivated]);
 
@@ -127,6 +141,7 @@ const StickyContact = () => {
 
   return (
     <MotionDiv
+      data-sticky-contact
       initial={{ opacity: 0 }}
       animate={animateTarget}
       transition={{

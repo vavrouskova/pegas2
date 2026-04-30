@@ -16,7 +16,10 @@ import {
 } from '@/data/bouquets';
 import { cn } from '@/lib/utils';
 import { Ceremony } from '@/types/ceremony';
-import { formatCeremonyDate, formatCeremonyTime } from '@/utils/ceremonies/format';
+import {
+  formatCeremonyDateLongWithWeekday,
+  formatCeremonyTime,
+} from '@/utils/ceremonies/format';
 
 interface CeremonyFlowerWizardProps {
   ceremony: Ceremony;
@@ -46,7 +49,11 @@ const CeremonyFlowerWizard = ({ ceremony, open, onOpenChange }: CeremonyFlowerWi
   const [payment, setPayment] = useState<PaymentMethod>('card');
 
   const fullName = `${ceremony.person.firstName} ${ceremony.person.lastName}`;
-  const dateLine = `${formatCeremonyDate(ceremony.startAt)} · ${formatCeremonyTime(ceremony.startAt)} · ${ceremony.venue.name}`;
+  const dateLine = `${formatCeremonyDateLongWithWeekday(ceremony.startAt)} · ${formatCeremonyTime(ceremony.startAt)} · ${ceremony.venue.name}, ${ceremony.venue.city}`;
+  const deadlineDate = ceremony.flowerOrderDeadline ? new Date(ceremony.flowerOrderDeadline) : null;
+  const deadlineLine = deadlineDate
+    ? `${formatCeremonyDateLongWithWeekday(ceremony.flowerOrderDeadline!)} · ${formatCeremonyTime(ceremony.flowerOrderDeadline!)}`
+    : null;
 
   const ribbonText = useMemo(() => {
     if (ribbonPreset === 'none') return '';
@@ -93,7 +100,7 @@ const CeremonyFlowerWizard = ({ ceremony, open, onOpenChange }: CeremonyFlowerWi
         else onOpenChange(true);
       }}
     >
-      <DialogContent className='!fixed !inset-0 !top-0 !left-0 grid !h-[100dvh] !w-screen !max-w-none !translate-x-0 !translate-y-0 grid-rows-[auto_1fr_auto] gap-0 overflow-hidden border-0 bg-white p-0 sm:!rounded-none lg:!h-[min(92vh,900px)] lg:!w-[min(95vw,1180px)] lg:!top-1/2 lg:!left-1/2 lg:!-translate-x-1/2 lg:!-translate-y-1/2 lg:sm:!rounded-none'>
+      <DialogContent className='!fixed !inset-0 !top-0 !left-0 grid !h-[100dvh] !w-screen !max-w-none !translate-x-0 !translate-y-0 grid-rows-[auto_1fr_auto] gap-0 overflow-hidden border-0 bg-white p-0 sm:!rounded-none lg:!h-[min(92vh,900px)] lg:!w-[min(95vw,1180px)] lg:!top-1/2 lg:!left-1/2 lg:!-translate-x-1/2 lg:!-translate-y-1/2 lg:sm:!rounded-none [&>button[type="button"].absolute]:hidden'>
         <DialogTitle className='sr-only'>{t('step1.title')}</DialogTitle>
 
         <header className='flex items-start justify-between gap-4 px-6 pt-6 pb-4 lg:px-12 lg:pt-10'>
@@ -102,7 +109,13 @@ const CeremonyFlowerWizard = ({ ceremony, open, onOpenChange }: CeremonyFlowerWi
               {t('for-label')}
             </span>
             <h2 className='font-heading text-primary text-2xl lg:text-3xl'>{fullName}</h2>
-            <span className='font-text text-primary text-sm'>{dateLine}</span>
+            {deadlineLine ? (
+              <span className='font-text text-primary text-sm'>
+                {t('order-deadline', { deadline: deadlineLine })}
+              </span>
+            ) : (
+              <span className='font-text text-primary text-sm'>{dateLine}</span>
+            )}
           </div>
           <button
             type='button'
@@ -251,7 +264,7 @@ const Step1 = ({
                 type='button'
                 onClick={() => onSelect(b)}
                 className={cn(
-                  'group flex h-full w-full flex-col gap-3 text-left transition-opacity duration-300 hover:opacity-90',
+                  'group flex h-full w-full flex-col text-left transition-opacity duration-300 hover:opacity-90',
                   selected && 'ring-primary outline-2 outline-offset-2 outline-current'
                 )}
                 style={selected ? { outlineColor: 'var(--color-primary)' } : undefined}
@@ -272,13 +285,11 @@ const Step1 = ({
                   </div>
                 </div>
                 <div className='bg-grey-warm/40 flex flex-1 flex-col gap-1 px-3 py-3'>
-                  <div className='flex flex-wrap items-baseline gap-x-2'>
-                    <span className='font-heading text-primary text-base'>
-                      {tBouquets(b.nameKey)}
-                    </span>
-                    <span className='font-text text-primary text-sm'>{formatPrice(b.price)}</span>
-                  </div>
-                  <span className='font-text text-primary/70 text-xs leading-snug'>
+                  <span className='font-heading text-primary text-base leading-tight'>
+                    {tBouquets(b.nameKey)}
+                  </span>
+                  <span className='font-text text-primary text-sm'>{formatPrice(b.price)}</span>
+                  <span className='font-text text-primary/70 mt-1 text-xs leading-snug'>
                     {tBouquets(b.descKey)}
                   </span>
                 </div>

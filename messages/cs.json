@@ -138,6 +138,7 @@
     },
     "flower-wizard": {
       "for-label": "KVĚTINA PRO",
+      "order-deadline": "Objednávky přijímáme do {deadline}",
       "step-progress": "Krok {current} z {total}",
       "back": "Zpět",
       "continue": "Pokračovat",

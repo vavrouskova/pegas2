@@ -68,7 +68,7 @@ const CeremonyGallery = ({ items, ceremonySlug }: CeremonyGalleryProps) => {
       <div className='grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4'>
         {items.map((item, index) => (
           <div
-            key={item.src}
+            key={`${item.src}-${index}`}
             className='group bg-grey-warm relative aspect-square overflow-hidden'
           >
             <button

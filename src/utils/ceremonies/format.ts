@@ -18,12 +18,23 @@ const WEEKDAYS_SHORT = ['NE', 'PO', 'ÚT', 'ST', 'ČT', 'PÁ', 'SO'];
 export const formatCeremonyDate = (iso: string): string => {
   const date = new Date(iso);
   const day = WEEKDAYS_SHORT[date.getDay()];
-  return `${day} ${date.getDate()}. ${date.getMonth() + 1}. ${date.getFullYear()}`;
+  return `${day} · ${date.getDate()}. ${date.getMonth() + 1}. ${date.getFullYear()}`;
 };
 
 export const formatCeremonyDateLong = (iso: string): string => {
   const date = new Date(iso);
   return `${date.getDate()}. ${MONTHS_GENITIVE[date.getMonth()]} ${date.getFullYear()}`;
+};
+
+export const formatCeremonyDateLongWithWeekday = (iso: string): string => {
+  const date = new Date(iso);
+  const day = WEEKDAYS_SHORT[date.getDay()];
+  return `${day} · ${date.getDate()}. ${MONTHS_GENITIVE[date.getMonth()]} ${date.getFullYear()}`;
+};
+
+export const getCeremonyWeekday = (iso: string): string => {
+  const date = new Date(iso);
+  return WEEKDAYS_SHORT[date.getDay()];
 };
 
 export const formatCeremonyTime = (iso: string): string => {

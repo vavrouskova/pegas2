@@ -12,7 +12,11 @@ import CeremonyFlowerCTA from '@/components/ceremonies/CeremonyFlowerCTA';
 import CeremonyGallery from '@/components/ceremonies/CeremonyGallery';
 import { CEREMONIES, getCeremonyBySlug } from '@/data/ceremonies';
 import { Link } from '@/i18n/routing';
-import { formatCeremonyDateLong, formatCeremonyTime } from '@/utils/ceremonies/format';
+import {
+  formatCeremonyDateLong,
+  formatCeremonyTime,
+  getCeremonyWeekday,
+} from '@/utils/ceremonies/format';
 
 interface CeremonyDetailParams {
   locale: string;
@@ -61,7 +65,7 @@ const CeremonyDetailPage = async ({ params }: CeremonyDetailPageProps) => {
 
   const fullName = `${ceremony.person.firstName} ${ceremony.person.lastName}`;
   const isPrivate = ceremony.visibility === 'private';
-  const announcementParagraphs = ceremony.announcement.split('\n').filter(Boolean);
+  const announcementText = ceremony.announcement.split('\n').filter(Boolean).join(' ');
 
   const halfDonors = Math.ceil(ceremony.donors.length / 2);
   const donorsLeft = ceremony.donors.slice(0, halfDonors);
@@ -88,7 +92,10 @@ const CeremonyDetailPage = async ({ params }: CeremonyDetailPageProps) => {
           <LeavesImage />
         </div>
 
-        <div className='max-w-dynamic-content mx-auto flex flex-col items-start gap-10 pt-12 lg:pt-20'>
+        <div
+          className='max-w-dynamic-content mx-auto flex flex-col items-start gap-10 pt-12 lg:pt-20'
+          data-hide-sticky-overlap
+        >
           <div className='bg-grey-warm flex aspect-square w-3/5 max-w-[17rem] items-center justify-center'>
             <div className='relative aspect-square w-3/5'>
               {ceremony.person.photo ? (
@@ -133,23 +140,21 @@ const CeremonyDetailPage = async ({ params }: CeremonyDetailPageProps) => {
               </div>
             ) : (
               <>
-                <div className='flex flex-col gap-1'>
-                  <p className='font-text text-primary text-lg'>
-                    {formatCeremonyDateLong(ceremony.startAt)},{' '}
-                    {formatCeremonyTime(ceremony.startAt)}
-                  </p>
-                  <p className='font-text text-primary text-lg'>
+                <p className='font-text text-primary flex flex-wrap items-center gap-x-3 text-lg'>
+                  <span>{getCeremonyWeekday(ceremony.startAt)}</span>
+                  <span aria-hidden>·</span>
+                  <span>{formatCeremonyDateLong(ceremony.startAt)}</span>
+                  <span aria-hidden>·</span>
+                  <span>{formatCeremonyTime(ceremony.startAt)}</span>
+                  <span aria-hidden>·</span>
+                  <span>
                     {ceremony.venue.name}, {ceremony.venue.city}
-                  </p>
-                </div>
+                  </span>
+                </p>
 
                 <CeremonyActions ceremony={ceremony} />
 
-                <div className='font-text text-primary mt-8 flex flex-col gap-4 text-base'>
-                  {announcementParagraphs.map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
-                </div>
+                <p className='font-text text-primary mt-8 text-base'>{announcementText}</p>
 
                 {ceremony.donors.length > 0 && (
                   <div className='mt-10 flex flex-col gap-4'>
