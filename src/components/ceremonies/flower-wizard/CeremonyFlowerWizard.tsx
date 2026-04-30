@@ -514,10 +514,7 @@ const Step4 = ({
 
   return (
     <div className='flex flex-col gap-6 lg:max-w-3xl'>
-      <div className='flex flex-col gap-2'>
-        <h3 className='font-heading text-primary text-2xl'>{t('title')}</h3>
-        <p className='font-text text-primary/70 text-sm'>{t('description')}</p>
-      </div>
+      <h3 className='font-heading text-primary text-2xl'>{t('title')}</h3>
 
       <div className='bg-grey-warm/40 flex flex-col gap-5 p-5 lg:p-6'>
         <div className='flex items-start gap-4'>
